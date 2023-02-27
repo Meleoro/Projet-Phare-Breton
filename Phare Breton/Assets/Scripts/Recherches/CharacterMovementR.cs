@@ -8,7 +8,7 @@ public class CharacterMovementR : MonoBehaviour
 {
     [Header("References")] 
     private Rigidbody rb;
-    
+
     [Header("Movements")]
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
     [SerializeField, Range(0f, 100f)] float maxAcceleration = 10f;
