@@ -45,7 +45,7 @@ public class CharacterMovementR : MonoBehaviour
         velocity = transform.InverseTransformDirection(rb.velocity); ;
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-        rb.velocity = transform.TransformDirection(velocity); ;
+        rb.velocity = transform.TransformDirection(velocity);
     }
 
     private void RotateCharacter()
