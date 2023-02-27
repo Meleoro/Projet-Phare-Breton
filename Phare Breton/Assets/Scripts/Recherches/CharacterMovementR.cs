@@ -24,6 +24,7 @@ public class CharacterMovementR : MonoBehaviour
     private void Update()
     {
         MoveCharacter();
+        RotateCharacter();
     }
 
     
@@ -38,10 +39,18 @@ public class CharacterMovementR : MonoBehaviour
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         
         // Acceleration du personnage
-        velocity = rb.velocity;
+
+
+
+        velocity = transform.InverseTransformDirection(rb.velocity); ;
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-        rb.velocity = velocity;
+        rb.velocity = transform.TransformDirection(velocity); ;
+    }
+
+    private void RotateCharacter()
+    {
+        transform.rotation = Quaternion.EulerAngles(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
     }
 
     //RECUPERE INPUT DE DIRECTION
