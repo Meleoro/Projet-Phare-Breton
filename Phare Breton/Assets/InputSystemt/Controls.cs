@@ -35,6 +35,24 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Flute"",
+                    ""type"": ""Button"",
+                    ""id"": ""62811a88-00c3-4307-9eb8-59398347bf41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lien"",
+                    ""type"": ""Button"",
+                    ""id"": ""9864a300-143a-4d24-aa31-102eb40f8ef5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -103,6 +121,50 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a90b5e54-2a0d-48ad-9e43-a8b5daaecf3f"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Flute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fda04295-f286-460e-b6d8-59fe76e8d5ce"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Flute"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f0b76f93-c457-4dc2-907c-0a08b6d573f0"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lien"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dbf4ea5f-82f2-4847-875d-a038e85a57dd"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lien"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -112,6 +174,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         // Character
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Direction = m_Character.FindAction("Direction", throwIfNotFound: true);
+        m_Character_Flute = m_Character.FindAction("Flute", throwIfNotFound: true);
+        m_Character_Lien = m_Character.FindAction("Lien", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,11 +238,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Character;
     private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
     private readonly InputAction m_Character_Direction;
+    private readonly InputAction m_Character_Flute;
+    private readonly InputAction m_Character_Lien;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
         public CharacterActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Direction => m_Wrapper.m_Character_Direction;
+        public InputAction @Flute => m_Wrapper.m_Character_Flute;
+        public InputAction @Lien => m_Wrapper.m_Character_Lien;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -191,6 +259,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started += instance.OnDirection;
             @Direction.performed += instance.OnDirection;
             @Direction.canceled += instance.OnDirection;
+            @Flute.started += instance.OnFlute;
+            @Flute.performed += instance.OnFlute;
+            @Flute.canceled += instance.OnFlute;
+            @Lien.started += instance.OnLien;
+            @Lien.performed += instance.OnLien;
+            @Lien.canceled += instance.OnLien;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -198,6 +272,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Direction.started -= instance.OnDirection;
             @Direction.performed -= instance.OnDirection;
             @Direction.canceled -= instance.OnDirection;
+            @Flute.started -= instance.OnFlute;
+            @Flute.performed -= instance.OnFlute;
+            @Flute.canceled -= instance.OnFlute;
+            @Lien.started -= instance.OnLien;
+            @Lien.performed -= instance.OnLien;
+            @Lien.canceled -= instance.OnLien;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -218,5 +298,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     public interface ICharacterActions
     {
         void OnDirection(InputAction.CallbackContext context);
+        void OnFlute(InputAction.CallbackContext context);
+        void OnLien(InputAction.CallbackContext context);
     }
 }
