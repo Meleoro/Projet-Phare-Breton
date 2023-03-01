@@ -11,9 +11,14 @@ public class CharaManager : MonoBehaviour
     
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
-    
+
     [Header("Inputs")]
     private Vector2 direction;
+    private bool R2;
+
+    [Header("Autres")] 
+    [HideInInspector] public bool noMovement;
+    [HideInInspector] public bool noControl;
 
 
     void Start()
@@ -23,8 +28,24 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
-        movementScript.MoveCharacter(direction);
-        movementScript.RotateCharacter();
+        if (!noControl)
+        {
+            if (!noMovement)
+            {
+                movementScript.MoveCharacter(direction);
+                movementScript.RotateCharacter();
+            }
+
+            if (R2)
+            {
+                fluteScript.FluteActive();
+                movementScript.MoveCharacter(Vector2.zero);
+            }
+            else
+            {
+                fluteScript.FluteUnactive();
+            }
+        }
     }
     
     
@@ -34,14 +55,14 @@ public class CharaManager : MonoBehaviour
     
     
     // LE JOUEUR MAINTIENT R2
-    public void OnFlute(InputValue value)
+    public void OnFlute(InputAction.CallbackContext context)
     {
-        //value.
+        R2 = context.performed;
     }
-    
+
     //RECUPERE INPUT DE DIRECTION
-    public void OnDirection(InputValue value)
+    public void OnDirection(InputAction.CallbackContext context)
     {
-        direction = value.Get<Vector2>();
+        direction = context.ReadValue<Vector2>();
     }
 }
