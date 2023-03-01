@@ -13,7 +13,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
-    private Vector2 direction;
+    [HideInInspector] public Vector2 direction;
     private bool R2;
 
     [Header("Autres")] 
@@ -38,7 +38,7 @@ public class CharaManager : MonoBehaviour
 
             if (R2)
             {
-                fluteScript.FluteActive();
+                fluteScript.FluteActive(direction);
                 movementScript.MoveCharacter(Vector2.zero);
             }
             else

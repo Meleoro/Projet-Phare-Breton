@@ -14,10 +14,12 @@ public class CharacterFlute : MonoBehaviour
         manager = GetComponent<CharaManager>();
     }
 
-    public void FluteActive()
+    public void FluteActive(Vector2 direction)
     {
         manager.noMovement = true;
         zoneFlute.SetActive(true);
+        
+        zoneFlute.transform.rotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
     public void FluteUnactive()
