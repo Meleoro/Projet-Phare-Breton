@@ -155,8 +155,8 @@ GameObject:
   - component: {fileID: 4042080586474578226}
   - component: {fileID: 1604713492887267752}
   m_Layer: 0
-  m_Name: Character-1
-  m_TagString: Untagged
+  m_Name: Character
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ Transform:
   m_Children:
   - {fileID: 4327643351497743432}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7140802484854216782
 MeshFilter:
@@ -275,7 +275,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &8054913415842007629
 MonoBehaviour:

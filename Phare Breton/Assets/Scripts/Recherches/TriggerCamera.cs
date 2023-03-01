@@ -12,8 +12,11 @@ public class TriggerCamera : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
-        ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+        if (other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+        }
     }
 
 
