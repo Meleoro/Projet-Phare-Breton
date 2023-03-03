@@ -33,14 +33,18 @@ public class CharaManager : MonoBehaviour
             if (!noMovement)
             {
                 movementScript.MoveCharacter(direction);
-                movementScript.RotateCharacter();
+                
+                if(direction == Vector2.zero)
+                    movementScript.RotateCharacter();
             }
 
             if (R2)
             {
                 fluteScript.FluteActive(direction);
+                movementScript.RotateCharacter();
                 movementScript.MoveCharacter(Vector2.zero);
             }
+            
             else
             {
                 fluteScript.FluteUnactive();
