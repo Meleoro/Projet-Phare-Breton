@@ -41,6 +41,7 @@ public class CharaManager : MonoBehaviour
             if (R2)
             {
                 fluteScript.FluteActive(direction);
+                movementScript.RotateCharacter();
                 movementScript.MoveCharacter(Vector2.zero);
             }
             

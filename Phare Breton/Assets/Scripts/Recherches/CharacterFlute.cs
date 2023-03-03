@@ -18,8 +18,10 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.noMovement = true;
         zoneFlute.SetActive(true);
-        
-        zoneFlute.transform.rotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
+
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(
+            new Vector3(direction.y, 0,
+                -direction.x), Vector3.up);
     }
 
     public void FluteUnactive()
