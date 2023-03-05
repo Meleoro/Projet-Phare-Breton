@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraR : MonoBehaviour
+public class CameraMovements : MonoBehaviour
 {
     private Camera _camera;
     
@@ -31,7 +31,7 @@ public class CameraR : MonoBehaviour
         {
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
 
-            MoveCamera(charaPos + offset);
+            MoveCamera(charaPos);
         }
     }
 
@@ -40,7 +40,7 @@ public class CameraR : MonoBehaviour
     // PERMET DE DEPLACER LA CAMERA TOUT EN NE SORTANT DE CERTAINES LIMITES EN X ET EN Z
     private void MoveCamera(Vector3 wantedPos)
     {
-        Vector3 newPos = new Vector3(0, transform.position.y, 0);
+        Vector3 newPos = new Vector3(0, 0, 0);
 
         // On determine la position en X
         if(wantedPos.x < minX)
@@ -49,11 +49,11 @@ public class CameraR : MonoBehaviour
         }
         else if(wantedPos.x > maxX)
         {
-            newPos.x = minX;
+            newPos.x = maxX;
         }
         else
         {
-            newPos.x = transform.position.x;
+            newPos.x = ReferenceManager.Instance.characterReference.transform.position.x;
         }
 
         // On determine la position en Z
@@ -63,23 +63,29 @@ public class CameraR : MonoBehaviour
         }
         else if (wantedPos.z > maxZ)
         {
-            newPos.z = minZ;
+            newPos.z = maxZ;
         }
         else
         {
-            newPos.z = transform.position.z;
+            newPos.z = ReferenceManager.Instance.characterReference.transform.position.z;
         }
 
         // Application des changements
-        transform.position = newPos;
+        transform.position = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
     }
 
 
     // QUAND ON ENTRE DANS UNE PIECE
-    public void EnterRoom(Vector3 newOffset)
+    public void EnterRoom(float newMinX, float newMaxX, float newMinZ, float newMaxZ)
     {
-        offset = newOffset;
+        offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
         isStatic = false;
+
+        minX = newMinX;
+        maxX = newMaxX;
+
+        minZ = newMinZ;
+        maxZ = newMaxZ;
     }
 
     // QUAND ON QUITTE UNE PIECE

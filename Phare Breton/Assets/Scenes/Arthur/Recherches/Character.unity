@@ -424,24 +424,6 @@ SpringJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!1 &383794712 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 299504277730878814, guid: a159f5861fb015d4d901249fa2f958d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5209479903800370464}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &383794717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 383794712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d817cf703c5e4744883a7a82442b2ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &418781771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,16 +1715,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentiel
       objectReference: {fileID: 0}
-    - target: {fileID: 1719168920312280914, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2339968287322325921, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7881634352397566789, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
       propertyPath: m_RootOrder
@@ -1801,9 +1773,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 299504277730878814, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 383794717}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
