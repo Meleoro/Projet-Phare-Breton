@@ -15,13 +15,34 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public float maxZ;
     private Vector3 offset;
 
+    [Header("DebutStatic")] 
+    [SerializeField] private bool startMove;       // Si on veut que la camera bouge dès le départ
+    [SerializeField] private Transform startMinX;
+    [SerializeField] private Transform startMaxX;
+    [SerializeField] private Transform startMinZ;
+    [SerializeField] private Transform startMaxZ;
+
 
 
     private void Start()
     {
         _camera = GetComponent<Camera>();
 
-        isStatic = true;
+        if (startMove)
+        {
+            isStatic = false;
+
+            minX = startMinX.position.x;
+            maxX = startMaxX.position.x;
+
+            minZ = startMinZ.position.z;
+            maxZ = startMaxZ.position.z;
+        }
+
+        else
+        {
+            isStatic = true;
+        }
     }
 
 
