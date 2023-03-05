@@ -7,22 +7,15 @@ public class CameraR : MonoBehaviour
 {
     private Camera _camera;
     
-    [Header("TransitionGeneral")]
+    [Header("CameraRoom")]
     private bool isStatic;
-    private float currentAvancee;
-    
-    [Header("PosTransition")] 
-    public Vector3 startPos;
-    public Vector3 midPos;
-    public Vector3 endPos;
-    private Vector3 currentPos;
-    
-    [Header("ZoomTransition")] 
-    public float startZoom;
-    public float midZoom;
-    public float endZoom;
-    private Vector3 currentZoom;
-    
+    [HideInInspector] public float minX;
+    [HideInInspector] public float maxX;
+    [HideInInspector] public float minZ;
+    [HideInInspector] public float maxZ;
+    private Vector3 offset;
+
+
 
     private void Start()
     {
@@ -36,34 +29,62 @@ public class CameraR : MonoBehaviour
     {
         if (!isStatic)
         {
-            
+            Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
+
+            MoveCamera(charaPos + offset);
         }
     }
 
 
-    public void TransitionCamera(Vector3 start, Vector3 end)
-    {
-        float distanceStart = Vector3.Distance(startPos, startPos);
-    }
-    
 
-    public void OrientateCamera(float newXRotation)
+    // PERMET DE DEPLACER LA CAMERA TOUT EN NE SORTANT DE CERTAINES LIMITES EN X ET EN Z
+    private void MoveCamera(Vector3 wantedPos)
     {
-        transform.rotation = Quaternion.Euler(45, newXRotation, 0);
+        Vector3 newPos = new Vector3(0, transform.position.y, 0);
+
+        // On determine la position en X
+        if(wantedPos.x < minX)
+        {
+            newPos.x = minX;
+        }
+        else if(wantedPos.x > maxX)
+        {
+            newPos.x = minX;
+        }
+        else
+        {
+            newPos.x = transform.position.x;
+        }
+
+        // On determine la position en Z
+        if (wantedPos.z < minZ)
+        {
+            newPos.z = minZ;
+        }
+        else if (wantedPos.z > maxZ)
+        {
+            newPos.z = minZ;
+        }
+        else
+        {
+            newPos.z = transform.position.z;
+        }
+
+        // Application des changements
+        transform.position = newPos;
     }
 
-    public void ChangeZoom(float newZoom)
+
+    // QUAND ON ENTRE DANS UNE PIECE
+    public void EnterRoom(Vector3 newOffset)
     {
-        _camera.orthographicSize = newZoom;
+        offset = newOffset;
+        isStatic = false;
     }
 
-    public void ChangePosXZ(float newX, float newZ)
+    // QUAND ON QUITTE UNE PIECE
+    public void ExitRoom()
     {
-        transform.position = new Vector3(newX, transform.position.y, newZ);
-    }
-    
-    public void ChangePosY(float newY)
-    {
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        isStatic = true;
     }
 }
