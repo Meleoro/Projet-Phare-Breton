@@ -15,8 +15,8 @@ public class CameraMovements : MonoBehaviour
 
     [Header("DebutStatic")] 
     [SerializeField] private bool startMove;       // Si on veut que la camera bouge d�s le d�part
-    [HideInInspector] public Transform startMinXZ;
-    [HideInInspector] public Transform startMaxXZ;
+    public Transform startMinXZ;
+    public Transform startMaxXZ;
 
 
 
