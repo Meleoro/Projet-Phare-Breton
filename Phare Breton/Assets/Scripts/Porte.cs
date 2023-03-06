@@ -12,10 +12,8 @@ public class Porte : MonoBehaviour
     [SerializeField] Transform cameraPos2;
 
     [Header("Limites Camera")]
-    [SerializeField] Transform minX;
-    [SerializeField] Transform maxX;
-    [SerializeField] Transform minZ;
-    [SerializeField] Transform maxZ;
+    [SerializeField] Transform minXZ;
+    [SerializeField] Transform maxXZ;
 
 
     public void EnterDoor1()
@@ -36,7 +34,7 @@ public class Porte : MonoBehaviour
 
     public void GoInside()
     {
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().EnterRoom(minX.position.x, maxX.position.x, minZ.position.z, maxZ.position.z);
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().EnterRoom(minXZ.position, maxXZ.position);
     }
 
     public void GoOutside()
