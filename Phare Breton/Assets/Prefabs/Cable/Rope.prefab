@@ -165,7 +165,7 @@ Transform:
   - {fileID: 3983425155078667346}
   - {fileID: 3245475370029914171}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2199939890008888650
 MonoBehaviour:
@@ -179,7 +179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153be534248402641bf3d7fdea9a4f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrNode: 0
+  nbrNodes: 18
+  distanceBetweenNodes: 0.2
+  spring: 50
+  damper: 10
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
@@ -211,7 +214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8847647552864450469}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalPosition: {x: 12, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
