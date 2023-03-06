@@ -9,18 +9,14 @@ public class CameraMovements : MonoBehaviour
     
     [Header("CameraRoom")]
     private bool isStatic;
-    [HideInInspector] public float minX;
-    [HideInInspector] public float maxX;
-    [HideInInspector] public float minZ;
-    [HideInInspector] public float maxZ;
+    [HideInInspector] public Vector3 minXZ;
+    [HideInInspector] public Vector3 maxXZ;
     private Vector3 offset;
 
     [Header("DebutStatic")] 
-    [SerializeField] private bool startMove;       // Si on veut que la camera bouge dès le départ
-    [SerializeField] private Transform startMinX;
-    [SerializeField] private Transform startMaxX;
-    [SerializeField] private Transform startMinZ;
-    [SerializeField] private Transform startMaxZ;
+    [SerializeField] private bool startMove;       // Si on veut que la camera bouge dï¿½s le dï¿½part
+    public Transform startMinXZ;
+    public Transform startMaxXZ;
 
 
 
@@ -32,11 +28,8 @@ public class CameraMovements : MonoBehaviour
         {
             isStatic = false;
 
-            minX = startMinX.position.x;
-            maxX = startMaxX.position.x;
-
-            minZ = startMinZ.position.z;
-            maxZ = startMaxZ.position.z;
+            minXZ = startMinXZ.position;
+            maxXZ = startMaxXZ.position;
         }
 
         else
@@ -64,13 +57,13 @@ public class CameraMovements : MonoBehaviour
         Vector3 newPos = new Vector3(0, 0, 0);
 
         // On determine la position en X
-        if(wantedPos.x < minX)
+        if(wantedPos.x < minXZ.x)
         {
-            newPos.x = minX;
+            newPos.x = minXZ.x;
         }
-        else if(wantedPos.x > maxX)
+        else if(wantedPos.x > maxXZ.x)
         {
-            newPos.x = maxX;
+            newPos.x = maxXZ.x;
         }
         else
         {
@@ -78,13 +71,13 @@ public class CameraMovements : MonoBehaviour
         }
 
         // On determine la position en Z
-        if (wantedPos.z < minZ)
+        if (wantedPos.z < minXZ.z)
         {
-            newPos.z = minZ;
+            newPos.z = minXZ.z;
         }
-        else if (wantedPos.z > maxZ)
+        else if (wantedPos.z > maxXZ.z)
         {
-            newPos.z = maxZ;
+            newPos.z = maxXZ.z;
         }
         else
         {
@@ -97,16 +90,13 @@ public class CameraMovements : MonoBehaviour
 
 
     // QUAND ON ENTRE DANS UNE PIECE
-    public void EnterRoom(float newMinX, float newMaxX, float newMinZ, float newMaxZ)
+    public void EnterRoom(Vector3 newMinXZ, Vector3 newMaxXZ)
     {
         offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
         isStatic = false;
 
-        minX = newMinX;
-        maxX = newMaxX;
-
-        minZ = newMinZ;
-        maxZ = newMaxZ;
+        minXZ = newMinXZ;
+        maxXZ = newMaxXZ;
     }
 
     // QUAND ON QUITTE UNE PIECE
