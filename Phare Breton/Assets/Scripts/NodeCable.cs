@@ -8,8 +8,11 @@ public class NodeCable : MonoBehaviour
 {
     private LineRenderer lineRenderer;
 
-    [SerializeField] private Transform node1;
-    [SerializeField] private Transform node2;
+    public Transform node1;
+    public Transform node2;
+    
+    public SpringJoint spring1;
+    public SpringJoint spring2;
     
     private void Start()
     {
@@ -18,7 +21,7 @@ public class NodeCable : MonoBehaviour
 
     void Update()
     {
-        Vector3[] newPositions = new Vector3[]{node1.position, transform.position, node2.position};
+        Vector3[] newPositions = {node1.position, transform.position, node2.position};
         
         lineRenderer.SetPositions(newPositions);
     }
