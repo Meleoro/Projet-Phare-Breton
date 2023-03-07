@@ -59,11 +59,11 @@ public class CableCreator : MonoBehaviour
             
             
             // GESTION DISTANCE ENTRE POINTS
-            currentNode.spring1.anchor = new Vector3(distanceBetweenNodes, 0, 0);
-            currentNode.spring2.anchor = new Vector3(-distanceBetweenNodes, 0, 0);
+            currentNode.spring1.anchor = new Vector3(-distanceBetweenNodes, 0, 0);
+            currentNode.spring2.anchor = new Vector3(distanceBetweenNodes * 2, 0, 0);
             
             currentNode.spring1.connectedAnchor = new Vector3(-distanceBetweenNodes * 2, 0, 0);
-            currentNode.spring2.connectedAnchor = new Vector3(distanceBetweenNodes * 2, 0, 0);
+            currentNode.spring2.connectedAnchor = new Vector3(distanceBetweenNodes * 4, 0, 0);
             
             
             // GESTION PHYSIQUE CORDE
@@ -71,10 +71,12 @@ public class CableCreator : MonoBehaviour
             currentNode.spring2.massScale = poidsCable;*/
             
             currentNode.spring1.spring = spring;
-            currentNode.spring2.spring = spring;
+            currentNode.spring2.spring = spring * 2;
             
             currentNode.spring1.damper = damper;
-            currentNode.spring2.damper = damper;
+            currentNode.spring2.damper = damper * 2;
+            
+            currentNode.spring2.maxDistance = distanceBetweenNodes;
         }
     }
 }

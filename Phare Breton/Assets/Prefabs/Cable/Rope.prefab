@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8501048448354683602}
   - component: {fileID: 4853438881783013283}
   - component: {fileID: 2527847094386597815}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OriginRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 7444570701646365546}
   - component: {fileID: 2199939890008888650}
   - component: {fileID: 9058123860006891802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,10 +180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153be534248402641bf3d7fdea9a4f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrNodes: 50
+  nbrNodes: 100
   distanceBetweenNodes: 0.05
-  spring: 300
-  damper: 50
+  spring: 100
+  damper: 5
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 7343668980640777361}
   - component: {fileID: 1543848257233928789}
   - component: {fileID: 8502898176608755338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EndRope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
