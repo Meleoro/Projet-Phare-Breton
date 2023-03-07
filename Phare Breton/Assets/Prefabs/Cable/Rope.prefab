@@ -102,7 +102,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -143,6 +143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7444570701646365546}
   - component: {fileID: 2199939890008888650}
+  - component: {fileID: 9058123860006891802}
   m_Layer: 0
   m_Name: Rope
   m_TagString: Untagged
@@ -179,13 +180,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153be534248402641bf3d7fdea9a4f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrNodes: 18
-  distanceBetweenNodes: 0.2
-  spring: 50
-  damper: 10
+  nbrNodes: 50
+  distanceBetweenNodes: 0.05
+  spring: 300
+  damper: 50
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
+--- !u!114 &9058123860006891802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2692012225170031430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bb523a2d13e5cf4a9040d6de5c68b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originAnchor: {fileID: 0}
+  endAnchor: {fileID: 0}
+  originNode: {fileID: 3983425155078667346}
+  endNode: {fileID: 3245475370029914171}
 --- !u!1 &8847647552864450469
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +305,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
