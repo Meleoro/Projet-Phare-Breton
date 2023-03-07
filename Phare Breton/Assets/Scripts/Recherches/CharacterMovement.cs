@@ -32,7 +32,7 @@ public class CharacterMovement : MonoBehaviour
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         
         // Acceleration du personnage
-        velocity = transform.InverseTransformDirection(manager.rb.velocity); ;
+        velocity = transform.InverseTransformDirection(manager.rb.velocity);
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
         manager.rb.velocity = transform.TransformDirection(velocity);
