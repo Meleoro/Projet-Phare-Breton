@@ -14,7 +14,8 @@ public class CharaManager : MonoBehaviour
 
     [Header("Inputs")]
     [HideInInspector] public Vector2 direction;
-    private bool R2;
+    [HideInInspector] public bool R2;
+    [HideInInspector] public bool lien;
 
     [Header("Autres")] 
     [HideInInspector] public bool noMovement;
@@ -43,6 +44,11 @@ public class CharaManager : MonoBehaviour
                 fluteScript.FluteActive(direction);
                 movementScript.RotateCharacter();
                 movementScript.MoveCharacter(Vector2.zero);
+
+                if (lien)
+                {
+                    fluteScript.CreateLien();
+                }
             }
             
             else
@@ -68,5 +74,11 @@ public class CharaManager : MonoBehaviour
     public void OnDirection(InputAction.CallbackContext context)
     {
         direction = context.ReadValue<Vector2>();
+    }
+
+    public void OnLien(InputAction.CallbackContext context)
+    {
+        if(context.started)
+            lien = true;
     }
 }

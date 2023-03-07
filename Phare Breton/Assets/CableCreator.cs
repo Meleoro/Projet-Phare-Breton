@@ -15,23 +15,18 @@ public class CableCreator : MonoBehaviour
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
-    [SerializeField] private GameObject origin;
-    [SerializeField] private GameObject end;
+    public GameObject origin;
+    public GameObject end;
 
     private List<GameObject> nodesRope = new List<GameObject>();
 
-
-    private void Start()
-    {
-        CreateNodes();
-        CreateCable();
-    }
+    
 
 
     public void CreateNodes()
     {
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
-        Vector3 directionStartEnd = origin.transform.position - end.transform.position;
+        Vector3 directionStartEnd = end.transform.position - origin.transform.position;
         
         nodesRope.Add(origin);
         
@@ -45,6 +40,8 @@ public class CableCreator : MonoBehaviour
         }
         
         nodesRope.Add(end);
+        
+        CreateCable();
     }
 
     private void CreateCable()

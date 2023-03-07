@@ -6,17 +6,15 @@ using UnityEngine.InputSystem.XR;
 
 public class ZoneFlute : MonoBehaviour
 {
-    private List<GameObject> selectedObjects = new List<GameObject>(); 
-    
-    
-    
+    [SerializeField] private CharacterFlute scriptFlute;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible"))
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
-            selectedObjects.Add(other.gameObject);
+            scriptFlute.selectedObjects.Add(other.gameObject);
             _object.Select();
         }
     }
@@ -27,7 +25,7 @@ public class ZoneFlute : MonoBehaviour
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
-            selectedObjects.Remove(other.gameObject);
+            scriptFlute.selectedObjects.Remove(other.gameObject);
             _object.Deselect();
         }
     }
