@@ -5,32 +5,75 @@ using UnityEngine;
 
 public class ObjetInteractible : MonoBehaviour
 {
-    [SerializeField] Material notSelectedMaterial;
-    [SerializeField] Material selectedMaterial;
+    [Header("General")]
+    public bool isLighted;
+    public List<GameObject> linkedObject = new List<GameObject>();
+    public enum InteractiblesType {
+        carton,
+        panneauElectrique,
+        ampoule
+    }
+    public InteractiblesType interactibleType;
 
-    private MeshRenderer mesh;
-    
-    public enum InteractiblesTypes {
-        generateur,
-        mecanisme
+    [Header("Ampoule")]
+    [SerializeField] private bool ampouleActive;
+    [SerializeField] private Light lightComponent;
+
+
+    private void Update()
+    {
+        VerifyLinkedObject();
+
+        if (ampouleActive)
+        {
+            Ampoule();
+        }
     }
 
-    public InteractiblesTypes interactibleType;
 
-
-    private void Start()
+    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
+    private void VerifyLinkedObject()
     {
-        mesh = GetComponent<MeshRenderer>();
+        if(linkedObject != null)
+        {
+            switch (interactibleType)
+            {
+                case InteractiblesType.carton:
+                    break;
+
+
+                case InteractiblesType.ampoule:
+
+                    ampouleActive = false;
+
+                    for (int k = 0; k < linkedObject.Count; k++)
+                    {
+                        if (linkedObject[k].GetComponent<ObjetInteractible>().interactibleType == InteractiblesType.panneauElectrique)
+                        {
+                            ampouleActive = true;
+                        }
+                    }
+
+                    break;
+            }
+        }
+    }
+
+
+    // COMPORTEMENT DE L'OBJET SI IL EST UNE AMPOULE
+    private void Ampoule()
+    {
+        lightComponent.enabled = true;
     }
 
 
     public void Select()
     {
-        //mesh.material = selectedMaterial;
+
     }
 
     public void Deselect()
     {
-        //mesh.material = notSelectedMaterial;
+
     }
 }

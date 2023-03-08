@@ -155,9 +155,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
-  interactibleType: 0
+  isLighted: 1
+  linkedObject: []
+  interactibleType: 1
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &101002781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -276,9 +278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &107337209
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -515,9 +519,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &287775500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -776,9 +782,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &873220319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -878,6 +886,8 @@ GameObject:
   - component: {fileID: 1017656526}
   - component: {fileID: 1017656525}
   - component: {fileID: 1017656524}
+  - component: {fileID: 1017656530}
+  - component: {fileID: 1017656529}
   m_Layer: 0
   m_Name: "M\xE9canisme"
   m_TagString: Interactible
@@ -897,9 +907,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
-  interactibleType: 1
+  isLighted: 1
+  linkedObject: []
+  interactibleType: 2
+  ampouleActive: 0
+  lightComponent: {fileID: 1017656530}
 --- !u!65 &1017656525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -986,6 +998,91 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1017656529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017656523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
+--- !u!108 &1017656530
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017656523}
+  m_Enabled: 0
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 25.77
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1306512209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,9 +1220,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
-  interactibleType: 0
+  isLighted: 0
+  linkedObject: []
+  interactibleType: 1
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &1358505367
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1244,9 +1343,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &1437470576
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1578,9 +1679,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &1728421354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1877,9 +1980,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notSelectedMaterial: {fileID: 2100000, guid: e5ef26d2d88cf93448fd5e31cc34d60f, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 36ab6264d0644d04fb49f4d9457fd382, type: 2}
+  isLighted: 0
+  linkedObject: []
   interactibleType: 0
+  ampouleActive: 0
+  lightComponent: {fileID: 0}
 --- !u!65 &2041552611
 BoxCollider:
   m_ObjectHideFlags: 0

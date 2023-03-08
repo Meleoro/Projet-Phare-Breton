@@ -17,6 +17,7 @@ public class CharacterFlute : MonoBehaviour
     [HideInInspector] public bool hasRope;
     [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
     private List<GameObject> cables = new List<GameObject>();
+    private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
     
     [Header("References")] 
     public GameObject zoneFlute;
@@ -102,28 +103,31 @@ public class CharacterFlute : MonoBehaviour
     }
 
 
+    // QUAND LE JOUEUR CREE UN CABLE AVEC SA FLUTE
     public void CreateLien()
     {
         if (selectedObjects.Count > 0)
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
+                // Références
                 GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
-
                 Cable currentCable = newRope.GetComponent<Cable>();
-                
+                CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
+
+                // On place le début et la fin du câble
                 currentCable.originAnchor = selectedObjects[k].gameObject;
                 currentCable.endAnchor = gameObject;
-                
-                
-                CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
+                // On crée le câble physiquement
                 currentCableCreator.CreateNodes();
                 
+                // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);
+                ropedObject.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
             }
 
             manager.lien = false;
@@ -131,14 +135,21 @@ public class CharacterFlute : MonoBehaviour
         }
     }
 
+
+    // QUAND LE JOUEUR PLACE LE(S) CABLE(S) QU'IL TRANSPORTE SUR UN OBJET
     public void PlaceLien()
     {
         if (objectsAtRange.Count == 1)
         {
             for (int k = cables.Count - 1; k >= 0; k--)
             {
+                // On relie les objets physiquement 
                 cables[k].GetComponent<CableCreator>().ChangePosNode(objectsAtRange[0]);
                 cables.RemoveAt(k);
+
+                // On informe les scripts de chaque objets qu'ils sont connectés 
+                ropedObject[k].linkedObject.Add(objectsAtRange[0]);
+                objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
         }
 
