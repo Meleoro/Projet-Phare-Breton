@@ -91,7 +91,7 @@ public class CharacterFlute : MonoBehaviour
 
         if (!doOnce)
         {
-            for (int i = selectedObjects.Count; i >= 0; i--)
+            for (int i = selectedObjects.Count - 1; i >= 0; i--)
             {
                 selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                 selectedObjects.RemoveAt(i);
