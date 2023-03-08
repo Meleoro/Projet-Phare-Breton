@@ -152,6 +152,73 @@ Transform:
   m_Father: {fileID: 305866493858369999}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1580841887084569927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6503702165506159941}
+  - component: {fileID: 4950549717037135537}
+  - component: {fileID: 6496479055574508442}
+  m_Layer: 7
+  m_Name: ZonePlaceCable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6503702165506159941
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580841887084569927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 305866493858369999}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4950549717037135537
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580841887084569927}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6496479055574508442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580841887084569927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4aa99af5620167e4f94a122bdab89738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptFlute: {fileID: 1604713492887267752}
 --- !u!1 &5527187700211497055
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,6 +256,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4327643351497743432}
+  - {fileID: 6503702165506159941}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -366,6 +434,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 9864a300-143a-4d24-aa31-102eb40f8ef5
     m_ActionName: Character/Lien[/XInputControllerWindows/buttonWest,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8814216740821263158}
+        m_TargetAssemblyTypeName: CharaManager, Assembly-CSharp
+        m_MethodName: OnInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cf8e7732-b6fa-479e-8f1e-3c364a0a2a49
+    m_ActionName: Character/Interaction[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Character
@@ -389,8 +473,10 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   R2: 0
   lien: 0
+  interaction: 0
   noMovement: 0
   noControl: 0
+  hasRope: 0
 --- !u!114 &4042080586474578226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,6 +506,8 @@ MonoBehaviour:
   selectedObjects: []
   ropeObject: {fileID: 2692012225170031430, guid: 04c86582e8370764a86d7d260b76f224,
     type: 3}
+  hasRope: 0
+  objectsAtRange: []
   zoneFlute: {fileID: 1388160980174438419}
   "modeVis\xE9e": {fileID: 320360803324039071}
   modeZone: {fileID: 8308329533933117268}
