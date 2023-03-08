@@ -14,8 +14,17 @@ public class TriggerCamera : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
-            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+            // Points qui vont permettre de determiner de quel côté arrive le joueur
+            Vector3 posAvant = transform.position + transform.forward;
+            Vector3 posArriere = transform.position - transform.forward;
+
+            
+            if (Vector3.Distance(posArriere, other.transform.position) <
+                Vector3.Distance(posAvant, other.transform.position))
+            {
+                ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+            }
         }
     }
 
