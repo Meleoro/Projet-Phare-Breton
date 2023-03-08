@@ -14,15 +14,27 @@ public class CableCreator : MonoBehaviour
     [SerializeField] private float maxDistSpring;
     [SerializeField] private float spring;
     [SerializeField] private float damper;
+    [SerializeField] private float maxLength;
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
     public GameObject origin;
     public GameObject end;
+    private LineRenderer _lineRenderer;
 
     private List<GameObject> nodesRope = new List<GameObject>();
     private float currentLength;
     private int nbrNodes;
+
+    [Header("CouleursCable")]
+    public Color cableOkay;
+    public Color cableNotokay;
+
+
+    private void Start()
+    {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
 
 
     private void Update()
@@ -37,6 +49,9 @@ public class CableCreator : MonoBehaviour
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
 
         nbrNodes = (int) (distanceStartEnd / distanceBetweenNodes);
+
+        if (nbrNodes > nbrMaxNodes)
+            nbrNodes = nbrMaxNodes;
 
         nodesRope.Add(origin);
         
@@ -115,6 +130,7 @@ public class CableCreator : MonoBehaviour
         currentNode.spring1.connectedBody = nodesRope[index - 1].GetComponent<Rigidbody>();
         currentNode.spring2.connectedBody = nodesRope[index + 1].GetComponent<Rigidbody>();
 
+        
         // GESTION DISTANCE ENTRE POINTS
         currentNode.spring1.anchor = Vector3.zero;
         currentNode.spring2.anchor = Vector3.zero;
@@ -123,14 +139,8 @@ public class CableCreator : MonoBehaviour
         
         currentNode.spring1.connectedAnchor = Vector3.zero;
         currentNode.spring2.connectedAnchor = direction.normalized * 0.4f;
-        
-        /*currentNode.spring1.connectedAnchor = nodesRope[index - 1].transform.position;
-        currentNode.spring2.connectedAnchor = nodesRope[index + 1].transform.position;*/
-        
-        /*currentNode.spring1.connectedAnchor = nodesRope[index - 1].transform.position - nodesRope[index].transform.position;
-        currentNode.spring2.connectedAnchor = nodesRope[index + 1].transform.position - nodesRope[index].transform.position;*/
-            
-            
+
+
         // GESTION PHYSIQUE CORDE
         currentNode.spring1.spring = spring;
         currentNode.spring2.spring = spring * 4;
@@ -148,9 +158,11 @@ public class CableCreator : MonoBehaviour
 
     private void ActualiseCable()
     {
+        ActualiseLienRenderer();
+        
         CalculateCableLength();
 
-        if (currentLength > nodesRope.Count * distanceBetweenNodes && nodesRope.Count < nbrMaxNodes)
+        if (currentLength > nodesRope.Count * distanceBetweenNodes * 2 && nodesRope.Count < nbrMaxNodes)
         {
             CreateNewNode();
         }
@@ -159,5 +171,31 @@ public class CableCreator : MonoBehaviour
         {
             DestroyNewNode();
         }
+    }
+
+    private void ActualiseLienRenderer()
+    {
+        // Actualisation de la position
+        _lineRenderer.positionCount = nodesRope.Count;
+
+        List<Vector3> posLineRenderer = ListePositionsNodes();
+        
+        _lineRenderer.SetPositions(posLineRenderer.ToArray());
+        
+        
+        // Actualisation de la couleur
+        _lineRenderer.material.color = Color.Lerp(cableOkay, cableNotokay, currentLength / maxLength);
+    }
+
+    private List<Vector3> ListePositionsNodes()
+    {
+        List<Vector3> posLineRenderer = new List<Vector3>();
+        
+        for (int k = 0; k < nodesRope.Count; k++)
+        {
+            posLineRenderer.Add(nodesRope[k].transform.position);
+        }
+
+        return posLineRenderer;
     }
 }
