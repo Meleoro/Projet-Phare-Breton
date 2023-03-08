@@ -69,6 +69,7 @@ public class CableCreator : MonoBehaviour
         CreateCable();
     }
 
+    
     private void CreateCable()
     {
         for(int k = 1; k < nodesRope.Count - 1; k++)
@@ -173,6 +174,7 @@ public class CableCreator : MonoBehaviour
         }
     }
 
+    
     private void ActualiseLienRenderer()
     {
         // Actualisation de la position
@@ -185,8 +187,14 @@ public class CableCreator : MonoBehaviour
         
         // Actualisation de la couleur
         _lineRenderer.material.color = Color.Lerp(cableOkay, cableNotokay, currentLength / maxLength);
+
+        if (currentLength > maxLength)
+        {
+            Destroy(gameObject);
+        }
     }
 
+    
     private List<Vector3> ListePositionsNodes()
     {
         List<Vector3> posLineRenderer = new List<Vector3>();
@@ -197,5 +205,11 @@ public class CableCreator : MonoBehaviour
         }
 
         return posLineRenderer;
+    }
+
+
+    public void ChangePosNode(GameObject newAnchor)
+    {
+        GetComponent<Cable>().endAnchor = newAnchor;   
     }
 }

@@ -9,6 +9,13 @@ public class ObjetInteractible : MonoBehaviour
     [SerializeField] Material selectedMaterial;
 
     private MeshRenderer mesh;
+    
+    public enum InteractiblesTypes {
+        generateur,
+        mecanisme
+    }
+
+    public InteractiblesTypes interactibleType;
 
 
     private void Start()
@@ -19,11 +26,11 @@ public class ObjetInteractible : MonoBehaviour
 
     public void Select()
     {
-        mesh.material = selectedMaterial;
+        //mesh.material = selectedMaterial;
     }
 
     public void Deselect()
     {
-        mesh.material = notSelectedMaterial;
+        //mesh.material = notSelectedMaterial;
     }
 }

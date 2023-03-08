@@ -3,13 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class CharacterFlute : MonoBehaviour
 {
     [HideInInspector] public List<GameObject> selectedObjects = new List<GameObject>();
     private bool doOnce;
+    private bool onZone;
+    private bool onVisee;
 
-    [Header("Rope")] public GameObject ropeObject;
+    [Header("Rope")] 
+    public GameObject ropeObject;
+    [HideInInspector] public bool hasRope;
+    [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
+    private List<GameObject> cables = new List<GameObject>();
     
     [Header("References")] 
     public GameObject zoneFlute;
@@ -29,12 +36,38 @@ public class CharacterFlute : MonoBehaviour
         // Choix du mode de visée
         if (direction == Vector2.zero)
         {
+            onZone = true;
+            
+            if (onVisee)
+            {
+                onVisee = false;
+                
+                for (int i = 0; i < selectedObjects.Count; i++)
+                {
+                    selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
+                    selectedObjects.RemoveAt(i);
+                }
+            }
+            
             modeVisée.SetActive(false);
             modeZone.SetActive(true);
         }
-        else
-        {
-            modeVisée.SetActive(true);
+        else 
+        { 
+            onVisee = true;
+            
+            if (onZone)
+            {
+                onZone = false;
+
+                for (int i = 0; i < selectedObjects.Count; i++)
+                {
+                    selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
+                    selectedObjects.RemoveAt(i);
+                }
+            }
+            
+            modeVisée.SetActive(true); 
             modeZone.SetActive(false);
         }
         
@@ -46,6 +79,7 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.transform.localRotation = Quaternion.LookRotation(
             new Vector3(direction.y, 0,
                 -direction.x), Vector3.up);
+        
     }
 
     
@@ -57,7 +91,7 @@ public class CharacterFlute : MonoBehaviour
 
         if (!doOnce)
         {
-            for (int i = 0; i < selectedObjects.Count; i++)
+            for (int i = selectedObjects.Count; i >= 0; i--)
             {
                 selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                 selectedObjects.RemoveAt(i);
@@ -88,9 +122,29 @@ public class CharacterFlute : MonoBehaviour
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
                 currentCableCreator.CreateNodes();
+                
+                cables.Add(newRope);
             }
 
             manager.lien = false;
+            manager.hasRope = true;
         }
     }
+
+    public void PlaceLien()
+    {
+        if (objectsAtRange.Count == 1)
+        {
+            for (int k = cables.Count - 1; k >= 0; k--)
+            {
+                cables[k].GetComponent<CableCreator>().ChangePosNode(objectsAtRange[0]);
+                cables.RemoveAt(k);
+            }
+        }
+
+        manager.hasRope = false;
+    }
+    
+    
+    
 }

@@ -187,11 +187,11 @@ MonoBehaviour:
   maxDistSpring: 0
   spring: 200
   damper: 10
-  maxLength: 20
+  maxLength: 30
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
-  cableOkay: {r: 0, g: 0.83468914, b: 1, a: 1}
+  cableOkay: {r: 0, g: 0.48307657, b: 1, a: 1}
   cableNotokay: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &9058123860006891802
 MonoBehaviour:
@@ -209,10 +209,6 @@ MonoBehaviour:
   endAnchor: {fileID: 0}
   originNode: {fileID: 3983425155078667346}
   endNode: {fileID: 3245475370029914171}
-  maxLength: 20
-  cableMaterial: {fileID: 2100000, guid: 375c036653b52e4489803f83eb02d7da, type: 2}
-  cableOkay: {r: 0, g: 0.8652291, b: 1, a: 1}
-  cableNotOkay: {r: 0.9716981, g: 0.12241893, b: 0, a: 1}
 --- !u!120 &6661636030175017580
 LineRenderer:
   serializedVersion: 2
