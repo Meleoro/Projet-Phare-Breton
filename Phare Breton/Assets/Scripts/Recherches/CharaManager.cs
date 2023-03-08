@@ -16,15 +16,19 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public Vector2 direction;
     [HideInInspector] public bool R2;
     [HideInInspector] public bool lien;
+    [HideInInspector] public bool interaction;
 
     [Header("Autres")] 
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
+    [HideInInspector] public bool hasRope;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        hasRope = false;
     }
     
     void Update()
@@ -39,7 +43,8 @@ public class CharaManager : MonoBehaviour
                     movementScript.RotateCharacter();
             }
 
-            if (R2)
+            
+            if (R2 && !hasRope)
             {
                 fluteScript.FluteActive(direction);
                 movementScript.RotateCharacter();
@@ -54,6 +59,12 @@ public class CharaManager : MonoBehaviour
             else
             {
                 fluteScript.FluteUnactive();
+            }
+
+            
+            if (interaction && hasRope)
+            {
+                fluteScript.PlaceLien();
             }
         }
     }
@@ -80,5 +91,14 @@ public class CharaManager : MonoBehaviour
     {
         if(context.started)
             lien = true;
+    }
+    
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if(context.started)
+            interaction = true;
+
+        if (context.canceled)
+            interaction = false;
     }
 }
