@@ -20,9 +20,6 @@ public class CharacterFlute : MonoBehaviour
     private List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
-    [Header("MoveObject")]
-    [SerializeField] private float hauteurObject;
-
     [Header("References")] 
     public GameObject zoneFlute;
     public GameObject modeVisée;

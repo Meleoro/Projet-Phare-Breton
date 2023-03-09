@@ -15,6 +15,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 velocity;
 
     [Header("MovementsObjets")]
+    [SerializeField] private float hauteurObject = 0.5f;
     [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
@@ -64,6 +65,16 @@ public class CharacterMovement : MonoBehaviour
             velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
             velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
             objects[k].velocity = transform.TransformDirection(velocityObject);
+
+            // Levitation de l'objet
+            if(objects[k].transform.position.y < transform.position.y + hauteurObject)
+            {
+                objects[k].AddForce(Vector3.up * Mathf.Lerp(3, 10, transform.position.y + hauteurObject - objects[k].transform.position.y), ForceMode.Force);
+            }
+            else
+            {
+                objects[k].AddForce(Vector3.up * Mathf.Lerp(5, 0.3f, -(transform.position.y + hauteurObject - objects[k].transform.position.y)), ForceMode.Force);
+            }
         }
     }
 }
