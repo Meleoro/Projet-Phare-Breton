@@ -14,6 +14,11 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxAcceleration = 10f;
     private Vector3 velocity;
 
+    [Header("MovementsObjets")]
+    [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
+    [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
+    private Vector3 velocityObject;
+
 
     private void Awake()
     {
@@ -42,5 +47,23 @@ public class CharacterMovement : MonoBehaviour
     public void RotateCharacter()
     {
         transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.eulerAngles.y, 0);
+    }
+
+
+    // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
+    public void MoveObjects(List<Rigidbody> objects, Vector2 direction)
+    {
+        for(int k = 0; k < objects.Count; k++)
+        {
+            Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
+
+            float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
+
+            // Acceleration de l'objet
+            velocityObject = transform.InverseTransformDirection(objects[k].velocity);
+            velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
+            velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
+            objects[k].velocity = transform.TransformDirection(velocityObject);
+        }
     }
 }

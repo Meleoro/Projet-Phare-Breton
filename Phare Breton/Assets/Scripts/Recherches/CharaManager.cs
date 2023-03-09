@@ -16,12 +16,15 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public Vector2 direction;
     [HideInInspector] public bool R2;
     [HideInInspector] public bool lien;
+    [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
 
     [Header("Autres")] 
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool hasRope;
+    [HideInInspector] public bool isMovingObjects;
+    [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
 
 
     void Start()
@@ -35,16 +38,22 @@ public class CharaManager : MonoBehaviour
     {
         if (!noControl)
         {
-            if (!noMovement)
+            // Partie déplacement player / objets
+            if (!noMovement && !isMovingObjects)
             {
                 movementScript.MoveCharacter(direction);
                 
                 if(direction == Vector2.zero)
                     movementScript.RotateCharacter();
             }
+            else if (isMovingObjects)
+            {
+                movementScript.MoveObjects(movedObjects, direction);
+            }
 
             
-            if (R2 && !hasRope)
+            // Partie flûte 
+            if (R2 && !hasRope && !isMovingObjects)
             {
                 fluteScript.FluteActive(direction);
                 movementScript.RotateCharacter();
@@ -54,6 +63,10 @@ public class CharaManager : MonoBehaviour
                 {
                     fluteScript.CreateLien();
                 }
+                else if (moveObject)
+                {
+                    fluteScript.MoveObject();
+                }
             }
             
             else
@@ -62,9 +75,14 @@ public class CharaManager : MonoBehaviour
             }
 
             
+            // Partie arrêt des pouvoirs
             if (interaction && hasRope)
             {
                 fluteScript.PlaceLien();
+            }
+            else if(interaction && isMovingObjects)
+            {
+                fluteScript.StopMoveObject();
             }
         }
     }
@@ -92,7 +110,13 @@ public class CharaManager : MonoBehaviour
         if(context.started)
             lien = true;
     }
-    
+
+    public void OnMoveObject(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            moveObject = true;
+    }
+
     public void OnInteraction(InputAction.CallbackContext context)
     {
         if(context.started)

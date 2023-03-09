@@ -7,6 +7,7 @@ using UnityEngine.Timeline;
 
 public class CharacterFlute : MonoBehaviour
 {
+    [Header("General")]
     [HideInInspector] public List<GameObject> selectedObjects = new List<GameObject>();
     private bool doOnce;
     private bool onZone;
@@ -18,7 +19,10 @@ public class CharacterFlute : MonoBehaviour
     [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
     private List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
-    
+
+    [Header("MoveObject")]
+    [SerializeField] private float hauteurObject;
+
     [Header("References")] 
     public GameObject zoneFlute;
     public GameObject modeVisée;
@@ -103,6 +107,7 @@ public class CharacterFlute : MonoBehaviour
     }
 
 
+
     // QUAND LE JOUEUR CREE UN CABLE AVEC SA FLUTE
     public void CreateLien()
     {
@@ -158,4 +163,24 @@ public class CharacterFlute : MonoBehaviour
     
     
     
+    // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
+    public void MoveObject()
+    {
+        manager.isMovingObjects = true;
+        manager.noMovement = true;
+
+        for (int k = 0; k < selectedObjects.Count; k++)
+        {
+            manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+        }
+    }
+
+    // QUAND LE JOUEUR ARRETE DE DEPLACER DES OBJETS
+    public void StopMoveObject()
+    {
+        manager.isMovingObjects = false;
+        manager.noMovement = false;
+
+        manager.movedObjects.Clear();
+    }
 }

@@ -62,6 +62,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Deplacement"",
+                    ""type"": ""Button"",
+                    ""id"": ""07b7f308-b9df-4674-b692-630d5fcc6c12"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""63d0bf45-e4e5-4c47-b696-4b00fbfead1b"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Deplacement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +228,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character_Flute = m_Character.FindAction("Flute", throwIfNotFound: true);
         m_Character_Lien = m_Character.FindAction("Lien", throwIfNotFound: true);
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
+        m_Character_Deplacement = m_Character.FindAction("Deplacement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Flute;
     private readonly InputAction m_Character_Lien;
     private readonly InputAction m_Character_Interaction;
+    private readonly InputAction m_Character_Deplacement;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
@@ -281,6 +303,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Flute => m_Wrapper.m_Character_Flute;
         public InputAction @Lien => m_Wrapper.m_Character_Lien;
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
+        public InputAction @Deplacement => m_Wrapper.m_Character_Deplacement;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +325,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
+            @Deplacement.started += instance.OnDeplacement;
+            @Deplacement.performed += instance.OnDeplacement;
+            @Deplacement.canceled += instance.OnDeplacement;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -318,6 +344,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
+            @Deplacement.started -= instance.OnDeplacement;
+            @Deplacement.performed -= instance.OnDeplacement;
+            @Deplacement.canceled -= instance.OnDeplacement;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -341,5 +370,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnFlute(InputAction.CallbackContext context);
         void OnLien(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnDeplacement(InputAction.CallbackContext context);
     }
 }
