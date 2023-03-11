@@ -7,6 +7,7 @@ public class ObjetInteractible : MonoBehaviour
 {
     [Header("General")]
     public bool isLighted;
+    public bool isClimbable;
     public List<GameObject> linkedObject = new List<GameObject>();
     public enum InteractiblesType {
         carton,
@@ -29,6 +30,8 @@ public class ObjetInteractible : MonoBehaviour
             Ampoule();
         }
     }
+
+
 
 
     // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ

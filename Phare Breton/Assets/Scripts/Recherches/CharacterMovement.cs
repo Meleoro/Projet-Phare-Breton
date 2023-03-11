@@ -77,4 +77,10 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+
+    // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
+    public void ClimbObject(GameObject climbedObject)
+    {
+        transform.position = climbedObject.transform.position + Vector3.up * 2;
+    }
 }
