@@ -54,7 +54,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Escalade
-            if(nearObjects.Count > 0 && interaction)
+            if(nearObjects.Count > 0 && interaction && !noMovement)
             {
                 movementScript.ClimbObject(nearObjects[0]);
             }

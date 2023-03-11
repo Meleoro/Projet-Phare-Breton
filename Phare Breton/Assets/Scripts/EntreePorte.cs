@@ -10,14 +10,14 @@ public class EntreePorte : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
         {
             // CHANGEMENTS POSITION
             if (numeroEntree == 1)
-                GetComponentInParent<Porte>().EnterDoor1();
+                GetComponentInParent<Porte>().EnterDoor1(collision.gameObject);
 
             else
-                GetComponentInParent<Porte>().EnterDoor2();
+                GetComponentInParent<Porte>().EnterDoor2(collision.gameObject);
 
 
             // CHANGEMENTS CAMERA

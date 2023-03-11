@@ -16,17 +16,17 @@ public class Porte : MonoBehaviour
     [SerializeField] Transform maxXZ;
 
 
-    public void EnterDoor1()
+    public void EnterDoor1(GameObject movedObject)
     {
-        ReferenceManager.Instance.characterReference.transform.position = charaPos2.position;
+        movedObject.transform.position = charaPos2.position;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
     }
 
-    public void EnterDoor2()
+    public void EnterDoor2(GameObject movedObject)
     {
-        ReferenceManager.Instance.characterReference.transform.position = charaPos1.position;
+        movedObject.transform.position = charaPos1.position;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;

@@ -165,11 +165,14 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.isMovingObjects = true;
         manager.noMovement = true;
+        manager.nearObjects.Clear();
 
         for (int k = 0; k < selectedObjects.Count; k++)
         {
             manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
         }
+
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
     }
 
     // QUAND LE JOUEUR ARRETE DE DEPLACER DES OBJETS
@@ -179,5 +182,7 @@ public class CharacterFlute : MonoBehaviour
         manager.noMovement = false;
 
         manager.movedObjects.Clear();
+
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
     }
 }

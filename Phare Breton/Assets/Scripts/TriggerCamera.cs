@@ -12,7 +12,7 @@ public class TriggerCamera : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Interactible"))
         {
             // Points qui vont permettre de determiner de quel côté arrive le joueur
             Vector3 posAvant = transform.position + transform.forward;
