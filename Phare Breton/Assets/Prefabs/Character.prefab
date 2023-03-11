@@ -450,6 +450,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: cf8e7732-b6fa-479e-8f1e-3c364a0a2a49
     m_ActionName: Character/Interaction[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8814216740821263158}
+        m_TargetAssemblyTypeName: CharaManager, Assembly-CSharp
+        m_MethodName: OnMoveObject
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 07b7f308-b9df-4674-b692-630d5fcc6c12
+    m_ActionName: Character/Deplacement[/XInputControllerWindows/buttonNorth]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Character
@@ -473,10 +489,14 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   R2: 0
   lien: 0
+  moveObject: 0
   interaction: 0
   noMovement: 0
   noControl: 0
   hasRope: 0
+  isMovingObjects: 0
+  movedObjects: []
+  nearObjects: []
 --- !u!114 &4042080586474578226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +511,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 6.5
   maxAcceleration: 30
+  hauteurObject: 1
+  maxSpeedObject: 10
+  maxAccelerationObject: 10
 --- !u!114 &1604713492887267752
 MonoBehaviour:
   m_ObjectHideFlags: 0
