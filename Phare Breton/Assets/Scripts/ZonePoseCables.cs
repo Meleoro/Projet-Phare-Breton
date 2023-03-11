@@ -9,7 +9,7 @@ public class ZonePoseCables : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactible"))
+        if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
@@ -20,7 +20,7 @@ public class ZonePoseCables : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactible"))
+        if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             

@@ -10,23 +10,29 @@ public class ZoneFlute : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactible"))
+        if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
-            
-            scriptFlute.selectedObjects.Add(other.gameObject);
-            _object.Select();
+            if (other.GetComponent<ObjetInteractible>().isLighted)
+            {
+                ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
+
+                scriptFlute.selectedObjects.Add(other.gameObject);
+                _object.Select();
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactible"))
+        if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
-            
-            scriptFlute.selectedObjects.Remove(other.gameObject);
-            _object.Deselect();
+            if (other.GetComponent<ObjetInteractible>().isLighted)
+            {
+                ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
+
+                scriptFlute.selectedObjects.Remove(other.gameObject);
+                _object.Deselect();
+            }
         }
     }
 }
