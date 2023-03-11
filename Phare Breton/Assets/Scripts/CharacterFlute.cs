@@ -16,7 +16,7 @@ public class CharacterFlute : MonoBehaviour
     [Header("Rope")] 
     public GameObject ropeObject;
     [HideInInspector] public bool hasRope;
-    [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
+    public List<GameObject> objectsAtRange = new List<GameObject>();
     private List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
