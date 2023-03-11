@@ -18,6 +18,9 @@ public class CameraMovements : MonoBehaviour
     public Transform startMinXZ;
     public Transform startMaxXZ;
 
+    [Header("Autres")]
+    private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
+    private Quaternion saveRotation;     
 
 
     private void Start()
@@ -103,5 +106,20 @@ public class CameraMovements : MonoBehaviour
     public void ExitRoom()
     {
         isStatic = true;
+    }
+
+
+    // QUAND ON COMMENCE A CONTROLER UN OBJET
+    public void SaveCamPos()
+    {
+        savePosition = transform.position;
+        saveRotation = transform.rotation;
+    }
+
+    // QUAND ON ARRETE DE CONTROLER UN OBJET
+    public void LoadCamPos()
+    {
+        transform.position = savePosition;
+        transform.rotation = saveRotation;
     }
 }
