@@ -18,6 +18,11 @@ public class Porte : MonoBehaviour
 
     public void EnterDoor1(GameObject movedObject)
     {
+        if (movedObject.CompareTag("Interactible"))
+        {
+            movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos2.position.y;
+        }
+        
         movedObject.transform.position = charaPos2.position;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
@@ -26,6 +31,11 @@ public class Porte : MonoBehaviour
 
     public void EnterDoor2(GameObject movedObject)
     {
+        if (movedObject.CompareTag("Interactible"))
+        {
+            movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
+        }
+        
         movedObject.transform.position = charaPos1.position;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;

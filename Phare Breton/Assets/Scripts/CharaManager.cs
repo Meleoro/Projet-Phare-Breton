@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +26,8 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool hasRope;
     [HideInInspector] public bool isMovingObjects;
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
-    public List<GameObject> nearObjects = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
+    [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
 
 
     void Start()
@@ -49,7 +51,7 @@ public class CharaManager : MonoBehaviour
             }
             else if (isMovingObjects)
             {
-                movementScript.MoveObjects(movedObjects, direction);
+                movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
             }
 
 

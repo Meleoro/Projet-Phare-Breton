@@ -157,11 +157,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 1
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 1
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &101002781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -282,11 +285,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 0
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &107337209
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -366,7 +372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107337207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.65, y: 26.03, z: 30.03}
+  m_LocalPosition: {x: -6.71, y: 32.73, z: 35.76}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -505,6 +511,7 @@ GameObject:
   - component: {fileID: 287775500}
   - component: {fileID: 287775499}
   - component: {fileID: 287775504}
+  - component: {fileID: 287775505}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Interactible
@@ -526,11 +533,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 1
   isClimbable: 1
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &287775500
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -644,6 +654,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!145 &287775505
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287775498}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.5, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Spring: 0
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &445735473
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,11 +853,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 0
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &873220319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -973,11 +1010,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 1
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 2
   ampouleActive: 0
   lightComponent: {fileID: 1017656530}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &1017656525
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1288,11 +1328,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 0
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &1358505367
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1626,11 +1669,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 0
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &1728421354
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1929,11 +1975,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLighted: 0
   isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
   linkedObject: []
   objectType: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
+  currentHauteur: 0
 --- !u!65 &2041552611
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2109,7 +2158,7 @@ PrefabInstance:
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.33
+      value: 3.07
       objectReference: {fileID: 0}
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
@@ -2119,7 +2168,7 @@ PrefabInstance:
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 31.74
+      value: 22.83
       objectReference: {fileID: 0}
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
@@ -2239,3 +2288,76 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
+--- !u!1001 &7227911240310762857
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 989861584667350396, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_Name
+      value: "SpotD\xE9placement"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 26.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 36.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9382215
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.34603524
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 40.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 5627516011866313904, guid: cd0481fb7cbcae047b6a4b24fc704147,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd0481fb7cbcae047b6a4b24fc704147, type: 3}
