@@ -186,7 +186,7 @@ public class CableCreator : MonoBehaviour
         
         
         // Actualisation de la couleur
-        _lineRenderer.material.color = Color.Lerp(cableOkay, cableNotokay, currentLength / maxLength);
+        _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
 
         if (currentLength > maxLength)
         {
