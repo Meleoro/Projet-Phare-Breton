@@ -151,7 +151,6 @@ public class CharacterFlute : MonoBehaviour
 
                 objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 2]
                     .GetComponent<Rigidbody>();
-                objectSpring.spring = 20;
 
                 currentCableCreator.springEnd = objectSpring;
                 currentCableCreator.rbEnd = objectsAtRange[0].GetComponent<Rigidbody>();
@@ -189,6 +188,8 @@ public class CharacterFlute : MonoBehaviour
         {
             manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
             manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+
+            manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
