@@ -176,16 +176,10 @@ public class CableCreator : MonoBehaviour
 
 
         // GESTION PHYSIQUE CORDE
-        if (isMoved)
-        {
-            currentNode.spring1.spring = spring;
-            currentNode.spring2.spring = spring;
-        }
-        else
-        {
-            currentNode.spring1.spring = spring;
-            currentNode.spring2.spring = spring;
-        }
+
+        currentNode.spring1.spring = spring;
+        currentNode.spring2.spring = spring * 2;
+        
             
         currentNode.spring1.damper = damper;
         currentNode.spring2.damper = damper;
