@@ -125,7 +125,8 @@ public class CharacterFlute : MonoBehaviour
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>());
+                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), selectedObjects[k].GetComponent<ObjetInteractible>(),
+                    selectedObjects[k].GetComponent<Rigidbody>(), gameObject.GetComponent<Rigidbody>());
                 
                 // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);

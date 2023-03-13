@@ -11,6 +11,9 @@ public class Porte : MonoBehaviour
     [SerializeField] Transform cameraPos1;
     [SerializeField] Transform cameraPos2;
 
+    [SerializeField] GameObject door1;
+    [SerializeField] GameObject door2;
+
     [Header("Limites Camera")]
     [SerializeField] Transform minXZ;
     [SerializeField] Transform maxXZ;
@@ -21,6 +24,13 @@ public class Porte : MonoBehaviour
         if (movedObject.CompareTag("Interactible"))
         {
             movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos2.position.y;
+
+            if (movedObject.GetComponent<ObjetInteractible>().isLinked)
+            {
+                ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
+
+                CableThroughDoor(currentObject.cable, movedObject, door1, door2);
+            }
         }
         
         movedObject.transform.position = charaPos2.position;
@@ -37,7 +47,9 @@ public class Porte : MonoBehaviour
 
             if (movedObject.GetComponent<ObjetInteractible>().isLinked)
             {
-                //CableThroughDoor();
+                ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
+
+                CableThroughDoor(currentObject.cable, movedObject, door2, door1);
             }
         }
         
@@ -58,16 +70,18 @@ public class Porte : MonoBehaviour
     }
 
 
-    public void CableThroughDoor(GameObject currentCable, GameObject currentObject,GameObject porte, GameObject startNewCable)
+    public void CableThroughDoor(GameObject currentCable, GameObject currentObject, GameObject endOldCable, GameObject startNewCable)
     {
         // Placement de l'ancien cable
         CableCreator currentScript = currentCable.GetComponent<CableCreator>();
         
-        currentScript.ChangeLastNode(porte, null, null);
+        currentScript.ChangeLastNode(endOldCable, null, null);
+
 
         // Recuperation des infos pour le nouveau cable
         float lenghtNewCable = currentScript.maxLength - currentScript.currentLength;
         int nbrNodesNewCable = (int) (currentScript.nbrMaxNodes * (currentScript.currentLength / currentScript.maxLength));
+
 
         // Creation du second cable
         GameObject newCable = Instantiate(
@@ -80,9 +94,10 @@ public class Porte : MonoBehaviour
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
         
-        newScriptCable.originAnchor = gameObject;    // A modifier
+        newScriptCable.originAnchor = startNewCable;    
         newScriptCable.endAnchor = currentObject;
         
-        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>());
+
+        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null, currentObject.GetComponent<Rigidbody>());
     }
 }

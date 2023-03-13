@@ -46,8 +46,9 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    public void CreateNodes(SpringJoint currentSpringOrigin, SpringJoint currentSpringEnd)
+    public void CreateNodes(SpringJoint currentSpringOrigin, SpringJoint currentSpringEnd, ObjetInteractible startObject, Rigidbody rigidbodyStart, Rigidbody rigidbodyEnd)
     {
+        // Calcule du nombre de nodes à générer (sert plus a rien mais je le laisse au cas où)
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
 
@@ -56,6 +57,8 @@ public class CableCreator : MonoBehaviour
         if (nbrNodes > nbrMaxNodes)
             nbrNodes = nbrMaxNodes;
         
+
+        // Creation de chaque node de la corde
         nodesRope.Add(origin);
         
         for (int k = 0; k < nbrNodes; k++)
@@ -69,19 +72,27 @@ public class CableCreator : MonoBehaviour
         
         nodesRope.Add(end);
 
-        
+
         // Attribution des springs exterieurs au cable (pour la resistance)
+
+        rbOrigin = rigidbodyStart;
+        rbEnd = rigidbodyEnd;
+
         springOrigin = currentSpringOrigin;
         springEnd = currentSpringEnd;
-
-        rbOrigin = currentSpringOrigin.gameObject.GetComponent<Rigidbody>();
-        rbEnd = currentSpringEnd.gameObject.GetComponent<Rigidbody>();
         
         if(springOrigin != null)
             springOrigin.connectedBody = nodesRope[2].GetComponent<Rigidbody>();
         
         if(springEnd != null)
             springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+
+        if(startObject != null)
+        {
+            startObject.isLinked = true;
+            startObject.cable = gameObject;
+            startObject.isStart = true;
+        }
 
 
         CreateCable();
@@ -225,11 +236,21 @@ public class CableCreator : MonoBehaviour
     }
 
 
+    // LORSQUE LE CABLE EST PLACÉ QUELQUE PART
     public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
         GetComponent<Cable>().endAnchor = newAnchor;
 
         rbEnd = newRb;
         springEnd = newSpring;
+
+        if (newAnchor.CompareTag("Interactible"))
+        {
+            ObjetInteractible currentObject = newAnchor.GetComponent<ObjetInteractible>();
+
+            currentObject.isLinked = true;
+            currentObject.isStart = false;
+            currentObject.cable = gameObject;
+        }
     }
 }
