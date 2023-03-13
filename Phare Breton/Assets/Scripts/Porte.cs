@@ -93,10 +93,14 @@ public class Porte : MonoBehaviour
 
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
-        
-        newScriptCable.originAnchor = startNewCable;    
-        newScriptCable.endAnchor = currentObject;
-        
+
+
+        newScriptCable.originAnchor = currentObject;
+        newScriptCable.endAnchor = gameObject;
+
+        newScriptCable.originOffset = currentObject.transform.position - newScriptCreator.ChooseSpotCable(gameObject, currentObject);
+        newScriptCable.endOffset = transform.position - newScriptCreator.ChooseSpotCable(currentObject, gameObject);
+
 
         newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null, currentObject.GetComponent<Rigidbody>());
     }

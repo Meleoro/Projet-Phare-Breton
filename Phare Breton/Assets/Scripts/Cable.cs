@@ -8,12 +8,15 @@ public class Cable : MonoBehaviour
     [HideInInspector] public GameObject originAnchor;
     [HideInInspector] public GameObject endAnchor;
 
+    [HideInInspector] public Vector3 originOffset;
+    [HideInInspector] public Vector3 endOffset;
+
     public Transform originNode;
     public Transform endNode;
 
     private void Update()
     {
-        originNode.position = originAnchor.transform.position;
-        endNode.position = endAnchor.transform.position;
+        originNode.position = originAnchor.transform.position + originOffset;
+        endNode.position = endAnchor.transform.position + endOffset;
     }
 }

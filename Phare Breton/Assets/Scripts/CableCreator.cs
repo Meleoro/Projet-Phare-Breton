@@ -268,6 +268,7 @@ public class CableCreator : MonoBehaviour
     // LORSQUE LE CABLE EST PLACÉ QUELQUE PART
     public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
+        GetComponent<Cable>().endOffset = ChooseSpotCable(GetComponent<Cable>().endAnchor, newAnchor) - newAnchor.transform.position;
         GetComponent<Cable>().endAnchor = newAnchor;
 
         isLinked = true;
@@ -287,6 +288,25 @@ public class CableCreator : MonoBehaviour
             currentObject.isLinked = true;
             currentObject.isStart = false;
             currentObject.cable = gameObject;
+        }
+    }
+
+
+    // LANCE UN RAYCAST POUR TROUVER LE MEILLEUR ENDROIT OU PLACER L'EXTREMITE DU CABLE
+    public Vector3 ChooseSpotCable(GameObject startObject, GameObject aimedObject)
+    {
+        Vector3 newDirection = aimedObject.transform.position - startObject.transform.position;
+        Vector3 startPos = aimedObject.transform.position - newDirection.normalized * 2;
+
+        RaycastHit raycastHit;
+
+        if (Physics.Raycast(startPos, newDirection.normalized, out raycastHit, 2))
+        {
+            return raycastHit.point;
+        }
+        else
+        {
+            return Vector3.zero;
         }
     }
 }

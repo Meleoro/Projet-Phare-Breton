@@ -118,8 +118,11 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[k].gameObject;
+                currentCable.originAnchor = selectedObjects[k];
                 currentCable.endAnchor = gameObject;
+
+                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[k]) - selectedObjects[k].transform.position;
+                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], gameObject) - transform.position;
 
                 currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
                 currentCableCreator.end.transform.position = gameObject.transform.position;
@@ -169,6 +172,24 @@ public class CharacterFlute : MonoBehaviour
         charaSpring.connectedBody = null;
         
         manager.hasRope = false;
+    }
+
+
+    private Vector3 ChooseSpotCable(GameObject aimedObject)
+    {
+        Vector3 newDirection = aimedObject.transform.position - transform.position;
+        Vector3 startPos = aimedObject.transform.position - newDirection * 2;
+
+        RaycastHit raycastHit;
+
+        if(Physics.Raycast(startPos, newDirection, out raycastHit, 1))
+        {
+            return raycastHit.point;
+        }
+        else
+        {
+            return Vector3.zero;
+        }
     }
     
     
