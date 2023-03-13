@@ -96,10 +96,10 @@ public class Porte : MonoBehaviour
 
 
         newScriptCable.originAnchor = currentObject;
-        newScriptCable.endAnchor = gameObject;
+        newScriptCable.endAnchor = startNewCable;
 
-        newScriptCable.originOffset = currentObject.transform.position - newScriptCreator.ChooseSpotCable(gameObject, currentObject);
-        newScriptCable.endOffset = transform.position - newScriptCreator.ChooseSpotCable(currentObject, gameObject);
+        newScriptCable.originOffset = newScriptCreator.ChooseSpotCable(startNewCable, currentObject) - currentObject.transform.position;
+        newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
 
         newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null, currentObject.GetComponent<Rigidbody>());

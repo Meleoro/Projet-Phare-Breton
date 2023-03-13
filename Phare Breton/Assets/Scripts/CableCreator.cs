@@ -236,10 +236,10 @@ public class CableCreator : MonoBehaviour
         if(currentLength > maxLength)
         {
             if (springOrigin != null)
-                springOrigin.spring = rbOrigin.mass * 100;
+                springOrigin.spring = rbOrigin.mass * multiplicateurResistance;
 
             if (springEnd != null)
-                springEnd.spring = rbEnd.mass * 100;
+                springEnd.spring = rbEnd.mass * multiplicateurResistance;
         }
         else
         {
