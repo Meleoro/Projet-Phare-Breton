@@ -74,11 +74,15 @@ public class Porte : MonoBehaviour
             ReferenceManager.Instance.characterReference.GetComponent<CharacterFlute>().ropeObject,
             startNewCable.transform.position, Quaternion.identity);
 
-        CableCreator newScript = newCable.GetComponent<CableCreator>();
+        CableCreator newScriptCreator = newCable.GetComponent<CableCreator>();
+        Cable newScriptCable = newCable.GetComponent<Cable>();
 
-        newScript.maxLength = lenghtNewCable;
-        newScript.nbrMaxNodes = nbrNodesNewCable;
+        newScriptCreator.maxLength = lenghtNewCable;
+        newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
         
-        newScript.CreateNodes(null, currentObject.GetComponent<SpringJoint>());
+        newScriptCable.originAnchor = gameObject;    // A modifier
+        newScriptCable.endAnchor = currentObject;
+        
+        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>());
     }
 }
