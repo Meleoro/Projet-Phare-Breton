@@ -11,11 +11,19 @@ public class CableCreator : MonoBehaviour
     [Header("Paramètres")] 
     [SerializeField] private int nbrMaxNodes;
     [SerializeField] private float distanceBetweenNodes;
-    [SerializeField] private float minDistSpring;
-    [SerializeField] private float maxDistSpring;
+    private float minDistSpring;
+    private float maxDistSpring;
     [SerializeField] private float spring;
     [SerializeField] private float damper;
     [SerializeField] private float maxLength;
+
+    [Header("ResistancePhysique")]
+    public float multiplicateurResistance;
+    private float currentResistance;
+    public SpringJoint springOrigin;
+    public SpringJoint springEnd;
+    public Rigidbody rbOrigin;
+    public Rigidbody rbEnd;
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
@@ -23,13 +31,9 @@ public class CableCreator : MonoBehaviour
     public GameObject end;
     private LineRenderer _lineRenderer;
 
-    private List<GameObject> nodesRope = new List<GameObject>();
+    public List<GameObject> nodesRope = new List<GameObject>();
     private float currentLength;
     private int nbrNodes;
-
-    [Header("CouleursCable")]
-    public Color cableOkay;
-    public Color cableNotokay;
 
 
     private void Start()
@@ -44,7 +48,7 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    public void CreateNodes(GameObject currentOrigin, GameObject currentEnd)
+    public void CreateNodes(SpringJoint currentSpringOrigin, SpringJoint currentSpringEnd)
     {
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
@@ -53,7 +57,7 @@ public class CableCreator : MonoBehaviour
 
         if (nbrNodes > nbrMaxNodes)
             nbrNodes = nbrMaxNodes;
-
+        
         nodesRope.Add(origin);
         
         for (int k = 0; k < nbrNodes; k++)
@@ -66,6 +70,21 @@ public class CableCreator : MonoBehaviour
         }
         
         nodesRope.Add(end);
+
+        
+        // Attribution des springs exterieurs au cable (pour la resistance)
+        springOrigin = currentSpringOrigin;
+        springEnd = currentSpringEnd;
+
+        rbOrigin = currentSpringOrigin.gameObject.GetComponent<Rigidbody>();
+        rbEnd = currentSpringEnd.gameObject.GetComponent<Rigidbody>();
+        
+        springOrigin.connectedBody = nodesRope[2].GetComponent<Rigidbody>();
+        springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+
+        springOrigin.spring = 20;
+        springEnd.spring = 20;
+        
         
         CreateCable();
     }
@@ -145,7 +164,7 @@ public class CableCreator : MonoBehaviour
 
         // GESTION PHYSIQUE CORDE
         currentNode.spring1.spring = spring;
-        currentNode.spring2.spring = spring * 4;
+        currentNode.spring2.spring = spring * 6;
             
         currentNode.spring1.damper = damper;
         currentNode.spring2.damper = damper;
@@ -169,10 +188,10 @@ public class CableCreator : MonoBehaviour
             CreateNewNode();
         }
         
-        else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes)
+        /*else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes)
         {
             DestroyNewNode();
-        }
+        }*/
     }
 
     
@@ -189,10 +208,13 @@ public class CableCreator : MonoBehaviour
         // Actualisation de la couleur
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
 
-        if (currentLength > maxLength)
-        {
-            Destroy(gameObject);
-        }
+
+        // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
+        springOrigin.spring = (multiplicateurResistance + (rbOrigin.mass / 1.5f)) 
+            * multiplicateurResistance * (currentLength / maxLength);
+        
+        springEnd.spring = (multiplicateurResistance + (rbEnd.mass / 1.5f)) 
+            * multiplicateurResistance * (currentLength / maxLength);
     }
 
     

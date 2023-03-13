@@ -370,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 107337207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.65, y: 26.03, z: 30.03}
+  m_LocalPosition: {x: -6.71, y: 32.73, z: 35.76}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -509,6 +509,7 @@ GameObject:
   - component: {fileID: 287775500}
   - component: {fileID: 287775499}
   - component: {fileID: 287775504}
+  - component: {fileID: 287775505}
   m_Layer: 0
   m_Name: Cube (6)
   m_TagString: Interactible
@@ -650,6 +651,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!145 &287775505
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287775498}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0.5, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Spring: 0
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &445735473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2206,6 +2231,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Carton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8058317706832649192, guid: 80e77516c8e3c02428956e2edea2ab29,
+        type: 3}
+      propertyPath: m_Spring
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

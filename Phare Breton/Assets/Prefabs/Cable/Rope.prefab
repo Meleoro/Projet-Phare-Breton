@@ -183,16 +183,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nbrMaxNodes: 40
   distanceBetweenNodes: 0.1
-  minDistSpring: 0
-  maxDistSpring: 0
   spring: 200
   damper: 10
   maxLength: 30
+  multiplicateurResistance: 5
+  springOrigin: {fileID: 0}
+  springEnd: {fileID: 0}
+  rbOrigin: {fileID: 0}
+  rbEnd: {fileID: 0}
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
-  cableOkay: {r: 0, g: 0.48307657, b: 1, a: 1}
-  cableNotokay: {r: 1, g: 0, b: 0, a: 1}
+  nodesRope: []
 --- !u!114 &9058123860006891802
 MonoBehaviour:
   m_ObjectHideFlags: 0

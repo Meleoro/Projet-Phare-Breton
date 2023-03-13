@@ -125,7 +125,7 @@ public class CharacterFlute : MonoBehaviour
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[k], gameObject);
+                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>());
                 
                 // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);
@@ -143,10 +143,21 @@ public class CharacterFlute : MonoBehaviour
     {
         if (objectsAtRange.Count == 1)
         {
+            SpringJoint objectSpring = objectsAtRange[0].GetComponent<SpringJoint>();
+            
             for (int k = cables.Count - 1; k >= 0; k--)
             {
+                CableCreator currentCableCreator = cables[k].GetComponent<CableCreator>();
+
+                objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 2]
+                    .GetComponent<Rigidbody>();
+                objectSpring.spring = 20;
+
+                currentCableCreator.springEnd = objectSpring;
+                currentCableCreator.rbEnd = objectsAtRange[0].GetComponent<Rigidbody>();
+                
                 // On relie les objets physiquement 
-                cables[k].GetComponent<CableCreator>().ChangePosNode(objectsAtRange[0]);
+                currentCableCreator.ChangePosNode(objectsAtRange[0]);
                 cables.RemoveAt(k);
 
                 // On informe les scripts de chaque objets qu'ils sont connectés 
@@ -155,6 +166,11 @@ public class CharacterFlute : MonoBehaviour
             }
         }
 
+        SpringJoint charaSpring = GetComponent<SpringJoint>();
+        
+        charaSpring.spring = 0;
+        charaSpring.connectedBody = null;
+        
         manager.hasRope = false;
     }
     
