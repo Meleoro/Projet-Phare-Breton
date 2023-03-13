@@ -8,6 +8,8 @@ public class ObjetInteractible : MonoBehaviour
     [Header("General")]
     public bool isLighted;
     public bool isClimbable;
+    [HideInInspector] public bool isMagneted;
+    [HideInInspector] public Transform magnetedPos;
     public List<GameObject> linkedObject = new List<GameObject>();
     public enum InteractiblesType {
         carton,
@@ -36,6 +38,12 @@ public class ObjetInteractible : MonoBehaviour
     }
 
 
+    public void Magnet(Transform magnetPos)
+    {
+        magnetedPos = magnetPos;
+        isMagneted = true;
+    }
+    
     public void Select()
     {
 
@@ -48,7 +56,7 @@ public class ObjetInteractible : MonoBehaviour
 
     
     
-    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
+    // VERIFIE QUEL TYPE D'OBJET EST CONNECTï¿½
     private void VerifyLinkedObject()
     {
         if (linkedObject != null)

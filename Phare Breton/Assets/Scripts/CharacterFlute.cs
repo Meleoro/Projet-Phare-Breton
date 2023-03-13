@@ -172,6 +172,7 @@ public class CharacterFlute : MonoBehaviour
         for (int k = 0; k < selectedObjects.Count; k++)
         {
             manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+            manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
@@ -184,6 +185,7 @@ public class CharacterFlute : MonoBehaviour
         manager.noMovement = false;
 
         manager.movedObjects.Clear();
+        manager.scriptsMovedObjects.Clear();
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
     }
