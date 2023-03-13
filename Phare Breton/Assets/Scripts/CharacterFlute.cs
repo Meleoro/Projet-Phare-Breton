@@ -152,11 +152,8 @@ public class CharacterFlute : MonoBehaviour
                 objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 2]
                     .GetComponent<Rigidbody>();
 
-                currentCableCreator.springEnd = objectSpring;
-                currentCableCreator.rbEnd = objectsAtRange[0].GetComponent<Rigidbody>();
-                
                 // On relie les objets physiquement 
-                currentCableCreator.ChangePosNode(objectsAtRange[0]);
+                currentCableCreator.ChangeLastNode(objectsAtRange[0], objectsAtRange[0].GetComponent<Rigidbody>(), objectsAtRange[0].GetComponent<SpringJoint>());
                 cables.RemoveAt(k);
 
                 // On informe les scripts de chaque objets qu'ils sont connectés 

@@ -10,13 +10,17 @@ public class ObjetInteractible : MonoBehaviour
     public bool isClimbable;
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public Transform magnetedPos;
-    public List<GameObject> linkedObject = new List<GameObject>();
     public enum InteractiblesType {
         carton,
         panneauElectrique,
         ampoule
     }
     public InteractiblesType objectType;
+    
+    [Header("Link")]
+    public bool isLinked;
+    public List<GameObject> linkedObject = new List<GameObject>();
+    public GameObject cable;
 
     [Header("Ampoule")]
     [SerializeField] private bool ampouleActive;
