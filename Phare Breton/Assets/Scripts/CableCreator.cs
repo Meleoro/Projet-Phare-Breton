@@ -167,9 +167,12 @@ public class CableCreator : MonoBehaviour
         currentNode.spring2.anchor = Vector3.zero;
 
         Vector3 direction = nodesRope[index + 1].transform.position - currentNode.transform.position;
-        
+
+        /*currentNode.spring1.anchor = Vector3.zero;
+        currentNode.spring2.anchor = -direction.normalized * 0.1f;*/
+
         currentNode.spring1.connectedAnchor = Vector3.zero;
-        currentNode.spring2.connectedAnchor = direction.normalized * 0.6f;
+        currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
 
 
         // GESTION PHYSIQUE CORDE
