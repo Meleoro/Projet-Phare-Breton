@@ -14,59 +14,25 @@ public class ObjetInteractible : MonoBehaviour
         panneauElectrique,
         ampoule
     }
-    public InteractiblesType interactibleType;
+    public InteractiblesType objectType;
 
     [Header("Ampoule")]
     [SerializeField] private bool ampouleActive;
     [SerializeField] private Light lightComponent;
+    [SerializeField] private SphereCollider lightArea;
 
 
     private void Update()
     {
         VerifyLinkedObject();
 
-        if (ampouleActive)
+        if(objectType == InteractiblesType.ampoule)
         {
-            Ampoule();
-        }
-    }
-
-
-
-
-    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
-    private void VerifyLinkedObject()
-    {
-        if(linkedObject != null)
-        {
-            switch (interactibleType)
+            if (ampouleActive)
             {
-                case InteractiblesType.carton:
-                    break;
-
-
-                case InteractiblesType.ampoule:
-
-                    ampouleActive = false;
-
-                    for (int k = 0; k < linkedObject.Count; k++)
-                    {
-                        if (linkedObject[k].GetComponent<ObjetInteractible>().interactibleType == InteractiblesType.panneauElectrique)
-                        {
-                            ampouleActive = true;
-                        }
-                    }
-
-                    break;
+                ActivateAmpoule();
             }
         }
-    }
-
-
-    // COMPORTEMENT DE L'OBJET SI IL EST UNE AMPOULE
-    private void Ampoule()
-    {
-        lightComponent.enabled = true;
     }
 
 
@@ -79,4 +45,59 @@ public class ObjetInteractible : MonoBehaviour
     {
 
     }
+
+    
+    
+    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
+    private void VerifyLinkedObject()
+    {
+        if (linkedObject != null)
+        {
+            switch (objectType)
+            {
+                case InteractiblesType.carton:
+                    break;
+
+
+                case InteractiblesType.ampoule:
+
+                    ampouleActive = false;
+
+                    for (int k = 0; k < linkedObject.Count; k++)
+                    {
+                        if (linkedObject[k].GetComponent<ObjetInteractible>().objectType == InteractiblesType.panneauElectrique)
+                        {
+                            ampouleActive = true;
+                        }
+                    }
+
+                    break;
+            }
+        }
+    }
+
+
+    // COMPORTEMENT DE L'OBJET SI IL EST UNE AMPOULE
+    private void ActivateAmpoule()
+    {
+        lightComponent.enabled = true;
+        lightArea.enabled = true;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactible") && !other.isTrigger)
+        {
+            other.GetComponent<ObjetInteractible>().isLighted = true;
+        }
+    }
+
+    /*private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interactible") && !other.isTrigger)
+        {
+            other.GetComponent<ObjetInteractible>().isLighted = false;
+        }
+    }*/
 }

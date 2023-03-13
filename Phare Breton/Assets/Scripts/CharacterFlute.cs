@@ -16,7 +16,7 @@ public class CharacterFlute : MonoBehaviour
     [Header("Rope")] 
     public GameObject ropeObject;
     [HideInInspector] public bool hasRope;
-    [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
+    public List<GameObject> objectsAtRange = new List<GameObject>();
     private List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
@@ -163,6 +163,8 @@ public class CharacterFlute : MonoBehaviour
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
     public void MoveObject()
     {
+        zoneFlute.SetActive(false);
+    
         manager.isMovingObjects = true;
         manager.noMovement = true;
         manager.nearObjects.Clear();

@@ -69,7 +69,7 @@ public class CharacterMovement : MonoBehaviour
             // Levitation de l'objet
             if(objects[k].transform.position.y < transform.position.y + hauteurObject)
             {
-                objects[k].AddForce(Vector3.up * 8, ForceMode.Force);
+                objects[k].AddForce(Vector3.up * 2, ForceMode.Acceleration);
             }
             else
             {

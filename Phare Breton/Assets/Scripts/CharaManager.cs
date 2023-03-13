@@ -25,7 +25,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool hasRope;
     [HideInInspector] public bool isMovingObjects;
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
-    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
+    public List<GameObject> nearObjects = new List<GameObject>();
 
 
     void Start()
@@ -54,7 +54,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Escalade
-            if(nearObjects.Count > 0 && interaction && !noMovement)
+            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope)
             {
                 movementScript.ClimbObject(nearObjects[0]);
             }
@@ -117,12 +117,18 @@ public class CharaManager : MonoBehaviour
     {
         if(context.started)
             lien = true;
+        
+        if (context.canceled)
+            lien = false;
     }
 
     public void OnMoveObject(InputAction.CallbackContext context)
     {
         if (context.started)
             moveObject = true;
+        
+        if (context.canceled)
+            moveObject = false;
     }
 
     public void OnInteraction(InputAction.CallbackContext context)
@@ -139,7 +145,7 @@ public class CharaManager : MonoBehaviour
     //------------------------------------------------------------------------------------
     // PARTIE DETECTION INTERACTIBLES
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible"))
         {
@@ -155,5 +161,5 @@ public class CharaManager : MonoBehaviour
             if (other.GetComponent<ObjetInteractible>().isClimbable)
                 nearObjects.Remove(other.gameObject);
         }
-    }
+    }*/
 }
