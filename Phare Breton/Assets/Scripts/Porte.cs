@@ -34,10 +34,15 @@ public class Porte : MonoBehaviour
         if (movedObject.CompareTag("Interactible"))
         {
             movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
+
+            if (movedObject.GetComponent<ObjetInteractible>().isLinked)
+            {
+                //CableThroughDoor();
+            }
         }
         
         movedObject.transform.position = charaPos1.position;
-
+        
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
     }
@@ -50,5 +55,34 @@ public class Porte : MonoBehaviour
     public void GoOutside()
     {
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ExitRoom();
+    }
+
+
+    public void CableThroughDoor(GameObject currentCable, GameObject currentObject,GameObject porte, GameObject startNewCable)
+    {
+        // Placement de l'ancien cable
+        CableCreator currentScript = currentCable.GetComponent<CableCreator>();
+        
+        currentScript.ChangeLastNode(porte, null, null);
+
+        // Recuperation des infos pour le nouveau cable
+        float lenghtNewCable = currentScript.maxLength - currentScript.currentLength;
+        int nbrNodesNewCable = (int) (currentScript.nbrMaxNodes * (currentScript.currentLength / currentScript.maxLength));
+
+        // Creation du second cable
+        GameObject newCable = Instantiate(
+            ReferenceManager.Instance.characterReference.GetComponent<CharacterFlute>().ropeObject,
+            startNewCable.transform.position, Quaternion.identity);
+
+        CableCreator newScriptCreator = newCable.GetComponent<CableCreator>();
+        Cable newScriptCable = newCable.GetComponent<Cable>();
+
+        newScriptCreator.maxLength = lenghtNewCable;
+        newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
+        
+        newScriptCable.originAnchor = gameObject;    // A modifier
+        newScriptCable.endAnchor = currentObject;
+        
+        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>());
     }
 }

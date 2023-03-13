@@ -9,13 +9,11 @@ using UnityEngine;
 public class CableCreator : MonoBehaviour
 {
     [Header("Paramètres")] 
-    [SerializeField] private int nbrMaxNodes;
+    public int nbrMaxNodes;
     [SerializeField] private float distanceBetweenNodes;
-    private float minDistSpring;
-    private float maxDistSpring;
     [SerializeField] private float spring;
     [SerializeField] private float damper;
-    [SerializeField] private float maxLength;
+    public float maxLength;
 
     [Header("ResistancePhysique")]
     public float multiplicateurResistance;
@@ -32,7 +30,7 @@ public class CableCreator : MonoBehaviour
     private LineRenderer _lineRenderer;
 
     public List<GameObject> nodesRope = new List<GameObject>();
-    private float currentLength;
+    [HideInInspector] public float currentLength;
     private int nbrNodes;
 
 
@@ -79,13 +77,13 @@ public class CableCreator : MonoBehaviour
         rbOrigin = currentSpringOrigin.gameObject.GetComponent<Rigidbody>();
         rbEnd = currentSpringEnd.gameObject.GetComponent<Rigidbody>();
         
-        springOrigin.connectedBody = nodesRope[2].GetComponent<Rigidbody>();
-        springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        if(springOrigin != null)
+            springOrigin.connectedBody = nodesRope[2].GetComponent<Rigidbody>();
+        
+        if(springEnd != null)
+            springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
 
-        springOrigin.spring = 20;
-        springEnd.spring = 20;
-        
-        
+
         CreateCable();
     }
 
@@ -98,7 +96,7 @@ public class CableCreator : MonoBehaviour
         }
     }
 
-    
+
     private void CalculateCableLength()
     {
         currentLength = 0f;
@@ -168,12 +166,6 @@ public class CableCreator : MonoBehaviour
             
         currentNode.spring1.damper = damper;
         currentNode.spring2.damper = damper;
-            
-        currentNode.spring1.minDistance = minDistSpring;
-        currentNode.spring2.minDistance = minDistSpring;
-        
-        currentNode.spring1.maxDistance = maxDistSpring;
-        currentNode.spring2.maxDistance = maxDistSpring;
     }
 
 
@@ -210,14 +202,16 @@ public class CableCreator : MonoBehaviour
 
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        springOrigin.spring = (multiplicateurResistance + (rbOrigin.mass / 1.5f)) 
-            * multiplicateurResistance * (currentLength / maxLength);
+        if(springOrigin != null) 
+            springOrigin.spring = (multiplicateurResistance + (rbOrigin.mass / 1.5f)) 
+                                                       * multiplicateurResistance * (currentLength / maxLength);
         
-        springEnd.spring = (multiplicateurResistance + (rbEnd.mass / 1.5f)) 
-            * multiplicateurResistance * (currentLength / maxLength);
+        if(springEnd != null)
+            springEnd.spring = (multiplicateurResistance + (rbEnd.mass / 1.5f)) 
+                                                        * multiplicateurResistance * (currentLength / maxLength);
     }
 
-    
+
     private List<Vector3> ListePositionsNodes()
     {
         List<Vector3> posLineRenderer = new List<Vector3>();
@@ -231,8 +225,11 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    public void ChangePosNode(GameObject newAnchor)
+    public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
-        GetComponent<Cable>().endAnchor = newAnchor;   
+        GetComponent<Cable>().endAnchor = newAnchor;
+
+        rbEnd = newRb;
+        springEnd = newSpring;
     }
 }
