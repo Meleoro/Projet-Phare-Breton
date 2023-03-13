@@ -163,6 +163,8 @@ public class CharacterFlute : MonoBehaviour
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
     public void MoveObject()
     {
+        zoneFlute.SetActive(false);
+    
         manager.isMovingObjects = true;
         manager.noMovement = true;
         manager.nearObjects.Clear();

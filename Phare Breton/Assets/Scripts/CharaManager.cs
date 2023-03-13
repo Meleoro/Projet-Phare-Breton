@@ -117,12 +117,18 @@ public class CharaManager : MonoBehaviour
     {
         if(context.started)
             lien = true;
+        
+        if (context.canceled)
+            lien = false;
     }
 
     public void OnMoveObject(InputAction.CallbackContext context)
     {
         if (context.started)
             moveObject = true;
+        
+        if (context.canceled)
+            moveObject = false;
     }
 
     public void OnInteraction(InputAction.CallbackContext context)
