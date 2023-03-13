@@ -52,7 +52,7 @@ public class CharacterMovement : MonoBehaviour
 
 
     // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
-    public void MoveObjects(List<Rigidbody> objects, Vector2 direction)
+    public void MoveObjects(List<Rigidbody> objects, List<ObjetInteractible> scripts, Vector2 direction)
     {
         for(int k = 0; k < objects.Count; k++)
         {
@@ -65,11 +65,19 @@ public class CharacterMovement : MonoBehaviour
             velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
             velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
             objects[k].velocity = transform.TransformDirection(velocityObject);
+            
+            // Magnet
+            if (scripts[k].isMagneted)
+            {
+                objects[k].transform.rotation = scripts[k].magnetedPos.rotation;
+                objects[k].AddForce(new Vector3(Mathf.Clamp(scripts[k].magnetedPos.position.x - objects[k].transform.position.x, -1, 1), 0, 
+                    Mathf.Clamp(scripts[k].magnetedPos.position.z - objects[k].transform.position.z, -1, 1)) * 4, ForceMode.Acceleration);
+            }
 
             // Levitation de l'objet
             if(objects[k].transform.position.y < transform.position.y + hauteurObject)
             {
-                objects[k].AddForce(Vector3.up * 8, ForceMode.Force);
+                objects[k].AddForce(Vector3.up * 10, ForceMode.Acceleration);
             }
             else
             {
