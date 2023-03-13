@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class CableCreator : MonoBehaviour
@@ -43,7 +44,7 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    public void CreateNodes()
+    public void CreateNodes(GameObject currentOrigin, GameObject currentEnd)
     {
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
