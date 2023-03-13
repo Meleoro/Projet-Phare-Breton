@@ -15,7 +15,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 velocity;
 
     [Header("MovementsObjets")]
-    [SerializeField] private float hauteurObject = 0.5f;
+    public float hauteurObject = 0.5f;
     [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
@@ -75,13 +75,13 @@ public class CharacterMovement : MonoBehaviour
             }
 
             // Levitation de l'objet
-            if(objects[k].transform.position.y < transform.position.y + hauteurObject)
+            if(objects[k].transform.position.y < scripts[k].currentHauteur)
             {
                 objects[k].AddForce(Vector3.up * 10, ForceMode.Acceleration);
             }
             else
             {
-                objects[k].transform.position = new Vector3(objects[k].transform.position.x, transform.position.y + hauteurObject, objects[k].transform.position.z);
+                objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
             }
         }
     }

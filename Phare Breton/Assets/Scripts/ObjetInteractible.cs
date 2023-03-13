@@ -23,6 +23,9 @@ public class ObjetInteractible : MonoBehaviour
     [SerializeField] private Light lightComponent;
     [SerializeField] private SphereCollider lightArea;
 
+    [Header("MoveObject")] 
+    [HideInInspector] public float currentHauteur;
+
 
     private void Update()
     {
