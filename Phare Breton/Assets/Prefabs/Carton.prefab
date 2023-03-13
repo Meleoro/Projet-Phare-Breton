@@ -35,7 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5165892494062510040
 MeshFilter:
@@ -124,8 +124,11 @@ MonoBehaviour:
   isClimbable: 1
   isMagneted: 0
   magnetedPos: {fileID: 0}
-  linkedObject: []
   objectType: 0
+  isLinked: 0
+  linkedObject: []
+  cable: {fileID: 0}
+  isStart: 0
   ampouleActive: 0
   lightComponent: {fileID: 0}
   lightArea: {fileID: 0}
@@ -166,7 +169,7 @@ SpringJoint:
   m_GameObject: {fileID: 4956059847939301575}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.5, z: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2

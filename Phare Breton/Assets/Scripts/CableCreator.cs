@@ -103,7 +103,7 @@ public class CableCreator : MonoBehaviour
     {
         for(int k = 1; k < nodesRope.Count - 1; k++)
         {
-            CreateLienBetweenNodes(k);
+            CreateLienBetweenNodes(k, false);
         }
     }
 
@@ -135,8 +135,8 @@ public class CableCreator : MonoBehaviour
         
         
         // Création du lien avec les nodes adjacentes
-        CreateLienBetweenNodes(nodesRope.Count - 2);
-        CreateLienBetweenNodes(nodesRope.Count - 3);
+        CreateLienBetweenNodes(nodesRope.Count - 2, false);
+        CreateLienBetweenNodes(nodesRope.Count - 3, false);
     }
     
     
@@ -149,7 +149,7 @@ public class CableCreator : MonoBehaviour
     }
 
     
-    private void CreateLienBetweenNodes(int index)
+    private void CreateLienBetweenNodes(int index, bool isMoved)
     {
         NodeCable currentNode = nodesRope[index].GetComponent<NodeCable>();
 
@@ -172,8 +172,16 @@ public class CableCreator : MonoBehaviour
 
 
         // GESTION PHYSIQUE CORDE
-        currentNode.spring1.spring = spring;
-        currentNode.spring2.spring = spring * 6;
+        if (isMoved)
+        {
+            currentNode.spring1.spring = spring;
+            currentNode.spring2.spring = spring * 6;
+        }
+        else
+        {
+            currentNode.spring1.spring = spring;
+            currentNode.spring2.spring = spring;
+        }
             
         currentNode.spring1.damper = damper;
         currentNode.spring2.damper = damper;
