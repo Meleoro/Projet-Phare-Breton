@@ -62,7 +62,7 @@ public class CableCreator : MonoBehaviour
         // Creation de chaque node de la corde
         nodesRope.Add(origin);
         
-        for (int k = 0; k < nbrNodes; k++)
+        for (int k = 1; k < nbrNodes + 1; k++)
         {
             Vector3 posNewNode =
                 origin.transform.position + (directionStartEnd.normalized * (distanceStartEnd / nbrNodes)) * k;
@@ -232,8 +232,19 @@ public class CableCreator : MonoBehaviour
 
         if(currentLength > maxLength)
         {
-            springOrigin.spring = rbOrigin.mass * 100;
-            springEnd.spring = rbEnd.mass * 100;
+            if (springOrigin != null)
+                springOrigin.spring = rbOrigin.mass * 100;
+
+            if (springEnd != null)
+                springEnd.spring = rbEnd.mass * 100;
+        }
+        else
+        {
+            if (springOrigin != null)
+                springOrigin.spring = 0;
+
+            if (springEnd != null)
+                springEnd.spring = 0;
         }
     }
 
