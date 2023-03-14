@@ -64,7 +64,7 @@ public class ObjetInteractible : MonoBehaviour
 
     
     
-    // VERIFIE QUEL TYPE D'OBJET EST CONNECT�
+    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
     private void VerifyLinkedObject()
     {
         if (linkedObject != null)

@@ -75,7 +75,11 @@ public class Porte : MonoBehaviour
         // Placement de l'ancien cable
         CableCreator currentScript = currentCable.GetComponent<CableCreator>();
         
-        currentScript.ChangeLastNode(endOldCable, null, null);
+        if(currentObject.GetComponent<ObjetInteractible>().isStart)
+            currentScript.ChangeFirstNode(endOldCable, null, null);
+        
+        else 
+            currentScript.ChangeLastNode(endOldCable, null, null);
 
 
         // Recuperation des infos pour le nouveau cable
