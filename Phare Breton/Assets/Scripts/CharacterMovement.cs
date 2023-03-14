@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
     [SerializeField, Range(0f, 100f)] float maxAcceleration = 10f;
     private Vector3 velocity;
+    [HideInInspector] public bool doOnce;
 
     [Header("MovementsObjets")]
     public float hauteurObject = 0.5f;
@@ -47,7 +48,10 @@ public class CharacterMovement : MonoBehaviour
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
     public void RotateCharacter()
     {
-        transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.eulerAngles.y, 0);
+        transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
+        
+        ReferenceManager.Instance.cameraRotationReference.transform.rotation = 
+            Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.eulerAngles.y, 0);
     }
 
 

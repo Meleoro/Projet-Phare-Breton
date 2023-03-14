@@ -33,10 +33,25 @@ public class Porte : MonoBehaviour
             }
         }
         
+        if (movedObject.CompareTag("Player"))
+        {
+            if (movedObject.GetComponent<CharaManager>().hasRope)
+            {
+                CharacterFlute currentObject = movedObject.GetComponent<CharacterFlute>();
+
+                for (int k = currentObject.cables.Count - 1; k >= 0; k--)
+                {
+                    CableThroughDoor(currentObject.cables[k], movedObject, door1, door2);
+                }
+            }
+        }
+        
         movedObject.transform.position = charaPos2.position;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
+        
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRoationCamRef();
     }
 
     
@@ -71,6 +86,8 @@ public class Porte : MonoBehaviour
         
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
+        
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRoationCamRef();
     }
 
     
@@ -97,9 +114,7 @@ public class Porte : MonoBehaviour
         
             else 
                 currentScript.ChangeLastNode(endOldCable, null, null);
-
         }
-
         else
         {
             currentScript.ChangeLastNode(endOldCable, null, null);

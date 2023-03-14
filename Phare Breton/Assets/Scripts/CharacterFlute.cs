@@ -174,25 +174,7 @@ public class CharacterFlute : MonoBehaviour
     }
 
 
-    private Vector3 ChooseSpotCable(GameObject aimedObject)
-    {
-        Vector3 newDirection = aimedObject.transform.position - transform.position;
-        Vector3 startPos = aimedObject.transform.position - newDirection * 2;
 
-        RaycastHit raycastHit;
-
-        if(Physics.Raycast(startPos, newDirection, out raycastHit, 1))
-        {
-            return raycastHit.point;
-        }
-        else
-        {
-            return Vector3.zero;
-        }
-    }
-    
-    
-    
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
     public void MoveObject()
     {

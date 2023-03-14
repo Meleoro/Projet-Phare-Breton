@@ -40,13 +40,13 @@ public class CameraMovements : MonoBehaviour
         {
             isStatic = true;
         }
+        
+        ActualiseRoationCamRef();
     }
 
 
     private void Update()
     {
-        ActualiseRoationCamRef();
-        
         if (!isStatic)
         {
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
@@ -95,9 +95,10 @@ public class CameraMovements : MonoBehaviour
     }
 
 
+    // PERMET DE REORIENTER L'OBJET QUI NOUS SERT DE REFERENCE POUR L'ORIENTATION DES CONTROLES
     public void ActualiseRoationCamRef()
     {
-        rotationCamRef.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        rotationCamRef.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
 
