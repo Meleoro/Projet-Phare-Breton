@@ -38,10 +38,10 @@ public class CharacterMovement : MonoBehaviour
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         
         // Acceleration du personnage
-        velocity = transform.InverseTransformDirection(manager.rb.velocity);
+        velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-        manager.rb.velocity = transform.TransformDirection(velocity);
+        manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
     }
 
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
@@ -61,10 +61,10 @@ public class CharacterMovement : MonoBehaviour
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
             // Acceleration de l'objet
-            velocityObject = transform.InverseTransformDirection(objects[k].velocity);
+            velocityObject = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(objects[k].velocity);
             velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
             velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
-            objects[k].velocity = transform.TransformDirection(velocityObject);
+            objects[k].velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocityObject);
             
             // Magnet
             if (scripts[k].isMagneted)
