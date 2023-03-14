@@ -28,8 +28,19 @@ public class ObjetInteractible : MonoBehaviour
     [SerializeField] private Light lightComponent;
     [SerializeField] private SphereCollider lightArea;
 
-    [Header("MoveObject")] 
+    [Header("MoveObject")]
+    [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+
+    [Header("Références")]
+    private Rigidbody rb;
+
+
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
 
     private void Update()
@@ -43,14 +54,37 @@ public class ObjetInteractible : MonoBehaviour
                 ActivateAmpoule();
             }
         }
+
+        if (isMagneted)
+        {
+            MagnetEffect();
+        }
     }
 
 
-    public void Magnet(Transform magnetPos)
+
+    public void ActivateMagnet(Transform magnetPos)
     {
         magnetedPos = magnetPos;
         isMagneted = true;
     }
+
+    public void MagnetEffect()
+    {
+        transform.rotation = magnetedPos.rotation;
+
+        if (isLinked)
+        {
+            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
+                ForceMode.Acceleration);
+        }
+        else
+        {
+            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
+                ForceMode.Acceleration);
+        }
+    }
+
     
     public void Select()
     {

@@ -178,7 +178,7 @@ public class CableCreator : MonoBehaviour
         // GESTION PHYSIQUE CORDE
 
         currentNode.spring1.spring = spring;
-        currentNode.spring2.spring = spring * 2;
+        currentNode.spring2.spring = spring * 5;
         
             
         currentNode.spring1.damper = damper;

@@ -71,12 +71,12 @@ public class CharacterMovement : MonoBehaviour
             objects[k].velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocityObject);
             
             // Magnet
-            if (scripts[k].isMagneted)
+            /*if (scripts[k].isMagneted)
             {
                 objects[k].transform.rotation = scripts[k].magnetedPos.rotation;
-                objects[k].AddForce(new Vector3(Mathf.Clamp(scripts[k].magnetedPos.position.x - objects[k].transform.position.x, -1, 1), 0, 
-                    Mathf.Clamp(scripts[k].magnetedPos.position.z - objects[k].transform.position.z, -1, 1)) * 4, ForceMode.Acceleration);
-            }
+                objects[k].AddForce(new Vector3(scripts[k].magnetedPos.position.x - objects[k].transform.position.x, 0, 
+                    scripts[k].magnetedPos.position.z - objects[k].transform.position.z).normalized * 0.5f, ForceMode.Acceleration);
+            }*/
 
             // Levitation de l'objet
             if(objects[k].transform.position.y < scripts[k].currentHauteur)
