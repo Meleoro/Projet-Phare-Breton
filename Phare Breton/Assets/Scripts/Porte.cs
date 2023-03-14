@@ -39,6 +39,7 @@ public class Porte : MonoBehaviour
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
     }
 
+    
     public void EnterDoor2(GameObject movedObject)
     {
         if (movedObject.CompareTag("Interactible"))
@@ -52,6 +53,19 @@ public class Porte : MonoBehaviour
                 CableThroughDoor(currentObject.cable, movedObject, door2, door1);
             }
         }
+
+        if (movedObject.CompareTag("Player"))
+        {
+            if (movedObject.GetComponent<CharaManager>().hasRope)
+            {
+                CharacterFlute currentObject = movedObject.GetComponent<CharacterFlute>();
+
+                for (int k = currentObject.cables.Count - 1; k >= 0; k--)
+                {
+                    CableThroughDoor(currentObject.cables[k], movedObject, door2, door1);
+                }
+            }
+        }
         
         movedObject.transform.position = charaPos1.position;
         
@@ -59,6 +73,7 @@ public class Porte : MonoBehaviour
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
     }
 
+    
     public void GoInside()
     {
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().EnterRoom(minXZ.position, maxXZ.position);
@@ -74,12 +89,21 @@ public class Porte : MonoBehaviour
     {
         // Placement de l'ancien cable
         CableCreator currentScript = currentCable.GetComponent<CableCreator>();
+
+        if (currentObject.CompareTag("Interactible"))
+        {
+            if(currentObject.GetComponent<ObjetInteractible>().isStart)
+                currentScript.ChangeFirstNode(endOldCable, null, null);
         
-        if(currentObject.GetComponent<ObjetInteractible>().isStart)
-            currentScript.ChangeFirstNode(endOldCable, null, null);
-        
-        else 
+            else 
+                currentScript.ChangeLastNode(endOldCable, null, null);
+
+        }
+
+        else
+        {
             currentScript.ChangeLastNode(endOldCable, null, null);
+        }
 
 
         // Recuperation des infos pour le nouveau cable
