@@ -18,7 +18,8 @@ public class CameraMovements : MonoBehaviour
     public Transform startMinXZ;
     public Transform startMaxXZ;
 
-    [Header("Autres")]
+    [Header("Autres")] 
+    public Transform rotationCamRef;
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;     
 
@@ -39,6 +40,8 @@ public class CameraMovements : MonoBehaviour
         {
             isStatic = true;
         }
+        
+        ActualiseRoationCamRef();
     }
 
 
@@ -89,6 +92,13 @@ public class CameraMovements : MonoBehaviour
 
         // Application des changements
         transform.position = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+    }
+
+
+    // PERMET DE REORIENTER L'OBJET QUI NOUS SERT DE REFERENCE POUR L'ORIENTATION DES CONTROLES
+    public void ActualiseRoationCamRef()
+    {
+        rotationCamRef.rotation = Quaternion.Euler(0, transform.rotation.y, 0);
     }
 
 

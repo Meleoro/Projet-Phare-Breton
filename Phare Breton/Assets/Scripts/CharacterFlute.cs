@@ -15,9 +15,8 @@ public class CharacterFlute : MonoBehaviour
 
     [Header("Rope")] 
     public GameObject ropeObject;
-    [HideInInspector] public bool hasRope;
-    public List<GameObject> objectsAtRange = new List<GameObject>();
-    private List<GameObject> cables = new List<GameObject>();
+    [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
+    [HideInInspector] public List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
     [Header("References")] 
@@ -118,14 +117,18 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[k].gameObject;
+                currentCable.originAnchor = selectedObjects[k];
                 currentCable.endAnchor = gameObject;
+
+                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[k]) - selectedObjects[k].transform.position;
+                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], gameObject) - transform.position;
 
                 currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>());
+                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), selectedObjects[k].GetComponent<ObjetInteractible>(),
+                    selectedObjects[k].GetComponent<Rigidbody>(), gameObject.GetComponent<Rigidbody>());
                 
                 // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);
@@ -169,9 +172,9 @@ public class CharacterFlute : MonoBehaviour
         
         manager.hasRope = false;
     }
-    
-    
-    
+
+
+
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
     public void MoveObject()
     {
