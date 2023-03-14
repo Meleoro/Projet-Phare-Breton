@@ -46,8 +46,8 @@ public class CharaManager : MonoBehaviour
             {
                 movementScript.MoveCharacter(direction);
                 
-                if(direction == Vector2.zero)
-                    movementScript.RotateCharacter();
+                /*if(direction == Vector2.zero)
+                    movementScript.RotateCharacter();*/
             }
             else if (isMovingObjects)
             {
