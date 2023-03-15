@@ -13,7 +13,8 @@ public class ObjetInteractible : MonoBehaviour
     public enum InteractiblesType {
         carton,
         panneauElectrique,
-        ampoule
+        ampoule,
+        echelle
     }
     public InteractiblesType objectType;
     
@@ -31,6 +32,9 @@ public class ObjetInteractible : MonoBehaviour
     [Header("MoveObject")]
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+    
+    [Header("Ladder")]
+    public Transform TPPos;
 
     [Header("Références")]
     private Rigidbody rb;
@@ -148,13 +152,24 @@ public class ObjetInteractible : MonoBehaviour
         {
             other.GetComponent<ObjetInteractible>().isLighted = true;
         }
+
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = true;
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().ladderTPPos = TPPos.position;
+        }
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             other.GetComponent<ObjetInteractible>().isLighted = false;
         }
-    }*/
+        
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = false;
+        }
+    }
 }

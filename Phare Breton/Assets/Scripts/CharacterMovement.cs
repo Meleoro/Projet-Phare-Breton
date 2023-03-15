@@ -86,9 +86,15 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
+    // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(GameObject climbedObject)
     {
         transform.position = climbedObject.transform.position + Vector3.up * 2;
+    }
+    
+    // PERMET AU JOUEUR D'UTILISER UNE ECHELLE
+    public void ClimbLadder(Vector3 newPos)
+    {
+        transform.position = newPos;
     }
 }
