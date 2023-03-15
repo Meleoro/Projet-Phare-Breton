@@ -69,23 +69,19 @@ public class CharacterMovement : MonoBehaviour
             velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
             velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
             objects[k].velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocityObject);
-            
-            // Magnet
-            /*if (scripts[k].isMagneted)
-            {
-                objects[k].transform.rotation = scripts[k].magnetedPos.rotation;
-                objects[k].AddForce(new Vector3(scripts[k].magnetedPos.position.x - objects[k].transform.position.x, 0, 
-                    scripts[k].magnetedPos.position.z - objects[k].transform.position.z).normalized * 0.5f, ForceMode.Acceleration);
-            }*/
 
-            // Levitation de l'objet
-            if(objects[k].transform.position.y < scripts[k].currentHauteur)
+
+            if (!scripts[k].isMagneted)
             {
-                objects[k].AddForce(Vector3.up * 10, ForceMode.Acceleration);
-            }
-            else
-            {
-                objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                // Levitation de l'objet
+                if(objects[k].transform.position.y < scripts[k].currentHauteur)
+                {
+                    objects[k].AddForce(Vector3.up * 8, ForceMode.Acceleration);
+                }
+                else
+                {
+                    objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                }
             }
         }
     }
