@@ -75,13 +75,11 @@ public class ObjetInteractible : MonoBehaviour
 
         if (isLinked)
         {
-            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
-                ForceMode.Acceleration);
+            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
         }
         else
         {
-            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
-                ForceMode.Acceleration);
+            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
         }
     }
 
