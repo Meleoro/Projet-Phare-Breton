@@ -13,12 +13,13 @@ public class ObjetInteractible : MonoBehaviour
     public enum InteractiblesType {
         carton,
         panneauElectrique,
-        ampoule
+        ampoule,
+        echelle
     }
     public InteractiblesType objectType;
     
     [Header("Link")]
-    [HideInInspector] public bool isLinked;
+    public bool isLinked;
     [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
     [HideInInspector] public GameObject cable;
     [HideInInspector] public bool isStart;
@@ -31,6 +32,9 @@ public class ObjetInteractible : MonoBehaviour
     [Header("MoveObject")]
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+    
+    [Header("Ladder")]
+    public Transform TPPos;
 
     [Header("Références")]
     private Rigidbody rb;
@@ -72,15 +76,24 @@ public class ObjetInteractible : MonoBehaviour
     public void MagnetEffect()
     {
         transform.rotation = magnetedPos.rotation;
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, Time.deltaTime * 1.5f),
+            transform.position.y, Mathf.Lerp(transform.position.z, magnetedPos.position.z, Time.deltaTime * 1.5f));
 
-        if (isLinked)
+
+        float difference = magnetedPos.position.y - transform.position.y;
+        
+        if (difference > 0)
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
+        
+        else if (difference < -0.1f)
         {
-            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
         }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
-        }
+
+        else 
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
     }
 
     
@@ -139,13 +152,24 @@ public class ObjetInteractible : MonoBehaviour
         {
             other.GetComponent<ObjetInteractible>().isLighted = true;
         }
+
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = true;
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().ladderTPPos = TPPos.position;
+        }
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             other.GetComponent<ObjetInteractible>().isLighted = false;
         }
-    }*/
+        
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = false;
+        }
+    }
 }

@@ -28,6 +28,8 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
+    [HideInInspector] public bool nearLadder;
+    [HideInInspector] public Vector3 ladderTPPos;
 
 
     void Start()
@@ -56,9 +58,15 @@ public class CharaManager : MonoBehaviour
 
 
             // Escalade
-            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope)
+            if(fluteScript.objectsAtRange.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
-                movementScript.ClimbObject(nearObjects[0]);
+                interaction = false;
+                movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+            }
+            else if (nearLadder && interaction)
+            {
+                interaction = false;
+                movementScript.ClimbLadder(ladderTPPos);
             }
 
             
