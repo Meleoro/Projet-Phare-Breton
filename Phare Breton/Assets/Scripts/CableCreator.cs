@@ -47,7 +47,7 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    public void CreateNodes(SpringJoint currentSpringOrigin, SpringJoint currentSpringEnd, ObjetInteractible startObject, Rigidbody rigidbodyStart, Rigidbody rigidbodyEnd)
+    public void CreateNodes(SpringJoint currentSpringOrigin, SpringJoint currentSpringEnd, ObjetInteractible startObject, ObjetInteractible endObject, Rigidbody rigidbodyStart, Rigidbody rigidbodyEnd)
     {
         // Calcule du nombre de nodes à générer (sert plus a rien mais je le laisse au cas où)
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
@@ -93,6 +93,13 @@ public class CableCreator : MonoBehaviour
             startObject.isLinked = true;
             startObject.cable = gameObject;
             startObject.isStart = true;
+        }
+
+        if (endObject != null)
+        {
+            endObject.isLinked = true;
+            endObject.cable = gameObject;
+            endObject.isStart = true;
         }
 
 

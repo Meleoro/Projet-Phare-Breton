@@ -18,7 +18,7 @@ public class ObjetInteractible : MonoBehaviour
     public InteractiblesType objectType;
     
     [Header("Link")]
-    [HideInInspector] public bool isLinked;
+    public bool isLinked;
     [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
     [HideInInspector] public GameObject cable;
     [HideInInspector] public bool isStart;

@@ -109,7 +109,7 @@ public class CharacterFlute : MonoBehaviour
     {
         if (selectedObjects.Count > 0)
         {
-            for (int k = 0; k < selectedObjects.Count; k++)
+            if (selectedObjects.Count == 1)
             {
                 // Références
                 GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
@@ -117,26 +117,58 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[k];
+                currentCable.originAnchor = selectedObjects[0];
                 currentCable.endAnchor = gameObject;
 
-                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[k]) - selectedObjects[k].transform.position;
-                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], gameObject) - transform.position;
+                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0]) - selectedObjects[0].transform.position;
+                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0], gameObject) - transform.position;
 
-                currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
+                currentCableCreator.origin.transform.position = selectedObjects[0].gameObject.transform.position;
                 currentCableCreator.end.transform.position = gameObject.transform.position;
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), selectedObjects[k].GetComponent<ObjetInteractible>(),
-                    selectedObjects[k].GetComponent<Rigidbody>(), gameObject.GetComponent<Rigidbody>());
+                currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), 
+                    selectedObjects[0].GetComponent<ObjetInteractible>(), null, selectedObjects[0].GetComponent<Rigidbody>(), 
+                    gameObject.GetComponent<Rigidbody>());
                 
                 // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);
-                ropedObject.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+                ropedObject.Add(selectedObjects[0].GetComponent<ObjetInteractible>());
+                
+                manager.hasRope = true;
             }
 
+            else
+            {
+                for (int k = selectedObjects.Count - 1; k > 0; k--)
+                {
+                    for (int j = k - 1; j >= 0; j--)
+                    {
+                        // Références
+                        GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
+                        Cable currentCable = newRope.GetComponent<Cable>();
+                        CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
+
+                        // On place le début et la fin du câble
+                        currentCable.originAnchor = selectedObjects[k];
+                        currentCable.endAnchor = selectedObjects[j];
+
+                        currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j], selectedObjects[k]) - selectedObjects[k].transform.position;
+                        currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], selectedObjects[j]) - selectedObjects[j].transform.position;
+
+                        currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
+                        currentCableCreator.end.transform.position = selectedObjects[j].transform.position;
+                
+                        // On crée le câble physiquement
+                        currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
+                            selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
+                            selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
+                    }
+                    
+                }
+            }
+            
             manager.lien = false;
-            manager.hasRope = true;
         }
     }
 
