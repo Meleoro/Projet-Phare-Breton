@@ -72,15 +72,24 @@ public class ObjetInteractible : MonoBehaviour
     public void MagnetEffect()
     {
         transform.rotation = magnetedPos.rotation;
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, Time.deltaTime * 1.5f),
+            transform.position.y, Mathf.Lerp(transform.position.z, magnetedPos.position.z, Time.deltaTime * 1.5f));
 
-        if (isLinked)
+
+        float difference = magnetedPos.position.y - transform.position.y;
+        
+        if (difference > 0)
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
+        
+        else if (difference < -0.1f)
         {
-            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
         }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, magnetedPos.position, Time.deltaTime * 1.5f);
-        }
+
+        else 
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
     }
 
     
