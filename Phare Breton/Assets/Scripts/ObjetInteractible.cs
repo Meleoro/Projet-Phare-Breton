@@ -18,7 +18,7 @@ public class ObjetInteractible : MonoBehaviour
     public InteractiblesType objectType;
     
     [Header("Link")]
-    [HideInInspector] public bool isLinked;
+    public bool isLinked;
     [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
     [HideInInspector] public GameObject cable;
     [HideInInspector] public bool isStart;
@@ -72,17 +72,24 @@ public class ObjetInteractible : MonoBehaviour
     public void MagnetEffect()
     {
         transform.rotation = magnetedPos.rotation;
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, Time.deltaTime * 1.5f),
+            transform.position.y, Mathf.Lerp(transform.position.z, magnetedPos.position.z, Time.deltaTime * 1.5f));
 
-        if (isLinked)
+
+        float difference = magnetedPos.position.y - transform.position.y;
+        
+        if (difference > 0)
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
+        
+        else if (difference < -0.1f)
         {
-            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
-                ForceMode.Acceleration);
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
         }
-        else
-        {
-            rb.AddForce(new Vector3(magnetedPos.position.x - transform.position.x, 0, magnetedPos.position.z - transform.position.z).normalized * 2f,
-                ForceMode.Acceleration);
-        }
+
+        else 
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
     }
 
     
