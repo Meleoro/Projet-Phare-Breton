@@ -29,11 +29,19 @@ public class Porte : MonoBehaviour
             {
                 ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
 
-                if(doorNumber == 1)
+                if (doorNumber == 1)
+                {
                     CableThroughDoor(currentObject.cable, movedObject, door1.gameObject, door2.gameObject);
-                
+                    
+                    
+                }
+
                 else
+                {
                     CableThroughDoor(currentObject.cable, movedObject, door2.gameObject, door1.gameObject);
+                    
+                    
+                }
             }
         }
 
