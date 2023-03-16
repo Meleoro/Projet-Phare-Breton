@@ -77,10 +77,7 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(
-            new Vector3(direction.y, 0,
-                -direction.x), Vector3.up);
-        
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
     
@@ -163,12 +160,16 @@ public class CharacterFlute : MonoBehaviour
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
                             selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
+                        
+                        // On informe les scripts des objets qu'ils sont liés
+                        selectedObjects[k].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[j]);
+                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = newRope;
+                        
+                        selectedObjects[j].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[k]);
+                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = newRope;
                     }
-                    
                 }
             }
-            
-            manager.lien = false;
         }
     }
 
@@ -195,20 +196,20 @@ public class CharacterFlute : MonoBehaviour
                 ropedObject[k].linkedObject.Add(objectsAtRange[0]);
                 objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
-        }
+            
+            SpringJoint charaSpring = GetComponent<SpringJoint>();
+        
+            charaSpring.spring = 0;
+            charaSpring.connectedBody = null;
 
-        SpringJoint charaSpring = GetComponent<SpringJoint>();
-        
-        charaSpring.spring = 0;
-        charaSpring.connectedBody = null;
-        
-        manager.hasRope = false;
+            manager.hasRope = false;
+        }
     }
 
 
 
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
-    public void MoveObject()
+    public void MoveObject(bool recursiveCall, GameObject movedObject)
     {
         zoneFlute.SetActive(false);
     
@@ -216,12 +217,25 @@ public class CharacterFlute : MonoBehaviour
         manager.noMovement = true;
         manager.nearObjects.Clear();
 
-        for (int k = 0; k < selectedObjects.Count; k++)
+        if (recursiveCall)
         {
-            manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
-            manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+            manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
+            manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
-            manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+        }
+        
+        else
+        {
+            for (int k = 0; k < selectedObjects.Count; k++)
+            {
+                manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+                manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+
+                manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+                
+                VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
+            }
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
@@ -237,5 +251,17 @@ public class CharacterFlute : MonoBehaviour
         manager.scriptsMovedObjects.Clear();
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
+    }
+
+
+    public void VerifyLinkedObject(ObjetInteractible currentScript)
+    {
+        if (currentScript.isLinked)
+        {
+            for (int k = 0; k < currentScript.linkedObject.Count; k++)
+            {
+                MoveObject(true, currentScript.linkedObject[k]);
+            }
+        }
     }
 }

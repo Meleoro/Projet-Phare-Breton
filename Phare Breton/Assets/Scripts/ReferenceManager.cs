@@ -7,7 +7,7 @@ public class ReferenceManager : MonoBehaviour
     public static ReferenceManager Instance;
 
     [Header("References")]
-    public GameObject cameraReference;
+    public CameraMovements cameraReference;
     public GameObject cameraRotationReference;
     public CharaManager characterReference;
 

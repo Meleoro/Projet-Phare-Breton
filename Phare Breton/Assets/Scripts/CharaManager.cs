@@ -16,7 +16,6 @@ public class CharaManager : MonoBehaviour
     [Header("Inputs")]
     [HideInInspector] public Vector2 direction;
     [HideInInspector] public bool R2;
-    [HideInInspector] public bool lien;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
 
@@ -69,7 +68,6 @@ public class CharaManager : MonoBehaviour
                 movementScript.ClimbLadder(ladderTPPos);
             }
 
-            
             // Partie flûte 
             if (R2 && !hasRope && !isMovingObjects)
             {
@@ -77,13 +75,15 @@ public class CharaManager : MonoBehaviour
                 movementScript.RotateCharacter();
                 movementScript.MoveCharacter(Vector2.zero);
 
-                if (lien)
+                if (interaction)
                 {
+                    interaction = false;
                     fluteScript.CreateLien();
                 }
                 else if (moveObject)
                 {
-                    fluteScript.MoveObject();
+                    moveObject = false;
+                    fluteScript.MoveObject(false, null);
                 }
             }
             
@@ -98,10 +98,15 @@ public class CharaManager : MonoBehaviour
             {
                 fluteScript.PlaceLien();
             }
-            else if(interaction && isMovingObjects)
+            else if(moveObject && isMovingObjects)
             {
                 fluteScript.StopMoveObject();
             }
+
+            
+            // Pour les effets des contrôles se fasssent qu'une fois
+            interaction = false;
+            moveObject = false;
         }
     }
     
@@ -126,10 +131,10 @@ public class CharaManager : MonoBehaviour
     public void OnLien(InputAction.CallbackContext context)
     {
         if(context.started)
-            lien = true;
+            interaction = true;
         
         if (context.canceled)
-            lien = false;
+            interaction = false;
     }
 
     public void OnMoveObject(InputAction.CallbackContext context)
@@ -139,15 +144,6 @@ public class CharaManager : MonoBehaviour
         
         if (context.canceled)
             moveObject = false;
-    }
-
-    public void OnInteraction(InputAction.CallbackContext context)
-    {
-        if(context.started)
-            interaction = true;
-
-        if (context.canceled)
-            interaction = false;
     }
 
 
