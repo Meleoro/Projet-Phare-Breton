@@ -48,10 +48,9 @@ public class CharacterMovement : MonoBehaviour
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
     public void RotateCharacter()
     {
-        transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
+        //transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
         
-        ReferenceManager.Instance.cameraRotationReference.transform.rotation = 
-            Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.eulerAngles.y, 0);
+        ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
     }
 
 

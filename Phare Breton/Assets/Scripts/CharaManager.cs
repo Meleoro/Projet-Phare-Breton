@@ -58,7 +58,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Escalade
-            if(fluteScript.objectsAtRange.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
+            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
                 interaction = false;
                 movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
@@ -69,7 +69,6 @@ public class CharaManager : MonoBehaviour
                 movementScript.ClimbLadder(ladderTPPos);
             }
 
-            
             // Partie flûte 
             if (R2 && !hasRope && !isMovingObjects)
             {
@@ -83,7 +82,7 @@ public class CharaManager : MonoBehaviour
                 }
                 else if (moveObject)
                 {
-                    fluteScript.MoveObject();
+                    fluteScript.MoveObject(false, null);
                 }
             }
             
@@ -96,10 +95,12 @@ public class CharaManager : MonoBehaviour
             // Partie arrêt des pouvoirs
             if (interaction && hasRope)
             {
+                interaction = false;
                 fluteScript.PlaceLien();
             }
             else if(interaction && isMovingObjects)
             {
+                interaction = false;
                 fluteScript.StopMoveObject();
             }
         }

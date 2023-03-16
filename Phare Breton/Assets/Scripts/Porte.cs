@@ -51,7 +51,7 @@ public class Porte : MonoBehaviour
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
         
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRoationCamRef();
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
     }
 
     
@@ -87,7 +87,7 @@ public class Porte : MonoBehaviour
         ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
         
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRoationCamRef();
+        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
     }
 
     
