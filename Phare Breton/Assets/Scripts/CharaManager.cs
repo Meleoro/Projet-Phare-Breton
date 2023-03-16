@@ -69,7 +69,6 @@ public class CharaManager : MonoBehaviour
                 movementScript.ClimbLadder(ladderTPPos);
             }
 
-            
             // Partie flûte 
             if (R2 && !hasRope && !isMovingObjects)
             {
@@ -96,10 +95,12 @@ public class CharaManager : MonoBehaviour
             // Partie arrêt des pouvoirs
             if (interaction && hasRope)
             {
+                interaction = false;
                 fluteScript.PlaceLien();
             }
             else if(interaction && isMovingObjects)
             {
+                interaction = false;
                 fluteScript.StopMoveObject();
             }
         }
