@@ -46,18 +46,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Lien"",
-                    ""type"": ""Button"",
-                    ""id"": ""9864a300-143a-4d24-aa31-102eb40f8ef5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Interaction"",
                     ""type"": ""Button"",
-                    ""id"": ""cf8e7732-b6fa-479e-8f1e-3c364a0a2a49"",
+                    ""id"": ""9864a300-143a-4d24-aa31-102eb40f8ef5"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -169,7 +160,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Lien"",
+                    ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -177,28 +168,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""dbf4ea5f-82f2-4847-875d-a038e85a57dd"",
                     ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Lien"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9be547ca-d4e9-4e51-966c-c82c446a83be"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interaction"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bf294752-c7b9-412c-9f97-bec969e5b69d"",
-                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -237,7 +206,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Direction = m_Character.FindAction("Direction", throwIfNotFound: true);
         m_Character_Flute = m_Character.FindAction("Flute", throwIfNotFound: true);
-        m_Character_Lien = m_Character.FindAction("Lien", throwIfNotFound: true);
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
         m_Character_Deplacement = m_Character.FindAction("Deplacement", throwIfNotFound: true);
     }
@@ -303,7 +271,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
     private readonly InputAction m_Character_Direction;
     private readonly InputAction m_Character_Flute;
-    private readonly InputAction m_Character_Lien;
     private readonly InputAction m_Character_Interaction;
     private readonly InputAction m_Character_Deplacement;
     public struct CharacterActions
@@ -312,7 +279,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public CharacterActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Direction => m_Wrapper.m_Character_Direction;
         public InputAction @Flute => m_Wrapper.m_Character_Flute;
-        public InputAction @Lien => m_Wrapper.m_Character_Lien;
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
         public InputAction @Deplacement => m_Wrapper.m_Character_Deplacement;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
@@ -330,9 +296,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Flute.started += instance.OnFlute;
             @Flute.performed += instance.OnFlute;
             @Flute.canceled += instance.OnFlute;
-            @Lien.started += instance.OnLien;
-            @Lien.performed += instance.OnLien;
-            @Lien.canceled += instance.OnLien;
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
@@ -349,9 +312,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Flute.started -= instance.OnFlute;
             @Flute.performed -= instance.OnFlute;
             @Flute.canceled -= instance.OnFlute;
-            @Lien.started -= instance.OnLien;
-            @Lien.performed -= instance.OnLien;
-            @Lien.canceled -= instance.OnLien;
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
@@ -379,7 +339,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     {
         void OnDirection(InputAction.CallbackContext context);
         void OnFlute(InputAction.CallbackContext context);
-        void OnLien(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnDeplacement(InputAction.CallbackContext context);
     }

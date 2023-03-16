@@ -77,9 +77,6 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        Quaternion wantedRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
-        Quaternion modificateurRotation = ReferenceManager.Instance.cameraRotationReference.transform.rotation;
-
         zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
@@ -173,8 +170,6 @@ public class CharacterFlute : MonoBehaviour
                     }
                 }
             }
-            
-            manager.lien = false;
         }
     }
 
@@ -201,14 +196,14 @@ public class CharacterFlute : MonoBehaviour
                 ropedObject[k].linkedObject.Add(objectsAtRange[0]);
                 objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
-        }
+            
+            SpringJoint charaSpring = GetComponent<SpringJoint>();
+        
+            charaSpring.spring = 0;
+            charaSpring.connectedBody = null;
 
-        SpringJoint charaSpring = GetComponent<SpringJoint>();
-        
-        charaSpring.spring = 0;
-        charaSpring.connectedBody = null;
-        
-        manager.hasRope = false;
+            manager.hasRope = false;
+        }
     }
 
 
