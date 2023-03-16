@@ -192,8 +192,6 @@ public class Porte : MonoBehaviour
             {
                 doorCrossed.cableOtherSide.ChangeLastNode(currentObject, null, null);
             }
-            
-            
         }
     }
 }

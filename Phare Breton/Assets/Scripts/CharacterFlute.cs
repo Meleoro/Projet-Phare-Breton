@@ -163,8 +163,14 @@ public class CharacterFlute : MonoBehaviour
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
                             selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
+                        
+                        // On informe les scripts des objets qu'ils sont liés
+                        selectedObjects[k].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[j]);
+                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = newRope;
+                        
+                        selectedObjects[j].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[k]);
+                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = newRope;
                     }
-                    
                 }
             }
             
