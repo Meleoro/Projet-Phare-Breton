@@ -5,20 +5,25 @@ using UnityEngine;
 
 public class SpotDeplacement : MonoBehaviour
 {
-    private void OnDrawGizmos()
-    {
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
-        Gizmos.matrix = rotationMatrix;
-        
-        Gizmos.color = Color.blue;
-        Gizmos.DrawCube(Vector3.zero, Vector3.one);
-    }
+    [Header("Parametres")]
+    public bool objectHasToBeRoped;
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            other.GetComponent<ObjetInteractible>().Magnet(transform);
+            if (objectHasToBeRoped)
+            {
+                if(other.GetComponent<ObjetInteractible>().isLinked)
+                {
+                    other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+                }
+            }
+            else
+            {
+                other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+            }
         }
     }
     
@@ -28,5 +33,15 @@ public class SpotDeplacement : MonoBehaviour
         {
             other.GetComponent<ObjetInteractible>().isMagneted = false;
         }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
+        Gizmos.matrix = rotationMatrix;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawCube(Vector3.zero, Vector3.one);
     }
 }

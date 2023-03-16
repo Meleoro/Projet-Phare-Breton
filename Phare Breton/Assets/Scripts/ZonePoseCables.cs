@@ -15,6 +15,9 @@ public class ZonePoseCables : MonoBehaviour
             
             scriptFlute.objectsAtRange.Add(other.gameObject);
             _object.Select();
+            
+            if(other.GetComponent<ObjetInteractible>().isClimbable)
+                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
         }
     }
 
@@ -26,6 +29,9 @@ public class ZonePoseCables : MonoBehaviour
             
             scriptFlute.objectsAtRange.Remove(other.gameObject);
             _object.Deselect();
+            
+            if(other.GetComponent<ObjetInteractible>().isClimbable)
+                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
         }
     }
 }

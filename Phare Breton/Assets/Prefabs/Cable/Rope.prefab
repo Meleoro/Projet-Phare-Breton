@@ -186,7 +186,7 @@ MonoBehaviour:
   spring: 200
   damper: 10
   maxLength: 30
-  multiplicateurResistance: 5
+  multiplicateurResistance: 2
   springOrigin: {fileID: 0}
   springEnd: {fileID: 0}
   rbOrigin: {fileID: 0}
@@ -195,6 +195,7 @@ MonoBehaviour:
   origin: {fileID: 2671385627867411780}
   end: {fileID: 8847647552864450469}
   nodesRope: []
+  currentLength: 0
 --- !u!114 &9058123860006891802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originAnchor: {fileID: 0}
   endAnchor: {fileID: 0}
+  originOffset: {x: 0, y: 0, z: 0}
+  endOffset: {x: 0, y: 0, z: 0}
   originNode: {fileID: 3983425155078667346}
   endNode: {fileID: 3245475370029914171}
 --- !u!120 &6661636030175017580

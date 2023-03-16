@@ -13,6 +13,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
     [SerializeField, Range(0f, 100f)] float maxAcceleration = 10f;
     private Vector3 velocity;
+    [HideInInspector] public bool doOnce;
 
     [Header("MovementsObjets")]
     public float hauteurObject = 0.5f;
@@ -38,16 +39,18 @@ public class CharacterMovement : MonoBehaviour
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         
         // Acceleration du personnage
-        velocity = transform.InverseTransformDirection(manager.rb.velocity);
+        velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
         velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-        manager.rb.velocity = transform.TransformDirection(velocity);
+        manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
     }
 
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
     public void RotateCharacter()
     {
-        transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.eulerAngles.y, 0);
+        //transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
+        
+        ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
     }
 
 
@@ -61,34 +64,36 @@ public class CharacterMovement : MonoBehaviour
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
             // Acceleration de l'objet
-            velocityObject = transform.InverseTransformDirection(objects[k].velocity);
+            velocityObject = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(objects[k].velocity);
             velocityObject.x = Mathf.MoveTowards(velocityObject.x, desiredVelocity.x, maxSpeedChange);
             velocityObject.z = Mathf.MoveTowards(velocityObject.z, desiredVelocity.z, maxSpeedChange);
-            objects[k].velocity = transform.TransformDirection(velocityObject);
-            
-            // Magnet
-            if (scripts[k].isMagneted)
-            {
-                objects[k].transform.rotation = scripts[k].magnetedPos.rotation;
-                objects[k].AddForce(new Vector3(Mathf.Clamp(scripts[k].magnetedPos.position.x - objects[k].transform.position.x, -1, 1), 0, 
-                    Mathf.Clamp(scripts[k].magnetedPos.position.z - objects[k].transform.position.z, -1, 1)) * 4, ForceMode.Acceleration);
-            }
+            objects[k].velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocityObject);
 
-            // Levitation de l'objet
-            if(objects[k].transform.position.y < scripts[k].currentHauteur)
+
+            if (!scripts[k].isMagneted)
             {
-                objects[k].AddForce(Vector3.up * 10, ForceMode.Acceleration);
-            }
-            else
-            {
-                objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                // Levitation de l'objet
+                if(objects[k].transform.position.y < scripts[k].currentHauteur)
+                {
+                    objects[k].AddForce(Vector3.up * 8, ForceMode.Acceleration);
+                }
+                else
+                {
+                    objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                }
             }
         }
     }
 
-    // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
+    // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(GameObject climbedObject)
     {
         transform.position = climbedObject.transform.position + Vector3.up * 2;
+    }
+    
+    // PERMET AU JOUEUR D'UTILISER UNE ECHELLE
+    public void ClimbLadder(Vector3 newPos)
+    {
+        transform.position = newPos;
     }
 }

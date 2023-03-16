@@ -10,21 +10,41 @@ public class ObjetInteractible : MonoBehaviour
     public bool isClimbable;
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public Transform magnetedPos;
-    public List<GameObject> linkedObject = new List<GameObject>();
     public enum InteractiblesType {
         carton,
         panneauElectrique,
-        ampoule
+        ampoule,
+        echelle
     }
     public InteractiblesType objectType;
+    
+    [Header("Link")]
+    public bool isLinked;
+    [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
+    [HideInInspector] public GameObject cable;
+    [HideInInspector] public bool isStart;
 
     [Header("Ampoule")]
     [SerializeField] private bool ampouleActive;
     [SerializeField] private Light lightComponent;
     [SerializeField] private SphereCollider lightArea;
 
-    [Header("MoveObject")] 
+    [Header("MoveObject")]
+    [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+    
+    [Header("Ladder")]
+    public Transform TPPos;
+
+    [Header("Références")]
+    private Rigidbody rb;
+
+
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
 
     private void Update()
@@ -38,14 +58,44 @@ public class ObjetInteractible : MonoBehaviour
                 ActivateAmpoule();
             }
         }
+
+        if (isMagneted)
+        {
+            MagnetEffect();
+        }
     }
 
 
-    public void Magnet(Transform magnetPos)
+
+    public void ActivateMagnet(Transform magnetPos)
     {
         magnetedPos = magnetPos;
         isMagneted = true;
     }
+
+    public void MagnetEffect()
+    {
+        transform.rotation = magnetedPos.rotation;
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, Time.deltaTime * 1.5f),
+            transform.position.y, Mathf.Lerp(transform.position.z, magnetedPos.position.z, Time.deltaTime * 1.5f));
+
+
+        float difference = magnetedPos.position.y - transform.position.y;
+        
+        if (difference > 0)
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
+        
+        else if (difference < -0.1f)
+        {
+            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference) * Time.deltaTime, 0),
+                ForceMode.VelocityChange);
+        }
+
+        else 
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+    }
+
     
     public void Select()
     {
@@ -59,7 +109,7 @@ public class ObjetInteractible : MonoBehaviour
 
     
     
-    // VERIFIE QUEL TYPE D'OBJET EST CONNECT�
+    // VERIFIE QUEL TYPE D'OBJET EST CONNECTÉ
     private void VerifyLinkedObject()
     {
         if (linkedObject != null)
@@ -102,13 +152,24 @@ public class ObjetInteractible : MonoBehaviour
         {
             other.GetComponent<ObjetInteractible>().isLighted = true;
         }
+
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.nearLadder = true;
+            ReferenceManager.Instance.characterReference.ladderTPPos = TPPos.position;
+        }
     }
 
-    /*private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             other.GetComponent<ObjetInteractible>().isLighted = false;
         }
-    }*/
+        
+        if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.nearLadder = false;
+        }
+    }
 }
