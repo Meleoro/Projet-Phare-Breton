@@ -77,10 +77,7 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(
-            new Vector3(direction.y, 0,
-                -direction.x), Vector3.up);
-        
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
     
@@ -163,12 +160,16 @@ public class CharacterFlute : MonoBehaviour
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
                             selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
+                        
+                        // On informe les scripts des objets qu'ils sont liés
+                        selectedObjects[k].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[j]);
+                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = newRope;
+                        
+                        selectedObjects[j].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[k]);
+                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = newRope;
                     }
-                    
                 }
             }
-            
-            manager.lien = false;
         }
     }
 
@@ -195,14 +196,14 @@ public class CharacterFlute : MonoBehaviour
                 ropedObject[k].linkedObject.Add(objectsAtRange[0]);
                 objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
-        }
+            
+            SpringJoint charaSpring = GetComponent<SpringJoint>();
+        
+            charaSpring.spring = 0;
+            charaSpring.connectedBody = null;
 
-        SpringJoint charaSpring = GetComponent<SpringJoint>();
-        
-        charaSpring.spring = 0;
-        charaSpring.connectedBody = null;
-        
-        manager.hasRope = false;
+            manager.hasRope = false;
+        }
     }
 
 
