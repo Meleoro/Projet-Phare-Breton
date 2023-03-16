@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class TriggerCamera : MonoBehaviour
 {
+    [SerializeField] private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>(); 
+    
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private Transform cameraPos;
     [SerializeField] private Color gizmosColor;
@@ -24,6 +26,8 @@ public class TriggerCamera : MonoBehaviour
             {
                 ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
                 ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+                
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects);
             }
         }
     }

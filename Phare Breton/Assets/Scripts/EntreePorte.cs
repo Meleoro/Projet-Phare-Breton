@@ -6,7 +6,8 @@ using UnityEngine;
 public class EntreePorte : MonoBehaviour
 {
     [Range(1, 2)] public int numeroEntree;
-    public bool goInside;    // Pour si la porte menne a l'interieur d'un batiment
+    public bool goInside;
+    public List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>();
 
     // Variables permettant de détruire câble si on sort puis entre
     [HideInInspector] public bool hasCableThrough;
