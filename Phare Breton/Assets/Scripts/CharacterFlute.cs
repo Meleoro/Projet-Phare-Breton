@@ -120,8 +120,7 @@ public class CharacterFlute : MonoBehaviour
                 currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0]) - selectedObjects[0].transform.position;
                 currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0], gameObject) - transform.position;
 
-                currentCableCreator.origin.transform.position = selectedObjects[0].gameObject.transform.position;
-                currentCableCreator.end.transform.position = gameObject.transform.position;
+                currentCable.ActualiseNodes();
                 
                 // On crée le câble physiquement
                 currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), 
@@ -153,9 +152,8 @@ public class CharacterFlute : MonoBehaviour
                         currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j], selectedObjects[k]) - selectedObjects[k].transform.position;
                         currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], selectedObjects[j]) - selectedObjects[j].transform.position;
 
-                        currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
-                        currentCableCreator.end.transform.position = selectedObjects[j].transform.position;
-                
+                        currentCable.ActualiseNodes();
+
                         // On crée le câble physiquement
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
