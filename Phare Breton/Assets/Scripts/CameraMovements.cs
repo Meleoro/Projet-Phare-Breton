@@ -18,11 +18,11 @@ public class CameraMovements : MonoBehaviour
     public Transform startMinXZ;
     public Transform startMaxXZ;
 
-    [Header("Autres")] 
-    public Transform rotationCamRef;
+    [Header("Autres")]
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
     private CameraRotationRef cameraRotationRefScript;
+    private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>();
 
 
     private void Start()
@@ -134,5 +134,22 @@ public class CameraMovements : MonoBehaviour
     {
         transform.position = savePosition;
         transform.rotation = saveRotation;
+    }
+
+
+    // REND INVISIBLES LES OBJETS EN PARAMETRE
+    public void ActualiseDesactivatedObjects(List<MeshRenderer> objects)
+    {
+        for (int k = 0; k < desactivatedObjects.Count; k++)
+        {
+            desactivatedObjects[k].gameObject.SetActive(true);
+        }
+        
+        desactivatedObjects = objects;
+        
+        for (int k = 0; k < desactivatedObjects.Count; k++)
+        {
+            desactivatedObjects[k].gameObject.SetActive(false);
+        }
     }
 }
