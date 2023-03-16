@@ -82,7 +82,7 @@ public class CharaManager : MonoBehaviour
                 }
                 else if (moveObject)
                 {
-                    fluteScript.MoveObject();
+                    fluteScript.MoveObject(false, null);
                 }
             }
             

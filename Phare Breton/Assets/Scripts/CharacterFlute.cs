@@ -208,7 +208,7 @@ public class CharacterFlute : MonoBehaviour
 
 
     // QUAND LE JOUEUR COMMENCE A DEPLACER UN/DES OBJETS AVEC SA FLUTE
-    public void MoveObject()
+    public void MoveObject(bool recursiveCall, GameObject movedObject)
     {
         zoneFlute.SetActive(false);
     
@@ -216,12 +216,25 @@ public class CharacterFlute : MonoBehaviour
         manager.noMovement = true;
         manager.nearObjects.Clear();
 
-        for (int k = 0; k < selectedObjects.Count; k++)
+        if (recursiveCall)
         {
-            manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
-            manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+            manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
+            manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
-            manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+        }
+        
+        else
+        {
+            for (int k = 0; k < selectedObjects.Count; k++)
+            {
+                manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+                manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+
+                manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+                
+                VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
+            }
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
@@ -237,5 +250,17 @@ public class CharacterFlute : MonoBehaviour
         manager.scriptsMovedObjects.Clear();
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
+    }
+
+
+    public void VerifyLinkedObject(ObjetInteractible currentScript)
+    {
+        if (currentScript.isLinked)
+        {
+            for (int k = 0; k < currentScript.linkedObject.Count; k++)
+            {
+                MoveObject(true, currentScript.linkedObject[k]);
+            }
+        }
     }
 }
