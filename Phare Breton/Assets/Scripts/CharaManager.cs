@@ -58,7 +58,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Escalade
-            if(fluteScript.objectsAtRange.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
+            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
                 interaction = false;
                 movementScript.ClimbObject(fluteScript.objectsAtRange[0]);

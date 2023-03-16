@@ -9,7 +9,7 @@ public class ReferenceManager : MonoBehaviour
     [Header("References")]
     public GameObject cameraReference;
     public GameObject cameraRotationReference;
-    public GameObject characterReference;
+    public CharaManager characterReference;
 
     private void Awake()
     {

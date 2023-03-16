@@ -155,8 +155,8 @@ public class ObjetInteractible : MonoBehaviour
 
         if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
         {
-            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = true;
-            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().ladderTPPos = TPPos.position;
+            ReferenceManager.Instance.characterReference.nearLadder = true;
+            ReferenceManager.Instance.characterReference.ladderTPPos = TPPos.position;
         }
     }
 
@@ -169,7 +169,7 @@ public class ObjetInteractible : MonoBehaviour
         
         if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
         {
-            ReferenceManager.Instance.characterReference.GetComponent<CharaManager>().nearLadder = false;
+            ReferenceManager.Instance.characterReference.nearLadder = false;
         }
     }
 }
