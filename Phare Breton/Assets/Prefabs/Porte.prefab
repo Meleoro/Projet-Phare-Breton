@@ -122,6 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numeroEntree: 1
   goInside: 1
+  hasCableThrough: 0
+  cableThisSide: {fileID: 0}
+  cableOtherSide: {fileID: 0}
 --- !u!1 &607371269110758605
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,8 +269,8 @@ MonoBehaviour:
   charaPos2: {fileID: 568117227848035356}
   cameraPos1: {fileID: 8998546002124698464}
   cameraPos2: {fileID: 6592479298285007914}
-  door1: {fileID: 82727622841322084}
-  door2: {fileID: 3186927731120074644}
+  door1: {fileID: 396954631571981279}
+  door2: {fileID: 59830192907572259}
   minXZ: {fileID: 8234449916261313949}
   maxXZ: {fileID: 7808651036114276973}
 --- !u!1 &3186927731120074644
@@ -393,6 +396,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numeroEntree: 2
   goInside: 0
+  hasCableThrough: 0
+  cableThisSide: {fileID: 0}
+  cableOtherSide: {fileID: 0}
 --- !u!114 &7360247336562614605
 MonoBehaviour:
   m_ObjectHideFlags: 0
