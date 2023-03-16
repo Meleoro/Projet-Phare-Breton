@@ -23,24 +23,33 @@ public class Porte : MonoBehaviour
     {
         if (movedObject.CompareTag("Interactible"))
         {
-            movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
+            if(doorNumber == 1)
+                movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos2.position.y;
+            
+            else
+                movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
 
+            
             if (movedObject.GetComponent<ObjetInteractible>().isLinked)
             {
                 ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
 
                 if (doorNumber == 1)
                 {
-                    CableThroughDoor(currentObject.cable, movedObject, door1.gameObject, door2.gameObject);
+                    if(!door1.hasCableThrough)
+                        CableThroughDoor(currentObject.cable, movedObject, door1.gameObject, door2.gameObject);
                     
-                    
+                    else
+                        DestroyCableThroughDoor(door1, movedObject);
                 }
 
                 else
                 {
-                    CableThroughDoor(currentObject.cable, movedObject, door2.gameObject, door1.gameObject);
+                    if(!door2.hasCableThrough) 
+                        CableThroughDoor(currentObject.cable, movedObject, door2.gameObject, door1.gameObject);
                     
-                    
+                    else
+                        DestroyCableThroughDoor(door2, movedObject);
                 }
             }
         }
@@ -53,11 +62,23 @@ public class Porte : MonoBehaviour
 
                 for (int k = currentObject.cables.Count - 1; k >= 0; k--)
                 {
-                    if(doorNumber == 1)
-                        CableThroughDoor(currentObject.cables[k], movedObject, door1.gameObject, door2.gameObject);
+                    if (doorNumber == 1)
+                    {
+                        if(!door1.hasCableThrough)
+                            CableThroughDoor(currentObject.cables[k], movedObject, door1.gameObject, door2.gameObject);
+                        
+                        else
+                            DestroyCableThroughDoor(door1, movedObject);
+                    }
                     
                     else
-                        CableThroughDoor(currentObject.cables[k], movedObject, door2.gameObject, door1.gameObject);
+                    {
+                        if(!door2.hasCableThrough)
+                            CableThroughDoor(currentObject.cables[k], movedObject, door2.gameObject, door1.gameObject);
+                        
+                        else
+                            DestroyCableThroughDoor(door2, movedObject);
+                    }
                 }
             }
         }
@@ -137,7 +158,16 @@ public class Porte : MonoBehaviour
         newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
 
-        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null,null, currentObject.GetComponent<Rigidbody>());
+        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null,null, 
+            currentObject.GetComponent<Rigidbody>());
+        
+        
+        // On assigne tous ces éléments à la porte
+        EntreePorte currentDoor = startNewCable.GetComponent<EntreePorte>();
+
+        currentDoor.hasCableThrough = true;
+        currentDoor.cableOtherSide = currentScript;
+        currentDoor.cableThisSide = newScriptCreator;
     }
 
     
