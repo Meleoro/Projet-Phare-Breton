@@ -99,7 +99,7 @@ public class CableCreator : MonoBehaviour
         {
             endObject.isLinked = true;
             endObject.cable = gameObject;
-            endObject.isStart = true;
+            endObject.isStart = false;
         }
 
 
