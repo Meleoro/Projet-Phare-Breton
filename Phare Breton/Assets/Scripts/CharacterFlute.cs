@@ -77,10 +77,10 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(
-            new Vector3(direction.y, 0,
-                -direction.x), Vector3.up);
-        
+        Quaternion wantedRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
+        Quaternion modificateurRotation = ReferenceManager.Instance.cameraRotationReference.transform.rotation;
+
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
     
