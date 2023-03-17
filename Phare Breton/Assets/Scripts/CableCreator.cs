@@ -301,19 +301,13 @@ public class CableCreator : MonoBehaviour
     // CHANGE LE POSITION DE LA NODE AU BOUT DU CABLE (FIN DE CABLE)
     public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
-        GetComponent<Cable>().endOffset = ChooseSpotCable(GetComponent<Cable>().endAnchor, newAnchor) - newAnchor.transform.position;
-        GetComponent<Cable>().endAnchor = newAnchor;
         end.spring2.connectedBody = newRb;
 
         isLinked = true;
 
-        /*for (int k = 1; k < nodesRope.Count - 1; k++)
-        {
-            CreateLienBetweenNodes(k, false);
-        }*/
-
         rbEnd = newRb;
         springEnd = newSpring;
+        springEnd.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {
@@ -329,14 +323,13 @@ public class CableCreator : MonoBehaviour
     // CHANGE LE POSITION DE LA NODE AU BOUT DU CABLE (DEBUT DE CABLE)
     public void ChangeFirstNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
-        GetComponent<Cable>().originOffset = ChooseSpotCable(GetComponent<Cable>().originAnchor, newAnchor) - newAnchor.transform.position;
-        GetComponent<Cable>().originAnchor = newAnchor;
         origin.spring1.connectedBody = newRb;
 
         isLinked = true;
 
         rbOrigin = newRb;
         springOrigin = newSpring;
+        springOrigin.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {
