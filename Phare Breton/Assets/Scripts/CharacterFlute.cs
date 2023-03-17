@@ -124,7 +124,7 @@ public class CharacterFlute : MonoBehaviour
                 currentCable.ActualiseNodes();
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
+                currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
                     selectedObjects[0].GetComponent<ObjetInteractible>(), null, selectedObjects[0].GetComponent<Rigidbody>(), 
                     gameObject.GetComponent<Rigidbody>());
                 
@@ -156,7 +156,7 @@ public class CharacterFlute : MonoBehaviour
                         currentCable.ActualiseNodes();
 
                         // On crée le câble physiquement
-                        currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
+                        currentCableCreator.CreateNodes(selectedObjects[k].GetComponentInChildren<SpringJoint>(), selectedObjects[j].GetComponentInChildren<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
                             selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
                         
@@ -178,17 +178,17 @@ public class CharacterFlute : MonoBehaviour
     {
         if (objectsAtRange.Count == 1)
         {
-            SpringJoint objectSpring = objectsAtRange[0].GetComponent<SpringJoint>();
+            SpringJoint objectSpring = objectsAtRange[0].GetComponentInChildren<SpringJoint>();
             
             for (int k = cables.Count - 1; k >= 0; k--)
             {
                 CableCreator currentCableCreator = cables[k].GetComponent<CableCreator>();
 
-                objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 2]
+                objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 1]
                     .GetComponent<Rigidbody>();
 
                 // On relie les objets physiquement 
-                currentCableCreator.ChangeLastNode(objectsAtRange[0], objectsAtRange[0].GetComponent<Rigidbody>(), objectsAtRange[0].GetComponent<SpringJoint>());
+                currentCableCreator.ChangeLastNode(objectsAtRange[0], objectsAtRange[0].GetComponent<Rigidbody>(), objectsAtRange[0].GetComponentInChildren<SpringJoint>());
                 cables.RemoveAt(k);
 
                 // On informe les scripts de chaque objets qu'ils sont connectés 

@@ -53,7 +53,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2671385627867411780}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -254,11 +254,13 @@ MonoBehaviour:
   spring: 100
   damper: 10
   maxLength: 30
-  multiplicateurResistance: 5
+  multiplicateurResistance: 10
   springOrigin: {fileID: 0}
   springEnd: {fileID: 0}
   rbOrigin: {fileID: 0}
   rbEnd: {fileID: 0}
+  lockStart: 0
+  lockEnd: 0
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 8482334853663818354}
   end: {fileID: 3363387956108976720}
@@ -441,7 +443,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8847647552864450469}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

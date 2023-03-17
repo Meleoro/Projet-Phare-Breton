@@ -22,6 +22,8 @@ public class CableCreator : MonoBehaviour
     public SpringJoint springEnd;
     public Rigidbody rbOrigin;
     public Rigidbody rbEnd;
+    public bool lockStart;
+    public bool lockEnd;
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
@@ -80,7 +82,10 @@ public class CableCreator : MonoBehaviour
         rbEnd = rigidbodyEnd;
 
         springOrigin = currentSpringOrigin;
+        springOrigin.spring = spring;
+        
         springEnd = currentSpringEnd;
+        springEnd.spring = spring;
         
         if(springOrigin != null)
             springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
@@ -237,7 +242,7 @@ public class CableCreator : MonoBehaviour
     private void ActualiseLienRenderer()
     {
         // Actualisation de la position
-        _lineRenderer.positionCount = nodesRope.Count;
+        _lineRenderer.positionCount = nodesRope.Count + 2;
 
         List<Vector3> posLineRenderer = ListePositionsNodes();
         
@@ -249,22 +254,45 @@ public class CableCreator : MonoBehaviour
         
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        if (springOrigin != null)
+        if (springOrigin != null && !lockStart)
+        {
             origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+            origin.spring2.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        }
+
+        else
+        {
+            origin.spring1.spring = 0;
+            origin.spring2.spring = spring;
+        }
         
-        if (springEnd != null)
+        
+        if (springEnd != null && !lockEnd)
+        {
+            end.spring1.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
             end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        }
+
+        else 
+        {
+            end.spring1.spring = spring;
+            end.spring2.spring = 0;
+        }
     }
 
 
     private List<Vector3> ListePositionsNodes()
     {
         List<Vector3> posLineRenderer = new List<Vector3>();
+
+        posLineRenderer.Add(rbOrigin.transform.position);
         
         for (int k = 0; k < nodesRope.Count; k++)
         {
             posLineRenderer.Add(nodesRope[k].transform.position);
         }
+
+        posLineRenderer.Add(rbEnd.transform.position);
 
         return posLineRenderer;
     }
@@ -273,19 +301,13 @@ public class CableCreator : MonoBehaviour
     // CHANGE LE POSITION DE LA NODE AU BOUT DU CABLE (FIN DE CABLE)
     public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
-        GetComponent<Cable>().endOffset = ChooseSpotCable(GetComponent<Cable>().endAnchor, newAnchor) - newAnchor.transform.position;
-        GetComponent<Cable>().endAnchor = newAnchor;
         end.spring2.connectedBody = newRb;
 
         isLinked = true;
 
-        /*for (int k = 1; k < nodesRope.Count - 1; k++)
-        {
-            CreateLienBetweenNodes(k, false);
-        }*/
-
         rbEnd = newRb;
         springEnd = newSpring;
+        springEnd.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {
@@ -301,14 +323,13 @@ public class CableCreator : MonoBehaviour
     // CHANGE LE POSITION DE LA NODE AU BOUT DU CABLE (DEBUT DE CABLE)
     public void ChangeFirstNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
-        GetComponent<Cable>().originOffset = ChooseSpotCable(GetComponent<Cable>().originAnchor, newAnchor) - newAnchor.transform.position;
-        GetComponent<Cable>().originAnchor = newAnchor;
         origin.spring1.connectedBody = newRb;
 
         isLinked = true;
 
         rbOrigin = newRb;
         springOrigin = newSpring;
+        springOrigin.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {

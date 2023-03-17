@@ -82,7 +82,29 @@ public class ObjetInteractible : MonoBehaviour
     {
         magnetedPos = magnetPos;
         isMagneted = true;
+
+        if (isLinked)
+        {
+            if (isStart)
+            {
+                cable.lockStart = true;
+            }
+            else 
+            {
+                cable.lockEnd = true;
+            }
+        }
     }
+    
+    public void DesactivateMagnet(Transform magnetPos)
+    {
+        magnetedPos = magnetPos;
+        isMagneted = false;
+
+        cable.lockStart = false;
+        cable.lockEnd = false;
+    }
+    
 
     public void MagnetEffect()
     {
