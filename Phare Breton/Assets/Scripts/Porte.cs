@@ -88,6 +88,8 @@ public class Porte : MonoBehaviour
         {
             movedObject.transform.position = charaPos2.position;
             
+            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
+            
             ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
             ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
         }
@@ -95,6 +97,8 @@ public class Porte : MonoBehaviour
         else
         {
             movedObject.transform.position = charaPos1.position;
+            
+            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
             
             ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
             ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;

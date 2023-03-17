@@ -77,10 +77,7 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(
-            new Vector3(direction.y, 0,
-                -direction.x), Vector3.up);
-        
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
     }
 
     
@@ -123,8 +120,7 @@ public class CharacterFlute : MonoBehaviour
                 currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0]) - selectedObjects[0].transform.position;
                 currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0], gameObject) - transform.position;
 
-                currentCableCreator.origin.transform.position = selectedObjects[0].gameObject.transform.position;
-                currentCableCreator.end.transform.position = gameObject.transform.position;
+                currentCable.ActualiseNodes();
                 
                 // On crée le câble physiquement
                 currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), 
@@ -156,9 +152,8 @@ public class CharacterFlute : MonoBehaviour
                         currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j], selectedObjects[k]) - selectedObjects[k].transform.position;
                         currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], selectedObjects[j]) - selectedObjects[j].transform.position;
 
-                        currentCableCreator.origin.transform.position = selectedObjects[k].gameObject.transform.position;
-                        currentCableCreator.end.transform.position = selectedObjects[j].transform.position;
-                
+                        currentCable.ActualiseNodes();
+
                         // On crée le câble physiquement
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponent<SpringJoint>(), selectedObjects[j].GetComponent<SpringJoint>(), 
                             selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
@@ -173,8 +168,6 @@ public class CharacterFlute : MonoBehaviour
                     }
                 }
             }
-            
-            manager.lien = false;
         }
     }
 
@@ -201,14 +194,14 @@ public class CharacterFlute : MonoBehaviour
                 ropedObject[k].linkedObject.Add(objectsAtRange[0]);
                 objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
-        }
+            
+            SpringJoint charaSpring = GetComponent<SpringJoint>();
+        
+            charaSpring.spring = 0;
+            charaSpring.connectedBody = null;
 
-        SpringJoint charaSpring = GetComponent<SpringJoint>();
-        
-        charaSpring.spring = 0;
-        charaSpring.connectedBody = null;
-        
-        manager.hasRope = false;
+            manager.hasRope = false;
+        }
     }
 
 

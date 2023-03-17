@@ -44,6 +44,8 @@ public class ObjetInteractible : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        isMagneted = false;
     }
 
 

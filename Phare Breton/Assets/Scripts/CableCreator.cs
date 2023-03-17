@@ -83,7 +83,7 @@ public class CableCreator : MonoBehaviour
         springEnd = currentSpringEnd;
         
         if(springOrigin != null)
-            springOrigin.connectedBody = nodesRope[2].GetComponent<Rigidbody>();
+            springOrigin.connectedBody = nodesRope[1].GetComponent<Rigidbody>();
         
         if(springEnd != null)
             springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
@@ -109,10 +109,26 @@ public class CableCreator : MonoBehaviour
     
     private void CreateCable()
     {
-        for(int k = 1; k < nodesRope.Count - 1; k++)
+        NodeCable currentNode = nodesRope[0].GetComponent<NodeCable>();
+
+        currentNode.node2 = nodesRope[1].transform;
+        currentNode.spring2.connectedBody = nodesRope[1].GetComponent<Rigidbody>();
+        currentNode.spring2.spring = spring;
+        currentNode.spring2.damper = damper;
+
+
+        for (int k = 1; k < nodesRope.Count - 1; k++)
         {
             CreateLienBetweenNodes(k, true);
         }
+
+
+        currentNode = nodesRope[nodesRope.Count - 1].GetComponent<NodeCable>();
+
+        currentNode.node1 = nodesRope[nodesRope.Count - 2].transform;
+        currentNode.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        currentNode.spring1.spring = spring;
+        currentNode.spring1.damper = damper;
     }
 
 
@@ -173,19 +189,20 @@ public class CableCreator : MonoBehaviour
         currentNode.spring1.anchor = Vector3.zero;
         currentNode.spring2.anchor = Vector3.zero;
 
-        Vector3 direction = nodesRope[index + 1].transform.position - currentNode.transform.position;
-
-        /*currentNode.spring1.anchor = Vector3.zero;
-        currentNode.spring2.anchor = -direction.normalized * 0.1f;*/
+        //Vector3 direction = nodesRope[index + 1].transform.position - currentNode.transform.position;
 
         currentNode.spring1.connectedAnchor = Vector3.zero;
-        currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
+        currentNode.spring2.connectedAnchor = Vector3.zero;
+        //currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
+
+        currentNode.spring1.minDistance = 0.1f;
+        currentNode.spring2.minDistance = 0.1f;
 
 
         // GESTION PHYSIQUE CORDE
 
         currentNode.spring1.spring = spring;
-        currentNode.spring2.spring = spring * 5;
+        currentNode.spring2.spring = spring;
         
             
         currentNode.spring1.damper = damper;
@@ -225,17 +242,13 @@ public class CableCreator : MonoBehaviour
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
 
 
-        // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        /*if(springOrigin != null) 
-            springOrigin.spring = (multiplicateurResistance + (rbOrigin.mass)) 
-                                                       * multiplicateurResistance * (currentLength / maxLength);
-        
-        if(springEnd != null)
-            springEnd.spring = (multiplicateurResistance + (rbEnd.mass)) 
-                                                        * multiplicateurResistance * (currentLength / maxLength);*/
+        Debug.Log(currentLength);
 
-        if(currentLength > maxLength)
+        // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
+        /*if(currentLength > maxLength)
         {
+            Debug.Log(12);
+
             if (springOrigin != null)
                 springOrigin.spring = rbOrigin.mass * multiplicateurResistance;
 
@@ -245,11 +258,14 @@ public class CableCreator : MonoBehaviour
         else
         {
             if (springOrigin != null)
-                springOrigin.spring = 0;
+                springOrigin.spring = Mathf.Lerp(rbOrigin.mass * multiplicateurResistance * 0.25f, rbOrigin.mass * multiplicateurResistance, currentLength / maxLength);
 
             if (springEnd != null)
-                springEnd.spring = 0;
-        }
+                springEnd.spring = Mathf.Lerp(rbEnd.mass * multiplicateurResistance * 0.25f, rbEnd.mass * multiplicateurResistance, currentLength / maxLength);
+        }*/
+
+        springOrigin.spring = rbOrigin.mass * multiplicateurResistance * currentLength / maxLength;
+        springEnd.spring = rbEnd.mass * multiplicateurResistance * currentLength / maxLength;
     }
 
 
