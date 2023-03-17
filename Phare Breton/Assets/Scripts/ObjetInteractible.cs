@@ -21,7 +21,7 @@ public class ObjetInteractible : MonoBehaviour
     [Header("Link")]
     public bool isLinked;
     [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
-    [HideInInspector] public GameObject cable;
+    [HideInInspector] public CableCreator cable;
     [HideInInspector] public bool isStart;
 
     [Header("Ampoule")]
@@ -65,6 +65,15 @@ public class ObjetInteractible : MonoBehaviour
         {
             MagnetEffect();
         }
+
+        if (isLinked)
+        {
+            if(isStart)
+                OrientateObject(cable.origin.transform);
+            
+            else
+                OrientateObject(cable.end.transform);
+        }
     }
 
 
@@ -96,6 +105,13 @@ public class ObjetInteractible : MonoBehaviour
 
         else 
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+    }
+
+    public void OrientateObject(Transform newParent)
+    {
+        /*Vector3 direction = nextNode.position - connectedNode.position;
+
+        transform.rotation = Quaternion.AngleAxis(Vector3.Angle(transform.up, transform.InverseTransformDirection(-direction)), Vector3.up);*/
     }
 
     

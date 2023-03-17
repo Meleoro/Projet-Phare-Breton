@@ -37,7 +37,7 @@ public class Porte : MonoBehaviour
                 if (doorNumber == 1)
                 {
                     if(!door1.hasCableThrough)
-                        CableThroughDoor(currentObject.cable, movedObject, door1.gameObject, door2.gameObject);
+                        CableThroughDoor(currentObject.cable.gameObject, movedObject, door1.gameObject, door2.gameObject);
                     
                     else
                         DestroyCableThroughDoor(door1, movedObject);
@@ -46,7 +46,7 @@ public class Porte : MonoBehaviour
                 else
                 {
                     if(!door2.hasCableThrough) 
-                        CableThroughDoor(currentObject.cable, movedObject, door2.gameObject, door1.gameObject);
+                        CableThroughDoor(currentObject.cable.gameObject, movedObject, door2.gameObject, door1.gameObject);
                     
                     else
                         DestroyCableThroughDoor(door2, movedObject);
@@ -162,10 +162,10 @@ public class Porte : MonoBehaviour
         newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
 
-        newScriptCreator.CreateNodes(null, currentObject.GetComponent<SpringJoint>(), null, null,null, 
-            currentObject.GetComponent<Rigidbody>());
-        
-        
+        newScriptCreator.CreateNodes(currentObject.GetComponent<SpringJoint>(), null, currentObject.GetComponent<ObjetInteractible>(), null,
+            currentObject.GetComponent<Rigidbody>(), null);
+
+
         // On assigne tous ces éléments à la porte
         EntreePorte currentDoor = startNewCable.GetComponent<EntreePorte>();
 
