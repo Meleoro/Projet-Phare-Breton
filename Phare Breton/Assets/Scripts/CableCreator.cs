@@ -255,17 +255,29 @@ public class CableCreator : MonoBehaviour
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
         if (springOrigin != null && !lockStart)
+        {
             origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-        
+            origin.spring2.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        }
+
         else
+        {
             origin.spring1.spring = 0;
+            origin.spring2.spring = spring;
+        }
         
         
         if (springEnd != null && !lockEnd)
+        {
+            end.spring1.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
             end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-        
-        else
+        }
+
+        else 
+        {
+            end.spring1.spring = spring;
             end.spring2.spring = 0;
+        }
     }
 
 
