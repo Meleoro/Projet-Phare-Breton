@@ -103,18 +103,21 @@ public class CableCreator : MonoBehaviour
         }
 
 
-        CreateCable();
+        CreateCable(rbOrigin, rbEnd);
     }
 
     
-    private void CreateCable()
+    private void CreateCable(Rigidbody origin, Rigidbody end)
     {
-        NodeCable currentNode = nodesRope[0].GetComponent<NodeCable>();
+        if (origin != null)
+        {
+            NodeCable currentNode = nodesRope[0].GetComponent<NodeCable>();
 
-        currentNode.node2 = nodesRope[1].transform;
-        currentNode.spring2.connectedBody = nodesRope[1].GetComponent<Rigidbody>();
-        currentNode.spring2.spring = spring;
-        currentNode.spring2.damper = damper;
+            currentNode.node2 = origin.transform;
+            currentNode.spring2.connectedBody = origin;
+            currentNode.spring2.spring = spring;
+            currentNode.spring2.damper = damper;
+        }
 
 
         for (int k = 1; k < nodesRope.Count - 1; k++)
@@ -123,12 +126,15 @@ public class CableCreator : MonoBehaviour
         }
 
 
-        currentNode = nodesRope[nodesRope.Count - 1].GetComponent<NodeCable>();
+        if (end != null)
+        {
+            NodeCable currentNode = nodesRope[nodesRope.Count - 1].GetComponent<NodeCable>();
 
-        currentNode.node1 = nodesRope[nodesRope.Count - 2].transform;
-        currentNode.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
-        currentNode.spring1.spring = spring;
-        currentNode.spring1.damper = damper;
+            currentNode.node1 = end.transform;
+            currentNode.spring1.connectedBody = end;
+            currentNode.spring1.spring = spring;
+            currentNode.spring1.damper = damper;
+        }
     }
 
 
