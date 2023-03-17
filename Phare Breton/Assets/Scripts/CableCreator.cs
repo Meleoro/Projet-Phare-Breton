@@ -53,10 +53,10 @@ public class CableCreator : MonoBehaviour
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
 
-        nbrNodes = (int) (distanceStartEnd / distanceBetweenNodes);
+        //nbrNodes = (int) (distanceStartEnd / distanceBetweenNodes);
 
-        if (nbrNodes > nbrMaxNodes)
-            nbrNodes = nbrMaxNodes;
+
+        nbrNodes = nbrMaxNodes;
         
 
         // Creation de chaque node de la corde
