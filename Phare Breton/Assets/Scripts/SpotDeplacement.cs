@@ -31,7 +31,7 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            other.GetComponent<ObjetInteractible>().isMagneted = false;
+            other.GetComponent<ObjetInteractible>().DesactivateMagnet(transform);
         }
     }
 

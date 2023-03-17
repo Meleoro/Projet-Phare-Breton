@@ -22,6 +22,8 @@ public class CableCreator : MonoBehaviour
     public SpringJoint springEnd;
     public Rigidbody rbOrigin;
     public Rigidbody rbEnd;
+    public bool lockStart;
+    public bool lockEnd;
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
@@ -80,7 +82,10 @@ public class CableCreator : MonoBehaviour
         rbEnd = rigidbodyEnd;
 
         springOrigin = currentSpringOrigin;
+        springOrigin.spring = spring;
+        
         springEnd = currentSpringEnd;
+        springEnd.spring = spring;
         
         if(springOrigin != null)
             springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
@@ -249,11 +254,18 @@ public class CableCreator : MonoBehaviour
         
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        if (springOrigin != null)
+        if (springOrigin != null && !lockStart)
             origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
         
-        if (springEnd != null)
+        else
+            origin.spring1.spring = 0;
+        
+        
+        if (springEnd != null && !lockEnd)
             end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        
+        else
+            end.spring2.spring = 0;
     }
 
 
