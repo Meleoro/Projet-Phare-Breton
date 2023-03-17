@@ -19,6 +19,10 @@ public class Cable : MonoBehaviour
     {
         originNode.position = originAnchor.transform.position + originAnchor.transform.TransformDirection(originOffset);
         endNode.position = endAnchor.transform.position + endAnchor.transform.TransformDirection(endOffset);
+
+        /*originAnchor.transform.position = originNode.position + originAnchor.transform.TransformDirection(originOffset);
+        endNode.position = endNode.transform.position + endAnchor.transform.TransformDirection(endOffset);*/
+        
     }
 
     public void ActualiseNodes()

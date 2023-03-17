@@ -91,14 +91,14 @@ public class CableCreator : MonoBehaviour
         if(startObject != null)
         {
             startObject.isLinked = true;
-            startObject.cable = gameObject;
+            startObject.cable = this;
             startObject.isStart = true;
         }
 
         if (endObject != null)
         {
             endObject.isLinked = true;
-            endObject.cable = gameObject;
+            endObject.cable = this;
             endObject.isStart = false;
         }
 
@@ -117,6 +117,8 @@ public class CableCreator : MonoBehaviour
             currentNode.spring2.connectedBody = origin;
             currentNode.spring2.spring = spring;
             currentNode.spring2.damper = damper;
+
+            springOrigin = currentNode.GetComponent<SpringJoint>();
         }
 
 
@@ -134,6 +136,8 @@ public class CableCreator : MonoBehaviour
             currentNode.spring1.connectedBody = end;
             currentNode.spring1.spring = spring;
             currentNode.spring1.damper = damper;
+            
+            springEnd = currentNode.GetComponent<SpringJoint>();
         }
     }
 
@@ -246,9 +250,7 @@ public class CableCreator : MonoBehaviour
         
         // Actualisation de la couleur
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
-
-
-        Debug.Log(currentLength);
+        
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
         /*if(currentLength > maxLength)
@@ -270,8 +272,11 @@ public class CableCreator : MonoBehaviour
                 springEnd.spring = Mathf.Lerp(rbEnd.mass * multiplicateurResistance * 0.25f, rbEnd.mass * multiplicateurResistance, currentLength / maxLength);
         }*/
 
-        springOrigin.spring = rbOrigin.mass * multiplicateurResistance * currentLength / maxLength;
-        springEnd.spring = rbEnd.mass * multiplicateurResistance * currentLength / maxLength;
+        if (springOrigin != null)
+            springOrigin.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        
+        if (springEnd != null)
+            springEnd.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
     }
 
 
@@ -293,6 +298,7 @@ public class CableCreator : MonoBehaviour
     {
         GetComponent<Cable>().endOffset = ChooseSpotCable(GetComponent<Cable>().endAnchor, newAnchor) - newAnchor.transform.position;
         GetComponent<Cable>().endAnchor = newAnchor;
+        end.GetComponent<SpringJoint>().connectedBody = newRb;
 
         isLinked = true;
 
@@ -310,7 +316,7 @@ public class CableCreator : MonoBehaviour
 
             currentObject.isLinked = true;
             currentObject.isStart = false;
-            currentObject.cable = gameObject;
+            currentObject.cable = this;
         }
     }
 
@@ -320,6 +326,7 @@ public class CableCreator : MonoBehaviour
     {
         GetComponent<Cable>().originOffset = ChooseSpotCable(GetComponent<Cable>().originAnchor, newAnchor) - newAnchor.transform.position;
         GetComponent<Cable>().originAnchor = newAnchor;
+        origin.GetComponent<SpringJoint>().connectedBody = newRb;
 
         isLinked = true;
 
@@ -332,7 +339,7 @@ public class CableCreator : MonoBehaviour
 
             currentObject.isLinked = true;
             currentObject.isStart = false;
-            currentObject.cable = gameObject;
+            currentObject.cable = this;
         }
     }
 

@@ -161,10 +161,10 @@ public class CharacterFlute : MonoBehaviour
                         
                         // On informe les scripts des objets qu'ils sont liés
                         selectedObjects[k].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[j]);
-                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = newRope;
+                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = currentCableCreator;
                         
                         selectedObjects[j].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[k]);
-                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = newRope;
+                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = currentCableCreator;
                     }
                 }
             }
