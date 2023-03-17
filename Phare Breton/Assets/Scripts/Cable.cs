@@ -14,16 +14,22 @@ public class Cable : MonoBehaviour
     public Transform originNode;
     public Transform endNode;
 
+    [HideInInspector] public Vector3 wantedDirectionOrigin;
+    [HideInInspector] public Vector3 wantedDirectionEnd;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        originNode.position = originAnchor.transform.position + originAnchor.transform.TransformDirection(originOffset);
-        endNode.position = endAnchor.transform.position + endAnchor.transform.TransformDirection(endOffset);
+        /*originNode.position = originAnchor.transform.position + originAnchor.transform.TransformDirection(originOffset);
+        endNode.position = endAnchor.transform.position + endAnchor.transform.TransformDirection(endOffset);*/
+        
+        //ChangeDirection();
 
         /*originAnchor.transform.position = originNode.position + originAnchor.transform.TransformDirection(originOffset);
         endNode.position = endNode.transform.position + endAnchor.transform.TransformDirection(endOffset);*/
         
     }
+    
+    
 
     public void ActualiseNodes()
     {

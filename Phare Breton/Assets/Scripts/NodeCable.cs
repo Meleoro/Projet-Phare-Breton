@@ -11,4 +11,6 @@ public class NodeCable : MonoBehaviour
     
     public SpringJoint spring1;
     public SpringJoint spring2;
+
+    public FixedJoint joint;
 }

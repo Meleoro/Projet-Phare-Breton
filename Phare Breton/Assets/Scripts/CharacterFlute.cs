@@ -23,6 +23,7 @@ public class CharacterFlute : MonoBehaviour
     public GameObject zoneFlute;
     public GameObject modeVisée;
     public GameObject modeZone;
+    public GameObject cablePoint;
     private CharaManager manager;
 
     private void Start()
@@ -123,7 +124,7 @@ public class CharacterFlute : MonoBehaviour
                 currentCable.ActualiseNodes();
                 
                 // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), gameObject.GetComponent<SpringJoint>(), 
+                currentCableCreator.CreateNodes(selectedObjects[0].GetComponent<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
                     selectedObjects[0].GetComponent<ObjetInteractible>(), null, selectedObjects[0].GetComponent<Rigidbody>(), 
                     gameObject.GetComponent<Rigidbody>());
                 
@@ -195,7 +196,7 @@ public class CharacterFlute : MonoBehaviour
                 objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
             
-            SpringJoint charaSpring = GetComponent<SpringJoint>();
+            SpringJoint charaSpring = cablePoint.GetComponent<SpringJoint>();
         
             charaSpring.spring = 0;
             charaSpring.connectedBody = null;

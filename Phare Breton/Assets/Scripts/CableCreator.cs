@@ -25,8 +25,8 @@ public class CableCreator : MonoBehaviour
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
-    public GameObject origin;
-    public GameObject end;
+    public NodeCable origin;
+    public NodeCable end;
     private LineRenderer _lineRenderer;
     private bool isLinked;
 
@@ -60,7 +60,7 @@ public class CableCreator : MonoBehaviour
         
 
         // Creation de chaque node de la corde
-        nodesRope.Add(origin);
+        nodesRope.Add(origin.gameObject);
         
         for (int k = 1; k < nbrNodes + 1; k++)
         {
@@ -71,7 +71,7 @@ public class CableCreator : MonoBehaviour
             nodesRope.Add(newNode);
         }
         
-        nodesRope.Add(end);
+        nodesRope.Add(end.gameObject);
 
 
         // Attribution des springs exterieurs au cable (pour la resistance)
@@ -83,10 +83,10 @@ public class CableCreator : MonoBehaviour
         springEnd = currentSpringEnd;
         
         if(springOrigin != null)
-            springOrigin.connectedBody = nodesRope[1].GetComponent<Rigidbody>();
+            springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
         
         if(springEnd != null)
-            springEnd.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+            springEnd.connectedBody = nodesRope[nodesRope.Count - 1].GetComponent<Rigidbody>();
 
         if(startObject != null)
         {
@@ -103,41 +103,15 @@ public class CableCreator : MonoBehaviour
         }
 
 
-        CreateCable(rbOrigin, rbEnd);
+        CreateCable();
     }
 
     
-    private void CreateCable(Rigidbody origin, Rigidbody end)
+    private void CreateCable()
     {
-        if (origin != null)
-        {
-            NodeCable currentNode = nodesRope[0].GetComponent<NodeCable>();
-
-            currentNode.node2 = origin.transform;
-            currentNode.spring2.connectedBody = origin;
-            currentNode.spring2.spring = spring;
-            currentNode.spring2.damper = damper;
-
-            springOrigin = currentNode.GetComponent<SpringJoint>();
-        }
-
-
-        for (int k = 1; k < nodesRope.Count - 1; k++)
+        for (int k = 0; k < nodesRope.Count; k++)
         {
             CreateLienBetweenNodes(k, true);
-        }
-
-
-        if (end != null)
-        {
-            NodeCable currentNode = nodesRope[nodesRope.Count - 1].GetComponent<NodeCable>();
-
-            currentNode.node1 = end.transform;
-            currentNode.spring1.connectedBody = end;
-            currentNode.spring1.spring = spring;
-            currentNode.spring1.damper = damper;
-            
-            springEnd = currentNode.GetComponent<SpringJoint>();
         }
     }
 
@@ -188,13 +162,33 @@ public class CableCreator : MonoBehaviour
         NodeCable currentNode = nodesRope[index].GetComponent<NodeCable>();
 
         // CREATION DU LIEN
-        currentNode.node1 = nodesRope[index - 1].transform;
-        currentNode.node2 = nodesRope[index + 1].transform;
 
-        currentNode.spring1.connectedBody = nodesRope[index - 1].GetComponent<Rigidbody>();
-        currentNode.spring2.connectedBody = nodesRope[index + 1].GetComponent<Rigidbody>();
+        if (index == 0)
+        {
+            currentNode.node1 = rbOrigin.transform;
+            currentNode.node2 = nodesRope[index + 1].transform;
+            
+            currentNode.spring1.connectedBody = rbOrigin;
+            currentNode.spring2.connectedBody = nodesRope[index + 1].GetComponent<Rigidbody>();
+        }
+        else if (index == nodesRope.Count - 1)
+        {
+            currentNode.node1 = nodesRope[index - 1].transform;
+            currentNode.node2 = rbEnd.transform;
+            
+            currentNode.spring1.connectedBody = nodesRope[index - 1].GetComponent<Rigidbody>();
+            currentNode.spring2.connectedBody = rbEnd;
+        }
+        else
+        {
+            currentNode.node1 = nodesRope[index - 1].transform;
+            currentNode.node2 = nodesRope[index + 1].transform;
 
-        
+            currentNode.spring1.connectedBody = nodesRope[index - 1].GetComponent<Rigidbody>();
+            currentNode.spring2.connectedBody = nodesRope[index + 1].GetComponent<Rigidbody>();
+        }
+
+
         // GESTION DISTANCE ENTRE POINTS
         currentNode.spring1.anchor = Vector3.zero;
         currentNode.spring2.anchor = Vector3.zero;
@@ -205,8 +199,10 @@ public class CableCreator : MonoBehaviour
         currentNode.spring2.connectedAnchor = Vector3.zero;
         //currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
 
-        currentNode.spring1.minDistance = 0.1f;
+        /*currentNode.spring1.minDistance = 0.1f;
         currentNode.spring2.minDistance = 0.1f;
+        currentNode.spring1.maxDistance = 0.1f;
+        currentNode.spring2.maxDistance = 0.1f;*/
 
 
         // GESTION PHYSIQUE CORDE
@@ -253,30 +249,11 @@ public class CableCreator : MonoBehaviour
         
 
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        /*if(currentLength > maxLength)
-        {
-            Debug.Log(12);
-
-            if (springOrigin != null)
-                springOrigin.spring = rbOrigin.mass * multiplicateurResistance;
-
-            if (springEnd != null)
-                springEnd.spring = rbEnd.mass * multiplicateurResistance;
-        }
-        else
-        {
-            if (springOrigin != null)
-                springOrigin.spring = Mathf.Lerp(rbOrigin.mass * multiplicateurResistance * 0.25f, rbOrigin.mass * multiplicateurResistance, currentLength / maxLength);
-
-            if (springEnd != null)
-                springEnd.spring = Mathf.Lerp(rbEnd.mass * multiplicateurResistance * 0.25f, rbEnd.mass * multiplicateurResistance, currentLength / maxLength);
-        }*/
-
         if (springOrigin != null)
-            springOrigin.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+            origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
         
         if (springEnd != null)
-            springEnd.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+            end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
     }
 
 
@@ -298,7 +275,7 @@ public class CableCreator : MonoBehaviour
     {
         GetComponent<Cable>().endOffset = ChooseSpotCable(GetComponent<Cable>().endAnchor, newAnchor) - newAnchor.transform.position;
         GetComponent<Cable>().endAnchor = newAnchor;
-        end.GetComponent<SpringJoint>().connectedBody = newRb;
+        end.spring2.connectedBody = newRb;
 
         isLinked = true;
 
@@ -326,7 +303,7 @@ public class CableCreator : MonoBehaviour
     {
         GetComponent<Cable>().originOffset = ChooseSpotCable(GetComponent<Cable>().originAnchor, newAnchor) - newAnchor.transform.position;
         GetComponent<Cable>().originAnchor = newAnchor;
-        origin.GetComponent<SpringJoint>().connectedBody = newRb;
+        origin.spring1.connectedBody = newRb;
 
         isLinked = true;
 

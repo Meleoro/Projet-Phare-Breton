@@ -127,14 +127,14 @@ public class Porte : MonoBehaviour
         if (currentObject.CompareTag("Interactible"))
         {
             if(currentObject.GetComponent<ObjetInteractible>().isStart)
-                currentScript.ChangeFirstNode(endOldCable, null, null);
+                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
         
             else 
-                currentScript.ChangeLastNode(endOldCable, null, null);
+                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
         }
         else
         {
-            currentScript.ChangeLastNode(endOldCable, null, null);
+            currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
         }
 
 
@@ -163,7 +163,7 @@ public class Porte : MonoBehaviour
 
 
         newScriptCreator.CreateNodes(currentObject.GetComponent<SpringJoint>(), null, currentObject.GetComponent<ObjetInteractible>(), null,
-            currentObject.GetComponent<Rigidbody>(), null);
+            currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
 
 
         // On assigne tous ces éléments à la porte

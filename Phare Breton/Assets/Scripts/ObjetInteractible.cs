@@ -66,14 +66,14 @@ public class ObjetInteractible : MonoBehaviour
             MagnetEffect();
         }
 
-        if (isLinked)
+        /*if (isLinked)
         {
             if(isStart)
                 OrientateObject(cable.origin.transform);
             
             else
                 OrientateObject(cable.end.transform);
-        }
+        }*/
     }
 
 
