@@ -242,7 +242,7 @@ public class CableCreator : MonoBehaviour
     private void ActualiseLienRenderer()
     {
         // Actualisation de la position
-        _lineRenderer.positionCount = nodesRope.Count;
+        _lineRenderer.positionCount = nodesRope.Count + 2;
 
         List<Vector3> posLineRenderer = ListePositionsNodes();
         
@@ -284,11 +284,15 @@ public class CableCreator : MonoBehaviour
     private List<Vector3> ListePositionsNodes()
     {
         List<Vector3> posLineRenderer = new List<Vector3>();
+
+        posLineRenderer.Add(rbOrigin.transform.position);
         
         for (int k = 0; k < nodesRope.Count; k++)
         {
             posLineRenderer.Add(nodesRope[k].transform.position);
         }
+
+        posLineRenderer.Add(rbEnd.transform.position);
 
         return posLineRenderer;
     }
