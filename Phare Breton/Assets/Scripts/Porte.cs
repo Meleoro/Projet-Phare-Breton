@@ -162,7 +162,7 @@ public class Porte : MonoBehaviour
         newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
 
-        newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), null, currentObject.GetComponent<ObjetInteractible>(), null,
+        newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
 
 
