@@ -82,10 +82,12 @@ public class CableCreator : MonoBehaviour
         rbEnd = rigidbodyEnd;
 
         springOrigin = currentSpringOrigin;
-        springOrigin.spring = spring;
+        if (springOrigin != null)
+            springOrigin.spring = spring;
         
         springEnd = currentSpringEnd;
-        springEnd.spring = spring;
+        if(springEnd != null)
+            springEnd.spring = spring;
         
         if(springOrigin != null)
             springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
@@ -307,7 +309,8 @@ public class CableCreator : MonoBehaviour
 
         rbEnd = newRb;
         springEnd = newSpring;
-        springEnd.spring = spring;
+        if (springEnd != null)
+            springEnd.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {
@@ -329,7 +332,9 @@ public class CableCreator : MonoBehaviour
 
         rbOrigin = newRb;
         springOrigin = newSpring;
-        springOrigin.spring = spring;
+
+        if(springOrigin != null)
+            springOrigin.spring = spring;
 
         if (newAnchor.CompareTag("Interactible"))
         {
