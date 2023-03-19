@@ -9,6 +9,7 @@ public class CharaManager : MonoBehaviour
     [Header("Scripts")] 
     public CharacterMovement movementScript;
     public CharacterFlute fluteScript;
+    public CharacterNotes notesScript;
     
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
@@ -19,6 +20,10 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
 
+    [Header("Notes")]
+    [HideInInspector] public int nearNotePartitionNumber;
+    [HideInInspector] public int nearNoteNumber;
+    
     [Header("Autres")] 
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
