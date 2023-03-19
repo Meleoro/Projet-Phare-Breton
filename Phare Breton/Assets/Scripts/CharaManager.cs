@@ -61,11 +61,22 @@ public class CharaManager : MonoBehaviour
             }
 
 
-            // Escalade
+            // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
-            {
-                interaction = false;
-                movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+            { 
+                // Si c'est une note
+                if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
+                {
+                    notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
+
+                    nearNoteNumber = 0;
+                    nearNotePartitionNumber = 0;
+                }
+                else
+                {
+                    interaction = false;
+                    movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+                }
             }
             else if (nearLadder && interaction)
             {
