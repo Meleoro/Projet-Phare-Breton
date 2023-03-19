@@ -21,7 +21,7 @@ public class ObjetInteractible : MonoBehaviour
     
     [Header("Link")]
     public bool isLinked;
-    [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
+    public List<GameObject> linkedObject = new List<GameObject>();
     [HideInInspector] public CableCreator cable;
     [HideInInspector] public bool isStart;
 
