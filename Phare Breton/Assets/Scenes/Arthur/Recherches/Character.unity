@@ -2061,27 +2061,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2075980105 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5543552995709342366, guid: a159f5861fb015d4d901249fa2f958d9,
-    type: 3}
-  m_PrefabInstance: {fileID: 5209479903800370464}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2075980116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075980105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d44de43371f40904f9fe307900f97637, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  notesPerMelody: 0300000004000000
-  collectedNotes1: 
-  collectedNotes2: 
 --- !u!1001 &1341649936011561316
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2324,11 +2303,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentiel
       objectReference: {fileID: 0}
-    - target: {fileID: 4053926968630742003, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      propertyPath: hauteurObject
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6087425077177480877, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
       propertyPath: m_Constraints
@@ -2417,11 +2391,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5543552995709342366, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2075980116}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
 --- !u!1001 &5751631165472272042
 PrefabInstance:
