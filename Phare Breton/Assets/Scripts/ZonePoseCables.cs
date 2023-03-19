@@ -16,15 +16,23 @@ public class ZonePoseCables : MonoBehaviour
             scriptFlute.objectsAtRange.Add(other.gameObject);
             _object.Select();
             
-            if(other.GetComponent<ObjetInteractible>().isClimbable)
+            if(_object.isClimbable)
                 ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
+            
+            if (_object.isNote)
+            {
+                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
+                ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
+                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = _object.partitionNumber;
+                ReferenceManager.Instance.characterReference.nearNoteNumber = _object.posInPartitionNumber;
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
-        {
+        {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
             scriptFlute.objectsAtRange.Remove(other.gameObject);
@@ -32,6 +40,14 @@ public class ZonePoseCables : MonoBehaviour
             
             if(other.GetComponent<ObjetInteractible>().isClimbable)
                 ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
+            
+            else if (_object.isNote)
+            {
+                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
+                ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
+                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
+                ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
+            }
         }
     }
 }
