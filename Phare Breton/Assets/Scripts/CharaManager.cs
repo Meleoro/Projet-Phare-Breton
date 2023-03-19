@@ -65,10 +65,12 @@ public class CharaManager : MonoBehaviour
 
             // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
-            { 
+            {
                 // Si c'est une note
                 if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                 {
+                    nearObjects.Clear();
+                    
                     notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
 
                     Destroy(nearNoteObject);
@@ -77,9 +79,10 @@ public class CharaManager : MonoBehaviour
                 }
                 else
                 {
-                    interaction = false;
-                    movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+                    movementScript.ClimbObject(nearObjects[0]);
                 }
+                
+                interaction = false;
             }
             else if (nearLadder && interaction)
             {

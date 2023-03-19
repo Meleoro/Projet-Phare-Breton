@@ -40,6 +40,7 @@ public class ObjetInteractible : MonoBehaviour
     [Header("Note")]
     [Min(1)] public int partitionNumber;   // Quelle partition
     [Min(1)] public int posInPartitionNumber;   // Quelle place dans cette partition
+    [HideInInspector] public bool isNote;
 
     [Header("Références")]
     private Rigidbody rb;
@@ -69,6 +70,15 @@ public class ObjetInteractible : MonoBehaviour
         if (isMagneted)
         {
             MagnetEffect();
+        }
+
+        if (objectType == InteractiblesType.note)
+        {
+            isNote = true;
+        }
+        else
+        {
+            isNote = false;
         }
     }
 
@@ -191,6 +201,7 @@ public class ObjetInteractible : MonoBehaviour
         }
         else if (objectType == InteractiblesType.note && other.CompareTag("Player"))
         {
+            ReferenceManager.Instance.characterReference.nearNoteObject = gameObject;
             ReferenceManager.Instance.characterReference.nearNotePartitionNumber = partitionNumber;
             ReferenceManager.Instance.characterReference.nearNoteNumber = posInPartitionNumber;
         }
