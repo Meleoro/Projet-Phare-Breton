@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,7 @@ public class CharaManager : MonoBehaviour
     [Header("Scripts")] 
     public CharacterMovement movementScript;
     public CharacterFlute fluteScript;
+    public CharacterNotes notesScript;
     
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
@@ -19,6 +21,11 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
 
+    [Header("Notes")]
+    [HideInInspector] public GameObject nearNoteObject;
+    [HideInInspector] public int nearNotePartitionNumber;
+    [HideInInspector] public int nearNoteNumber;
+    
     [Header("Autres")] 
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
@@ -56,11 +63,23 @@ public class CharaManager : MonoBehaviour
             }
 
 
-            // Escalade
+            // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
-            {
-                interaction = false;
-                movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+            { 
+                // Si c'est une note
+                if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
+                {
+                    notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
+
+                    Destroy(nearNoteObject);
+                    nearNoteNumber = 0;
+                    nearNotePartitionNumber = 0;
+                }
+                else
+                {
+                    interaction = false;
+                    movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
+                }
             }
             else if (nearLadder && interaction)
             {
