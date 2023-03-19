@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +22,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool interaction;
 
     [Header("Notes")]
+    [HideInInspector] public GameObject nearNoteObject;
     [HideInInspector] public int nearNotePartitionNumber;
     [HideInInspector] public int nearNoteNumber;
     
@@ -69,6 +71,7 @@ public class CharaManager : MonoBehaviour
                 {
                     notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
 
+                    Destroy(nearNoteObject);
                     nearNoteNumber = 0;
                     nearNotePartitionNumber = 0;
                 }
