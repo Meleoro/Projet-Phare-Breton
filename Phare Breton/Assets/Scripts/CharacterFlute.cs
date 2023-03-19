@@ -15,7 +15,7 @@ public class CharacterFlute : MonoBehaviour
 
     [Header("Rope")] 
     public GameObject ropeObject;
-    [HideInInspector] public List<GameObject> objectsAtRange = new List<GameObject>();
+    public List<GameObject> objectsAtRange = new List<GameObject>();
     [HideInInspector] public List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
@@ -202,6 +202,8 @@ public class CharacterFlute : MonoBehaviour
             charaSpring.connectedBody = null;
 
             manager.hasRope = false;
+            
+            ropedObject.Clear();
         }
     }
 

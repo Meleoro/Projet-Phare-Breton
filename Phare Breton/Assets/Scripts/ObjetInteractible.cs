@@ -14,13 +14,14 @@ public class ObjetInteractible : MonoBehaviour
         carton,
         panneauElectrique,
         ampoule,
-        echelle
+        echelle,
+        note
     }
     public InteractiblesType objectType;
     
     [Header("Link")]
     public bool isLinked;
-    [HideInInspector] public List<GameObject> linkedObject = new List<GameObject>();
+    public List<GameObject> linkedObject = new List<GameObject>();
     [HideInInspector] public CableCreator cable;
     [HideInInspector] public bool isStart;
 
@@ -35,6 +36,11 @@ public class ObjetInteractible : MonoBehaviour
     
     [Header("Ladder")]
     public Transform TPPos;
+    
+    [Header("Note")]
+    [Min(1)] public int partitionNumber;   // Quelle partition
+    [Min(1)] public int posInPartitionNumber;   // Quelle place dans cette partition
+    [HideInInspector] public bool isNote;
 
     [Header("Références")]
     private Rigidbody rb;
@@ -66,14 +72,14 @@ public class ObjetInteractible : MonoBehaviour
             MagnetEffect();
         }
 
-        /*if (isLinked)
+        if (objectType == InteractiblesType.note)
         {
-            if(isStart)
-                OrientateObject(cable.origin.transform);
-            
-            else
-                OrientateObject(cable.end.transform);
-        }*/
+            isNote = true;
+        }
+        else
+        {
+            isNote = false;
+        }
     }
 
 
@@ -131,14 +137,7 @@ public class ObjetInteractible : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
     }
 
-    public void OrientateObject(Transform newParent)
-    {
-        /*Vector3 direction = nextNode.position - connectedNode.position;
 
-        transform.rotation = Quaternion.AngleAxis(Vector3.Angle(transform.up, transform.InverseTransformDirection(-direction)), Vector3.up);*/
-    }
-
-    
     public void Select()
     {
 
@@ -200,6 +199,12 @@ public class ObjetInteractible : MonoBehaviour
             ReferenceManager.Instance.characterReference.nearLadder = true;
             ReferenceManager.Instance.characterReference.ladderTPPos = TPPos.position;
         }
+        else if (objectType == InteractiblesType.note && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.nearNoteObject = gameObject;
+            ReferenceManager.Instance.characterReference.nearNotePartitionNumber = partitionNumber;
+            ReferenceManager.Instance.characterReference.nearNoteNumber = posInPartitionNumber;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -212,6 +217,11 @@ public class ObjetInteractible : MonoBehaviour
         if (objectType == InteractiblesType.echelle && other.CompareTag("Player"))
         {
             ReferenceManager.Instance.characterReference.nearLadder = false;
+        }
+        else if (objectType == InteractiblesType.note && other.CompareTag("Player"))
+        {
+            ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
+            ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
         }
     }
 }

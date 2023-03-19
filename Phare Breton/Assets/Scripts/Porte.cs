@@ -21,6 +21,26 @@ public class Porte : MonoBehaviour
     
     public void EnterDoor(GameObject movedObject, int doorNumber)
     {
+        if (doorNumber == 1)
+        {
+            movedObject.transform.position = charaPos2.position;
+            
+            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
+            
+            ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
+            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
+        }
+
+        else
+        {
+            movedObject.transform.position = charaPos1.position;
+            
+            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
+            
+            ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
+            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
+        }
+        
         if (movedObject.CompareTag("Interactible"))
         {
             if(doorNumber == 1)
@@ -82,28 +102,7 @@ public class Porte : MonoBehaviour
                 }
             }
         }
-        
-        
-        if (doorNumber == 1)
-        {
-            movedObject.transform.position = charaPos2.position;
-            
-            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
-            
-            ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
-            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
-        }
 
-        else
-        {
-            movedObject.transform.position = charaPos1.position;
-            
-            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
-            
-            ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
-            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
-        }
-        
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
     }
 
@@ -161,6 +160,9 @@ public class Porte : MonoBehaviour
         newScriptCable.originOffset = newScriptCreator.ChooseSpotCable(startNewCable, currentObject) - currentObject.transform.position;
         newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
+        newScriptCreator.end.transform.position = currentObject.transform.position;
+        newScriptCreator.origin.transform.position = startNewCable.transform.position;
+        
 
         newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
