@@ -62,6 +62,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RetourMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fa7797c-d4b0-4778-a319-c486a39ba9fc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +205,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Deplacement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11ce5ddb-c1ff-4fd7-a257-bb79f689180a"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RetourMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8fef3dcb-0eb8-4d73-ac1e-c20bdabf580a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RetourMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +239,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character_Flute = m_Character.FindAction("Flute", throwIfNotFound: true);
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
         m_Character_Deplacement = m_Character.FindAction("Deplacement", throwIfNotFound: true);
+        m_Character_RetourMenu = m_Character.FindAction("RetourMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +305,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Flute;
     private readonly InputAction m_Character_Interaction;
     private readonly InputAction m_Character_Deplacement;
+    private readonly InputAction m_Character_RetourMenu;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
@@ -281,6 +314,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Flute => m_Wrapper.m_Character_Flute;
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
         public InputAction @Deplacement => m_Wrapper.m_Character_Deplacement;
+        public InputAction @RetourMenu => m_Wrapper.m_Character_RetourMenu;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +336,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Deplacement.started += instance.OnDeplacement;
             @Deplacement.performed += instance.OnDeplacement;
             @Deplacement.canceled += instance.OnDeplacement;
+            @RetourMenu.started += instance.OnRetourMenu;
+            @RetourMenu.performed += instance.OnRetourMenu;
+            @RetourMenu.canceled += instance.OnRetourMenu;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -318,6 +355,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Deplacement.started -= instance.OnDeplacement;
             @Deplacement.performed -= instance.OnDeplacement;
             @Deplacement.canceled -= instance.OnDeplacement;
+            @RetourMenu.started -= instance.OnRetourMenu;
+            @RetourMenu.performed -= instance.OnRetourMenu;
+            @RetourMenu.canceled -= instance.OnRetourMenu;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -341,5 +381,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnFlute(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnDeplacement(InputAction.CallbackContext context);
+        void OnRetourMenu(InputAction.CallbackContext context);
     }
 }
