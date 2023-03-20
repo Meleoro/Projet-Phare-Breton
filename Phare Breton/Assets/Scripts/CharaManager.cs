@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CharaManager : MonoBehaviour
 {
@@ -20,13 +21,14 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool R2;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
+    [HideInInspector] public bool escape;
 
     [Header("Notes")]
     [HideInInspector] public GameObject nearNoteObject;
     [HideInInspector] public int nearNotePartitionNumber;
     [HideInInspector] public int nearNoteNumber;
-    
-    [Header("Autres")] 
+
+    [Header("Autres")] public string menuScene;
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool hasRope;
@@ -47,6 +49,13 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
+        if (escape)
+        {
+            escape = false;
+
+            SceneManager.LoadScene(menuScene);
+        }
+        
         if (!noControl)
         {
             // Partie déplacement player / objets
@@ -166,6 +175,15 @@ public class CharaManager : MonoBehaviour
         
         if (context.canceled)
             moveObject = false;
+    }
+    
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            escape = true;
+        
+        if (context.canceled)
+            escape = false;
     }
 
 
