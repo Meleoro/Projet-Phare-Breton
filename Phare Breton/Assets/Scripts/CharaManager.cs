@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CharaManager : MonoBehaviour
 {
     [Header("Scripts")] 
     public CharacterMovement movementScript;
     public CharacterFlute fluteScript;
+    public CharacterNotes notesScript;
     
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
@@ -18,8 +21,14 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool R2;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
+    [HideInInspector] public bool escape;
 
-    [Header("Autres")] 
+    [Header("Notes")]
+    [HideInInspector] public GameObject nearNoteObject;
+    [HideInInspector] public int nearNotePartitionNumber;
+    [HideInInspector] public int nearNoteNumber;
+
+    [Header("Autres")] public string menuScene;
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool hasRope;
@@ -40,6 +49,13 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
+        if (escape)
+        {
+            escape = false;
+
+            SceneManager.LoadScene(menuScene);
+        }
+        
         if (!noControl)
         {
             // Partie déplacement player / objets
@@ -56,11 +72,26 @@ public class CharaManager : MonoBehaviour
             }
 
 
-            // Escalade
+            // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
+                // Si c'est une note
+                if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
+                {
+                    nearObjects.Clear();
+                    
+                    notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
+
+                    Destroy(nearNoteObject);
+                    nearNoteNumber = 0;
+                    nearNotePartitionNumber = 0;
+                }
+                else
+                {
+                    movementScript.ClimbObject(nearObjects[0]);
+                }
+                
                 interaction = false;
-                movementScript.ClimbObject(fluteScript.objectsAtRange[0]);
             }
             else if (nearLadder && interaction)
             {
@@ -144,6 +175,15 @@ public class CharaManager : MonoBehaviour
         
         if (context.canceled)
             moveObject = false;
+    }
+    
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            escape = true;
+        
+        if (context.canceled)
+            escape = false;
     }
 
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Porte : MonoBehaviour
 {
@@ -17,94 +18,103 @@ public class Porte : MonoBehaviour
     [Header("Limites Camera")]
     [SerializeField] Transform minXZ;
     [SerializeField] Transform maxXZ;
-    
+
+    [Header("Changement Scene")] 
+    [SerializeField] private bool changeScene;
+    [SerializeField] private string sceneName;
     
     public void EnterDoor(GameObject movedObject, int doorNumber)
     {
-        if (movedObject.CompareTag("Interactible"))
+        if (changeScene)
         {
-            if(doorNumber == 1)
-                movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos2.position.y;
-            
-            else
-                movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
-
-            
-            if (movedObject.GetComponent<ObjetInteractible>().isLinked)
-            {
-                ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
-
-                if (doorNumber == 1)
-                {
-                    if(!door1.hasCableThrough)
-                        CableThroughDoor(currentObject.cable.gameObject, movedObject, door1.gameObject, door2.gameObject);
-                    
-                    else
-                        DestroyCableThroughDoor(door1, movedObject);
-                }
-
-                else
-                {
-                    if(!door2.hasCableThrough) 
-                        CableThroughDoor(currentObject.cable.gameObject, movedObject, door2.gameObject, door1.gameObject);
-                    
-                    else
-                        DestroyCableThroughDoor(door2, movedObject);
-                }
-            }
+            SceneManager.LoadScene(sceneName);
         }
-
-        if (movedObject.CompareTag("Player"))
+        else
         {
-            if (movedObject.GetComponent<CharaManager>().hasRope)
+            if (doorNumber == 1)
             {
-                CharacterFlute currentObject = movedObject.GetComponent<CharacterFlute>();
+                movedObject.transform.position = charaPos2.position;
+                
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
+                
+                ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
+                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
+            }
 
-                for (int k = currentObject.cables.Count - 1; k >= 0; k--)
+            else
+            {
+                movedObject.transform.position = charaPos1.position;
+                
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
+                
+                ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
+                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
+            }
+            
+            if (movedObject.CompareTag("Interactible"))
+            {
+                if(doorNumber == 1)
+                    movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos2.position.y;
+                
+                else
+                    movedObject.GetComponent<ObjetInteractible>().currentHauteur = charaPos1.position.y;
+
+                
+                if (movedObject.GetComponent<ObjetInteractible>().isLinked)
                 {
+                    ObjetInteractible currentObject = movedObject.GetComponent<ObjetInteractible>();
+
                     if (doorNumber == 1)
                     {
                         if(!door1.hasCableThrough)
-                            CableThroughDoor(currentObject.cables[k], movedObject, door1.gameObject, door2.gameObject);
+                            CableThroughDoor(currentObject.cable.gameObject, movedObject, door1.gameObject, door2.gameObject);
                         
                         else
                             DestroyCableThroughDoor(door1, movedObject);
                     }
-                    
+
                     else
                     {
-                        if(!door2.hasCableThrough)
-                            CableThroughDoor(currentObject.cables[k], movedObject, door2.gameObject, door1.gameObject);
+                        if(!door2.hasCableThrough) 
+                            CableThroughDoor(currentObject.cable.gameObject, movedObject, door2.gameObject, door1.gameObject);
                         
                         else
                             DestroyCableThroughDoor(door2, movedObject);
                     }
                 }
             }
-        }
-        
-        
-        if (doorNumber == 1)
-        {
-            movedObject.transform.position = charaPos2.position;
-            
-            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
-            
-            ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
-            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
-        }
 
-        else
-        {
-            movedObject.transform.position = charaPos1.position;
-            
-            ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
-            
-            ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
-            ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
+            if (movedObject.CompareTag("Player"))
+            {
+                if (movedObject.GetComponent<CharaManager>().hasRope)
+                {
+                    CharacterFlute currentObject = movedObject.GetComponent<CharacterFlute>();
+
+                    for (int k = currentObject.cables.Count - 1; k >= 0; k--)
+                    {
+                        if (doorNumber == 1)
+                        {
+                            if(!door1.hasCableThrough)
+                                CableThroughDoor(currentObject.cables[k], movedObject, door1.gameObject, door2.gameObject);
+                            
+                            else
+                                DestroyCableThroughDoor(door1, movedObject);
+                        }
+                        
+                        else
+                        {
+                            if(!door2.hasCableThrough)
+                                CableThroughDoor(currentObject.cables[k], movedObject, door2.gameObject, door1.gameObject);
+                            
+                            else
+                                DestroyCableThroughDoor(door2, movedObject);
+                        }
+                    }
+                }
+            }
+
+            ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
         }
-        
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
     }
 
     
@@ -161,6 +171,9 @@ public class Porte : MonoBehaviour
         newScriptCable.originOffset = newScriptCreator.ChooseSpotCable(startNewCable, currentObject) - currentObject.transform.position;
         newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
 
+        newScriptCreator.end.transform.position = currentObject.transform.position;
+        newScriptCreator.origin.transform.position = startNewCable.transform.position;
+        
 
         newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
