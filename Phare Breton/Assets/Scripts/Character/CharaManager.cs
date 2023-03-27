@@ -185,27 +185,4 @@ public class CharaManager : MonoBehaviour
         if (context.canceled)
             escape = false;
     }
-
-
-
-    //------------------------------------------------------------------------------------
-    // PARTIE DETECTION INTERACTIBLES
-
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Interactible"))
-        {
-            if(other.GetComponent<ObjetInteractible>().isClimbable)
-                nearObjects.Add(other.gameObject);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactible"))
-        {
-            if (other.GetComponent<ObjetInteractible>().isClimbable)
-                nearObjects.Remove(other.gameObject);
-        }
-    }*/
 }

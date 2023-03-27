@@ -19,12 +19,12 @@ public class ZonePoseCables : MonoBehaviour
             if(_object.isClimbable)
                 ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
             
-            if (_object.isNote)
+            if (_object.TryGetComponent<Note>(out Note currentNote))
             {
                 ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
                 ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
-                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = _object.partitionNumber;
-                ReferenceManager.Instance.characterReference.nearNoteNumber = _object.posInPartitionNumber;
+                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = currentNote.partitionNumber;
+                ReferenceManager.Instance.characterReference.nearNoteNumber = currentNote.posInPartitionNumber;
             }
         }
     }
@@ -41,7 +41,7 @@ public class ZonePoseCables : MonoBehaviour
             if(other.GetComponent<ObjetInteractible>().isClimbable)
                 ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
             
-            else if (_object.isNote)
+            else if (_object.TryGetComponent<Note>(out Note currentNote))
             {
                 ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
                 ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
