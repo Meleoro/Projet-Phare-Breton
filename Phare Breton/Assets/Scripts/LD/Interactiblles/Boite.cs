@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Note : MonoBehaviour
+public class Boite : ObjetInteractible
 {
     // Start is called before the first frame update
     void Start()
