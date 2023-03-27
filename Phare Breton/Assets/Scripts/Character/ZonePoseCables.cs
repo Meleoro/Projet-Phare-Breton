@@ -12,12 +12,9 @@ public class ZonePoseCables : MonoBehaviour
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
-            
-            scriptFlute.objectsAtRange.Add(other.gameObject);
+
             _object.Select();
-            
-            if(_object.isClimbable)
-                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
+            ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
             
             if (_object.TryGetComponent<Note>(out Note currentNote))
             {
@@ -35,13 +32,10 @@ public class ZonePoseCables : MonoBehaviour
         {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
-            scriptFlute.objectsAtRange.Remove(other.gameObject);
             _object.Deselect();
+            ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
             
-            if(other.GetComponent<ObjetInteractible>().isClimbable)
-                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
-            
-            else if (_object.TryGetComponent<Note>(out Note currentNote))
+            if (_object.TryGetComponent<Note>(out Note currentNote))
             {
                 ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
                 ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;

@@ -48,8 +48,6 @@ public class CharacterMovement : MonoBehaviour
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
     public void RotateCharacter()
     {
-        //transform.rotation = Quaternion.Euler(0, ReferenceManager.Instance.cameraReference.transform.rotation.y, 0);
-        
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
     }
 
@@ -85,12 +83,15 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+
     // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(GameObject climbedObject)
     {
-        transform.position = climbedObject.transform.position + Vector3.up * 2;
+        if(climbedObject.GetComponent<ObjetInteractible>().isClimbable)
+            transform.position = climbedObject.transform.position + Vector3.up * 2;
     }
     
+
     // PERMET AU JOUEUR D'UTILISER UNE ECHELLE
     public void ClimbLadder(Vector3 newPos)
     {

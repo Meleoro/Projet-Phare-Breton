@@ -15,7 +15,6 @@ public class CharacterFlute : MonoBehaviour
 
     [Header("Rope")] 
     public GameObject ropeObject;
-    public List<GameObject> objectsAtRange = new List<GameObject>();
     [HideInInspector] public List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
 
@@ -176,9 +175,9 @@ public class CharacterFlute : MonoBehaviour
     // QUAND LE JOUEUR PLACE LE(S) CABLE(S) QU'IL TRANSPORTE SUR UN OBJET
     public void PlaceLien()
     {
-        if (objectsAtRange.Count == 1)
+        if (manager.nearObjects.Count == 1)
         {
-            SpringJoint objectSpring = objectsAtRange[0].GetComponentInChildren<SpringJoint>();
+            SpringJoint objectSpring = manager.nearObjects[0].GetComponentInChildren<SpringJoint>();
             
             for (int k = cables.Count - 1; k >= 0; k--)
             {
@@ -188,12 +187,12 @@ public class CharacterFlute : MonoBehaviour
                     .GetComponent<Rigidbody>();
 
                 // On relie les objets physiquement 
-                currentCableCreator.ChangeLastNode(objectsAtRange[0], objectsAtRange[0].GetComponent<Rigidbody>(), objectsAtRange[0].GetComponentInChildren<SpringJoint>());
+                currentCableCreator.ChangeLastNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
                 cables.RemoveAt(k);
 
                 // On informe les scripts de chaque objets qu'ils sont connectés 
-                ropedObject[k].linkedObject.Add(objectsAtRange[0]);
-                objectsAtRange[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
+                ropedObject[k].linkedObject.Add(manager.nearObjects[0]);
+                manager.nearObjects[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
             }
             
             SpringJoint charaSpring = cablePoint.GetComponent<SpringJoint>();

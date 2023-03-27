@@ -86,6 +86,7 @@ public class CharaManager : MonoBehaviour
                     nearNoteNumber = 0;
                     nearNotePartitionNumber = 0;
                 }
+
                 else
                 {
                     movementScript.ClimbObject(nearObjects[0]);
@@ -93,11 +94,13 @@ public class CharaManager : MonoBehaviour
                 
                 interaction = false;
             }
+
             else if (nearLadder && interaction)
             {
                 interaction = false;
                 movementScript.ClimbLadder(ladderTPPos);
             }
+
 
             // Partie flûte 
             if (R2 && !hasRope && !isMovingObjects)
