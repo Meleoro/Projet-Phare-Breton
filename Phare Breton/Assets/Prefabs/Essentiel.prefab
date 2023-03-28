@@ -199,6 +199,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1922999139315818349}
   - component: {fileID: 6600994248506118378}
+  - component: {fileID: 6564153844785076590}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -236,6 +237,23 @@ MonoBehaviour:
   cameraReference: {fileID: 4418095107218476792}
   cameraRotationReference: {fileID: 7638195603434322025}
   characterReference: {fileID: 8793358076578007543}
+--- !u!114 &6564153844785076590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501074936058964957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a4e189a7267444abea8f6c76b02981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Melodies:
+  - nbrNotes: 2
+    bande1: {fileID: 0}
+    bande2: {fileID: 0}
+    bande3: {fileID: 0}
 --- !u!1 &7638195603434322025
 GameObject:
   m_ObjectHideFlags: 0
