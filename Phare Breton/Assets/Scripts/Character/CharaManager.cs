@@ -27,6 +27,8 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public GameObject nearNoteObject;
     [HideInInspector] public int nearNotePartitionNumber;
     [HideInInspector] public int nearNoteNumber;
+    [HideInInspector] public bool canPlayMusic;
+    [HideInInspector] public int currentMelodyIndex;
 
     [Header("Autres")] public string menuScene;
     [HideInInspector] public bool noMovement;
@@ -58,6 +60,11 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl)
         {
+            if(interaction && canPlayMusic)
+            {
+                notesScript.Play(currentMelodyIndex);
+            }
+
             // Partie déplacement player / objets
             if (!noMovement && !isMovingObjects)
             {

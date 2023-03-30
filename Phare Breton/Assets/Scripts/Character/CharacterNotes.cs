@@ -5,41 +5,56 @@ using UnityEngine;
 
 public class CharacterNotes : MonoBehaviour
 {
-    [HideInInspector] public List<bool> collectedNotes1;
-    [HideInInspector] public List<bool> collectedNotes2;
+    public List<CollectedNotes> collectedNotes;
+
+    private List<GameObject> bandes;
+
 
     private void Start()
     {
+        Initialize();
     }
 
     public void Initialize()
     {
-        for (int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[0].nbrNotes; k++)
+        for (int k = 0; k < 3; k++)
         {
-            collectedNotes1.Add(false);
-        }
-        
-        for (int j = 0; j <  ReferenceManager.Instance.noteManagerReference.Melodies[1].nbrNotes; j++)
-        {
-            collectedNotes2.Add(false);
+            for (int j = 0; j < ReferenceManager.Instance.noteManagerReference.Melodies[k].nbrNotes; j++)
+            {
+                collectedNotes[k].currentCollectedNotes.Add(false);
+            }
         }
     }
 
     public void AddNote(int partition, int notePos)
     {
-        if (partition == 1)
-        {
-            collectedNotes1[notePos - 1] = true;
-        }
-        else if (partition == 2)
-        {
-            collectedNotes2[notePos - 1] = true;
-        }
+        collectedNotes[partition - 1].currentCollectedNotes[notePos - 1] = true;
     }
 
 
-    public void Play()
+    public void Play(int melodyIndex)
     {
-        
+        if (!collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
+        {
+            // On récupère chaque bande de cette mélodie
+            bandes.Clear();
+
+            for(int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes.Count; k++)
+            {
+                bandes.Add(ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes[k]);
+            }
+
+
+            // On commence le mini jeu
+            bandes[0].GetComponent<BandeJeuDeRythme>().LaunchGame();
+        }
     }
+}
+
+
+
+[Serializable]
+public class CollectedNotes
+{
+    public List<bool> currentCollectedNotes = new List<bool>();
 }

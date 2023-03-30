@@ -18,7 +18,5 @@ public class Melody
 {
     public int nbrNotes;
 
-    public GameObject bande1;
-    public GameObject bande2;
-    public GameObject bande3;
+    public List<GameObject> bandes;
 }
