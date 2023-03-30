@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class CharacterNotes : MonoBehaviour
 {
-    public List<CollectedNotes> collectedNotes;
+    public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
 
-    private List<GameObject> bandes;
+    private List<GameObject> bandes = new List<GameObject>();
 
 
     private void Start()
@@ -34,7 +34,7 @@ public class CharacterNotes : MonoBehaviour
 
     public void Play(int melodyIndex)
     {
-        if (!collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
+        if (collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
         {
             // On récupère chaque bande de cette mélodie
             bandes.Clear();
@@ -46,7 +46,8 @@ public class CharacterNotes : MonoBehaviour
 
 
             // On commence le mini jeu
-            bandes[0].GetComponent<BandeJeuDeRythme>().LaunchGame();
+            GameObject newBande = Instantiate(bandes[0]);
+            newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
         }
     }
 }

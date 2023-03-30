@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class BandeJeuDeRythme : MonoBehaviour
 {
@@ -24,6 +26,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
+    private bool interaction;
 
 
 
@@ -43,6 +46,21 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             barreAvancement.localPosition += Vector3.right * speedMoveBarre * Time.deltaTime;
         }
+
+        if (interaction)
+        {
+            interaction = false;
+
+            if(currentNode != null)
+            {
+                Destroy(currentNode);
+            }
+
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
 
@@ -51,5 +69,15 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         timer = 0;
         gameStarted = true;
+    }
+
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            interaction = true;
+
+        if (context.canceled)
+            interaction = false;
     }
 }

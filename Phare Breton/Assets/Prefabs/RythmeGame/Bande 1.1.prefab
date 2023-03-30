@@ -88,9 +88,10 @@ GameObject:
   - component: {fileID: 2953780821541293983}
   - component: {fileID: 938840412085787283}
   - component: {fileID: 2913501909034166291}
+  - component: {fileID: 1194604195749626196}
   m_Layer: 5
   m_Name: Barre
-  m_TagString: Untagged
+  m_TagString: MusicBarre
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +183,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -198,6 +199,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5, y: 40}
   m_EdgeRadius: 0
+--- !u!50 &1194604195749626196
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111254472404953178}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &131138208534769739
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +352,8 @@ GameObject:
   - component: {fileID: 901964157908319266}
   - component: {fileID: 798883178359612448}
   - component: {fileID: 6452521480286781196}
+  - component: {fileID: 449166252239413154}
+  - component: {fileID: 438425901575955991}
   m_Layer: 5
   m_Name: Node (2)
   m_TagString: Untagged
@@ -418,12 +448,55 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 10
+--- !u!114 &449166252239413154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540373298903370639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e34a4b049b86e64aaf9b5d5468bffa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBande: {fileID: 6103243265949677628}
+  isGreen: 0
+  isYellow: 1
+  isBlue: 0
+--- !u!50 &438425901575955991
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2540373298903370639}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3798852312594694351
 GameObject:
   m_ObjectHideFlags: 0
@@ -475,6 +548,8 @@ GameObject:
   - component: {fileID: 5907363825864485159}
   - component: {fileID: 2215667977399783439}
   - component: {fileID: 4438490005790444447}
+  - component: {fileID: 3614362116630375699}
+  - component: {fileID: 6639257397979650076}
   m_Layer: 5
   m_Name: Node (1)
   m_TagString: Untagged
@@ -569,12 +644,55 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 10
+--- !u!114 &3614362116630375699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806660570388689756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e34a4b049b86e64aaf9b5d5468bffa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBande: {fileID: 6103243265949677628}
+  isGreen: 0
+  isYellow: 1
+  isBlue: 0
+--- !u!50 &6639257397979650076
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3806660570388689756}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3818357303430456641
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,6 +705,8 @@ GameObject:
   - component: {fileID: 4818704446381851150}
   - component: {fileID: 5123927141126680972}
   - component: {fileID: 6106136779511952218}
+  - component: {fileID: 5573504553045505993}
+  - component: {fileID: 4182953983800125354}
   m_Layer: 5
   m_Name: Node
   m_TagString: Untagged
@@ -611,7 +731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -76.7, y: 0}
+  m_AnchoredPosition: {x: -44.2, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4818704446381851150
@@ -681,12 +801,55 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 10
+--- !u!114 &5573504553045505993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3818357303430456641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e34a4b049b86e64aaf9b5d5468bffa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentBande: {fileID: 6103243265949677628}
+  isGreen: 1
+  isYellow: 0
+  isBlue: 0
+--- !u!50 &4182953983800125354
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3818357303430456641}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &8980207317900242794
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +862,8 @@ GameObject:
   - component: {fileID: 1948419303822084885}
   - component: {fileID: 8430695845091468347}
   - component: {fileID: 8588937633860218599}
+  - component: {fileID: 6103243265949677628}
+  - component: {fileID: 6921755257406399830}
   m_Layer: 5
   m_Name: Bande 1.1
   m_TagString: Untagged
@@ -791,3 +956,85 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6103243265949677628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980207317900242794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b1b5204e44ede4e884fa762d43d041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentNode: {fileID: 0}
+  isOnGreen: 0
+  isOnYellow: 0
+  isOnBlue: 0
+  dureePreparation: 1
+  speedMoveBarre: 60
+  barreAvancement: {fileID: 5974979816344026753}
+--- !u!114 &6921755257406399830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980207317900242794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: c3b16583741040e4ca22713515d5c020,
+    type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e878212-b90a-4095-a341-69b85dd69dfb
+    m_ActionName: Character/Direction[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 62811a88-00c3-4307-9eb8-59398347bf41
+    m_ActionName: Character/Flute[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6103243265949677628}
+        m_TargetAssemblyTypeName: BandeJeuDeRythme, Assembly-CSharp
+        m_MethodName: OnInteraction
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9864a300-143a-4d24-aa31-102eb40f8ef5
+    m_ActionName: Character/Interaction[/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 07b7f308-b9df-4674-b692-630d5fcc6c12
+    m_ActionName: Character/Deplacement[/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8fa7797c-d4b0-4778-a319-c486a39ba9fc
+    m_ActionName: Character/RetourMenu[/Keyboard/escape]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Character
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
