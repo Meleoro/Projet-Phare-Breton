@@ -5,19 +5,21 @@ using UnityEngine;
 
 public class CharacterNotes : MonoBehaviour
 {
-    public List<int> notesPerMelody;
-    
     [HideInInspector] public List<bool> collectedNotes1;
     [HideInInspector] public List<bool> collectedNotes2;
 
     private void Start()
     {
-        for (int k = 0; k < notesPerMelody[0]; k++)
+    }
+
+    public void Initialize()
+    {
+        for (int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[0].nbrNotes; k++)
         {
             collectedNotes1.Add(false);
         }
         
-        for (int j = 0; j < notesPerMelody[1]; j++)
+        for (int j = 0; j <  ReferenceManager.Instance.noteManagerReference.Melodies[1].nbrNotes; j++)
         {
             collectedNotes2.Add(false);
         }
@@ -33,5 +35,11 @@ public class CharacterNotes : MonoBehaviour
         {
             collectedNotes2[notePos - 1] = true;
         }
+    }
+
+
+    public void Play()
+    {
+        
     }
 }

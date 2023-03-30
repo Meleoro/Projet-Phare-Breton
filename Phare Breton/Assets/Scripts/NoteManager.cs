@@ -7,7 +7,7 @@ public class NoteManager : MonoBehaviour
 {
     public List<Melody> Melodies;
 
-
+    [Range(1, 3)] public int currentMelody; 
 }
 
 
