@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 
 public class BandeJeuDeRythme : MonoBehaviour
 {
     [Header("Infos Node Selectionnée")]
-    public GameObject currentNode;
-    public bool isOnGreen;
-    public bool isOnYellow;
-    public bool isOnBlue;
+    [HideInInspector] public GameObject currentNode;
+    [HideInInspector] public bool isOnGreen;
+    [HideInInspector] public bool isOnYellow;
+    [HideInInspector] public bool isOnBlue;
 
 
     [Header("Parametres déroulement")]
@@ -21,13 +22,24 @@ public class BandeJeuDeRythme : MonoBehaviour
     [Header("References")]
     public RectTransform barreAvancement;
 
+    [Header("Inputs")]
+    private bool pressX;
+    private bool pressY;
+    private bool pressZ;
+
 
     [Header("Autre")]
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
-    private bool interaction;
+    public List<GameObject> nodesErased = new List<GameObject>();
+    private Vector3 originBarre;
 
+
+    private void Start()
+    {
+        originBarre = barreAvancement.position;
+    }
 
 
     private void Update()
@@ -47,18 +59,31 @@ public class BandeJeuDeRythme : MonoBehaviour
             barreAvancement.localPosition += Vector3.right * speedMoveBarre * Time.deltaTime;
         }
 
-        if (interaction)
+        if (pressX || pressY || pressZ)
         {
-            interaction = false;
-
             if(currentNode != null)
             {
-                Destroy(currentNode);
+                bool isRight = VerifyNote();
+
+                if (isRight)
+                {
+                    currentNode.GetComponent<Image>().enabled = false;
+                    nodesErased.Add(currentNode);
+                }
+
+                else
+                {
+                    RestartGame();
+                }
+
+                pressX = false;
+                pressY = false;
+                pressZ = false;
             }
 
             else
             {
-                Destroy(gameObject);
+                RestartGame();
             }
         }
     }
@@ -72,12 +97,76 @@ public class BandeJeuDeRythme : MonoBehaviour
     }
 
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void RestartGame()
+    {
+        timer = 0;
+        startMoveBarre = false;
+
+        barreAvancement.position = originBarre;
+
+        for(int i = 0; i < nodesErased.Count; i++)
+        {
+            nodesErased[i].GetComponent<Image>().enabled = true;
+        }
+
+        nodesErased.Clear();
+
+        isOnBlue = false;
+        isOnGreen = false;
+        isOnYellow = false;
+        currentNode = null;
+    }
+
+
+    public bool VerifyNote()
+    {
+        if(pressX && isOnGreen)
+        {
+            return true;
+        }
+
+        else if(pressY && isOnYellow)
+        {
+            return true;
+        }
+
+        else if(pressZ && isOnBlue)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
+
+
+    public void OnX(InputAction.CallbackContext context)
     {
         if (context.started)
-            interaction = true;
+            pressX = true;
 
         if (context.canceled)
-            interaction = false;
+            pressX = false;
+    }
+
+    public void OnY(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            pressY = true;
+
+        if (context.canceled)
+            pressY = false;
+    }
+
+    public void OnZ(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            pressZ = true;
+
+        if (context.canceled)
+            pressZ = false;
     }
 }

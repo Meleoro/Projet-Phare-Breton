@@ -14,8 +14,6 @@ public class MusicNode : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(12);
-
         if (other.CompareTag("MusicBarre"))
         {
             currentBande.currentNode = gameObject;
