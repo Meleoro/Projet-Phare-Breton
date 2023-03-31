@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class BandeJeuDeRythme : MonoBehaviour
 {
     [Header("Infos Node Selectionnée")]
-    [HideInInspector] public GameObject currentNode;
+    [HideInInspector] public MusicNode currentNode;
     [HideInInspector] public bool isOnGreen;
     [HideInInspector] public bool isOnYellow;
     [HideInInspector] public bool isOnBlue;
@@ -32,7 +32,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
-    public List<GameObject> nodesErased = new List<GameObject>();
+    public List<MusicNode> nodesErased = new List<MusicNode>();
     private Vector3 originBarre;
 
 
@@ -67,7 +67,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
                 if (isRight)
                 {
-                    currentNode.GetComponent<Image>().enabled = false;
+                    currentNode.EraseNode();
                     nodesErased.Add(currentNode);
                 }
 
@@ -106,7 +106,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         for(int i = 0; i < nodesErased.Count; i++)
         {
-            nodesErased[i].GetComponent<Image>().enabled = true;
+            nodesErased[i].ReappearNode();
         }
 
         nodesErased.Clear();

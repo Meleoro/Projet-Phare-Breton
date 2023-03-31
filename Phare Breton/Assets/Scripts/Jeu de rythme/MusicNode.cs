@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicNode : MonoBehaviour
 {
@@ -10,13 +11,37 @@ public class MusicNode : MonoBehaviour
     public bool isYellow;
     public bool isBlue;
 
+    [HideInInspector] public bool erased;
+
+    [Header("Références")]
+    private Image image;
+
+
+    private void Start()
+    {
+        image = GetComponent<Image>();
+    }
+
+
+    public void EraseNode()
+    {
+        image.enabled = false;
+        erased = true;
+    }
+
+    public void ReappearNode()
+    {
+        image.enabled = true;
+        erased = false;
+    }
+
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("MusicBarre"))
         {
-            currentBande.currentNode = gameObject;
+            currentBande.currentNode = this;
 
             if (isGreen)
                 currentBande.isOnGreen = true;
@@ -44,6 +69,13 @@ public class MusicNode : MonoBehaviour
 
             else
                 currentBande.isOnBlue = false;
+
+
+            // Si le joueur n'a pas appuyé 
+            if (!erased)
+            {
+                currentBande.RestartGame();
+            }
         }
     }
 }
