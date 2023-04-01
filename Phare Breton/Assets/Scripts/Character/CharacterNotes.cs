@@ -62,11 +62,11 @@ public class CharacterNotes : MonoBehaviour
 
     public void NextBande()
     {
-        Debug.Log(12);
-
         if(currentBande < bandes.Count)
         {
-            GameObject newBande = Instantiate(bandes[currentBande]);
+            GameObject newBandeRef = bandes[currentBande];
+
+            GameObject newBande = Instantiate(newBandeRef);
             newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
 
             currentBande += 1;
@@ -78,8 +78,10 @@ public class CharacterNotes : MonoBehaviour
 
             for (int i = 0; i < bandes.Count; i++)
             {
-                Destroy(bandes[i].gameObject);
+                bandes[i].SetActive(false);
             }
+
+            bandes.Clear();
         }
     }
 }

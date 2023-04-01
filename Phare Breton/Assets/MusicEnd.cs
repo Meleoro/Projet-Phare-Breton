@@ -8,8 +8,11 @@ public class MusicEnd : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("MusicBarre") && !currentBande.stop)
+        if (collision.CompareTag("MusicBarre"))
         {
+            collision.enabled = false;
+            GetComponent<Collider2D>().enabled = false;
+
             currentBande.EndGame();
         }
     }
