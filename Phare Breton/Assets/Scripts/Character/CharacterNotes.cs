@@ -10,6 +10,7 @@ public class CharacterNotes : MonoBehaviour
     [HideInInspector] public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
 
     private List<GameObject> bandes = new List<GameObject>();
+    private List<GameObject> bandesObjects = new List<GameObject>();
     private int currentBande;
 
 
@@ -54,6 +55,8 @@ public class CharacterNotes : MonoBehaviour
             GameObject newBande = Instantiate(bandes[0]);
             newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
 
+            bandesObjects.Add(newBande);
+
             currentBande = 1;
 
             mainSript.noControl = true;
@@ -64,10 +67,10 @@ public class CharacterNotes : MonoBehaviour
     {
         if(currentBande < bandes.Count)
         {
-            GameObject newBandeRef = bandes[currentBande];
-
-            GameObject newBande = Instantiate(newBandeRef);
+            GameObject newBande = Instantiate(bandes[currentBande]);
             newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
+
+            bandesObjects.Add(newBande);
 
             currentBande += 1;
         }
@@ -78,10 +81,11 @@ public class CharacterNotes : MonoBehaviour
 
             for (int i = 0; i < bandes.Count; i++)
             {
-                bandes[i].SetActive(false);
+                Destroy(bandesObjects[i]);
             }
 
             bandes.Clear();
+            bandesObjects.Clear();
         }
     }
 }
