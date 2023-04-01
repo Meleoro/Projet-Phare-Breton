@@ -62,7 +62,7 @@ public class CharaManager : MonoBehaviour
         {
             if(interaction && canPlayMusic)
             {
-                notesScript.Play(currentMelodyIndex);
+                notesScript.StartPlay(currentMelodyIndex);
             }
 
             // Partie déplacement player / objets

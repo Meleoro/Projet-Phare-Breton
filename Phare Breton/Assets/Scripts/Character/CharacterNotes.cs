@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class CharacterNotes : MonoBehaviour
 {
-    public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
+    private CharaManager mainSript;
+
+    [HideInInspector] public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
 
     private List<GameObject> bandes = new List<GameObject>();
+    private int currentBande;
 
 
     private void Start()
     {
         Initialize();
+
+        mainSript = GetComponent<CharaManager>();
     }
 
     public void Initialize()
@@ -32,7 +37,7 @@ public class CharacterNotes : MonoBehaviour
     }
 
 
-    public void Play(int melodyIndex)
+    public void StartPlay(int melodyIndex)
     {
         if (collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
         {
@@ -48,6 +53,33 @@ public class CharacterNotes : MonoBehaviour
             // On commence le mini jeu
             GameObject newBande = Instantiate(bandes[0]);
             newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
+
+            currentBande = 1;
+
+            mainSript.noControl = true;
+        }
+    }
+
+    public void NextBande()
+    {
+        Debug.Log(12);
+
+        if(currentBande < bandes.Count)
+        {
+            GameObject newBande = Instantiate(bandes[currentBande]);
+            newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
+
+            currentBande += 1;
+        }
+
+        else
+        {
+            mainSript.noControl = false;
+
+            for (int i = 0; i < bandes.Count; i++)
+            {
+                Destroy(bandes[i].gameObject);
+            }
         }
     }
 }

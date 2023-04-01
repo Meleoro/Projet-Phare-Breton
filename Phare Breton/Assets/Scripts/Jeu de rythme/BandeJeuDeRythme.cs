@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 
 public class BandeJeuDeRythme : MonoBehaviour
@@ -34,56 +35,61 @@ public class BandeJeuDeRythme : MonoBehaviour
     private bool startMoveBarre;
     public List<MusicNode> nodesErased = new List<MusicNode>();
     private Vector3 originBarre;
+    [HideInInspector] public bool stop;
 
 
     private void Start()
     {
         originBarre = barreAvancement.position;
+        stop = false;
     }
 
 
     private void Update()
     {
-        if (gameStarted)
+        if (!stop)
         {
-            timer += Time.deltaTime;
-
-            if(timer > dureePreparation && !startMoveBarre)
+            if (gameStarted)
             {
-                startMoveBarre = true;
-            }
-        }
+                timer += Time.deltaTime;
 
-        if (startMoveBarre)
-        {
-            barreAvancement.localPosition += Vector3.right * speedMoveBarre * Time.deltaTime;
-        }
-
-        if (pressX || pressY || pressZ)
-        {
-            if(currentNode != null)
-            {
-                bool isRight = VerifyNote();
-
-                if (isRight)
+                if (timer > dureePreparation && !startMoveBarre)
                 {
-                    currentNode.EraseNode();
-                    nodesErased.Add(currentNode);
+                    startMoveBarre = true;
+                }
+            }
+
+            if (startMoveBarre)
+            {
+                barreAvancement.localPosition += Vector3.right * speedMoveBarre * Time.deltaTime;
+            }
+
+            if (pressX || pressY || pressZ)
+            {
+                if (currentNode != null)
+                {
+                    bool isRight = VerifyNote();
+
+                    if (isRight)
+                    {
+                        currentNode.EraseNode();
+                        nodesErased.Add(currentNode);
+                    }
+
+                    else
+                    {
+                        RestartGame();
+                    }
+
+                    pressX = false;
+                    pressY = false;
+                    pressZ = false;
                 }
 
                 else
                 {
                     RestartGame();
                 }
-
-                pressX = false;
-                pressY = false;
-                pressZ = false;
-            }
-
-            else
-            {
-                RestartGame();
             }
         }
     }
@@ -116,6 +122,17 @@ public class BandeJeuDeRythme : MonoBehaviour
         isOnYellow = false;
         currentNode = null;
     }
+
+
+    public void EndGame()
+    {
+        stop = true;
+
+        ReferenceManager.Instance.characterReference.notesScript.NextBande();
+
+        GetComponent<RectTransform>().DOMoveY(GetComponent<RectTransform>().position.y - 50, 0.5f);
+    }
+
 
 
     public bool VerifyNote()
