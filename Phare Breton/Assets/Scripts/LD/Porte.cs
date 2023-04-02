@@ -33,23 +33,18 @@ public class Porte : MonoBehaviour
         {
             if (doorNumber == 1)
             {
-                movedObject.transform.position = charaPos2.position;
-                
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
-                
-                ReferenceManager.Instance.cameraReference.transform.position = cameraPos2.position;
-                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos2.rotation;
+
+                StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject));
             }
 
             else
             {
-                movedObject.transform.position = charaPos1.position;
-                
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
-                
-                ReferenceManager.Instance.cameraReference.transform.position = cameraPos1.position;
-                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos1.rotation;
+
+                StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject));
             }
+
             
             if (movedObject.CompareTag("Interactible"))
             {
@@ -112,20 +107,18 @@ public class Porte : MonoBehaviour
                     }
                 }
             }
-
-            ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ActualiseRotationCamRef();
         }
     }
 
     
     public void GoInside()
     {
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().EnterRoom(minXZ.position, maxXZ.position);
+        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.EnterRoom(minXZ.position, maxXZ.position));
     }
 
     public void GoOutside()
     {
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().ExitRoom();
+        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.ExitRoom());
     }
 
 
