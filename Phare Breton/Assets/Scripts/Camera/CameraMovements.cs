@@ -5,23 +5,25 @@ using UnityEngine;
 
 public class CameraMovements : MonoBehaviour
 {
+    [Header("Références")]
+    [HideInInspector] public Fondu scriptFondu;
     private Camera _camera;
-    
+    private CameraRotationRef cameraRotationRefScript;
+
     [Header("CameraRoom")]
     private bool isStatic;
     [HideInInspector] public Vector3 minXZ;
     [HideInInspector] public Vector3 maxXZ;
-    private Vector3 offset;
+    [HideInInspector] public Vector3 offset;
 
     [Header("DebutStatic")] 
-    [SerializeField] private bool startMove;       // Si on veut que la camera bouge d�s le d�part
+    [SerializeField] private bool startMove;       // Si on veut que la camera bouge des le depart
     public Transform startMinXZ;
     public Transform startMaxXZ;
 
     [Header("Autres")]
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
-    private CameraRotationRef cameraRotationRefScript;
     private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>();
 
 
@@ -29,6 +31,7 @@ public class CameraMovements : MonoBehaviour
     {
         _camera = GetComponent<Camera>();
         cameraRotationRefScript = GetComponentInChildren<CameraRotationRef>();
+        scriptFondu = GetComponent<Fondu>();
 
         if (startMove)
         {
