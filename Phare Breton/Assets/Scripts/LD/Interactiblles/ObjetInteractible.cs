@@ -24,9 +24,9 @@ public class ObjetInteractible : MonoBehaviour
 
     [Header("Stase")]
     [HideInInspector] public bool isInStase;
-
+                                                                                
     [Header("Références")]
-    private Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
 
 
 
@@ -112,6 +112,9 @@ public class ObjetInteractible : MonoBehaviour
     {
 
     }
+
+
+    public virtual void VerifyLinkedObject() { }
 
 
 

@@ -164,6 +164,10 @@ public class CharacterFlute : MonoBehaviour
                         
                         selectedObjects[j].linkedObject.Add(selectedObjects[k].gameObject);
                         selectedObjects[j].cable = currentCableCreator;
+
+                        // On vérifie si ces objets intéragissent entre eux
+                        selectedObjects[k].VerifyLinkedObject();
+                        selectedObjects[j].VerifyLinkedObject();
                     }
                 }
             }
@@ -192,8 +196,13 @@ public class CharacterFlute : MonoBehaviour
                 // On informe les scripts de chaque objets qu'ils sont connectés 
                 ropedObject[k].linkedObject.Add(manager.nearObjects[0]);
                 manager.nearObjects[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
+
+                // Vérification des objets liés
+                ropedObject[k].VerifyLinkedObject();
             }
-            
+
+            manager.nearObjects[0].GetComponent<ObjetInteractible>().VerifyLinkedObject();
+
             SpringJoint charaSpring = cablePoint.GetComponent<SpringJoint>();
         
             charaSpring.spring = 0;
@@ -261,11 +270,13 @@ public class CharacterFlute : MonoBehaviour
             if (!selectedObjects[i].isInStase)
             {
                 selectedObjects[i].isInStase = true;
+                selectedObjects[i].rb.isKinematic = true;
             }
 
             else
             {
                 selectedObjects[i].isInStase = false;
+                selectedObjects[i].rb.isKinematic = false;
             }
         }
     }

@@ -28,7 +28,7 @@ public class Ampoule : ObjetInteractible
 
 
     // VERIFIE SI UN PANNEAU EST RELIE
-    private void VerifyLinkedObject()
+    public override void VerifyLinkedObject()
     {
         ampouleActive = false;
 

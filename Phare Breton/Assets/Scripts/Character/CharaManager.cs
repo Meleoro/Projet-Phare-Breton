@@ -113,6 +113,7 @@ public class CharaManager : MonoBehaviour
             // Partie flûte 
             if (R2 && !hasRope)
             {
+                movementScript.MoveCharacter(Vector2.zero);
                 fluteScript.FluteActive(direction);
                 movementScript.RotateCharacter();
 
