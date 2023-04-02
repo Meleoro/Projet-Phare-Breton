@@ -21,6 +21,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool R2;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
+    [HideInInspector] public bool stase;
     [HideInInspector] public bool escape;
 
     [Header("Notes")]
@@ -110,21 +111,25 @@ public class CharaManager : MonoBehaviour
 
 
             // Partie flûte 
-            if (R2 && !hasRope && !isMovingObjects)
+            if (R2 && !hasRope)
             {
                 fluteScript.FluteActive(direction);
                 movementScript.RotateCharacter();
-                movementScript.MoveCharacter(Vector2.zero);
 
                 if (interaction)
                 {
                     interaction = false;
                     fluteScript.CreateLien();
                 }
-                else if (moveObject)
+                else if (moveObject && !isMovingObjects)
                 {
                     moveObject = false;
                     fluteScript.MoveObject(false, null);
+                }
+                else if (stase)
+                {
+                    stase = false;
+                    fluteScript.Stase();
                 }
             }
             
@@ -148,6 +153,11 @@ public class CharaManager : MonoBehaviour
             // Pour les effets des contrôles se fasssent qu'une fois
             interaction = false;
             moveObject = false;
+            stase = false;
+        }
+        else
+        {
+            movementScript.MoveCharacter(Vector2.zero);
         }
     }
     
@@ -185,6 +195,15 @@ public class CharaManager : MonoBehaviour
         
         if (context.canceled)
             moveObject = false;
+    }
+
+    public void OnStase(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            stase = true;
+
+        if (context.canceled)
+            stase = false;
     }
     
     public void OnEscape(InputAction.CallbackContext context)

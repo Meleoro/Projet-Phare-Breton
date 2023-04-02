@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 public class ObjetInteractible : MonoBehaviour
 {
     [Header("General")]
@@ -22,6 +21,9 @@ public class ObjetInteractible : MonoBehaviour
     [Header("MoveObject")]
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+
+    [Header("Stase")]
+    [HideInInspector] public bool isInStase;
 
     [Header("Références")]
     private Rigidbody rb;

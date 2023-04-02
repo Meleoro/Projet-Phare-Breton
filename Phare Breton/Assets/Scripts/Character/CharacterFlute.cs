@@ -8,7 +8,7 @@ using UnityEngine.Timeline;
 public class CharacterFlute : MonoBehaviour
 {
     [Header("General")]
-    [HideInInspector] public List<GameObject> selectedObjects = new List<GameObject>();
+    [HideInInspector] public List<ObjetInteractible> selectedObjects = new List<ObjetInteractible>();
     private bool doOnce;
     private bool onZone;
     private bool onVisee;
@@ -114,22 +114,22 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[0];
+                currentCable.originAnchor = selectedObjects[0].gameObject;
                 currentCable.endAnchor = gameObject;
 
-                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0]) - selectedObjects[0].transform.position;
-                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0], gameObject) - transform.position;
+                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0].gameObject) - selectedObjects[0].transform.position;
+                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0].gameObject, gameObject) - transform.position;
 
                 currentCable.ActualiseNodes();
                 
                 // On crée le câble physiquement
                 currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
-                    selectedObjects[0].GetComponent<ObjetInteractible>(), null, selectedObjects[0].GetComponent<Rigidbody>(), 
+                    selectedObjects[0], null, selectedObjects[0].GetComponent<Rigidbody>(), 
                     gameObject.GetComponent<Rigidbody>());
                 
                 // On récupère les informations sur le câble et les objets liés à lui
                 cables.Add(newRope);
-                ropedObject.Add(selectedObjects[0].GetComponent<ObjetInteractible>());
+                ropedObject.Add(selectedObjects[0]);
                 
                 manager.hasRope = true;
             }
@@ -146,25 +146,24 @@ public class CharacterFlute : MonoBehaviour
                         CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                         // On place le début et la fin du câble
-                        currentCable.originAnchor = selectedObjects[k];
-                        currentCable.endAnchor = selectedObjects[j];
+                        currentCable.originAnchor = selectedObjects[k].gameObject;
+                        currentCable.endAnchor = selectedObjects[j].gameObject;
 
-                        currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j], selectedObjects[k]) - selectedObjects[k].transform.position;
-                        currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k], selectedObjects[j]) - selectedObjects[j].transform.position;
+                        currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j].gameObject, selectedObjects[k].gameObject) - selectedObjects[k].transform.position;
+                        currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k].gameObject, selectedObjects[j].gameObject) - selectedObjects[j].transform.position;
 
                         currentCable.ActualiseNodes();
 
                         // On crée le câble physiquement
-                        currentCableCreator.CreateNodes(selectedObjects[k].GetComponentInChildren<SpringJoint>(), selectedObjects[j].GetComponentInChildren<SpringJoint>(), 
-                            selectedObjects[k].GetComponent<ObjetInteractible>(), selectedObjects[j].GetComponent<ObjetInteractible>(),
+                        currentCableCreator.CreateNodes(selectedObjects[k].GetComponentInChildren<SpringJoint>(), selectedObjects[j].GetComponentInChildren<SpringJoint>(), selectedObjects[k], selectedObjects[j],
                             selectedObjects[k].GetComponent<Rigidbody>(), selectedObjects[j].GetComponent<Rigidbody>());
                         
                         // On informe les scripts des objets qu'ils sont liés
-                        selectedObjects[k].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[j]);
-                        selectedObjects[k].GetComponent<ObjetInteractible>().cable = currentCableCreator;
+                        selectedObjects[k].linkedObject.Add(selectedObjects[j].gameObject);
+                        selectedObjects[k].cable = currentCableCreator;
                         
-                        selectedObjects[j].GetComponent<ObjetInteractible>().linkedObject.Add(selectedObjects[k]);
-                        selectedObjects[j].GetComponent<ObjetInteractible>().cable = currentCableCreator;
+                        selectedObjects[j].linkedObject.Add(selectedObjects[k].gameObject);
+                        selectedObjects[j].cable = currentCableCreator;
                     }
                 }
             }
@@ -252,6 +251,25 @@ public class CharacterFlute : MonoBehaviour
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
     }
+
+
+
+    public void Stase()
+    {
+        for (int i = 0; i < selectedObjects.Count; i++)
+        {
+            if (!selectedObjects[i].isInStase)
+            {
+                selectedObjects[i].isInStase = true;
+            }
+
+            else
+            {
+                selectedObjects[i].isInStase = false;
+            }
+        }
+    }
+
 
 
     public void VerifyLinkedObject(ObjetInteractible currentScript)

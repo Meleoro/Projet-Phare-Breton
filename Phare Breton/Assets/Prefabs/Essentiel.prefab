@@ -237,6 +237,7 @@ MonoBehaviour:
   cameraReference: {fileID: 4418095107218476792}
   cameraRotationReference: {fileID: 7638195603434322025}
   characterReference: {fileID: 8793358076578007543}
+  noteManagerReference: {fileID: 6564153844785076590}
 --- !u!114 &6564153844785076590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,9 +252,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Melodies:
   - nbrNotes: 2
-    bande1: {fileID: 0}
-    bande2: {fileID: 0}
-    bande3: {fileID: 0}
+    bandes:
+    - {fileID: 8980207317900242794, guid: 5964e0547b235a14caea1fb529756822, type: 3}
+    - {fileID: 8980207317900242794, guid: 5964e0547b235a14caea1fb529756822, type: 3}
+    - {fileID: 8980207317900242794, guid: 5964e0547b235a14caea1fb529756822, type: 3}
+  - nbrNotes: 2
+    bandes: []
+  - nbrNotes: 2
+    bandes: []
+  currentMelody: 3
 --- !u!1 &7638195603434322025
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +388,56 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: bc5ddb68-b0ca-429a-b1ed-8c3834a6870c
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: Character/Fixation[/XInputControllerWindows/buttonEast,/Keyboard/rightArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8793358076578007543}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnStase
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CharaManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8054913415842007629, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354452777228727355, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: collectedNotes.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
