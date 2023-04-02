@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 401882579610021373}
   - component: {fileID: 6815387144978462228}
   - component: {fileID: 6352702661042521783}
-  - component: {fileID: 5368473063029775677}
+  - component: {fileID: 1307070620112789831}
   - component: {fileID: 9203554971627105844}
   - component: {fileID: 6711964871505574923}
   m_Layer: 0
@@ -108,7 +108,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5368473063029775677
+--- !u!114 &1307070620112789831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,24 +117,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6314667218006813099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e11ff79288604c4aa5c358099647f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isLighted: 1
   isClimbable: 0
   isMagneted: 0
   magnetedPos: {fileID: 0}
-  objectType: 1
   isLinked: 0
   linkedObject: []
   cable: {fileID: 0}
   isStart: 0
-  ampouleActive: 0
-  lightComponent: {fileID: 0}
-  lightArea: {fileID: 0}
   isMoved: 0
   currentHauteur: 0
-  TPPos: {fileID: 0}
 --- !u!54 &9203554971627105844
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,11 +166,11 @@ SpringJoint:
   m_GameObject: {fileID: 6314667218006813099}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0.5, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_Spring: 10
+  m_Spring: 0
   m_Damper: 0.2
   m_MinDistance: 0
   m_MaxDistance: 0

@@ -71,6 +71,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fixation"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc5ddb68-b0ca-429a-b1ed-8c3834a6870c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""RetourMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa6e4f95-17fb-49a4-a6e8-3b5db5776477"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fixation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c00e94b7-18e8-4a2a-91de-d6b673e3b891"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fixation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,6 +271,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
         m_Character_Deplacement = m_Character.FindAction("Deplacement", throwIfNotFound: true);
         m_Character_RetourMenu = m_Character.FindAction("RetourMenu", throwIfNotFound: true);
+        m_Character_Fixation = m_Character.FindAction("Fixation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +338,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Interaction;
     private readonly InputAction m_Character_Deplacement;
     private readonly InputAction m_Character_RetourMenu;
+    private readonly InputAction m_Character_Fixation;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
@@ -315,6 +348,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
         public InputAction @Deplacement => m_Wrapper.m_Character_Deplacement;
         public InputAction @RetourMenu => m_Wrapper.m_Character_RetourMenu;
+        public InputAction @Fixation => m_Wrapper.m_Character_Fixation;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -339,6 +373,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RetourMenu.started += instance.OnRetourMenu;
             @RetourMenu.performed += instance.OnRetourMenu;
             @RetourMenu.canceled += instance.OnRetourMenu;
+            @Fixation.started += instance.OnFixation;
+            @Fixation.performed += instance.OnFixation;
+            @Fixation.canceled += instance.OnFixation;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -358,6 +395,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @RetourMenu.started -= instance.OnRetourMenu;
             @RetourMenu.performed -= instance.OnRetourMenu;
             @RetourMenu.canceled -= instance.OnRetourMenu;
+            @Fixation.started -= instance.OnFixation;
+            @Fixation.performed -= instance.OnFixation;
+            @Fixation.canceled -= instance.OnFixation;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -382,5 +422,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnInteraction(InputAction.CallbackContext context);
         void OnDeplacement(InputAction.CallbackContext context);
         void OnRetourMenu(InputAction.CallbackContext context);
+        void OnFixation(InputAction.CallbackContext context);
     }
 }
