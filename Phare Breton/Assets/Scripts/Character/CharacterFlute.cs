@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.Timeline;
+using Object = System.Object;
 
 public class CharacterFlute : MonoBehaviour
 {
@@ -219,6 +220,8 @@ public class CharacterFlute : MonoBehaviour
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
             manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+            
+            manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
         }
         
         else
@@ -232,6 +235,11 @@ public class CharacterFlute : MonoBehaviour
                 
                 VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
             }
+
+            for (int i = 0; i < manager.movedObjects.Count; i++)
+            {
+                manager.movedObjects[i].isKinematic = false;
+            }
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
@@ -242,6 +250,11 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.isMovingObjects = false;
         manager.noMovement = false;
+
+        for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
+        {
+            StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
+        }
 
         manager.movedObjects.Clear();
         manager.scriptsMovedObjects.Clear();
