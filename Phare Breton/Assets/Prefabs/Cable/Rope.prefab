@@ -249,11 +249,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153be534248402641bf3d7fdea9a4f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrMaxNodes: 30
-  distanceBetweenNodes: 0.1
-  spring: 100
-  damper: 10
-  maxLength: 30
+  nbrMaxNodes: 15
+  spring: 50
+  damper: 1
+  maxLength: 10
   multiplicateurResistance: 10
   springOrigin: {fileID: 0}
   springEnd: {fileID: 0}
@@ -284,8 +283,6 @@ MonoBehaviour:
   endOffset: {x: 0, y: 0, z: 0}
   originNode: {fileID: 3983425155078667346}
   endNode: {fileID: 3245475370029914171}
-  wantedDirectionOrigin: {x: 0, y: 0, z: 0}
-  wantedDirectionEnd: {x: 0, y: 0, z: 0}
 --- !u!120 &6661636030175017580
 LineRenderer:
   serializedVersion: 2

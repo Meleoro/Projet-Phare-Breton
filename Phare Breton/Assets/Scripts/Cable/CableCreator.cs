@@ -10,7 +10,6 @@ public class CableCreator : MonoBehaviour
 {
     [Header("Paramètres")] 
     public int nbrMaxNodes;
-    [SerializeField] private float distanceBetweenNodes;
     [SerializeField] private float spring;
     [SerializeField] private float damper;
     public float maxLength;
@@ -31,6 +30,7 @@ public class CableCreator : MonoBehaviour
     public NodeCable end;
     private LineRenderer _lineRenderer;
     private bool isLinked;
+    private float distanceBetweenNodes;
 
     public List<GameObject> nodesRope = new List<GameObject>();
     [HideInInspector] public float currentLength;
@@ -55,13 +55,19 @@ public class CableCreator : MonoBehaviour
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
 
-        nbrNodes = nbrMaxNodes;
+        distanceBetweenNodes = maxLength / (nbrMaxNodes + 1);
+        
+        
+        nbrNodes = (int) (distanceBetweenNodes / distanceStartEnd - 1);
+
+        if (nbrNodes > nbrMaxNodes)
+            nbrNodes = nbrMaxNodes;
         
 
         // Creation de chaque node de la corde
         nodesRope.Add(origin.gameObject);
         
-        for (int k = 1; k < nbrNodes; k++)
+        for (int k = 1; k < nbrNodes - 1; k++)
         {
             Vector3 posNewNode =
                 origin.transform.position + (directionStartEnd.normalized * (distanceStartEnd / nbrNodes)) * k;
@@ -115,7 +121,7 @@ public class CableCreator : MonoBehaviour
     {
         for (int k = 0; k < nodesRope.Count; k++)
         {
-            CreateLienBetweenNodes(k, true);
+            CreateLienBetweenNodes(k);
         }
     }
 
@@ -131,42 +137,11 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    private void CreateNewNode()
-    {
-        Vector3 newPos = nodesRope[nodesRope.Count - 1].transform.position -
-                         nodesRope[nodesRope.Count - 2].transform.position;
-        
-        GameObject newNode = Instantiate(node, nodesRope[nodesRope.Count - 2].transform.position + newPos, Quaternion.identity, transform);
-        
-        // Placement dans la liste des nodes de la nouvelle node
-        nodesRope.Add(newNode);
-
-        GameObject saveNode = nodesRope[nodesRope.Count - 1];
-        nodesRope[nodesRope.Count - 1] = nodesRope[nodesRope.Count - 2];
-        nodesRope[nodesRope.Count - 2] = saveNode;
-        
-        
-        // Création du lien avec les nodes adjacentes
-        CreateLienBetweenNodes(nodesRope.Count - 2, false);
-        CreateLienBetweenNodes(nodesRope.Count - 3, false);
-    }
-    
-    
-    private void DestroyNewNode()
-    {
-        Destroy(nodesRope[nodesRope.Count - 2]);
-        nodesRope.RemoveAt(nodesRope.Count - 2);
-        
-        //CreateLienBetweenNodes(nodesRope.Count - 2);
-    }
-
-    
-    private void CreateLienBetweenNodes(int index, bool isMoved)
+    private void CreateLienBetweenNodes(int index)
     {
         NodeCable currentNode = nodesRope[index].GetComponent<NodeCable>();
 
         // CREATION DU LIEN
-
         if (index == 0)
         {
             currentNode.node1 = rbOrigin.transform;
@@ -197,20 +172,14 @@ public class CableCreator : MonoBehaviour
         currentNode.spring1.anchor = Vector3.zero;
         currentNode.spring2.anchor = Vector3.zero;
 
-        //Vector3 direction = nodesRope[index + 1].transform.position - currentNode.transform.position;
-
+        /*currentNode.spring1.connectedAnchor = Vector3.up;
+        currentNode.spring2.connectedAnchor = Vector3.up;*/
+        
         currentNode.spring1.connectedAnchor = Vector3.zero;
         currentNode.spring2.connectedAnchor = Vector3.zero;
-        //currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
-
-        /*currentNode.spring1.minDistance = 0.1f;
-        currentNode.spring2.minDistance = 0.1f;
-        currentNode.spring1.maxDistance = 0.1f;
-        currentNode.spring2.maxDistance = 0.1f;*/
 
 
         // GESTION PHYSIQUE CORDE
-
         currentNode.spring1.spring = spring;
         currentNode.spring2.spring = spring;
         
@@ -222,19 +191,54 @@ public class CableCreator : MonoBehaviour
 
     private void ActualiseCable()
     {
-        ActualiseLienRenderer();
-        
         CalculateCableLength();
 
-        if (currentLength > nodesRope.Count * distanceBetweenNodes * 2 && nodesRope.Count < nbrMaxNodes)
+        if (currentLength > (nodesRope.Count + 1) * distanceBetweenNodes && nodesRope.Count < nbrMaxNodes)
         {
             CreateNewNode();
         }
         
-        /*else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes)
+        else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes && nodesRope.Count > 3)
         {
             DestroyNewNode();
-        }*/
+        }
+        
+        ActualiseLienRenderer();
+    }
+    
+    private void CreateNewNode()
+    {
+        Vector3 newPos = nodesRope[nodesRope.Count - 1].transform.position -
+                         nodesRope[nodesRope.Count - 2].transform.position;
+        
+        GameObject newNode = Instantiate(node, nodesRope[nodesRope.Count - 2].transform.position + newPos, Quaternion.identity, transform);
+        
+        // Placement dans la liste des nodes de la nouvelle node
+        nodesRope.Add(newNode);
+
+        GameObject saveNode = nodesRope[nodesRope.Count - 1];
+        nodesRope[nodesRope.Count - 1] = nodesRope[nodesRope.Count - 2];
+        nodesRope[nodesRope.Count - 2] = saveNode;
+        
+        
+        // Changement des refs de la node du personnage
+        end.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        
+        
+        // Création du lien avec les nodes adjacentes
+        CreateLienBetweenNodes(nodesRope.Count - 2);
+        CreateLienBetweenNodes(nodesRope.Count - 3);
+    }
+    
+    
+    private void DestroyNewNode()
+    {
+        Destroy(nodesRope[nodesRope.Count - 2]);
+        nodesRope.RemoveAt(nodesRope.Count - 2);
+        
+        end.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        
+        CreateLienBetweenNodes(nodesRope.Count - 2);
     }
 
     

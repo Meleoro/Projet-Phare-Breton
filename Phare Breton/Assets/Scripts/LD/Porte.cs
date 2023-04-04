@@ -155,25 +155,14 @@ public class Porte : MonoBehaviour
 
 
         // CREATION DU SECOND CABLE
-        // References
-        GameObject newCable = Instantiate(
-            ReferenceManager.Instance.characterReference.fluteScript.ropeObject,
-            startNewCable.transform.position, Quaternion.identity);
-
+        GameObject newCable = Instantiate(ReferenceManager.Instance.characterReference.fluteScript.ropeObject, startNewCable.transform.position, Quaternion.identity);
         CableCreator newScriptCreator = newCable.GetComponent<CableCreator>();
         Cable newScriptCable = newCable.GetComponent<Cable>();
 
-        // On modifie la taille maximale du nouveau cable
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
 
-        // On place le debut et la fin du cable
         newScriptCable.InitialiseStartEnd(startNewCable, currentObject);
-        
-        
-        /*newScriptCreator.end.transform.position = currentObject.transform.position;
-        newScriptCreator.origin.transform.position = startNewCable.transform.position;*/
-        
 
         newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
