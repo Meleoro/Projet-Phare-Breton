@@ -6,11 +6,11 @@ using DG.Tweening;
 
 public class Fondu : MonoBehaviour
 {
-    [Header("Références")]
+    [Header("Rï¿½fï¿½rences")]
     [SerializeField] private GameObject canva;
     [SerializeField] private Image imageFondu;
 
-    [Header("Paramètres")]
+    [Header("Paramï¿½tres")]
     [SerializeField] private float dureeFondu;
 
 
@@ -21,7 +21,7 @@ public class Fondu : MonoBehaviour
     }
 
 
-    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject)
+    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber)
     {
         canva.SetActive(true);
         imageFondu.DOFade(1, dureeFondu);
@@ -29,8 +29,9 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.characterReference.noControl = true;
 
         yield return new WaitForSeconds(dureeFondu);
-
+        
         ActualisePos(objectNewPos, cameraNewPos, movedObject);
+        doorScript.EnterDoor(movedObject, doorNumber);
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
 
@@ -42,13 +43,15 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.characterReference.noControl = false;
     }
 
+    
     public IEnumerator EnterRoom(Vector3 newMinXZ, Vector3 newMaxXZ)
     {
-        yield return new WaitForSeconds(dureeFondu);
+        yield return new WaitForSeconds(dureeFondu + 0.1f);
 
         ReferenceManager.Instance.cameraReference.EnterRoom(newMinXZ, newMaxXZ);
     }
 
+    
     public IEnumerator ExitRoom()
     {
         yield return new WaitForSeconds(dureeFondu);

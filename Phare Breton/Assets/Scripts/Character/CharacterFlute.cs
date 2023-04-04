@@ -114,13 +114,7 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[0].gameObject;
-                currentCable.endAnchor = gameObject;
-
-                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0].gameObject) - selectedObjects[0].transform.position;
-                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0].gameObject, gameObject) - transform.position;
-
-                currentCable.ActualiseNodes();
+                currentCable.InitialiseStartEnd(selectedObjects[0].gameObject, gameObject);
                 
                 // On crée le câble physiquement
                 currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
@@ -146,13 +140,7 @@ public class CharacterFlute : MonoBehaviour
                         CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                         // On place le début et la fin du câble
-                        currentCable.originAnchor = selectedObjects[k].gameObject;
-                        currentCable.endAnchor = selectedObjects[j].gameObject;
-
-                        currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j].gameObject, selectedObjects[k].gameObject) - selectedObjects[k].transform.position;
-                        currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k].gameObject, selectedObjects[j].gameObject) - selectedObjects[j].transform.position;
-
-                        currentCable.ActualiseNodes();
+                        currentCable.InitialiseStartEnd(selectedObjects[k].gameObject, selectedObjects[j].gameObject);
 
                         // On crée le câble physiquement
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponentInChildren<SpringJoint>(), selectedObjects[j].GetComponentInChildren<SpringJoint>(), selectedObjects[k], selectedObjects[j],
