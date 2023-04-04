@@ -19,19 +19,19 @@ public class EntreePorte : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
         {
             // Changements positions
-            if (numeroEntree == 1)
+            /*if (numeroEntree == 1)
                 GetComponentInParent<Porte>().EnterDoor(collision.gameObject, 1);
 
             else
-                GetComponentInParent<Porte>().EnterDoor(collision.gameObject, 2);
+                GetComponentInParent<Porte>().EnterDoor(collision.gameObject, 2);*/
 
 
             // Changements camera
             if (goInside)
-                GetComponentInParent<Porte>().GoInside();
+                GetComponentInParent<Porte>().GoInside(numeroEntree, collision.gameObject);
 
             else
-                GetComponentInParent<Porte>().GoOutside();
+                GetComponentInParent<Porte>().GoOutside(numeroEntree, collision.gameObject);
         }
     }
 }

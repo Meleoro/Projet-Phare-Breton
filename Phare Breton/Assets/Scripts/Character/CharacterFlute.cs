@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
 using UnityEngine.Timeline;
+using Object = System.Object;
 
 public class CharacterFlute : MonoBehaviour
 {
@@ -114,13 +115,7 @@ public class CharacterFlute : MonoBehaviour
                 CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                 // On place le début et la fin du câble
-                currentCable.originAnchor = selectedObjects[0].gameObject;
-                currentCable.endAnchor = gameObject;
-
-                currentCable.originOffset =  currentCableCreator.ChooseSpotCable(gameObject, selectedObjects[0].gameObject) - selectedObjects[0].transform.position;
-                currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[0].gameObject, gameObject) - transform.position;
-
-                currentCable.ActualiseNodes();
+                currentCable.InitialiseStartEnd(selectedObjects[0].gameObject, gameObject);
                 
                 // On crée le câble physiquement
                 currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
@@ -146,13 +141,7 @@ public class CharacterFlute : MonoBehaviour
                         CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
                         // On place le début et la fin du câble
-                        currentCable.originAnchor = selectedObjects[k].gameObject;
-                        currentCable.endAnchor = selectedObjects[j].gameObject;
-
-                        currentCable.originOffset =  currentCableCreator.ChooseSpotCable(selectedObjects[j].gameObject, selectedObjects[k].gameObject) - selectedObjects[k].transform.position;
-                        currentCable.endOffset = currentCableCreator.ChooseSpotCable(selectedObjects[k].gameObject, selectedObjects[j].gameObject) - selectedObjects[j].transform.position;
-
-                        currentCable.ActualiseNodes();
+                        currentCable.InitialiseStartEnd(selectedObjects[k].gameObject, selectedObjects[j].gameObject);
 
                         // On crée le câble physiquement
                         currentCableCreator.CreateNodes(selectedObjects[k].GetComponentInChildren<SpringJoint>(), selectedObjects[j].GetComponentInChildren<SpringJoint>(), selectedObjects[k], selectedObjects[j],
@@ -231,6 +220,8 @@ public class CharacterFlute : MonoBehaviour
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
             manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+            
+            manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
         }
         
         else
@@ -244,6 +235,11 @@ public class CharacterFlute : MonoBehaviour
                 
                 VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
             }
+
+            for (int i = 0; i < manager.movedObjects.Count; i++)
+            {
+                manager.movedObjects[i].isKinematic = false;
+            }
         }
 
         ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
@@ -254,6 +250,11 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.isMovingObjects = false;
         manager.noMovement = false;
+
+        for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
+        {
+            StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
+        }
 
         manager.movedObjects.Clear();
         manager.scriptsMovedObjects.Clear();

@@ -34,15 +34,11 @@ public class Porte : MonoBehaviour
             if (doorNumber == 1)
             {
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
-
-                StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject));
             }
 
             else
             {
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
-
-                StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject));
             }
 
             
@@ -111,14 +107,26 @@ public class Porte : MonoBehaviour
     }
 
     
-    public void GoInside()
+    public void GoInside(int doorNumber, GameObject movedObject)
     {
         StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.EnterRoom(minXZ.position, maxXZ.position));
+        
+        if(doorNumber == 1)
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
+        
+        else
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
     }
 
-    public void GoOutside()
+    public void GoOutside(int doorNumber, GameObject movedObject)
     {
         StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.ExitRoom());
+        
+        if(doorNumber == 1)
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
+            
+        else
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
     }
 
 
@@ -146,27 +154,15 @@ public class Porte : MonoBehaviour
         int nbrNodesNewCable = (int) (currentScript.nbrMaxNodes * (currentScript.currentLength / currentScript.maxLength));
 
 
-        // Creation du second cable
-        GameObject newCable = Instantiate(
-            ReferenceManager.Instance.characterReference.GetComponent<CharacterFlute>().ropeObject,
-            startNewCable.transform.position, Quaternion.identity);
-
+        // CREATION DU SECOND CABLE
+        GameObject newCable = Instantiate(ReferenceManager.Instance.characterReference.fluteScript.ropeObject, startNewCable.transform.position, Quaternion.identity);
         CableCreator newScriptCreator = newCable.GetComponent<CableCreator>();
         Cable newScriptCable = newCable.GetComponent<Cable>();
 
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
 
-
-        newScriptCable.originAnchor = currentObject;
-        newScriptCable.endAnchor = startNewCable;
-
-        newScriptCable.originOffset = newScriptCreator.ChooseSpotCable(startNewCable, currentObject) - currentObject.transform.position;
-        newScriptCable.endOffset = newScriptCreator.ChooseSpotCable(currentObject, startNewCable) - startNewCable.transform.position;
-
-        newScriptCreator.end.transform.position = currentObject.transform.position;
-        newScriptCreator.origin.transform.position = startNewCable.transform.position;
-        
+        newScriptCable.InitialiseStartEnd(startNewCable, currentObject);
 
         newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());

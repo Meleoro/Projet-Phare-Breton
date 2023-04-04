@@ -33,6 +33,7 @@ public class ObjetInteractible : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
 
         isMagneted = false;
     }
@@ -132,5 +133,12 @@ public class ObjetInteractible : MonoBehaviour
         {
             other.GetComponent<ObjetInteractible>().isLighted = false;
         }
+    }
+
+    public IEnumerator PutRigidbodyKinematic()
+    {
+        yield return new WaitForSeconds(2);
+
+        rb.isKinematic = true;
     }
 }

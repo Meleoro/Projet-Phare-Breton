@@ -10,7 +10,6 @@ public class CableCreator : MonoBehaviour
 {
     [Header("Paramètres")] 
     public int nbrMaxNodes;
-    [SerializeField] private float distanceBetweenNodes;
     [SerializeField] private float spring;
     [SerializeField] private float damper;
     public float maxLength;
@@ -31,6 +30,7 @@ public class CableCreator : MonoBehaviour
     public NodeCable end;
     private LineRenderer _lineRenderer;
     private bool isLinked;
+    private float distanceBetweenNodes;
 
     public List<GameObject> nodesRope = new List<GameObject>();
     [HideInInspector] public float currentLength;
@@ -55,16 +55,19 @@ public class CableCreator : MonoBehaviour
         float distanceStartEnd = Vector3.Distance(origin.transform.position, end.transform.position);
         Vector3 directionStartEnd = end.transform.position - origin.transform.position;
 
-        //nbrNodes = (int) (distanceStartEnd / distanceBetweenNodes);
+        distanceBetweenNodes = maxLength / (nbrMaxNodes + 1);
+        
+        
+        nbrNodes = (int) (distanceBetweenNodes / distanceStartEnd - 1);
 
-
-        nbrNodes = nbrMaxNodes;
+        if (nbrNodes > nbrMaxNodes)
+            nbrNodes = nbrMaxNodes;
         
 
         // Creation de chaque node de la corde
         nodesRope.Add(origin.gameObject);
         
-        for (int k = 1; k < nbrNodes + 1; k++)
+        for (int k = 1; k < nbrNodes - 1; k++)
         {
             Vector3 posNewNode =
                 origin.transform.position + (directionStartEnd.normalized * (distanceStartEnd / nbrNodes)) * k;
@@ -77,23 +80,23 @@ public class CableCreator : MonoBehaviour
 
 
         // Attribution des springs exterieurs au cable (pour la resistance)
-
         rbOrigin = rigidbodyStart;
         rbEnd = rigidbodyEnd;
 
         springOrigin = currentSpringOrigin;
         if (springOrigin != null)
+        {           
             springOrigin.spring = spring;
-        
-        springEnd = currentSpringEnd;
-        if(springEnd != null)
-            springEnd.spring = spring;
-        
-        if(springOrigin != null)
             springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
-        
-        if(springEnd != null)
+        }
+
+        springEnd = currentSpringEnd;
+        if (springEnd != null)
+        {
+            springEnd.spring = spring;
             springEnd.connectedBody = nodesRope[nodesRope.Count - 1].GetComponent<Rigidbody>();
+        }
+        
 
         if(startObject != null)
         {
@@ -118,7 +121,7 @@ public class CableCreator : MonoBehaviour
     {
         for (int k = 0; k < nodesRope.Count; k++)
         {
-            CreateLienBetweenNodes(k, true);
+            CreateLienBetweenNodes(k);
         }
     }
 
@@ -134,42 +137,11 @@ public class CableCreator : MonoBehaviour
     }
 
 
-    private void CreateNewNode()
-    {
-        Vector3 newPos = nodesRope[nodesRope.Count - 1].transform.position -
-                         nodesRope[nodesRope.Count - 2].transform.position;
-        
-        GameObject newNode = Instantiate(node, nodesRope[nodesRope.Count - 2].transform.position + newPos, Quaternion.identity, transform);
-        
-        // Placement dans la liste des nodes de la nouvelle node
-        nodesRope.Add(newNode);
-
-        GameObject saveNode = nodesRope[nodesRope.Count - 1];
-        nodesRope[nodesRope.Count - 1] = nodesRope[nodesRope.Count - 2];
-        nodesRope[nodesRope.Count - 2] = saveNode;
-        
-        
-        // Création du lien avec les nodes adjacentes
-        CreateLienBetweenNodes(nodesRope.Count - 2, false);
-        CreateLienBetweenNodes(nodesRope.Count - 3, false);
-    }
-    
-    
-    private void DestroyNewNode()
-    {
-        Destroy(nodesRope[nodesRope.Count - 2]);
-        nodesRope.RemoveAt(nodesRope.Count - 2);
-        
-        //CreateLienBetweenNodes(nodesRope.Count - 2);
-    }
-
-    
-    private void CreateLienBetweenNodes(int index, bool isMoved)
+    private void CreateLienBetweenNodes(int index)
     {
         NodeCable currentNode = nodesRope[index].GetComponent<NodeCable>();
 
         // CREATION DU LIEN
-
         if (index == 0)
         {
             currentNode.node1 = rbOrigin.transform;
@@ -200,20 +172,14 @@ public class CableCreator : MonoBehaviour
         currentNode.spring1.anchor = Vector3.zero;
         currentNode.spring2.anchor = Vector3.zero;
 
-        //Vector3 direction = nodesRope[index + 1].transform.position - currentNode.transform.position;
-
+        /*currentNode.spring1.connectedAnchor = Vector3.up;
+        currentNode.spring2.connectedAnchor = Vector3.up;*/
+        
         currentNode.spring1.connectedAnchor = Vector3.zero;
         currentNode.spring2.connectedAnchor = Vector3.zero;
-        //currentNode.spring2.connectedAnchor = -direction.normalized * 0.5f;
-
-        /*currentNode.spring1.minDistance = 0.1f;
-        currentNode.spring2.minDistance = 0.1f;
-        currentNode.spring1.maxDistance = 0.1f;
-        currentNode.spring2.maxDistance = 0.1f;*/
 
 
         // GESTION PHYSIQUE CORDE
-
         currentNode.spring1.spring = spring;
         currentNode.spring2.spring = spring;
         
@@ -225,19 +191,54 @@ public class CableCreator : MonoBehaviour
 
     private void ActualiseCable()
     {
-        ActualiseLienRenderer();
-        
         CalculateCableLength();
 
-        if (currentLength > nodesRope.Count * distanceBetweenNodes * 2 && nodesRope.Count < nbrMaxNodes)
+        if (currentLength > (nodesRope.Count + 1) * distanceBetweenNodes && nodesRope.Count < nbrMaxNodes)
         {
             CreateNewNode();
         }
         
-        /*else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes)
+        else if (currentLength < (nodesRope.Count * distanceBetweenNodes) - distanceBetweenNodes && nodesRope.Count > 3)
         {
             DestroyNewNode();
-        }*/
+        }
+        
+        ActualiseLienRenderer();
+    }
+    
+    private void CreateNewNode()
+    {
+        Vector3 newPos = nodesRope[nodesRope.Count - 1].transform.position -
+                         nodesRope[nodesRope.Count - 2].transform.position;
+        
+        GameObject newNode = Instantiate(node, nodesRope[nodesRope.Count - 2].transform.position + newPos, Quaternion.identity, transform);
+        
+        // Placement dans la liste des nodes de la nouvelle node
+        nodesRope.Add(newNode);
+
+        GameObject saveNode = nodesRope[nodesRope.Count - 1];
+        nodesRope[nodesRope.Count - 1] = nodesRope[nodesRope.Count - 2];
+        nodesRope[nodesRope.Count - 2] = saveNode;
+        
+        
+        // Changement des refs de la node du personnage
+        end.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        
+        
+        // Création du lien avec les nodes adjacentes
+        CreateLienBetweenNodes(nodesRope.Count - 2);
+        CreateLienBetweenNodes(nodesRope.Count - 3);
+    }
+    
+    
+    private void DestroyNewNode()
+    {
+        Destroy(nodesRope[nodesRope.Count - 2]);
+        nodesRope.RemoveAt(nodesRope.Count - 2);
+        
+        end.spring1.connectedBody = nodesRope[nodesRope.Count - 2].GetComponent<Rigidbody>();
+        
+        CreateLienBetweenNodes(nodesRope.Count - 2);
     }
 
     
@@ -255,11 +256,33 @@ public class CableCreator : MonoBehaviour
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
         
 
+        
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
+        
+        float ratioLength = currentLength / maxLength;
+        
         if (springOrigin != null && !lockStart)
         {
-            origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-            origin.spring2.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+            if (ratioLength > 0.8f)
+            {
+                //float aimedResistance = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+
+                if (!rbOrigin.isKinematic)
+                {
+                    Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
+
+                    ratioLength = (ratioLength - 0.8f) * 5;
+
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
+                }
+            }
+            else
+            {
+                origin.spring1.spring = 0;
+                origin.spring2.spring = spring;
+                
+                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+            }
         }
 
         else
@@ -271,8 +294,26 @@ public class CableCreator : MonoBehaviour
         
         if (springEnd != null && !lockEnd)
         {
-            end.spring1.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-            end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+            if (ratioLength > 0.8f)
+            {
+                //float aimedResistance = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+
+                if (!rbEnd.isKinematic)
+                {
+                    Vector3 directionResistance = end.transform.position - rbEnd.transform.position;
+                    
+                    ratioLength = (ratioLength - 0.8f) * 5;
+
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
+                }
+            }
+            else
+            {
+                end.spring1.spring = spring;
+                end.spring2.spring = 0;
+
+                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+            }
         }
 
         else 
@@ -287,14 +328,16 @@ public class CableCreator : MonoBehaviour
     {
         List<Vector3> posLineRenderer = new List<Vector3>();
 
-        posLineRenderer.Add(rbOrigin.transform.position);
+        if(springOrigin != null)
+            posLineRenderer.Add(springOrigin.transform.position);
         
         for (int k = 0; k < nodesRope.Count; k++)
         {
             posLineRenderer.Add(nodesRope[k].transform.position);
         }
 
-        posLineRenderer.Add(rbEnd.transform.position);
+        if(springEnd != null)
+            posLineRenderer.Add(springEnd.transform.position);
 
         return posLineRenderer;
     }
@@ -343,25 +386,6 @@ public class CableCreator : MonoBehaviour
             currentObject.isLinked = true;
             currentObject.isStart = false;
             currentObject.cable = this;
-        }
-    }
-
-
-    // LANCE UN RAYCAST POUR TROUVER LE MEILLEUR ENDROIT OU PLACER L'EXTREMITE DU CABLE
-    public Vector3 ChooseSpotCable(GameObject startObject, GameObject aimedObject)
-    {
-        Vector3 newDirection = aimedObject.transform.position - startObject.transform.position;
-        Vector3 startPos = aimedObject.transform.position - newDirection.normalized * 2;
-
-        RaycastHit raycastHit;
-
-        if (Physics.Raycast(startPos, newDirection.normalized, out raycastHit, 2))
-        {
-            return raycastHit.point;
-        }
-        else
-        {
-            return Vector3.zero;
         }
     }
 }
