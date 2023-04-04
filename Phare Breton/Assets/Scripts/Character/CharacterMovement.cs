@@ -14,6 +14,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxAcceleration = 10f;
     private Vector3 velocity;
     [HideInInspector] public bool doOnce;
+    [HideInInspector] public Vector3 resistanceCable;
 
     [Header("MovementsObjets")]
     public float hauteurObject = 0.5f;
@@ -35,6 +36,7 @@ public class CharacterMovement : MonoBehaviour
     public void MoveCharacter(Vector2 direction)
     {
         Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeed;
+        desiredVelocity += new Vector3(resistanceCable.x, 0, resistanceCable.z) * maxSpeed;
         
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
         

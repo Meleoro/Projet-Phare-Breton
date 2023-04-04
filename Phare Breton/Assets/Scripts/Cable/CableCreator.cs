@@ -256,18 +256,32 @@ public class CableCreator : MonoBehaviour
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
         
 
+        
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
+        
+        float ratioLength = currentLength / maxLength;
+        
         if (springOrigin != null && !lockStart)
         {
-            if (currentLength > maxLength)
+            if (ratioLength > 0.8f)
             {
-                origin.spring1.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-                origin.spring2.spring = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+                //float aimedResistance = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+
+                if (!rbOrigin.isKinematic)
+                {
+                    Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
+
+                    ratioLength = (ratioLength - 0.8f) * 5;
+
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
+                }
             }
             else
             {
                 origin.spring1.spring = 0;
                 origin.spring2.spring = spring;
+                
+                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
             }
         }
 
@@ -280,15 +294,25 @@ public class CableCreator : MonoBehaviour
         
         if (springEnd != null && !lockEnd)
         {
-            if (currentLength > maxLength)
+            if (ratioLength > 0.8f)
             {
-                end.spring1.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-                end.spring2.spring = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+                //float aimedResistance = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+
+                if (!rbEnd.isKinematic)
+                {
+                    Vector3 directionResistance = end.transform.position - rbEnd.transform.position;
+                    
+                    ratioLength = (ratioLength - 0.8f) * 5;
+
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
+                }
             }
             else
             {
                 end.spring1.spring = spring;
                 end.spring2.spring = 0;
+
+                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
             }
         }
 
