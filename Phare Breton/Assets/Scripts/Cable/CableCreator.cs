@@ -129,11 +129,17 @@ public class CableCreator : MonoBehaviour
     private void CalculateCableLength()
     {
         currentLength = 0f;
+
+        if(springOrigin != null)
+            currentLength += Vector3.Distance(nodesRope[0].transform.position,springOrigin.transform.position);
         
         for(int k = 0; k < nodesRope.Count - 1; k++)
         {
             currentLength += Vector3.Distance(nodesRope[k].transform.position, nodesRope[k + 1].transform.position);
         }
+        
+        if(springEnd != null)
+            currentLength += Vector3.Distance(nodesRope[nodesRope.Count - 1].transform.position,springOrigin.transform.position);
     }
 
 
