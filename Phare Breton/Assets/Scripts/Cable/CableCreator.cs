@@ -86,14 +86,14 @@ public class CableCreator : MonoBehaviour
         springOrigin = currentSpringOrigin;
         if (springOrigin != null)
         {           
-            springOrigin.spring = spring;
+            springOrigin.spring = spring * 2;
             springOrigin.connectedBody = nodesRope[0].GetComponent<Rigidbody>();
         }
 
         springEnd = currentSpringEnd;
         if (springEnd != null)
         {
-            springEnd.spring = spring;
+            springEnd.spring = spring * 2;
             springEnd.connectedBody = nodesRope[nodesRope.Count - 1].GetComponent<Rigidbody>();
         }
         
@@ -285,6 +285,7 @@ public class CableCreator : MonoBehaviour
             else
             {
                 origin.spring1.spring = 0;
+                origin.spring1.damper = 0;
                 origin.spring2.spring = spring;
                 
                 ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
@@ -294,6 +295,7 @@ public class CableCreator : MonoBehaviour
         else
         {
             origin.spring1.spring = 0;
+            origin.spring1.damper = 0;
             origin.spring2.spring = spring;
         }
         
@@ -317,6 +319,7 @@ public class CableCreator : MonoBehaviour
             {
                 end.spring1.spring = spring;
                 end.spring2.spring = 0;
+                end.spring2.damper = 0;
 
                 ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
             }
@@ -326,6 +329,7 @@ public class CableCreator : MonoBehaviour
         {
             end.spring1.spring = spring;
             end.spring2.spring = 0;
+            end.spring2.damper = 0;
         }
     }
 
