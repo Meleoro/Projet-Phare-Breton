@@ -192,9 +192,6 @@ public class CableCreator : MonoBehaviour
             
         currentNode.spring1.damper = damper;
         currentNode.spring2.damper = damper;
-
-        currentNode.startRope = rbOrigin.transform;
-        currentNode.endRope = rbEnd.transform;
     }
 
 

@@ -18,7 +18,7 @@ public class NodeCable : MonoBehaviour
 
     private void Update()
     {
-        ActualiseNodePos();
+        //ActualiseNodePos();
     }
 
     public void ActualiseNodePos()
