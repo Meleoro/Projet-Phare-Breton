@@ -261,9 +261,6 @@ public class CableCreator : MonoBehaviour
         // Actualisation de la couleur
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
         
-
-        
-        // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
         VerifyLength();
     }
 
@@ -280,7 +277,7 @@ public class CableCreator : MonoBehaviour
                     Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
 
                     float newRatio = (ratioLength - 0.8f) * 5;
-
+                    
                     if(!isLinked)
                         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
                 }
@@ -294,8 +291,8 @@ public class CableCreator : MonoBehaviour
                     
                     float newRatio = (ratioLength - 0.8f) * 5;
 
-                    if(!isLinked)
-                     ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
+                    if(!isLinked) 
+                        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
                 }
             }
         }

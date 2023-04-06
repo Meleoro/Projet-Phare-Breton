@@ -36,10 +36,12 @@ public class CharacterMovement : MonoBehaviour
     public void MoveCharacter(Vector2 direction)
     {
         Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeed;
-        desiredVelocity += new Vector3(resistanceCable.x, 0, resistanceCable.z) * maxSpeed;
+
+        Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
+        desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
         float maxSpeedChange = maxAcceleration * Time.deltaTime;
-        
+
         // Acceleration du personnage
         velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
         velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);

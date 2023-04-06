@@ -164,9 +164,9 @@ public class Porte : MonoBehaviour
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
 
-        newScriptCable.InitialiseStartEnd(startNewCable, currentObject);
+        newScriptCable.InitialiseStartEnd(currentObject, startNewCable);
 
-        newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), currentObject.GetComponent<ObjetInteractible>(), null,
+        newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), null, null,
             currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
 
 
