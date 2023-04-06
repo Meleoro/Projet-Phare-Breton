@@ -183,8 +183,6 @@ public class Porte : MonoBehaviour
     {
         if (doorCrossed.hasCableThrough)
         {
-            Debug.Log(12);
-            
             // On détruit la partie du câble qui sert à rien
             Destroy(doorCrossed.cableThisSide.gameObject);
             
