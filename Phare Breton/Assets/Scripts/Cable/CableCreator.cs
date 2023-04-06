@@ -264,15 +264,17 @@ public class CableCreator : MonoBehaviour
 
         
         // On modifie la puissance des springs des deux extremites en fonction de leur poids et de la longueur du cable
-        
-        float ratioLength = currentLength / maxLength;
-        
-        if (springOrigin != null && !lockStart)
-        {
-            if (ratioLength > 0.8f)
-            {
-                //float aimedResistance = rbOrigin.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
+        VerifyLength();
+    }
 
+    public void VerifyLength()
+    {
+        float ratioLength = currentLength / maxLength;
+
+        if (ratioLength > 0.8f)
+        {
+            if (rbOrigin != null && !lockStart)
+            {
                 if (!rbOrigin.isKinematic)
                 {
                     Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
@@ -282,30 +284,9 @@ public class CableCreator : MonoBehaviour
                     ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
                 }
             }
-            else
-            {
-                origin.spring1.spring = 0;
-                origin.spring1.damper = 0;
-                origin.spring2.spring = spring;
-                
-                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
-            }
-        }
 
-        else
-        {
-            origin.spring1.spring = 0;
-            origin.spring1.damper = 0;
-            origin.spring2.spring = spring;
-        }
-        
-        
-        if (springEnd != null && !lockEnd)
-        {
-            if (ratioLength > 0.8f)
+            if (rbEnd != null && !lockEnd)
             {
-                //float aimedResistance = rbEnd.mass * multiplicateurResistance * ((currentLength / maxLength) * 2);
-
                 if (!rbEnd.isKinematic)
                 {
                     Vector3 directionResistance = end.transform.position - rbEnd.transform.position;
@@ -315,21 +296,44 @@ public class CableCreator : MonoBehaviour
                     ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
                 }
             }
-            else
-            {
-                end.spring1.spring = spring;
-                end.spring2.spring = 0;
-                end.spring2.damper = 0;
-
-                ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
-            }
         }
-
-        else 
+        else
         {
-            end.spring1.spring = spring;
-            end.spring2.spring = 0;
-            end.spring2.damper = 0;
+            if (rbOrigin != null && !lockStart)
+            {
+                if (rbOrigin.isKinematic)
+                {
+                    origin.spring1.spring = spring;
+                    origin.spring2.spring = spring;
+                    origin.spring2.damper = damper;
+                }
+                else
+                {
+                    origin.spring1.spring = 0;
+                    origin.spring1.damper = 0;
+                    origin.spring2.spring = spring;
+                
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                }
+            }
+
+            if (rbEnd != null && !lockEnd)
+            {
+                if (rbEnd.isKinematic)
+                {
+                    end.spring1.spring = spring;
+                    end.spring2.spring = spring;
+                    end.spring2.damper = damper;
+                }
+                else
+                {
+                    end.spring1.spring = spring;
+                    end.spring2.spring = 0;
+                    end.spring2.damper = 0;
+
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                }
+            }
         }
     }
 
