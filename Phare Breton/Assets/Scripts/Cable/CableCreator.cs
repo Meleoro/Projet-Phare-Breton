@@ -283,6 +283,10 @@ public class CableCreator : MonoBehaviour
 
                     ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
                 }
+                else
+                {
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                }
             }
 
             if (rbEnd != null && !lockEnd)
@@ -294,6 +298,10 @@ public class CableCreator : MonoBehaviour
                     ratioLength = (ratioLength - 0.8f) * 5;
 
                     ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * ratioLength;
+                }
+                else
+                {
+                    ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
                 }
             }
         }
