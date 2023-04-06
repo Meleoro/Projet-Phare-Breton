@@ -29,7 +29,7 @@ public class CableCreator : MonoBehaviour
     public NodeCable origin;
     public NodeCable end;
     private LineRenderer _lineRenderer;
-    private bool isLinked;
+    [HideInInspector] public bool isLinked;
     private float distanceBetweenNodes;
 
     public List<GameObject> nodesRope = new List<GameObject>();

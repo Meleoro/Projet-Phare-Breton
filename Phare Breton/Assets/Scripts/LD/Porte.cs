@@ -183,6 +183,8 @@ public class Porte : MonoBehaviour
     {
         if (doorCrossed.hasCableThrough)
         {
+            Debug.Log(12);
+            
             // On détruit la partie du câble qui sert à rien
             Destroy(doorCrossed.cableThisSide.gameObject);
             
@@ -198,7 +200,8 @@ public class Porte : MonoBehaviour
             }
             else
             {
-                doorCrossed.cableOtherSide.ChangeLastNode(currentObject, null, null);
+                doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+                doorCrossed.cableOtherSide.isLinked = false;
             }
         }
     }
