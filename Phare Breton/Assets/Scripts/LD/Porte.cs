@@ -148,6 +148,8 @@ public class Porte : MonoBehaviour
             currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
         }
 
+        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+        
 
         // Recuperation des infos pour le nouveau cable
         float lenghtNewCable = currentScript.maxLength - currentScript.currentLength;
