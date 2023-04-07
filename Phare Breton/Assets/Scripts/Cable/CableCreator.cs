@@ -130,16 +130,16 @@ public class CableCreator : MonoBehaviour
     {
         currentLength = 0f;
 
-        if(springOrigin != null)
-            currentLength += Vector3.Distance(nodesRope[0].transform.position,springOrigin.transform.position);
+        if(rbOrigin != null)
+            currentLength += Vector3.Distance(nodesRope[0].transform.position,rbOrigin.transform.position);
         
         for(int k = 0; k < nodesRope.Count - 1; k++)
         {
             currentLength += Vector3.Distance(nodesRope[k].transform.position, nodesRope[k + 1].transform.position);
         }
         
-        if(springEnd != null)
-            currentLength += Vector3.Distance(nodesRope[nodesRope.Count - 1].transform.position,springOrigin.transform.position);
+        if(rbEnd != null)
+            currentLength += Vector3.Distance(nodesRope[nodesRope.Count - 1].transform.position,rbEnd.transform.position);
     }
 
 
@@ -364,6 +364,7 @@ public class CableCreator : MonoBehaviour
         end.spring2.connectedBody = newRb;
 
         isLinked = true;
+        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
 
         rbEnd = newRb;
         springEnd = newSpring;
@@ -393,6 +394,7 @@ public class CableCreator : MonoBehaviour
         origin.spring1.connectedBody = newRb;
 
         isLinked = true;
+        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
 
         rbOrigin = newRb;
         springOrigin = newSpring;

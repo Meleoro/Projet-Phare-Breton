@@ -200,7 +200,6 @@ MonoBehaviour:
   node2: {fileID: 0}
   spring1: {fileID: 2555051717595034430}
   spring2: {fileID: 3765473189375473497}
-  joint: {fileID: 0}
 --- !u!1 &2692012225170031430
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153be534248402641bf3d7fdea9a4f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrMaxNodes: 10
+  nbrMaxNodes: 25
   spring: 40
   damper: 20
   maxLength: 20
@@ -263,6 +262,7 @@ MonoBehaviour:
   node: {fileID: 3649838580731453319, guid: a0856fac30f0c594ab041fe217d4e4b6, type: 3}
   origin: {fileID: 8482334853663818354}
   end: {fileID: 3363387956108976720}
+  isLinked: 0
   nodesRope: []
   currentLength: 0
 --- !u!114 &9058123860006891802
@@ -587,4 +587,3 @@ MonoBehaviour:
   node2: {fileID: 0}
   spring1: {fileID: 1111786707907215954}
   spring2: {fileID: 4726566309875214722}
-  joint: {fileID: 0}

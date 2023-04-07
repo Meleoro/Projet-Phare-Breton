@@ -190,11 +190,13 @@ public class Porte : MonoBehaviour
             // On relie le câble de l'autre côté à l'objet
             if (currentObject.CompareTag("Interactible"))
             {
+                Debug.Log(12);
+                
                 if(currentObject.GetComponent<ObjetInteractible>().isStart)
-                    doorCrossed.cableOtherSide.ChangeFirstNode(currentObject, null, null);
+                    doorCrossed.cableOtherSide.ChangeFirstNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
         
                 else 
-                    doorCrossed.cableOtherSide.ChangeLastNode(currentObject, null, null);
+                    doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
             }
             else
             {
