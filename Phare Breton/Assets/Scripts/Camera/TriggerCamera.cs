@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class TriggerCamera : MonoBehaviour
 {
-    [SerializeField] private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>(); 
-    
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private Transform cameraPos;
     [SerializeField] private Color gizmosColor;
-
+    
+    [Header("Gestion des alpha")]
+    [SerializeField] private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
+    [SerializeField] private float distanceMin = 1;
+    [SerializeField] private float distanceMax = 8;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +29,7 @@ public class TriggerCamera : MonoBehaviour
                 ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
                 ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
                 
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects);
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMin, distanceMax);
             }
         }
     }

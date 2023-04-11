@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraMovements : MonoBehaviour
@@ -24,7 +25,7 @@ public class CameraMovements : MonoBehaviour
     [Header("Autres")]
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
-    private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>();
+    private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
 
 
     private void Start()
@@ -141,18 +142,22 @@ public class CameraMovements : MonoBehaviour
 
 
     // REND INVISIBLES LES OBJETS EN PARAMETRE
-    public void ActualiseDesactivatedObjects(List<MeshRenderer> objects)
+    public void ActualiseDesactivatedObjects(List<TransparencyObject> objects, float distMin, float distMax)
     {
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].gameObject.SetActive(true);
+            desactivatedObjects[k].meshRenderer.material.SetFloat("Opacity", 1);
         }
         
         desactivatedObjects = objects;
         
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].gameObject.SetActive(false);
+            /*float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
+            distObject -= distMin;
+            distObject /= distMax;*/
+            
+            desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
         }
     }
 }
