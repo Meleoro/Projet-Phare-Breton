@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Porte : MonoBehaviour
 {
+    [Header("Références")]
     [SerializeField] Transform charaPos1;
     [SerializeField] Transform charaPos2;
 
@@ -16,12 +17,18 @@ public class Porte : MonoBehaviour
     [SerializeField] EntreePorte door2;
 
     [Header("Limites Camera")]
-    [SerializeField] Transform minXZ;
-    [SerializeField] Transform maxXZ;
+    [SerializeField] Transform minXZDoor1;
+    [SerializeField] Transform maxXZDoor1;
+    [SerializeField] Transform minXZDoor2;
+    [SerializeField] Transform maxXZDoor2;
 
     [Header("Changement Scene")] 
     [SerializeField] private bool changeScene;
     [SerializeField] private string sceneName;
+
+    [Header("Gizmos")] 
+    [SerializeField] private bool lineBetweenDoors;
+    [SerializeField] private bool areaCamera;
     
     public void EnterDoor(GameObject movedObject, int doorNumber)
     {
@@ -33,12 +40,12 @@ public class Porte : MonoBehaviour
         {
             if (doorNumber == 1)
             {
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects, door1.distanceMin, door1.distanceMax);
             }
 
             else
             {
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects, door1.distanceMin, door1.distanceMax);
             }
 
             
@@ -107,18 +114,26 @@ public class Porte : MonoBehaviour
     }
 
     
-    public void GoInside(int doorNumber, GameObject movedObject)
+    public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera)
     {
-        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.EnterRoom(minXZ.position, maxXZ.position));
-        
-        if(doorNumber == 1)
+        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.EnterRoom(staticCamera));
+
+        if (doorNumber == 1)
+        {
             StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
-        
+            
+            ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor2, maxXZDoor2);
+        }
+
         else
+        {
             StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
+
+            ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor1, maxXZDoor1);
+        }
     }
 
-    public void GoOutside(int doorNumber, GameObject movedObject)
+    /*public void GoOutside(int doorNumber, GameObject movedObject)
     {
         StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.ExitRoom());
         
@@ -127,7 +142,7 @@ public class Porte : MonoBehaviour
             
         else
             StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
-    }
+    }*/
 
 
     public void CableThroughDoor(GameObject currentCable, GameObject currentObject, GameObject endOldCable, GameObject startNewCable)
@@ -190,8 +205,6 @@ public class Porte : MonoBehaviour
             // On relie le câble de l'autre côté à l'objet
             if (currentObject.CompareTag("Interactible"))
             {
-                Debug.Log(12);
-                
                 if(currentObject.GetComponent<ObjetInteractible>().isStart)
                     doorCrossed.cableOtherSide.ChangeFirstNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
         
@@ -202,6 +215,50 @@ public class Porte : MonoBehaviour
             {
                 doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
                 doorCrossed.cableOtherSide.isLinked = false;
+            }
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        if (lineBetweenDoors)
+        {
+            Gizmos.DrawLine(door1.transform.position, door2.transform.position);
+        }
+
+        if (areaCamera)
+        {
+            if (!door1.staticCamera)
+            {
+                Vector3 max = minXZDoor1.transform.InverseTransformPoint(maxXZDoor1.position);
+                
+                Vector3 point1 = new Vector3(0, 0, max.z);
+                Vector3 point2 = new Vector3(max.x, max.y, 0);
+
+                point1 = minXZDoor1.transform.TransformPoint(point1);
+                point2 = minXZDoor1.transform.TransformPoint(point2);
+
+                Gizmos.DrawLine(minXZDoor1.position, point1);
+                Gizmos.DrawLine(minXZDoor1.position, point2);
+                Gizmos.DrawLine(maxXZDoor1.position, point1);
+                Gizmos.DrawLine(maxXZDoor1.position, point2);
+            }
+            
+            if (!door2.staticCamera)
+            {
+                Vector3 max = minXZDoor2.transform.InverseTransformPoint(maxXZDoor2.position);
+                
+                Vector3 point1 = new Vector3(0, 0, max.z);
+                Vector3 point2 = new Vector3(max.x, max.y, 0);
+
+                point1 = minXZDoor2.transform.TransformPoint(point1);
+                point2 = minXZDoor2.transform.TransformPoint(point2);
+
+                Gizmos.DrawLine(minXZDoor2.position, point1);
+                Gizmos.DrawLine(minXZDoor2.position, point2);
+                Gizmos.DrawLine(maxXZDoor2.position, point1);
+                Gizmos.DrawLine(maxXZDoor2.position, point2);
             }
         }
     }

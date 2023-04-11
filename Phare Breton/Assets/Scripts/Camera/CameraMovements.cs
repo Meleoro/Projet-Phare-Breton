@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraMovements : MonoBehaviour
@@ -12,9 +13,11 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CameraRoom")]
     private bool isStatic;
-    [HideInInspector] public Vector3 minXZ;
-    [HideInInspector] public Vector3 maxXZ;
+    [HideInInspector] public Transform minXZ;
+    [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
+    private Vector3 refMax;
+    private Vector3 wantedPos;
 
     [Header("DebutStatic")] 
     [SerializeField] private bool startMove;       // Si on veut que la camera bouge des le depart
@@ -24,7 +27,7 @@ public class CameraMovements : MonoBehaviour
     [Header("Autres")]
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
-    private List<MeshRenderer> desactivatedObjects = new List<MeshRenderer>();
+    private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
 
 
     private void Start()
@@ -37,8 +40,8 @@ public class CameraMovements : MonoBehaviour
         {
             isStatic = false;
 
-            minXZ = startMinXZ.position;
-            maxXZ = startMaxXZ.position;
+            minXZ = startMinXZ;
+            maxXZ = startMaxXZ;
         }
 
         else
@@ -56,47 +59,68 @@ public class CameraMovements : MonoBehaviour
         {
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
 
-            MoveCamera(charaPos);
+            Vector3 newPos = MoveCamera(charaPos);
+
+            wantedPos = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+            transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
         }
     }
 
 
 
     // PERMET DE DEPLACER LA CAMERA TOUT EN NE SORTANT DE CERTAINES LIMITES EN X ET EN Z
-    public void MoveCamera(Vector3 wantedPos)
+    public Vector3 MoveCamera(Vector3 charaPos)
     {
         Vector3 newPos = new Vector3(0, 0, 0);
+        charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.transform.position);
 
         // On determine la position en X
-        if(wantedPos.x < minXZ.x)
+        /*if(charaPos.x < 0)
         {
-            newPos.x = minXZ.x;
+            newPos.x = 0;
         }
-        else if(wantedPos.x > maxXZ.x)
+        else if(charaPos.x > refMax.x)
         {
-            newPos.x = maxXZ.x;
+            newPos.x = refMax.x;
         }
         else
         {
-            newPos.x = ReferenceManager.Instance.characterReference.transform.position.x;
+            newPos.x = charaPos.x;
+        }*/
+
+        if (charaPos.x < 0 || charaPos.x > refMax.x)
+        {
+            newPos.x = charaPos.x;
         }
 
         // On determine la position en Z
-        if (wantedPos.z < minXZ.z)
+        /*if (charaPos.z < 0)
         {
-            newPos.z = minXZ.z;
+            newPos.z = 0;
         }
-        else if (wantedPos.z > maxXZ.z)
+        else if (charaPos.z > refMax.z)
         {
-            newPos.z = maxXZ.z;
+            newPos.z = refMax.z;
         }
         else
         {
-            newPos.z = ReferenceManager.Instance.characterReference.transform.position.z;
+            newPos.z = charaPos.z;
+        }*/
+        
+        if (charaPos.z < 0 || charaPos.z > refMax.z)
+        {
+            newPos.z = charaPos.z;
         }
+        
+        return minXZ.TransformPoint(newPos);
+    }
 
-        // Application des changements
-        transform.position = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+
+    public void InitialiseNewZone(Transform min, Transform max)
+    {
+        minXZ = min;
+        maxXZ = max;
+        refMax = minXZ.InverseTransformPoint(max.position);
     }
     
     
@@ -109,19 +133,17 @@ public class CameraMovements : MonoBehaviour
 
 
     // QUAND ON ENTRE DANS UNE PIECE
-    public void EnterRoom(Vector3 newMinXZ, Vector3 newMaxXZ)
+    public void EnterRoom(bool staticCamera)
     {
-        offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
-        isStatic = false;
-
-        minXZ = newMinXZ;
-        maxXZ = newMaxXZ;
-    }
-
-    // QUAND ON QUITTE UNE PIECE
-    public void ExitRoom()
-    {
-        isStatic = true;
+        if (!staticCamera)
+        {
+            offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
+            isStatic = false;
+        }
+        else
+        {
+            isStatic = true;
+        }
     }
 
 
@@ -141,18 +163,22 @@ public class CameraMovements : MonoBehaviour
 
 
     // REND INVISIBLES LES OBJETS EN PARAMETRE
-    public void ActualiseDesactivatedObjects(List<MeshRenderer> objects)
+    public void ActualiseDesactivatedObjects(List<TransparencyObject> objects, float distMin, float distMax)
     {
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].gameObject.SetActive(true);
+            desactivatedObjects[k].meshRenderer.material.SetFloat("Opacity", 1);
         }
         
         desactivatedObjects = objects;
         
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].gameObject.SetActive(false);
+            /*float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
+            distObject -= distMin;
+            distObject /= distMax;*/
+            
+            desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
         }
     }
 }
