@@ -17,6 +17,7 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
     private Vector3 refMax;
+    private Vector3 wantedPos;
 
     [Header("DebutStatic")] 
     [SerializeField] private bool startMove;       // Si on veut que la camera bouge des le depart
@@ -60,7 +61,8 @@ public class CameraMovements : MonoBehaviour
 
             Vector3 newPos = MoveCamera(charaPos);
 
-            transform.position = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+            wantedPos = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+            transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
         }
     }
 
@@ -73,7 +75,7 @@ public class CameraMovements : MonoBehaviour
         charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.transform.position);
 
         // On determine la position en X
-        if(charaPos.x < 0)
+        /*if(charaPos.x < 0)
         {
             newPos.x = 0;
         }
@@ -84,10 +86,15 @@ public class CameraMovements : MonoBehaviour
         else
         {
             newPos.x = charaPos.x;
+        }*/
+
+        if (charaPos.x < 0 || charaPos.x > refMax.x)
+        {
+            newPos.x = charaPos.x;
         }
 
         // On determine la position en Z
-        if (charaPos.z < 0)
+        /*if (charaPos.z < 0)
         {
             newPos.z = 0;
         }
@@ -96,6 +103,11 @@ public class CameraMovements : MonoBehaviour
             newPos.z = refMax.z;
         }
         else
+        {
+            newPos.z = charaPos.z;
+        }*/
+        
+        if (charaPos.z < 0 || charaPos.z > refMax.z)
         {
             newPos.z = charaPos.z;
         }
