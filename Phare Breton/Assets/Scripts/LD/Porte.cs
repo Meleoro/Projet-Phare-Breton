@@ -33,12 +33,12 @@ public class Porte : MonoBehaviour
         {
             if (doorNumber == 1)
             {
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects);
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects, door1.distanceMin, door1.distanceMax);
             }
 
             else
             {
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects);
+                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects, door1.distanceMin, door1.distanceMax);
             }
 
             
