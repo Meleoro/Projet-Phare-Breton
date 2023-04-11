@@ -6,12 +6,12 @@ using UnityEngine;
 public class EntreePorte : MonoBehaviour
 {
     [Range(1, 2)] public int numeroEntree;
-    public bool goInside;
+    public bool staticCamera;
     
     [Header("Gestion des alpha")]
     public List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
-    public float distanceMin = 1;     // Distance à partir de laquelle on va calculer un alpha différent de 0
-    public float distanceMax = 10;     // Distance après laquelle les éléments ne sont plus affectés par des modifiations d'alpha
+    [HideInInspector] public float distanceMin = 1;     // Distance à partir de laquelle on va calculer un alpha différent de 0
+    [HideInInspector] public float distanceMax = 10;     // Distance après laquelle les éléments ne sont plus affectés par des modifiations d'alpha
 
     // Variables permettant de détruire câble si on sort puis entre
     [HideInInspector] public bool hasCableThrough;
@@ -23,11 +23,8 @@ public class EntreePorte : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
         {
             // Changements camera
-            if (goInside)
-                GetComponentInParent<Porte>().GoInside(numeroEntree, collision.gameObject);
 
-            else
-                GetComponentInParent<Porte>().GoOutside(numeroEntree, collision.gameObject);
+            GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera);
         }
     }
 }
