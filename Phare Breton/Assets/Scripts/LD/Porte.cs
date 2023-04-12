@@ -271,7 +271,7 @@ public class Porte : MonoBehaviour
             }
         }
 
-        if (areaCamera)
+        if (cameraView)
         {
             Gizmos.color = cameraViewColor;
 

@@ -7,12 +7,19 @@ public class TriggerCamera : MonoBehaviour
 {
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private Transform cameraPos;
-    [SerializeField] private Color gizmosColor;
-    
+
     [Header("Gestion des alpha")]
     [SerializeField] private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
     [SerializeField] private float distanceMin = 1;
     [SerializeField] private float distanceMax = 8;
+    
+    [Header("Gizmos")]
+    [SerializeField] private Color mainGizmosColor;
+    [SerializeField] private bool cameraView;
+    [SerializeField] private Color cameraViewColor;
+    [SerializeField] private float rangeCamera;
+    private Camera currentCamera;
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -40,7 +47,23 @@ public class TriggerCamera : MonoBehaviour
         Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
         Gizmos.matrix = rotationMatrix;
         
-        Gizmos.color = gizmosColor;
+        Gizmos.color = mainGizmosColor;
         Gizmos.DrawCube(_collider.center, _collider.size);
+        
+        if (cameraView)
+        {
+            Gizmos.color = cameraViewColor;
+
+            Matrix4x4 tempMatrix = Gizmos.matrix;
+            
+            if (currentCamera == null)
+                currentCamera = ReferenceManager.Instance._camera;
+
+            Gizmos.matrix = Matrix4x4.TRS(cameraPos.transform.position, cameraPos.transform.rotation, Vector3.one);
+            Gizmos.DrawFrustum(Vector3.zero, currentCamera.fieldOfView, rangeCamera, currentCamera.nearClipPlane, currentCamera.aspect);
+
+
+            Gizmos.matrix = tempMatrix;
+        }
     }
 }

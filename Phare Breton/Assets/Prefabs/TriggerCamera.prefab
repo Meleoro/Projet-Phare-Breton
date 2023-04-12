@@ -63,7 +63,7 @@ Transform:
   m_Children:
   - {fileID: 8187576369685950503}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 46.27, z: 0}
 --- !u!114 &2787982334932714924
 MonoBehaviour:
@@ -79,7 +79,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _collider: {fileID: 9170139889989570990}
   cameraPos: {fileID: 8187576369685950503}
-  gizmosColor: {r: 0.9496862, g: 1, b: 0.36470592, a: 0.48235294}
+  desactivatedObjects: []
+  distanceMin: 1
+  distanceMax: 8
+  mainGizmosColor: {r: 1, g: 0.8730766, b: 0.36470592, a: 0.45490196}
+  cameraView: 1
+  cameraViewColor: {r: 1, g: 0.69343066, b: 0, a: 1}
+  rangeCamera: 20
 --- !u!65 &9170139889989570990
 BoxCollider:
   m_ObjectHideFlags: 0
