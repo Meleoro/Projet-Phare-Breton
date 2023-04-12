@@ -28,7 +28,9 @@ public class Porte : MonoBehaviour
 
     [Header("Gizmos")] 
     [SerializeField] private bool lineBetweenDoors;
+    [SerializeField] private Color lineBetweenDoorsColor;
     [SerializeField] private bool areaCamera;
+    [SerializeField] private Color areaCameraColor;
     
     public void EnterDoor(GameObject movedObject, int doorNumber)
     {
@@ -224,11 +226,13 @@ public class Porte : MonoBehaviour
     {
         if (lineBetweenDoors)
         {
+            Gizmos.color = lineBetweenDoorsColor;
             Gizmos.DrawLine(door1.transform.position, door2.transform.position);
         }
 
         if (areaCamera)
         {
+            Gizmos.color = areaCameraColor;
             if (!door1.staticCamera)
             {
                 Vector3 max = minXZDoor1.transform.InverseTransformPoint(maxXZDoor1.position);

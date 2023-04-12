@@ -124,6 +124,7 @@ MonoBehaviour:
   numeroEntree: 1
   staticCamera: 0
   desactivatedObjects: []
+  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
@@ -373,7 +374,7 @@ Transform:
   - {fileID: 5372824620800315381}
   - {fileID: 7469114093271813161}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6444921814277703122
 MonoBehaviour:
@@ -400,7 +401,9 @@ MonoBehaviour:
   changeScene: 0
   sceneName: 
   lineBetweenDoors: 1
-  areaCamera: 0
+  lineBetweenDoorsColor: {r: 0.10210263, g: 0.7830189, b: 0, a: 1}
+  areaCamera: 1
+  areaCameraColor: {r: 0, g: 0.5986471, b: 1, a: 1}
 --- !u!1 &3186927731120074644
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +529,7 @@ MonoBehaviour:
   numeroEntree: 2
   staticCamera: 0
   desactivatedObjects: []
+  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
