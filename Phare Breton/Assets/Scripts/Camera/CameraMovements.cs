@@ -8,7 +8,7 @@ public class CameraMovements : MonoBehaviour
 {
     [Header("Références")]
     [HideInInspector] public Fondu scriptFondu;
-    private Camera _camera;
+    public Camera _camera;
     private CameraRotationRef cameraRotationRefScript;
 
     [Header("CameraRoom")]

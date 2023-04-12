@@ -31,6 +31,11 @@ public class Porte : MonoBehaviour
     [SerializeField] private Color lineBetweenDoorsColor;
     [SerializeField] private bool areaCamera;
     [SerializeField] private Color areaCameraColor;
+    [SerializeField] private bool cameraView;
+    [SerializeField] private Color cameraViewColor;
+    [SerializeField] private float rangeCamera;
+    private Camera currentCamera;
+    
     
     public void EnterDoor(GameObject movedObject, int doorNumber)
     {
@@ -264,6 +269,29 @@ public class Porte : MonoBehaviour
                 Gizmos.DrawLine(maxXZDoor2.position, point1);
                 Gizmos.DrawLine(maxXZDoor2.position, point2);
             }
+        }
+
+        if (areaCamera)
+        {
+            Gizmos.color = cameraViewColor;
+
+            Matrix4x4 tempMatrix = Gizmos.matrix;
+            
+            if (currentCamera == null)
+                currentCamera = ReferenceManager.Instance._camera;
+
+            
+            // Camera Pos 1
+            Gizmos.matrix = Matrix4x4.TRS(cameraPos1.transform.position, cameraPos1.transform.rotation, Vector3.one);
+            Gizmos.DrawFrustum(Vector3.zero, currentCamera.fieldOfView, rangeCamera, currentCamera.nearClipPlane, currentCamera.aspect);
+            
+            
+            // Camera Pos 2
+            Gizmos.matrix = Matrix4x4.TRS(cameraPos2.transform.position, cameraPos2.transform.rotation, Vector3.one);
+            Gizmos.DrawFrustum(Vector3.zero, currentCamera.fieldOfView, rangeCamera, currentCamera.nearClipPlane, currentCamera.aspect);
+            
+
+            Gizmos.matrix = tempMatrix;
         }
     }
 }
