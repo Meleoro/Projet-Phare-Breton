@@ -10,7 +10,6 @@ public class EntreePorte : MonoBehaviour
     
     [Header("Gestion des alpha")]
     public List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
-    public bool activateAuto;
     public float distanceMin = 1;     // Distance à partir de laquelle on va calculer un alpha différent de 0
     public float distanceMax = 10;     // Distance après laquelle les éléments ne sont plus affectés par des modifiations d'alpha
 
@@ -35,7 +34,8 @@ public class EntreePorte : MonoBehaviour
 public class TransparencyObject
 {
     public MeshRenderer meshRenderer;
-    
-    [Header("GestionAlphaManuelle")]
+
+    [Header("GestionAlphaManuelle")] 
+    public bool alphaManuelle;
     [Range(0f, 1f)] public float alpha;
 }

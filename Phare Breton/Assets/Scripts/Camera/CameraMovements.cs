@@ -174,11 +174,19 @@ public class CameraMovements : MonoBehaviour
         
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            /*float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
-            distObject -= distMin;
-            distObject /= distMax;*/
-            
-            desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+            if (!desactivatedObjects[k].alphaManuelle)
+            {
+                float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
+                distObject -= distMin;
+                distObject /= distMax;
+                
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
+            }
+
+            else
+            {
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+            }
         }
     }
 }
