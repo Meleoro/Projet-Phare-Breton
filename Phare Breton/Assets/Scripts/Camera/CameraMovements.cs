@@ -60,6 +60,8 @@ public class CameraMovements : MonoBehaviour
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
 
             Vector3 newPos = MoveCamera(charaPos);
+            
+            Debug.Log(newPos);
 
             wantedPos = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
@@ -84,7 +86,7 @@ public class CameraMovements : MonoBehaviour
             newPos.x = charaPos.x - refMax.x;
         }
 
-        
+         
         if (charaPos.z < 0)
         {
             newPos.z = charaPos.z;
@@ -119,6 +121,7 @@ public class CameraMovements : MonoBehaviour
         if (!staticCamera)
         {
             offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
+            Debug.Log(offset);
             isStatic = false;
         }
         else
