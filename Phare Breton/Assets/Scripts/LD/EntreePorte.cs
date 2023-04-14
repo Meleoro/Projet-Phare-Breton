@@ -23,6 +23,7 @@ public class EntreePorte : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
         {
             // Changements camera
+            ReferenceManager.Instance.cameraReference.isStatic = true;
 
             GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera);
         }

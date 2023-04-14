@@ -13,7 +13,7 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CameraRoom")]
     [HideInInspector] public bool isStatic;
-    [HideInInspector] public Transform minXZ;
+    public Transform minXZ;
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
     private Vector3 refMax;
@@ -73,21 +73,8 @@ public class CameraMovements : MonoBehaviour
     {
         Vector3 newPos = new Vector3(0, 0, 0);
         charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.transform.position);
-
-        // On determine la position en X
-        /*if(charaPos.x < 0)
-        {
-            newPos.x = 0;
-        }
-        else if(charaPos.x > refMax.x)
-        {
-            newPos.x = refMax.x;
-        }
-        else
-        {
-            newPos.x = charaPos.x;
-        }*/
-
+        
+        
         if (charaPos.x < 0)
         {
             newPos.x = charaPos.x;
@@ -97,19 +84,6 @@ public class CameraMovements : MonoBehaviour
             newPos.x = charaPos.x - refMax.x;
         }
 
-        // On determine la position en Z
-        /*if (charaPos.z < 0)
-        {
-            newPos.z = 0;
-        }
-        else if (charaPos.z > refMax.z)
-        {
-            newPos.z = refMax.z;
-        }
-        else
-        {
-            newPos.z = charaPos.z;
-        }*/
         
         if (charaPos.z < 0)
         {
@@ -127,8 +101,7 @@ public class CameraMovements : MonoBehaviour
     public void InitialiseNewZone(Transform min, Transform max)
     {
         minXZ = min;
-        maxXZ = max;
-        refMax = minXZ.InverseTransformPoint(max.position);
+        refMax = min.InverseTransformPoint(max.position);
     }
     
     

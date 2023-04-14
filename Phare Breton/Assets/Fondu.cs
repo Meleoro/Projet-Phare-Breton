@@ -46,7 +46,7 @@ public class Fondu : MonoBehaviour
 
     public IEnumerator EnterRoom(bool staticCamera)
     {
-        yield return new WaitForSeconds(dureeFondu + 0.1f);
+        yield return new WaitForSeconds(dureeFondu + 0.01f);
 
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
     }
@@ -59,5 +59,6 @@ public class Fondu : MonoBehaviour
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraNewPos.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraNewPos.rotation;
+        
     }
 }
