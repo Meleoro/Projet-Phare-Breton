@@ -12,7 +12,7 @@ public class CameraMovements : MonoBehaviour
     private CameraRotationRef cameraRotationRefScript;
 
     [Header("CameraRoom")]
-    private bool isStatic;
+    [HideInInspector] public bool isStatic;
     [HideInInspector] public Transform minXZ;
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
@@ -88,9 +88,13 @@ public class CameraMovements : MonoBehaviour
             newPos.x = charaPos.x;
         }*/
 
-        if (charaPos.x < 0 || charaPos.x > refMax.x)
+        if (charaPos.x < 0)
         {
             newPos.x = charaPos.x;
+        }
+        else if (charaPos.x > refMax.x)
+        {
+            newPos.x = charaPos.x - refMax.x;
         }
 
         // On determine la position en Z
@@ -107,9 +111,13 @@ public class CameraMovements : MonoBehaviour
             newPos.z = charaPos.z;
         }*/
         
-        if (charaPos.z < 0 || charaPos.z > refMax.z)
+        if (charaPos.z < 0)
         {
             newPos.z = charaPos.z;
+        }
+        else if (charaPos.z > refMax.z)
+        {
+            newPos.z = charaPos.z - refMax.z;
         }
         
         return minXZ.TransformPoint(newPos);

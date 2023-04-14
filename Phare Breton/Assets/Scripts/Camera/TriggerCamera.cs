@@ -35,6 +35,8 @@ public class TriggerCamera : MonoBehaviour
             {
                 ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
                 ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+
+                ReferenceManager.Instance.cameraReference.isStatic = true;
                 
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMin, distanceMax);
             }
