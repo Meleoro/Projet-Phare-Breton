@@ -227,13 +227,13 @@ public class Porte : MonoBehaviour
     }
 
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
-        if (lineBetweenDoors)
+        /*if (lineBetweenDoors)
         {
             Gizmos.color = lineBetweenDoorsColor;
             Gizmos.DrawLine(door1.transform.position, door2.transform.position);
-        }
+        }*/
 
         if (areaCamera)
         {
