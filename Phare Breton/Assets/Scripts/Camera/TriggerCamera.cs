@@ -33,9 +33,11 @@ public class TriggerCamera : MonoBehaviour
             if (Vector3.Distance(posArriere, other.transform.position) <
                 Vector3.Distance(posAvant, other.transform.position))
             {
+                ReferenceManager.Instance.cameraReference.isStatic = true;
+                
                 ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
                 ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
-                
+
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMin, distanceMax);
             }
         }

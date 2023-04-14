@@ -48,11 +48,13 @@ public class Porte : MonoBehaviour
             if (doorNumber == 1)
             {
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door1.desactivatedObjects, door1.distanceMin, door1.distanceMax);
+                ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor2, maxXZDoor2);
             }
 
             else
             {
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(door2.desactivatedObjects, door1.distanceMin, door1.distanceMax);
+                ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor1, maxXZDoor1);
             }
 
             
@@ -128,15 +130,11 @@ public class Porte : MonoBehaviour
         if (doorNumber == 1)
         {
             StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
-            
-            ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor2, maxXZDoor2);
         }
 
         else
         {
             StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
-
-            ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZDoor1, maxXZDoor1);
         }
     }
 
