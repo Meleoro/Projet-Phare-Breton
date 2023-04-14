@@ -49,7 +49,10 @@ public class TriggerCamera : MonoBehaviour
         
         Gizmos.color = mainGizmosColor;
         Gizmos.DrawCube(_collider.center, _collider.size);
-        
+    }
+
+    private void OnDrawGizmosSelected()
+    {
         if (cameraView)
         {
             Gizmos.color = cameraViewColor;
