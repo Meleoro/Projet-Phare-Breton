@@ -6,11 +6,11 @@ using DG.Tweening;
 
 public class Fondu : MonoBehaviour
 {
-    [Header("R�f�rences")]
+    [Header("References")]
     [SerializeField] private GameObject canva;
     [SerializeField] private Image imageFondu;
 
-    [Header("Param�tres")]
+    [Header("Parametres")]
     [SerializeField] private float dureeFondu;
 
 
@@ -43,20 +43,12 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.characterReference.noControl = false;
     }
 
-    
-    public IEnumerator EnterRoom(Vector3 newMinXZ, Vector3 newMaxXZ)
+
+    public IEnumerator EnterRoom(bool staticCamera)
     {
         yield return new WaitForSeconds(dureeFondu + 0.1f);
 
-        ReferenceManager.Instance.cameraReference.EnterRoom(newMinXZ, newMaxXZ);
-    }
-
-    
-    public IEnumerator ExitRoom()
-    {
-        yield return new WaitForSeconds(dureeFondu);
-
-        ReferenceManager.Instance.cameraReference.ExitRoom();
+        ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
     }
 
 
