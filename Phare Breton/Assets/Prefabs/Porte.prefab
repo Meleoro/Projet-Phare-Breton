@@ -124,7 +124,6 @@ MonoBehaviour:
   numeroEntree: 1
   staticCamera: 0
   desactivatedObjects: []
-  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
@@ -320,6 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8998546002124698464}
+  - component: {fileID: 7900267952615699914}
   m_Layer: 0
   m_Name: PosCamera
   m_TagString: Untagged
@@ -342,6 +342,20 @@ Transform:
   m_Father: {fileID: 5372824620800315381}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 45, y: -110.642, z: 0.008}
+--- !u!114 &7900267952615699914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816782908358971514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8de13bd3f47b8b468284e8de0f42cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraViewColor: {r: 0.34509805, g: 0.47058824, b: 1, a: 1}
+  rangeCamera: 20
 --- !u!1 &3048879914980297087
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,7 +546,6 @@ MonoBehaviour:
   numeroEntree: 2
   staticCamera: 0
   desactivatedObjects: []
-  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
@@ -839,6 +852,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6592479298285007914}
+  - component: {fileID: 6293813281101894061}
   m_Layer: 0
   m_Name: PosCamera
   m_TagString: Untagged
@@ -861,6 +875,20 @@ Transform:
   m_Father: {fileID: 7469114093271813161}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 45, y: -1.145, z: 0.009}
+--- !u!114 &6293813281101894061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452464847833618147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8de13bd3f47b8b468284e8de0f42cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraViewColor: {r: 0.34509805, g: 0.47058824, b: 1, a: 1}
+  rangeCamera: 20
 --- !u!1 &3919654257603174134
 GameObject:
   m_ObjectHideFlags: 0
