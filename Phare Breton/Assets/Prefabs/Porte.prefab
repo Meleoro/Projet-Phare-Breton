@@ -288,6 +288,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8234449916261313949}
+  - component: {fileID: 5544906924396692268}
   m_Layer: 0
   m_Name: MinXZ
   m_TagString: Untagged
@@ -310,6 +311,22 @@ Transform:
   m_Father: {fileID: 6324587021185951831}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5544906924396692268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242559256883659087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}
 --- !u!1 &2816782908358971514
 GameObject:
   m_ObjectHideFlags: 0
@@ -929,6 +946,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7808651036114276973}
+  - component: {fileID: 5405891518495553858}
   m_Layer: 0
   m_Name: MaxXZ
   m_TagString: Untagged
@@ -951,6 +969,22 @@ Transform:
   m_Father: {fileID: 6324587021185951831}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5405891518495553858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716591452207490423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}
 --- !u!1 &5128457060774480205
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7840544024770539579}
+  - component: {fileID: 181148501580005350}
   m_Layer: 0
   m_Name: MaxXZ
   m_TagString: Untagged
@@ -982,6 +1017,22 @@ Transform:
   m_Father: {fileID: 6601943219280305552}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181148501580005350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128457060774480205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &6261181381325799210
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +1042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6601943219280305552}
+  - component: {fileID: 7124103943226029422}
   m_Layer: 0
   m_Name: LimitesCamera
   m_TagString: Untagged
@@ -1015,6 +1067,22 @@ Transform:
   m_Father: {fileID: 7469114093271813161}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7124103943226029422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261181381325799210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &7775947701343980164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9200648904131869654}
+  - component: {fileID: 1937902896232731523}
   m_Layer: 0
   m_Name: MinXZ
   m_TagString: Untagged
@@ -1046,6 +1115,22 @@ Transform:
   m_Father: {fileID: 6601943219280305552}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1937902896232731523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7775947701343980164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &9088955119639677772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6324587021185951831}
+  - component: {fileID: 3082001862686603536}
   m_Layer: 0
   m_Name: LimitesCamera
   m_TagString: Untagged
@@ -1079,3 +1165,19 @@ Transform:
   m_Father: {fileID: 5372824620800315381}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3082001862686603536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088955119639677772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}
