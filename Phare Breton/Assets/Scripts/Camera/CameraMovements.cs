@@ -9,11 +9,12 @@ public class CameraMovements : MonoBehaviour
     [Header("Références")]
     [HideInInspector] public Fondu scriptFondu;
     public Camera _camera;
+    public Transform cameraPosRef;
     private CameraRotationRef cameraRotationRefScript;
 
     [Header("CameraRoom")]
     [HideInInspector] public bool isStatic;
-    public Transform minXZ;
+    [HideInInspector] public Transform minXZ;
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
     private Vector3 refMax;
@@ -61,9 +62,8 @@ public class CameraMovements : MonoBehaviour
 
             Vector3 newPos = MoveCamera(charaPos);
             
-            Debug.Log(newPos);
 
-            wantedPos = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+            wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
         }
     }
@@ -95,8 +95,9 @@ public class CameraMovements : MonoBehaviour
         {
             newPos.z = charaPos.z - refMax.z;
         }
+
         
-        return minXZ.TransformPoint(newPos);
+        return cameraPosRef.TransformPoint(newPos);
     }
 
 
@@ -121,7 +122,6 @@ public class CameraMovements : MonoBehaviour
         if (!staticCamera)
         {
             offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
-            Debug.Log(offset);
             isStatic = false;
         }
         else
