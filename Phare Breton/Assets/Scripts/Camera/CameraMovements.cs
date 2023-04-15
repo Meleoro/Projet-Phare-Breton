@@ -104,6 +104,7 @@ public class CameraMovements : MonoBehaviour
     public void InitialiseNewZone(Transform min, Transform max)
     {
         minXZ = min;
+        cameraPosRef.rotation = minXZ.rotation;
         refMax = min.InverseTransformPoint(max.position);
     }
     

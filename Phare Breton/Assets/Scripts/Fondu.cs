@@ -61,6 +61,5 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraNewPos.rotation;
         
         ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraNewPos.position;
-        ReferenceManager.Instance.cameraReference.cameraPosRef.rotation = cameraNewPos.rotation;
     }
 }
