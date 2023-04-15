@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Vector3 = UnityEngine.Vector3;
 
 public class Fondu : MonoBehaviour
 {
@@ -59,7 +61,7 @@ public class Fondu : MonoBehaviour
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraNewPos.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraNewPos.rotation;
-        
+
         ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraNewPos.position;
     }
 }
