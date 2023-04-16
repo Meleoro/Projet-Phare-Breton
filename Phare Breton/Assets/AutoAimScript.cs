@@ -19,7 +19,7 @@ public class AutoAimScript : MonoBehaviour
         
         for (int k = 0; k < autoAimedObjects.Count; k++)
         {
-            if (autoAimedObjects[k].isLighted)
+            if (autoAimedObjects[k].isLighted && Mathf.Abs(autoAimedObjects[k].transform.position.y - transform.transform.position.y) < 1f)
             {
                 Vector3 newDirection = autoAimedObjects[k].transform.position - transform.position;
                 newDirection = zoneAncrage.InverseTransformDirection(newDirection);

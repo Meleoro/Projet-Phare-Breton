@@ -22,6 +22,9 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
 
+    [Header("Fall")] 
+    private Vector2 stockageDirection;
+
 
     private void Awake()
     {
@@ -35,18 +38,32 @@ public class CharacterMovement : MonoBehaviour
     // BOUGE LE PERSONNAGE
     public void MoveCharacter(Vector2 direction)
     {
-        Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeed;
+        if (direction != Vector2.zero)
+        {
+            stockageDirection = direction;
+        }
 
-        Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
-        desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
+        bool willFall = VerifyFall(direction);
+
+        if (!willFall)
+        {
+            Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeed;
+            
+            Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
+            desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
-        float maxSpeedChange = maxAcceleration * Time.deltaTime;
+            float maxSpeedChange = maxAcceleration * Time.deltaTime;
 
-        // Acceleration du personnage
-        velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
-        velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-        velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-        manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
+            // Acceleration du personnage
+            velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
+            velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
+            velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
+            manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
+        }
+        else
+        {
+            manager.rb.velocity = Vector3.zero;
+        }
     }
 
     // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
@@ -91,8 +108,17 @@ public class CharacterMovement : MonoBehaviour
     // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(GameObject climbedObject)
     {
-        if(climbedObject.GetComponent<ObjetInteractible>().isClimbable)
-            transform.position = climbedObject.transform.position + Vector3.up * 2;
+        if (climbedObject.GetComponent<ObjetInteractible>().isClimbable)
+        {
+            if (VerifyFall(stockageDirection))
+            {
+                transform.position = CalculateFallPos(stockageDirection);
+            }
+            else
+            {
+                transform.position = climbedObject.transform.position + Vector3.up * 2;
+            }
+        }
     }
     
 
@@ -101,4 +127,60 @@ public class CharacterMovement : MonoBehaviour
     {
         transform.position = newPos;
     }
+
+
+    public bool VerifyFall(Vector2 direction)
+    {
+        Vector3 point1 = Vector3.zero;
+        Vector3 point2 = Vector3.zero;
+        
+
+        // Raycast 1
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit raycastHit;
+        
+        if(Physics.Raycast(ray, out raycastHit, 5))
+        {
+            point1 = raycastHit.point;
+        }
+        
+        
+        // Raycast 2
+        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, -2f, direction.y));
+        
+        ray = new Ray(transform.position, direction2);
+        RaycastHit raycastHit2;
+
+        if(Physics.Raycast(ray, out raycastHit2, 5))
+        {
+            point2 = raycastHit2.point;
+        }
+
+
+        if (point1.y > point2.y + 0.2f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public Vector3 CalculateFallPos(Vector2 direction)
+    {
+        Vector3 posFall = Vector3.zero;
+        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, -2f, direction.y));
+        
+        Ray ray = new Ray(transform.position, direction2);
+        RaycastHit raycastHit2;
+
+        if(Physics.Raycast(ray, out raycastHit2, 5))
+        {
+            posFall = raycastHit2.point + Vector3.up;
+        }
+        
+        return posFall;
+    }
+    
 }
