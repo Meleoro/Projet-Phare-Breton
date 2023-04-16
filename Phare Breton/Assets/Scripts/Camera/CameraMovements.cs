@@ -64,7 +64,7 @@ public class CameraMovements : MonoBehaviour
 
             Vector3 newPos = MoveCamera(charaPos);
 
-            wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+            wantedPos = new Vector3(newPos.x, newPos.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
             
             UpdateAlpha();
@@ -80,6 +80,13 @@ public class CameraMovements : MonoBehaviour
         charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.transform.position);
         
         
+        /*if ((charaPos.x < 0 || charaPos.x > refMax.x) || (charaPos.z < 0 || charaPos.z > refMax.z))
+        {
+            newPos.x = charaPos.x;
+            newPos.z = charaPos.z;
+        }*/
+
+        
         if (charaPos.x < 0)
         {
             newPos.x = charaPos.x;
@@ -88,6 +95,8 @@ public class CameraMovements : MonoBehaviour
         {
             newPos.x = charaPos.x - refMax.x;
         }
+        
+        newPos.y = charaPos.y;
 
          
         if (charaPos.z < 0)
