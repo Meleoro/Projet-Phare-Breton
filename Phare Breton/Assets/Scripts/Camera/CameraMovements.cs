@@ -29,6 +29,8 @@ public class CameraMovements : MonoBehaviour
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
+    private float currentMinAlpha;
+    private float currentMaxAlpha;
 
 
     private void Start()
@@ -61,10 +63,11 @@ public class CameraMovements : MonoBehaviour
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
 
             Vector3 newPos = MoveCamera(charaPos);
-            
 
             wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
+            
+            UpdateAlpha();
         }
     }
 
@@ -156,6 +159,8 @@ public class CameraMovements : MonoBehaviour
         }
         
         desactivatedObjects = objects;
+        currentMinAlpha = distMin;
+        currentMaxAlpha = distMax;
         
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
@@ -165,7 +170,25 @@ public class CameraMovements : MonoBehaviour
                 distObject -= distMin;
                 distObject /= distMax - distMin;
 
-                Debug.Log(distObject);
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
+            }
+
+            else
+            {
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+            }
+        }
+    }
+
+    public void UpdateAlpha()
+    {
+        for (int k = 0; k < desactivatedObjects.Count; k++)
+        {
+            if (!desactivatedObjects[k].alphaManuelle)
+            {
+                float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
+                distObject -= currentMinAlpha;
+                distObject /= currentMaxAlpha - currentMinAlpha;
 
                 desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
             }
