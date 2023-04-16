@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.XR;
 public class ZoneFlute : MonoBehaviour
 {
     [SerializeField] private CharacterFlute scriptFlute;
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)

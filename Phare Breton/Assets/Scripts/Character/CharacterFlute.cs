@@ -23,6 +23,7 @@ public class CharacterFlute : MonoBehaviour
     public GameObject zoneFlute;
     public GameObject modeVisée;
     public GameObject modeZone;
+    public AutoAimScript autoAimScript;
     public GameObject cablePoint;
     private CharaManager manager;
 
@@ -78,7 +79,9 @@ public class CharacterFlute : MonoBehaviour
         zoneFlute.SetActive(true);
         doOnce = false;
 
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(direction.y, 0, -direction.x), Vector3.up);
+        Vector2 newDirection = autoAimScript.ChooseDirection(direction);
+
+        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(newDirection.y, 0, -newDirection.x), Vector3.up);
     }
 
     
