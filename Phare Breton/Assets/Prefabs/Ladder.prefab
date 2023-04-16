@@ -12,11 +12,13 @@ GameObject:
   - component: {fileID: 4567242508079424513}
   - component: {fileID: 8368006631036762829}
   - component: {fileID: 2344974902973312890}
-  - component: {fileID: 3196342299367870908}
   - component: {fileID: 6478786820997141363}
+  - component: {fileID: 2016389742551855824}
+  - component: {fileID: 1460641941730791606}
+  - component: {fileID: 4711847875231756949}
   m_Layer: 0
   m_Name: Ladder
-  m_TagString: Untagged
+  m_TagString: Interactible
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 5558081069223304709}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -43.963, z: 0}
 --- !u!33 &4567242508079424513
 MeshFilter:
@@ -6019,38 +6021,11 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 28
+  m_VersionIndex: 43
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!114 &3196342299367870908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2157151002786655817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLighted: 1
-  isClimbable: 1
-  isMagneted: 0
-  magnetedPos: {fileID: 0}
-  objectType: 3
-  isLinked: 0
-  linkedObject: []
-  cable: {fileID: 0}
-  isStart: 0
-  ampouleActive: 0
-  lightComponent: {fileID: 0}
-  lightArea: {fileID: 0}
-  isMoved: 0
-  currentHauteur: 0
-  TPPos: {fileID: 5558081069223304709}
 --- !u!65 &6478786820997141363
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6072,6 +6047,79 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.356302, y: 3.964304, z: 2.0621781}
   m_Center: {x: 0.031247327, y: 1.9807434, z: 0.13298108}
+--- !u!65 &2016389742551855824
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157151002786655817}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7270008, y: 3.964304, z: 0.0865987}
+  m_Center: {x: 0.09608975, y: 1.9807444, z: 0.04329933}
+--- !u!54 &1460641941730791606
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157151002786655817}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4711847875231756949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157151002786655817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4afd8d71aa294c90f59d2e9d53fcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLighted: 1
+  isClimbable: 1
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
+  isLinked: 0
+  linkedObject: []
+  cable: {fileID: 0}
+  isStart: 0
+  isMoved: 0
+  currentHauteur: 0
+  isInStase: 0
+  rb: {fileID: 0}
+  TPPos: {fileID: 5558081069223304709}
 --- !u!1 &4043761935921136249
 GameObject:
   m_ObjectHideFlags: 0

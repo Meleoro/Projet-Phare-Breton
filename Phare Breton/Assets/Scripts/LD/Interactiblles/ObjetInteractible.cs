@@ -72,8 +72,11 @@ public class ObjetInteractible : MonoBehaviour
         magnetedPos = magnetPos;
         isMagneted = false;
 
-        cable.lockStart = false;
-        cable.lockEnd = false;
+        if (cable != null)
+        {
+            cable.lockStart = false;
+            cable.lockEnd = false;
+        }
     }
     
 
