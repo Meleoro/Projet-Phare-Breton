@@ -30,6 +30,7 @@ Transform:
   m_Children:
   - {fileID: 1922999139315818349}
   - {fileID: 3428473451820206069}
+  - {fileID: 7449669620318268039}
   - {fileID: 316531863094180622}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -136,6 +137,37 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &789412087615073043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7449669620318268039}
+  m_Layer: 0
+  m_Name: CameraMovementRef
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7449669620318268039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789412087615073043}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7881634352397566789}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1074192986583977090
 GameObject:
   m_ObjectHideFlags: 0
@@ -290,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scriptFondu: {fileID: 0}
   _camera: {fileID: 1174603870151915392}
+  cameraPosRef: {fileID: 7449669620318268039}
   isStatic: 0
   minXZ: {fileID: 0}
   maxXZ: {fileID: 0}
@@ -311,7 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canva: {fileID: 246845634925632135}
   imageFondu: {fileID: 6220156003125322026}
-  dureeFondu: 0
+  dureeFondu: 0.5
 --- !u!1 &6501074936058964957
 GameObject:
   m_ObjectHideFlags: 0

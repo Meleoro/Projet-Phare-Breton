@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4052384763944759437}
   - component: {fileID: 358931916557384273}
   - component: {fileID: 396954631571981279}
+  - component: {fileID: 1846533463285865898}
   - component: {fileID: 5590052271654991784}
   - component: {fileID: 6158988283299262329}
   m_Layer: 0
@@ -124,12 +125,29 @@ MonoBehaviour:
   numeroEntree: 1
   staticCamera: 0
   desactivatedObjects: []
-  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
   cableThisSide: {fileID: 0}
   cableOtherSide: {fileID: 0}
+--- !u!114 &1846533463285865898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82727622841322084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f4d56233ddae5479ff891ea8e75266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keepShowing: 0
+  sphereGizmos: 1
+  scriptPorte: {fileID: 396954631571981279}
+  posCamera: {fileID: 6592479298285007914}
+  minColor: {r: 1, g: 0.2328192, b: 0, a: 1}
+  maxColor: {r: 0.999694, g: 1, b: 0, a: 1}
 --- !u!54 &5590052271654991784
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -289,6 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8234449916261313949}
+  - component: {fileID: 5544906924396692268}
   m_Layer: 0
   m_Name: MinXZ
   m_TagString: Untagged
@@ -311,6 +330,22 @@ Transform:
   m_Father: {fileID: 6324587021185951831}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5544906924396692268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242559256883659087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}
 --- !u!1 &2816782908358971514
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,6 +355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8998546002124698464}
+  - component: {fileID: 7900267952615699914}
   m_Layer: 0
   m_Name: PosCamera
   m_TagString: Untagged
@@ -342,6 +378,20 @@ Transform:
   m_Father: {fileID: 5372824620800315381}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 45, y: -110.642, z: 0.008}
+--- !u!114 &7900267952615699914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2816782908358971514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8de13bd3f47b8b468284e8de0f42cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraViewColor: {r: 0.34509805, g: 0.47058824, b: 1, a: 1}
+  rangeCamera: 20
 --- !u!1 &3048879914980297087
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,6 +470,7 @@ GameObject:
   - component: {fileID: 7456356487361863492}
   - component: {fileID: 452975694270192674}
   - component: {fileID: 59830192907572259}
+  - component: {fileID: 8181018131020006899}
   - component: {fileID: 7360247336562614605}
   - component: {fileID: 7287006416743229496}
   - component: {fileID: 255842967175181484}
@@ -532,12 +583,29 @@ MonoBehaviour:
   numeroEntree: 2
   staticCamera: 0
   desactivatedObjects: []
-  activateAuto: 0
   distanceMin: 1
   distanceMax: 10
   hasCableThrough: 0
   cableThisSide: {fileID: 0}
   cableOtherSide: {fileID: 0}
+--- !u!114 &8181018131020006899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186927731120074644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f4d56233ddae5479ff891ea8e75266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keepShowing: 0
+  sphereGizmos: 1
+  scriptPorte: {fileID: 59830192907572259}
+  posCamera: {fileID: 8998546002124698464}
+  minColor: {r: 1, g: 0.23137255, b: 0, a: 1}
+  maxColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!114 &7360247336562614605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,6 +907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6592479298285007914}
+  - component: {fileID: 6293813281101894061}
   m_Layer: 0
   m_Name: PosCamera
   m_TagString: Untagged
@@ -861,6 +930,20 @@ Transform:
   m_Father: {fileID: 7469114093271813161}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 45, y: -1.145, z: 0.009}
+--- !u!114 &6293813281101894061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3452464847833618147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8de13bd3f47b8b468284e8de0f42cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraViewColor: {r: 0.34509805, g: 0.47058824, b: 1, a: 1}
+  rangeCamera: 20
 --- !u!1 &3919654257603174134
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7808651036114276973}
+  - component: {fileID: 5405891518495553858}
   m_Layer: 0
   m_Name: MaxXZ
   m_TagString: Untagged
@@ -923,6 +1007,22 @@ Transform:
   m_Father: {fileID: 6324587021185951831}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5405891518495553858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4716591452207490423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}
 --- !u!1 &5128457060774480205
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,6 +1032,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7840544024770539579}
+  - component: {fileID: 181148501580005350}
   m_Layer: 0
   m_Name: MaxXZ
   m_TagString: Untagged
@@ -954,6 +1055,22 @@ Transform:
   m_Father: {fileID: 6601943219280305552}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &181148501580005350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128457060774480205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &6261181381325799210
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,6 +1080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6601943219280305552}
+  - component: {fileID: 7124103943226029422}
   m_Layer: 0
   m_Name: LimitesCamera
   m_TagString: Untagged
@@ -987,6 +1105,22 @@ Transform:
   m_Father: {fileID: 7469114093271813161}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7124103943226029422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6261181381325799210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &7775947701343980164
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,6 +1130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9200648904131869654}
+  - component: {fileID: 1937902896232731523}
   m_Layer: 0
   m_Name: MinXZ
   m_TagString: Untagged
@@ -1018,6 +1153,22 @@ Transform:
   m_Father: {fileID: 6601943219280305552}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1937902896232731523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7775947701343980164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 9200648904131869654}
+  maxXZ: {fileID: 7840544024770539579}
 --- !u!1 &9088955119639677772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,6 +1178,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6324587021185951831}
+  - component: {fileID: 3082001862686603536}
   m_Layer: 0
   m_Name: LimitesCamera
   m_TagString: Untagged
@@ -1051,3 +1203,19 @@ Transform:
   m_Father: {fileID: 5372824620800315381}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3082001862686603536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9088955119639677772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4500128d2cd494e9df14a28e7d9a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  desactivateGizmos: 0
+  areaCameraColor: {r: 0.23137255, g: 0.69411767, b: 1, a: 1}
+  minXZ: {fileID: 8234449916261313949}
+  maxXZ: {fileID: 7808651036114276973}

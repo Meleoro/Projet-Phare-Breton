@@ -9,11 +9,12 @@ public class CameraMovements : MonoBehaviour
     [Header("Références")]
     [HideInInspector] public Fondu scriptFondu;
     public Camera _camera;
+    public Transform cameraPosRef;
     private CameraRotationRef cameraRotationRefScript;
 
     [Header("CameraRoom")]
     [HideInInspector] public bool isStatic;
-    public Transform minXZ;
+    [HideInInspector] public Transform minXZ;
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
     private Vector3 refMax;
@@ -28,6 +29,8 @@ public class CameraMovements : MonoBehaviour
     private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
     private Quaternion saveRotation;
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
+    private float currentMinAlpha;
+    private float currentMaxAlpha;
 
 
     private void Start()
@@ -60,11 +63,11 @@ public class CameraMovements : MonoBehaviour
             Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
 
             Vector3 newPos = MoveCamera(charaPos);
-            
-            Debug.Log(newPos);
 
-            wantedPos = new Vector3(newPos.x + offset.x, transform.position.y, newPos.z + offset.z);
+            wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
+            
+            UpdateAlpha();
         }
     }
 
@@ -95,14 +98,16 @@ public class CameraMovements : MonoBehaviour
         {
             newPos.z = charaPos.z - refMax.z;
         }
+
         
-        return minXZ.TransformPoint(newPos);
+        return cameraPosRef.TransformPoint(newPos);
     }
 
 
     public void InitialiseNewZone(Transform min, Transform max)
     {
         minXZ = min;
+        cameraPosRef.rotation = minXZ.rotation;
         refMax = min.InverseTransformPoint(max.position);
     }
     
@@ -121,7 +126,6 @@ public class CameraMovements : MonoBehaviour
         if (!staticCamera)
         {
             offset = transform.position - ReferenceManager.Instance.characterReference.transform.position;
-            Debug.Log(offset);
             isStatic = false;
         }
         else
@@ -155,6 +159,8 @@ public class CameraMovements : MonoBehaviour
         }
         
         desactivatedObjects = objects;
+        currentMinAlpha = distMin;
+        currentMaxAlpha = distMax;
         
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
@@ -163,7 +169,27 @@ public class CameraMovements : MonoBehaviour
                 float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
                 distObject -= distMin;
                 distObject /= distMax - distMin;
-                
+
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
+            }
+
+            else
+            {
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+            }
+        }
+    }
+
+    public void UpdateAlpha()
+    {
+        for (int k = 0; k < desactivatedObjects.Count; k++)
+        {
+            if (!desactivatedObjects[k].alphaManuelle)
+            {
+                float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
+                distObject -= currentMinAlpha;
+                distObject /= currentMaxAlpha - currentMinAlpha;
+
                 desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
             }
 
