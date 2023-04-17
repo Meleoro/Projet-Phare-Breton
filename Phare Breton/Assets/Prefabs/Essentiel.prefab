@@ -690,6 +690,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 13b96ac8175c9024ba01e3ce92486ef2, type: 2}
+    - target: {fileID: 3799776982024782300, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 19d82c4b8f39e8e42921411d17335710, type: 2}
     - target: {fileID: 5527187700211497055, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: m_Name
@@ -752,6 +757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 3810519113055759133}
+    - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
       propertyPath: menuScene
       value: LevelDesign - BlockMesh
       objectReference: {fileID: 0}
@@ -777,6 +787,12 @@ Transform:
 --- !u!4 &3313839952954704557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3289655334772254828, guid: d45a5586b24669a4bab29e12b01b5703,
+    type: 3}
+  m_PrefabInstance: {fileID: 25381099719715521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3810519113055759133 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3799776982024782300, guid: d45a5586b24669a4bab29e12b01b5703,
     type: 3}
   m_PrefabInstance: {fileID: 25381099719715521}
   m_PrefabAsset: {fileID: 0}

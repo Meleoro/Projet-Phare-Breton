@@ -66,10 +66,18 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    // ORIENTATION DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
-    public void RotateCharacter()
+    // ORIENTATION LES CONTROLES DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
+    public void RotateCharacterCamera()
     {
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
+    }
+
+    // ORIENTE LE MESH DU PERSONNAGE
+    public void RotateCharacter(Vector2 direction)
+    {
+        Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+
+        transform.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 90, 0);
     }
 
 

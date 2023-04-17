@@ -12,8 +12,9 @@ public class CharaManager : MonoBehaviour
     public CharacterMovement movementScript;
     public CharacterFlute fluteScript;
     public CharacterNotes notesScript;
-    
+
     [Header("Références")]
+    [SerializeField] private Animator anim;
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
@@ -30,6 +31,9 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public int nearNoteNumber;
     [HideInInspector] public bool canPlayMusic;
     [HideInInspector] public int currentMelodyIndex;
+
+    [Header("Animations")]
+    private bool isWalking;
 
     [Header("Autres")] public string menuScene;
     [HideInInspector] public bool noMovement;
@@ -66,17 +70,29 @@ public class CharaManager : MonoBehaviour
                 notesScript.StartPlay(currentMelodyIndex);
             }
 
+
             // Partie déplacement player / objets
             if (!noMovement && !isMovingObjects)
             {
                 movementScript.MoveCharacter(direction);
-                
-                if(direction == Vector2.zero)
-                    movementScript.RotateCharacter();
+                movementScript.RotateCharacter(direction);
+
+                if (direction == Vector2.zero)
+                    movementScript.RotateCharacterCamera();
+
+
+                if (direction != Vector2.zero)
+                    isWalking = true;
+
+                else
+                    isWalking = false;
             }
+
             else if (isMovingObjects)
             {
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
+
+                isWalking = false;
             }
 
 
@@ -115,7 +131,9 @@ public class CharaManager : MonoBehaviour
             {
                 movementScript.MoveCharacter(Vector2.zero);
                 fluteScript.FluteActive(direction);
-                movementScript.RotateCharacter();
+
+                movementScript.RotateCharacterCamera();
+                movementScript.RotateCharacter(direction);
 
                 if (interaction)
                 {
@@ -132,6 +150,8 @@ public class CharaManager : MonoBehaviour
                     stase = false;
                     fluteScript.Stase();
                 }
+
+                isWalking = false;
             }
             
             else
@@ -159,7 +179,11 @@ public class CharaManager : MonoBehaviour
         else
         {
             movementScript.MoveCharacter(Vector2.zero);
+
+            isWalking = false;
         }
+
+        anim.SetBool("isWalking", isWalking);
     }
     
     

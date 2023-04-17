@@ -277,12 +277,13 @@ GameObject:
   - component: {fileID: 2315720178778483040}
   - component: {fileID: 6857754286562074931}
   - component: {fileID: 6062068450182470764}
+  - component: {fileID: 3378701548504057700}
   - component: {fileID: 8054913415842007629}
   - component: {fileID: 8814216740821263158}
   - component: {fileID: 4042080586474578226}
   - component: {fileID: 1604713492887267752}
-  - component: {fileID: 3378701548504057700}
   - component: {fileID: 8354452777228727355}
+  - component: {fileID: 3799776982024782300}
   m_Layer: 7
   m_Name: Character
   m_TagString: Player
@@ -408,6 +409,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!145 &3378701548504057700
+SpringJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527187700211497055}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 1, z: 0}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Spring: 0
+  m_Damper: 0.2
+  m_MinDistance: 0
+  m_MaxDistance: 0
+  m_Tolerance: 0.025
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!114 &8054913415842007629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +539,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 8fa7797c-d4b0-4778-a319-c486a39ba9fc
     m_ActionName: Character/RetourMenu[/XInputControllerWindows/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bc5ddb68-b0ca-429a-b1ed-8c3834a6870c
+    m_ActionName: Character/Fixation[/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Character
@@ -539,10 +568,14 @@ MonoBehaviour:
   R2: 0
   moveObject: 0
   interaction: 0
+  stase: 0
   escape: 0
   nearNoteObject: {fileID: 0}
   nearNotePartitionNumber: 0
   nearNoteNumber: 0
+  canPlayMusic: 0
+  currentMelodyIndex: 0
+  menuScene: 
   noMovement: 0
   noControl: 0
   hasRope: 0
@@ -567,6 +600,7 @@ MonoBehaviour:
   maxSpeed: 6.5
   maxAcceleration: 30
   doOnce: 0
+  resistanceCable: {x: 0, y: 0, z: 0}
   hauteurObject: 2
   maxSpeedObject: 5
   maxAccelerationObject: 20
@@ -585,36 +619,12 @@ MonoBehaviour:
   selectedObjects: []
   ropeObject: {fileID: 2692012225170031430, guid: 04c86582e8370764a86d7d260b76f224,
     type: 3}
-  objectsAtRange: []
   cables: []
   zoneFlute: {fileID: 1388160980174438419}
   "modeVis\xE9e": {fileID: 320360803324039071}
   modeZone: {fileID: 8308329533933117268}
+  autoAimScript: {fileID: 0}
   cablePoint: {fileID: 8294402505379973197}
---- !u!145 &3378701548504057700
-SpringJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5527187700211497055}
-  m_ConnectedBody: {fileID: 0}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 1, z: 0}
-  m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  serializedVersion: 2
-  m_Spring: 0
-  m_Damper: 0.2
-  m_MinDistance: 0
-  m_MaxDistance: 0
-  m_Tolerance: 0.025
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!114 &8354452777228727355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,9 +637,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44de43371f40904f9fe307900f97637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  notesPerMelody: 0300000004000000
-  collectedNotes1: 
-  collectedNotes2: 
+  collectedNotes: []
+--- !u!95 &3799776982024782300
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5527187700211497055}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &8294402505379973197
 GameObject:
   m_ObjectHideFlags: 0
