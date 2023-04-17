@@ -14,7 +14,7 @@ public class ZoneJump : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
+            ReferenceManager.Instance.characterReference.inJumpZone = true;
         }
     }
 
@@ -22,7 +22,7 @@ public class ZoneJump : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
+            ReferenceManager.Instance.characterReference.inJumpZone = false;
         }
     }
 

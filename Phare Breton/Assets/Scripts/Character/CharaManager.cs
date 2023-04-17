@@ -44,6 +44,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
     [HideInInspector] public bool nearLadder;
+    [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 ladderTPPos;
 
 
@@ -111,7 +112,7 @@ public class CharaManager : MonoBehaviour
                     nearNotePartitionNumber = 0;
                 }
 
-                else
+                else 
                 {
                     movementScript.ClimbObject(nearObjects[0]);
                 }
@@ -123,6 +124,16 @@ public class CharaManager : MonoBehaviour
             {
                 interaction = false;
                 movementScript.ClimbLadder(ladderTPPos);
+            }
+
+
+            // Saut du personnage
+            if (interaction)
+            {
+                if (inJumpZone)
+                {
+                    movementScript.GoDown();
+                }
             }
 
 

@@ -128,6 +128,14 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+
+    public void GoDown()
+    {
+        if (VerifyFall(stockageDirection))
+        {
+            transform.position = CalculateFallPos(stockageDirection);
+        }
+    }
     
 
     // PERMET AU JOUEUR D'UTILISER UNE ECHELLE
