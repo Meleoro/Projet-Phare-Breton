@@ -14,7 +14,7 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CameraRoom")]
     [HideInInspector] public bool isStatic;
-    [HideInInspector] public Transform minXZ;
+    public Transform minXZ;
     [HideInInspector] public Transform maxXZ;
     [HideInInspector] public Vector3 offset;
     private Vector3 refMax;
@@ -26,8 +26,12 @@ public class CameraMovements : MonoBehaviour
     public Transform startMaxXZ;
 
     [Header("Autres")]
-    private Vector3 savePosition;     // Lorsque qu'on déplace un objet et qu'on change de camera avec, cette variable permet de retourner à la camera originelle
+    private Vector3 savePosition;
     private Quaternion saveRotation;
+    private Transform saveMinXZ;
+    private Transform saveMaxXZ;
+    private Vector3 saveCameraRefPos;
+
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
     private float currentMinAlpha;
     private float currentMaxAlpha;
@@ -60,9 +64,7 @@ public class CameraMovements : MonoBehaviour
     {
         if (!isStatic)
         {
-            Vector3 charaPos = ReferenceManager.Instance.characterReference.transform.position;
-
-            Vector3 newPos = MoveCamera(charaPos);
+            Vector3 newPos = MoveCamera();
 
             wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
@@ -74,10 +76,10 @@ public class CameraMovements : MonoBehaviour
 
 
     // PERMET DE DEPLACER LA CAMERA TOUT EN NE SORTANT DE CERTAINES LIMITES EN X ET EN Z
-    public Vector3 MoveCamera(Vector3 charaPos)
+    public Vector3 MoveCamera()
     {
         Vector3 newPos = new Vector3(0, 0, 0);
-        charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.transform.position);
+        Vector3 charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.movedObjectPosition);
         
         
         /*if ((charaPos.x < 0 || charaPos.x > refMax.x) || (charaPos.z < 0 || charaPos.z > refMax.z))
@@ -116,6 +118,8 @@ public class CameraMovements : MonoBehaviour
     public void InitialiseNewZone(Transform min, Transform max)
     {
         minXZ = min;
+        maxXZ = max;
+
         cameraPosRef.rotation = minXZ.rotation;
         refMax = min.InverseTransformPoint(max.position);
     }
@@ -149,6 +153,11 @@ public class CameraMovements : MonoBehaviour
     {
         savePosition = transform.position;
         saveRotation = transform.rotation;
+
+        saveMinXZ = minXZ;
+        saveMaxXZ = maxXZ;
+
+        saveCameraRefPos = cameraPosRef.position;
     }
 
     // QUAND ON ARRETE DE CONTROLER UN OBJET
@@ -156,6 +165,10 @@ public class CameraMovements : MonoBehaviour
     {
         transform.position = savePosition;
         transform.rotation = saveRotation;
+
+        cameraPosRef.position = saveCameraRefPos;
+
+        InitialiseNewZone(saveMinXZ, saveMaxXZ);
     }
 
 

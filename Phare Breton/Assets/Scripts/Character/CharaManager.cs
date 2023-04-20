@@ -46,6 +46,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool nearLadder;
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 ladderTPPos;
+    [HideInInspector] public Vector3 movedObjectPosition;
 
 
     void Start()
@@ -57,6 +58,8 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
+        movedObjectPosition = transform.position;
+
         if (escape)
         {
             escape = false;
@@ -92,6 +95,8 @@ public class CharaManager : MonoBehaviour
             else if (isMovingObjects)
             {
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
+
+                movedObjectPosition = movedObjects[0].transform.position;
 
                 isWalking = false;
             }

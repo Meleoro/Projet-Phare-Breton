@@ -125,29 +125,16 @@ public class Porte : MonoBehaviour
     
     public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera)
     {
-        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.EnterRoom(staticCamera));
-
         if (doorNumber == 1)
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber, staticCamera));
         }
 
         else
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber, staticCamera));
         }
     }
-
-    /*public void GoOutside(int doorNumber, GameObject movedObject)
-    {
-        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.ExitRoom());
-        
-        if(doorNumber == 1)
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber));
-            
-        else
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber));
-    }*/
 
 
     public void CableThroughDoor(GameObject currentCable, GameObject currentObject, GameObject endOldCable, GameObject startNewCable)

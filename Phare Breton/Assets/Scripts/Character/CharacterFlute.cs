@@ -245,7 +245,7 @@ public class CharacterFlute : MonoBehaviour
             }
         }
 
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().SaveCamPos();
+        ReferenceManager.Instance.cameraReference.SaveCamPos();
     }
 
     // QUAND LE JOUEUR ARRETE DE DEPLACER DES OBJETS
@@ -262,7 +262,7 @@ public class CharacterFlute : MonoBehaviour
         manager.movedObjects.Clear();
         manager.scriptsMovedObjects.Clear();
 
-        ReferenceManager.Instance.cameraReference.GetComponent<CameraMovements>().LoadCamPos();
+        StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.TransitionMovedObject());
     }
 
 

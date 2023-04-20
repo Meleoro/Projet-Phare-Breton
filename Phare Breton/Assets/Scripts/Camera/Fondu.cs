@@ -15,6 +15,9 @@ public class Fondu : MonoBehaviour
     [Header("Parametres")]
     [SerializeField] private float dureeFondu;
 
+    [Header("Autres")]
+    [HideInInspector] public bool isInTransition;
+
 
     private void Start()
     {
@@ -23,8 +26,10 @@ public class Fondu : MonoBehaviour
     }
 
 
-    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber)
+    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera)
     {
+        isInTransition = true;
+
         canva.SetActive(true);
         imageFondu.DOFade(1, dureeFondu);
 
@@ -36,6 +41,7 @@ public class Fondu : MonoBehaviour
         doorScript.EnterDoor(movedObject, doorNumber);
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
+        ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
 
         imageFondu.DOFade(0, dureeFondu);
 
@@ -43,14 +49,38 @@ public class Fondu : MonoBehaviour
 
         canva.SetActive(false);
         ReferenceManager.Instance.characterReference.noControl = false;
+
+        isInTransition = false;
     }
 
 
-    public IEnumerator EnterRoom(bool staticCamera)
-    {
-        yield return new WaitForSeconds(dureeFondu + 0.01f);
 
-        ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
+    public IEnumerator TransitionMovedObject()
+    {
+        isInTransition = true;
+        ReferenceManager.Instance.cameraReference.isStatic = true;
+
+        canva.SetActive(true);
+        imageFondu.DOFade(1, dureeFondu);
+
+        ReferenceManager.Instance.characterReference.noControl = true;
+
+        yield return new WaitForSeconds(dureeFondu);
+
+        imageFondu.DOFade(0, dureeFondu);
+        ReferenceManager.Instance.cameraReference.isStatic = false;
+
+        ReferenceManager.Instance.cameraReference.LoadCamPos();
+        ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
+
+        yield return new WaitForSeconds(dureeFondu);
+
+        ReferenceManager.Instance.characterReference.noControl = false;
+
+        canva.SetActive(false);
+        ReferenceManager.Instance.characterReference.noControl = false;
+
+        isInTransition = false;
     }
 
 
