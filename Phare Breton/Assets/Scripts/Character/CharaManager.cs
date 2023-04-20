@@ -47,6 +47,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 ladderTPPos;
     [HideInInspector] public Vector3 movedObjectPosition;
+    [HideInInspector] public bool isInLightSource;
 
 
     void Start()
