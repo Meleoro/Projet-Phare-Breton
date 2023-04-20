@@ -140,7 +140,9 @@ public class ObjetInteractible : MonoBehaviour
 
     public IEnumerator PutRigidbodyKinematic()
     {
-        yield return new WaitForSeconds(2);
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        
+        yield return new WaitForSeconds(1);
 
         rb.isKinematic = true;
     }

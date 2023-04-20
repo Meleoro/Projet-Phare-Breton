@@ -365,6 +365,8 @@ public class CableCreator : MonoBehaviour
 
         isLinked = true;
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+        
+        // On retire l'attirance du cable actuel du perso
 
         rbEnd = newRb;
         springEnd = newSpring;

@@ -154,17 +154,17 @@ public class CharaManager : MonoBehaviour
                 movementScript.RotateCharacterCamera();
                 movementScript.RotateCharacter(direction);
 
-                if (interaction)
+                if (interaction && fluteScript.selectedObjects.Count != 0)
                 {
                     interaction = false;
                     fluteScript.CreateLien();
                 }
-                else if (moveObject && !isMovingObjects)
+                else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0)
                 {
                     moveObject = false;
                     fluteScript.MoveObject(false, null);
                 }
-                else if (stase)
+                else if (stase && fluteScript.selectedObjects.Count != 0)
                 {
                     stase = false;
                     fluteScript.Stase();

@@ -17,6 +17,7 @@ public class Fondu : MonoBehaviour
 
     [Header("Autres")]
     [HideInInspector] public bool isInTransition;
+    [HideInInspector] public bool doorCrossed;
 
 
     private void Start()
@@ -28,6 +29,8 @@ public class Fondu : MonoBehaviour
 
     public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera)
     {
+        SaveDoorCrossed();
+        
         isInTransition = true;
 
         canva.SetActive(true);
@@ -55,32 +58,54 @@ public class Fondu : MonoBehaviour
 
 
 
+    public void SaveDoorCrossed()
+    {
+        if (!doorCrossed)
+        {
+            if (ReferenceManager.Instance.characterReference.isMovingObjects)
+            {
+                doorCrossed = true;
+            }
+        }
+    }
+    
+
     public IEnumerator TransitionMovedObject()
     {
-        isInTransition = true;
-        ReferenceManager.Instance.cameraReference.isStatic = true;
+        if (doorCrossed)
+        {
+            isInTransition = true;
+            ReferenceManager.Instance.cameraReference.isStatic = true;
 
-        canva.SetActive(true);
-        imageFondu.DOFade(1, dureeFondu);
+            canva.SetActive(true);
+            imageFondu.DOFade(1, dureeFondu);
 
-        ReferenceManager.Instance.characterReference.noControl = true;
+            ReferenceManager.Instance.characterReference.noControl = true;
 
-        yield return new WaitForSeconds(dureeFondu);
+            yield return new WaitForSeconds(dureeFondu);
 
-        imageFondu.DOFade(0, dureeFondu);
-        ReferenceManager.Instance.cameraReference.isStatic = false;
+            imageFondu.DOFade(0, dureeFondu);
+            ReferenceManager.Instance.cameraReference.isStatic = false;
 
-        ReferenceManager.Instance.cameraReference.LoadCamPos();
-        ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
+            ReferenceManager.Instance.cameraReference.LoadCamPos();
+            ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
 
-        yield return new WaitForSeconds(dureeFondu);
+            yield return new WaitForSeconds(dureeFondu);
 
-        ReferenceManager.Instance.characterReference.noControl = false;
+            ReferenceManager.Instance.characterReference.noControl = false;
 
-        canva.SetActive(false);
-        ReferenceManager.Instance.characterReference.noControl = false;
+            canva.SetActive(false);
+            ReferenceManager.Instance.characterReference.noControl = false;
 
-        isInTransition = false;
+            doorCrossed = false;
+            isInTransition = false;
+        }
+
+        else
+        {
+            ReferenceManager.Instance.cameraReference.LoadCamPos();
+            ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
+        }
     }
 
 
