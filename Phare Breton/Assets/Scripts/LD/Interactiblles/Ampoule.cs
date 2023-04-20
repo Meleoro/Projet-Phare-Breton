@@ -18,7 +18,6 @@ public class Ampoule : ObjetInteractible
         }
     }
 
-
     // COMPORTEMENT DE L'OBJET SI IL EST UNE AMPOULE
     private void ActivateAmpoule()
     {
@@ -40,6 +39,34 @@ public class Ampoule : ObjetInteractible
             {
                 ampouleActive = true;
             }
+        }
+    }
+    
+    
+    
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Interactible") && !other.isTrigger)
+        {
+            other.GetComponent<ObjetInteractible>().isLighted = true;
+        }
+
+        if (other.CompareTag("Player") && !other.isTrigger)
+        {
+            ReferenceManager.Instance.characterReference.isInLightSource = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interactible") && !other.isTrigger)
+        {
+            other.GetComponent<ObjetInteractible>().isLighted = false;
+        }
+        
+        if (other.CompareTag("Player") && !other.isTrigger)
+        {
+            ReferenceManager.Instance.characterReference.isInLightSource = false;
         }
     }
 }

@@ -12,7 +12,7 @@ public class ZoneFlute : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            if (other.GetComponent<ObjetInteractible>().isLighted)
+            if (other.GetComponent<ObjetInteractible>().VerifySelection())
             {
                 ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
 
@@ -26,7 +26,7 @@ public class ZoneFlute : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            if (other.GetComponent<ObjetInteractible>().isLighted)
+            if (other.GetComponent<ObjetInteractible>().VerifySelection())
             {
                 ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
 

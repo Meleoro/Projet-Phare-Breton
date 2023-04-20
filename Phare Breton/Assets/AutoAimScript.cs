@@ -19,20 +19,23 @@ public class AutoAimScript : MonoBehaviour
         
         for (int k = 0; k < autoAimedObjects.Count; k++)
         {
-            if (autoAimedObjects[k].isLighted && Mathf.Abs(autoAimedObjects[k].transform.position.y - transform.transform.position.y) < 1f)
+            if (Mathf.Abs(autoAimedObjects[k].transform.position.y - transform.transform.position.y) < 1f)
             {
-                Vector3 newDirection = autoAimedObjects[k].transform.position - transform.position;
-                newDirection = zoneAncrage.InverseTransformDirection(newDirection);
+                if (autoAimedObjects[k].VerifySelection())
+                {
+                    Vector3 newDirection = autoAimedObjects[k].transform.position - transform.position;
+                    newDirection = zoneAncrage.InverseTransformDirection(newDirection);
                
-                Vector2 newDirectionVector2 = new Vector2(newDirection.x, newDirection.z).normalized;
+                    Vector2 newDirectionVector2 = new Vector2(newDirection.x, newDirection.z).normalized;
                 
-                directionsAutoAim.Add(newDirectionVector2);
+                    directionsAutoAim.Add(newDirectionVector2);
+                }
             } 
         }
     }
 
 
-    // On chosit en fonction des son input actuel quelle direction choisir
+    // On choisit en fonction des son input actuel quelle direction choisir
     public Vector2 ChooseDirection(Vector2 inputDirection)
     {
         CalculateDirections();

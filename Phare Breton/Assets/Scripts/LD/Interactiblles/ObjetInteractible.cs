@@ -8,6 +8,7 @@ public class ObjetInteractible : MonoBehaviour
 {
     [Header("General")]
     public bool isLighted;
+    public bool isInDarkZone;
     public bool isClimbable;
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public Transform magnetedPos;
@@ -33,9 +34,10 @@ public class ObjetInteractible : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
+        StartCoroutine(PutRigidbodyKinematic());
 
         isMagneted = false;
+        isLighted = false;
     }
 
 
@@ -120,26 +122,26 @@ public class ObjetInteractible : MonoBehaviour
 
     }
 
+    public bool VerifySelection()
+    {
+        if (isInDarkZone)
+        {
+            if (isLighted)
+                return true;
+
+            else
+                return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+
 
     public virtual void VerifyLinkedObject() { }
-
-
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
-        {
-            other.GetComponent<ObjetInteractible>().isLighted = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
-        {
-            other.GetComponent<ObjetInteractible>().isLighted = false;
-        }
-    }
+    
 
     public IEnumerator PutRigidbodyKinematic()
     {
