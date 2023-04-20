@@ -58,7 +58,12 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
-        movedObjectPosition = transform.position;
+        if(!isMovingObjects) 
+            movedObjectPosition = transform.position;
+        
+        else
+            movedObjectPosition = movedObjects[0].transform.position;
+        
 
         if (escape)
         {
@@ -95,8 +100,6 @@ public class CharaManager : MonoBehaviour
             else if (isMovingObjects)
             {
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
-
-                movedObjectPosition = movedObjects[0].transform.position;
 
                 isWalking = false;
             }

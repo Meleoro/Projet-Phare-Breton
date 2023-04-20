@@ -99,14 +99,17 @@ public class CharacterMovement : MonoBehaviour
 
             if (!scripts[k].isMagneted)
             {
-                // Levitation de l'objet
-                if(objects[k].transform.position.y < scripts[k].currentHauteur)
+                if (!ReferenceManager.Instance.cameraReference.scriptFondu.isInTransition)
                 {
-                    objects[k].AddForce(Vector3.up * 8, ForceMode.Acceleration);
-                }
-                else
-                {
-                    objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                    // Levitation de l'objet
+                    if(objects[k].transform.position.y < scripts[k].currentHauteur)
+                    {
+                        objects[k].AddForce(Vector3.up * 8, ForceMode.Acceleration);
+                    }
+                    else
+                    {
+                        objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
+                    }
                 }
             }
         }
