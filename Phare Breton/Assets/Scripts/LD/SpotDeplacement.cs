@@ -8,21 +8,25 @@ public class SpotDeplacement : MonoBehaviour
     [Header("Parametres")]
     public bool objectHasToBeRoped;
 
+    private bool isUsed;
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
+        if (other.CompareTag("Interactible") && !other.isTrigger && !isUsed)
         {
             if (objectHasToBeRoped)
             {
                 if(other.GetComponent<ObjetInteractible>().isLinked)
                 {
                     other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+                    isUsed = true;
                 }
             }
             else
             {
                 other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+                isUsed = true;
             }
         }
     }
@@ -31,6 +35,11 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
+            if (other.GetComponent<ObjetInteractible>().isMagneted)
+            {
+                isUsed = false;
+            }
+            
             other.GetComponent<ObjetInteractible>().DesactivateMagnet(transform);
         }
     }
