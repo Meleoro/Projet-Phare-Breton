@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class CharacterMovement : MonoBehaviour
 {
-    [Header("References")] 
+    [Header("References")] [SerializeField]
+    private Transform mesh;
     private CharaManager manager;
 
     [Header("Movements")]
@@ -77,7 +78,7 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
 
-        transform.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 90, 0);
+        mesh.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 180, 0);
     }
 
 
