@@ -6,9 +6,4 @@ using UnityEngine;
 public class Boite : ObjetInteractible
 {
     public ParticleSystem VFXDeplacement;
-
-    private void Start()
-    {
-        VFXDeplacement.Stop(true);
-    }
 }
