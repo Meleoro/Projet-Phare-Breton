@@ -220,6 +220,12 @@ public class CharacterFlute : MonoBehaviour
 
         if (recursiveCall)
         {
+            Boite currentBoite;
+            if(movedObject.TryGetComponent<Boite>(out currentBoite))
+            {
+                currentBoite.VFXDeplacement.Play(true);
+            }
+            
             manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
@@ -232,6 +238,12 @@ public class CharacterFlute : MonoBehaviour
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
+                Boite currentBoite;
+                if(selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
+                {
+                    currentBoite.VFXDeplacement.Play(true);
+                }
+                
                 manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
                 manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
 
@@ -258,6 +270,12 @@ public class CharacterFlute : MonoBehaviour
         for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
         {
             StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
+            
+            Boite currentBoite;
+            if(manager.scriptsMovedObjects[i].TryGetComponent<Boite>(out currentBoite))
+            {
+                currentBoite.VFXDeplacement.Stop(true);
+            }
         }
 
         manager.movedObjects.Clear();
