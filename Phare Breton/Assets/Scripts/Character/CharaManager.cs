@@ -85,7 +85,9 @@ public class CharaManager : MonoBehaviour
             if (!noMovement && !isMovingObjects)
             {
                 movementScript.MoveCharacter(direction);
-                movementScript.RotateCharacter(direction);
+                
+                if(direction != Vector2.zero) 
+                    movementScript.RotateCharacter(direction);
 
                 if (direction == Vector2.zero)
                     movementScript.RotateCharacterCamera();
