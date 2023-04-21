@@ -239,6 +239,8 @@ public class CharacterFlute : MonoBehaviour
             {
                 currentBoite.VFXDeplacement.Play(true);
             }
+
+            movedObject.GetComponent<ObjetInteractible>().isMoved = true;
             
             manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
@@ -257,6 +259,8 @@ public class CharacterFlute : MonoBehaviour
                 {
                     currentBoite.VFXDeplacement.Play(true);
                 }
+                
+                selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
                 
                 manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
                 manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
@@ -290,6 +294,8 @@ public class CharacterFlute : MonoBehaviour
             {
                 currentBoite.VFXDeplacement.Stop(true);
             }
+            
+            manager.scriptsMovedObjects[i].isMoved = true;
         }
 
         manager.movedObjects.Clear();

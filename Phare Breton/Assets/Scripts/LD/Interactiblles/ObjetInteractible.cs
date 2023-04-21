@@ -12,6 +12,7 @@ public class ObjetInteractible : MonoBehaviour
     public bool isClimbable;
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public Transform magnetedPos;
+    private Vector3 originalPos;
     
     [Header("Link")]
     public bool isLinked;
@@ -38,6 +39,8 @@ public class ObjetInteractible : MonoBehaviour
 
         isMagneted = false;
         isLighted = false;
+
+        originalPos = transform.position;
     }
 
 
@@ -46,6 +49,11 @@ public class ObjetInteractible : MonoBehaviour
         if (isMagneted)
         {
             MagnetEffect();
+        }
+
+        if (originalPos.y - 15 > transform.position.y)
+        {
+            transform.position = originalPos;
         }
     }
 
@@ -147,8 +155,9 @@ public class ObjetInteractible : MonoBehaviour
     {
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
 
-        rb.isKinematic = true;
+        if(!isMoved)
+            rb.isKinematic = true;
     }
 }
