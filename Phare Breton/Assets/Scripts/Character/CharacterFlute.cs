@@ -26,6 +26,7 @@ public class CharacterFlute : MonoBehaviour
     public GameObject modeZone;
     public AutoAimScript autoAimScript;
     public GameObject cablePoint;
+    public GameObject VFXFluteUsed;
     private CharaManager manager;
 
     private void Start()
@@ -102,6 +103,19 @@ public class CharacterFlute : MonoBehaviour
 
             doOnce = true;
         }
+    }
+
+    public void PlayVFX()
+    {
+        GameObject newVFX = Instantiate(VFXFluteUsed, transform.position + Vector3.down * 0.9f, Quaternion.identity);
+        StartCoroutine(DestroyVFX(newVFX));
+    }
+
+    IEnumerator DestroyVFX(GameObject currentVFX)
+    {
+        yield return new WaitForSeconds(5);
+        
+        Destroy(currentVFX);
     }
 
 

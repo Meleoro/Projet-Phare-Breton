@@ -161,16 +161,19 @@ public class CharaManager : MonoBehaviour
                 {
                     interaction = false;
                     fluteScript.CreateLien();
+                    fluteScript.PlayVFX();
                 }
                 else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0)
                 {
                     moveObject = false;
                     fluteScript.MoveObject(false, null);
+                    fluteScript.PlayVFX();
                 }
                 else if (stase && fluteScript.selectedObjects.Count != 0)
                 {
                     stase = false;
                     fluteScript.Stase();
+                    fluteScript.PlayVFX();
                 }
 
                 isWalking = false;
@@ -217,7 +220,11 @@ public class CharaManager : MonoBehaviour
     // LE JOUEUR MAINTIENT R2
     public void OnFlute(InputAction.CallbackContext context)
     {
-        R2 = context.performed;
+        if (context.started)
+            R2 = true;
+        
+        if (context.canceled)
+            R2 = false;
     }
 
     //RECUPERE INPUT DE DIRECTION
