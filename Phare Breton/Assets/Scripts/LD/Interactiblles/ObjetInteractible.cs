@@ -11,6 +11,7 @@ public class ObjetInteractible : MonoBehaviour
     public bool isInDarkZone;
     public bool isClimbable;
     [HideInInspector] public bool isMagneted;
+    [HideInInspector] public GameObject currentMagnet;
     [HideInInspector] public Transform magnetedPos;
     private Vector3 originalPos;
     
@@ -64,6 +65,8 @@ public class ObjetInteractible : MonoBehaviour
         magnetedPos = magnetPos;
         isMagneted = true;
 
+        currentMagnet = magnetedPos.gameObject;
+
         if (isLinked)
         {
             if (isStart)
@@ -82,6 +85,8 @@ public class ObjetInteractible : MonoBehaviour
         magnetedPos = magnetPos;
         isMagneted = false;
 
+        currentMagnet = null;
+
         if (cable != null)
         {
             cable.lockStart = false;
@@ -92,17 +97,29 @@ public class ObjetInteractible : MonoBehaviour
 
     public void MagnetEffect()
     {
-        float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
-        magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
-        
-        transform.rotation = magnetedPos.rotation;
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength),
-            Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
+        if (isMoved)
+        {
+            float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
+            magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
+
+            transform.rotation = magnetedPos.rotation;
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength),
+                Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
 
 
-        float difference = magnetedPos.position.y - transform.position.y;
-        
-        if (difference > 0)
+            float difference = magnetedPos.position.y - transform.position.y;
+
+            rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
+        }
+
+        else
+        {
+            rb.isKinematic = true;
+        }
+       
+
+
+        /*if (difference > 0)
         {
             rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
                 ForceMode.VelocityChange);
@@ -115,7 +132,7 @@ public class ObjetInteractible : MonoBehaviour
         }
 
         else 
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);*/
     }
 
 

@@ -295,7 +295,7 @@ public class CharacterFlute : MonoBehaviour
                 currentBoite.VFXDeplacement.Stop(true);
             }
             
-            manager.scriptsMovedObjects[i].isMoved = true;
+            manager.scriptsMovedObjects[i].isMoved = false;
         }
 
         manager.movedObjects.Clear();

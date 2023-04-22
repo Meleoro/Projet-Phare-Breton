@@ -8,13 +8,14 @@ public class SpotDeplacement : MonoBehaviour
     [Header("Parametres")]
     public bool objectHasToBeRoped;
 
-    private bool isUsed;
+    public bool isUsed;
 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger && !isUsed)
         {
+            Debug.Log(other.gameObject.name);
             if (objectHasToBeRoped)
             {
                 if(other.GetComponent<ObjetInteractible>().isLinked)
@@ -35,12 +36,12 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            if (other.GetComponent<ObjetInteractible>().isMagneted)
+            if (other.GetComponent<ObjetInteractible>().currentMagnet == gameObject)
             {
                 isUsed = false;
+
+                other.GetComponent<ObjetInteractible>().DesactivateMagnet(transform);
             }
-            
-            other.GetComponent<ObjetInteractible>().DesactivateMagnet(transform);
         }
     }
 

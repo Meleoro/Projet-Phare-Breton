@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2098486171428813544}
   - component: {fileID: 1326678218142863418}
   - component: {fileID: 7646105997710819587}
-  - component: {fileID: 3722117278848725202}
   - component: {fileID: 2303812327377113096}
   - component: {fileID: 5461739042381355251}
   - component: {fileID: 977574333887122776}
+  - component: {fileID: 1845390240764810804}
   m_Layer: 0
   m_Name: Planche
   m_TagString: Interactible
@@ -36,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -31.648, y: -100.376, z: -0.558}
 --- !u!33 &2098486171428813544
 MeshFilter:
@@ -296,31 +296,6 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!114 &3722117278848725202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6693904319099344437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0642f7651595a3e4aba8388444b671f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLighted: 1
-  isInDarkZone: 0
-  isClimbable: 0
-  isMagneted: 0
-  magnetedPos: {fileID: 0}
-  isLinked: 0
-  linkedObject: []
-  cable: {fileID: 0}
-  isStart: 0
-  isMoved: 0
-  currentHauteur: 0
-  isInStase: 0
-  rb: {fileID: 0}
 --- !u!54 &2303812327377113096
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -393,3 +368,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.60000026, y: 0.06338958, z: 3.2499998}
   m_Center: {x: -0.0000000014960937, y: -0.031694647, z: -0.009252967}
+--- !u!114 &1845390240764810804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6693904319099344437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf7130bb9c7de841884abee6cb9a138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLighted: 0
+  isInDarkZone: 0
+  isClimbable: 0
+  isMagneted: 0
+  magnetedPos: {fileID: 0}
+  isLinked: 0
+  linkedObject: []
+  cable: {fileID: 0}
+  isStart: 0
+  isMoved: 0
+  currentHauteur: 0
+  isInStase: 0
+  rb: {fileID: 0}
