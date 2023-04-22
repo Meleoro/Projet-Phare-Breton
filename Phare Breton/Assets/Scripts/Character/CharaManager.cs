@@ -59,11 +59,18 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
-        if(!isMovingObjects) 
+        if(!isMovingObjects)
+        {
             movedObjectPosition = transform.position;
-        
+            rb.isKinematic = false;
+        }
+
         else
+        {
             movedObjectPosition = movedObjects[0].transform.position;
+            rb.isKinematic = true;
+        }
+
         
 
         if (escape)

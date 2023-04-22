@@ -200,7 +200,6 @@ public class CharacterMovement : MonoBehaviour
         }
 
 
-
         if (difference1 > 0.5f)
         {
             return true;
@@ -210,6 +209,8 @@ public class CharacterMovement : MonoBehaviour
             return false;
         }
     }
+
+
 
     public Vector3 CalculateFallPos(Vector2 direction)
     {
