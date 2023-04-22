@@ -168,7 +168,11 @@ public class CameraMovements : MonoBehaviour
 
         cameraPosRef.position = saveCameraRefPos;
 
-        InitialiseNewZone(saveMinXZ, saveMaxXZ);
+        if (saveMinXZ != null)
+            InitialiseNewZone(saveMinXZ, saveMaxXZ);
+
+        else
+            isStatic = true;
     }
 
 
