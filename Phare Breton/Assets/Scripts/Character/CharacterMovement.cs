@@ -152,8 +152,9 @@ public class CharacterMovement : MonoBehaviour
     public bool VerifyFall(Vector2 direction)
     {
         Vector3 point1 = Vector3.zero;
-        Vector3 point2 = Vector3.zero;
-        
+        Vector3 point2 = new Vector3(0, -5000, 0);
+        Vector3 point3 = new Vector3(0, -5000, 0);
+
 
         // Raycast 1
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -166,9 +167,9 @@ public class CharacterMovement : MonoBehaviour
         
         
         // Raycast 2
-        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, -2f, direction.y));
+        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
-        ray = new Ray(transform.position, direction2);
+        ray = new Ray(transform.position + (direction2 * 0.8f), Vector3.down);
         RaycastHit raycastHit2;
 
         if(Physics.Raycast(ray, out raycastHit2, 5))
@@ -177,7 +178,30 @@ public class CharacterMovement : MonoBehaviour
         }
 
 
-        if (point1.y > point2.y + 0.2f)
+        // Raycast3 (pentes)
+        ray = new Ray(transform.position + (direction2 * 0.4f), Vector3.down);
+        RaycastHit raycastHit3;
+
+        if (Physics.Raycast(ray, out raycastHit3, 5))
+        {
+            point3 = raycastHit3.point;
+        }
+
+
+
+        float difference1 = point1.y - point2.y;
+        float difference2 = point1.y - point3.y;
+
+        float difference3 = point3.y - point2.y;
+
+        if (difference2 > 0.1f && difference3 + 0.8f > difference2)
+        {
+            return false;
+        }
+
+
+
+        if (difference1 > 0.5f)
         {
             return true;
         }
@@ -190,9 +214,9 @@ public class CharacterMovement : MonoBehaviour
     public Vector3 CalculateFallPos(Vector2 direction)
     {
         Vector3 posFall = Vector3.zero;
-        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, -2f, direction.y));
+        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
-        Ray ray = new Ray(transform.position, direction2);
+        Ray ray = new Ray(transform.position + direction2, Vector3.down);
         RaycastHit raycastHit2;
 
         if(Physics.Raycast(ray, out raycastHit2, 5))
