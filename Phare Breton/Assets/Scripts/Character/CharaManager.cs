@@ -15,6 +15,7 @@ public class CharaManager : MonoBehaviour
 
     [Header("Références")]
     [SerializeField] private Animator anim;
+    [SerializeField] private GameObject UIInteraction;
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
@@ -85,6 +86,18 @@ public class CharaManager : MonoBehaviour
             if(interaction && canPlayMusic)
             {
                 notesScript.StartPlay(currentMelodyIndex);
+            }
+
+
+
+
+            if(nearObjects.Count != 0)
+            {
+                UIInteraction.SetActive(VerificationInteractionUI());
+            }
+            else
+            {
+                UIInteraction.SetActive(false);
             }
 
 
@@ -219,6 +232,24 @@ public class CharaManager : MonoBehaviour
     }
     
     
+    public bool VerificationInteractionUI()
+    {
+        for (int i = 0; i < nearObjects.Count; i++)
+        {
+            Boite newObject;
+            Echelle newEchelle;
+
+            if(nearObjects[i].TryGetComponent<Boite>(out newObject) || nearObjects[i].TryGetComponent<Echelle>(out newEchelle))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
     
     //------------------------------------------------------------------------------------
     // PARTIE INPUT
