@@ -73,7 +73,8 @@ public class ObjetInteractible : MonoBehaviour
         {
             if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
             {
-                currentHauteur += Time.deltaTime * 3;
+                if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
+                    currentHauteur += Time.deltaTime * 3;
             }
             
         }
@@ -82,8 +83,6 @@ public class ObjetInteractible : MonoBehaviour
         {
             currentHauteur -= Time.deltaTime * 2;
         }
-
-        Debug.DrawRay(transform.position, Vector3.down);
     }
 
 

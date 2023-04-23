@@ -12,6 +12,7 @@ public class CharacterNotes : MonoBehaviour
     private List<GameObject> bandes = new List<GameObject>();
     private List<GameObject> bandesObjects = new List<GameObject>();
     private int currentBande;
+    private int currentMelody;
 
 
     private void Start()
@@ -40,6 +41,8 @@ public class CharacterNotes : MonoBehaviour
 
     public void StartPlay(int melodyIndex)
     {
+        currentMelody = melodyIndex;
+
         if (collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
         {
             // On recupere chaque bande de cette melodie
@@ -79,6 +82,8 @@ public class CharacterNotes : MonoBehaviour
         {
             mainSript.noControl = false;
 
+            UnlockPower();
+
             for (int i = 0; i < bandes.Count; i++)
             {
                 Destroy(bandesObjects[i]);
@@ -88,6 +93,24 @@ public class CharacterNotes : MonoBehaviour
             bandesObjects.Clear();
         }
     }
+
+
+    public void UnlockPower()
+    {
+        if(currentMelody == 1)
+        {
+            mainSript.canMoveObjects = true;
+        }
+        else if(currentMelody == 2)
+        {
+            mainSript.canCable = true;
+        }
+        else
+        {
+            mainSript.canStase = true;
+        }
+    }
+
 }
 
 
