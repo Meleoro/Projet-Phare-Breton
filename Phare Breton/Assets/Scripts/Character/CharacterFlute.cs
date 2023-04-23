@@ -10,10 +10,12 @@ using Object = System.Object;
 public class CharacterFlute : MonoBehaviour
 {
     [Header("General")]
-    [HideInInspector] public List<ObjetInteractible> selectedObjects = new List<ObjetInteractible>();
+    public List<ObjetInteractible> selectedObjects = new List<ObjetInteractible>();
     private bool doOnce;
     private bool onZone;
     private bool onVisee;
+    private bool switch1;
+    private bool switch2;
 
     [Header("Rope")] 
     public GameObject ropeObject;
@@ -47,7 +49,7 @@ public class CharacterFlute : MonoBehaviour
             {
                 onVisee = false;
                 
-                for (int i = 0; i < selectedObjects.Count; i++)
+                for (int i = selectedObjects.Count - 1; i >= 0; i--)
                 {
                     selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                     selectedObjects.RemoveAt(i);
@@ -65,7 +67,7 @@ public class CharacterFlute : MonoBehaviour
             {
                 onZone = false;
 
-                for (int i = 0; i < selectedObjects.Count; i++)
+                for (int i = selectedObjects.Count - 1; i >= 0; i--)
                 {
                     selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                     selectedObjects.RemoveAt(i);
