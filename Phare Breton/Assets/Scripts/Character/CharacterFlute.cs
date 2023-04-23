@@ -252,7 +252,7 @@ public class CharacterFlute : MonoBehaviour
             manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
-            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + movedObject.transform.position.y;
             
             manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
         }
@@ -272,7 +272,7 @@ public class CharacterFlute : MonoBehaviour
                 manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
                 manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
 
-                manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + transform.position.y;
+                manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + movedObject.transform.position.y;
                 
                 VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
             }
