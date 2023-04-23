@@ -198,10 +198,7 @@ public class CharacterMovement : MonoBehaviour
 
         float difference4 = difference2 - difference1;
 
-        Debug.Log(point2.y);
-        Debug.Log(point3.y);
-        
-        
+
         if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 2)
         {
             return false;
