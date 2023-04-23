@@ -24,6 +24,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 velocityObject;
 
     [Header("Fall")] 
+    [SerializeField] private LayerMask layerFall;
     private Vector2 stockageDirection;
 
 
@@ -151,7 +152,7 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction)
     {
-        Vector3 point1 = Vector3.zero;
+        Vector3 point1 = new Vector3(0, -5000, 0);
         Vector3 point2 = new Vector3(0, -5000, 0);
         Vector3 point3 = new Vector3(0, -5000, 0);
 
@@ -160,43 +161,51 @@ public class CharacterMovement : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit raycastHit;
         
-        if(Physics.Raycast(ray, out raycastHit, 5))
+        if(Physics.Raycast(ray, out raycastHit, 10, layerFall))
         {
             point1 = raycastHit.point;
         }
         
         
         // Raycast 2
-        Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+        Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
-        ray = new Ray(transform.position + (direction2 * 0.8f), Vector3.down);
-        RaycastHit raycastHit2;
-
-        if(Physics.Raycast(ray, out raycastHit2, 5))
-        {
-            point2 = raycastHit2.point;
-        }
-
-
-        // Raycast3 (pentes)
-        ray = new Ray(transform.position + (direction2 * 0.4f), Vector3.down);
+        ray = new Ray(transform.position + (newDirection.normalized * 0.8f), Vector3.down);
         RaycastHit raycastHit3;
 
-        if (Physics.Raycast(ray, out raycastHit3, 5))
+        if(Physics.Raycast(ray, out raycastHit3, 10, layerFall))
         {
             point3 = raycastHit3.point;
         }
 
 
+        // Raycast3 (pentes)
+        ray = new Ray(transform.position + (newDirection.normalized * 0.4f), Vector3.down);
+        RaycastHit raycastHit2;
 
-        float difference1 = point1.y - point2.y;
-        float difference2 = point1.y - point3.y;
+        if (Physics.Raycast(ray, out raycastHit2, 10, layerFall))
+        {
+            point2 = raycastHit2.point;
+        }
 
-        float difference3 = point3.y - point2.y;
 
-        if (difference2 > 0.1f && difference3 + 0.8f > difference2)
+        
+
+        float difference1 = Mathf.Abs(point1.y - point2.y);
+        float difference2 = Mathf.Abs(point2.y - point3.y);
+
+        float difference3 = point1.y - point3.y;
+
+        float difference4 = difference2 - difference1;
+
+
+        if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 3)
         {
             return false;
+        }
+        else
+        {
+            return true;
         }
 
 
