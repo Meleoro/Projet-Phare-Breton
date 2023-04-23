@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class MusicNode : MonoBehaviour
 {
@@ -26,12 +28,14 @@ public class MusicNode : MonoBehaviour
     public void EraseNode()
     {
         image.enabled = false;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         erased = true;
     }
 
     public void ReappearNode()
     {
         image.enabled = true;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = true;
         erased = false;
     }
 

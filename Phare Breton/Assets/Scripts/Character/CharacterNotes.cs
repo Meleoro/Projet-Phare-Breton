@@ -7,7 +7,7 @@ public class CharacterNotes : MonoBehaviour
 {
     private CharaManager mainSript;
 
-    [HideInInspector] public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
+    public List<CollectedNotes> collectedNotes = new List<CollectedNotes>();
 
     private List<GameObject> bandes = new List<GameObject>();
     private List<GameObject> bandesObjects = new List<GameObject>();
@@ -43,7 +43,7 @@ public class CharacterNotes : MonoBehaviour
     {
         currentMelody = melodyIndex;
 
-        if (collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
+        if (!collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
         {
             // On recupere chaque bande de cette melodie
             bandes.Clear();
