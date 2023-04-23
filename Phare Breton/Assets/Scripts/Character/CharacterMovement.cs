@@ -164,6 +164,8 @@ public class CharacterMovement : MonoBehaviour
             {
                 if (!ReferenceManager.Instance.cameraReference.scriptFondu.isInTransition)
                 {
+
+
                     // Levitation de l'objet
                     if (objects[k].transform.position.y < scripts[k].currentHauteur)
                     {

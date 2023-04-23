@@ -56,6 +56,32 @@ public class ObjetInteractible : MonoBehaviour
         {
             transform.position = originalPos;
         }
+
+        if (isMoved)
+        {
+            ActualiseHauteur();
+        }
+    }
+
+
+    public void ActualiseHauteur()
+    {
+        float newHauteur = currentHauteur;
+
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit raycastHit;
+
+        if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject))
+        {
+            float difference = transform.position.y - raycastHit.point.y;
+
+            if (difference < 0.7f)
+                newHauteur = currentHauteur;
+        }
+
+        Debug.DrawRay(transform.position, Vector3.down);
+
+        currentHauteur = newHauteur;
     }
 
 
