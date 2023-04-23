@@ -362,11 +362,11 @@ public class CableCreator : MonoBehaviour
     public void ChangeLastNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
         end.spring2.connectedBody = newRb;
+        springEnd.connectedBody = null;
 
         isLinked = true;
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
-        
-        // On retire l'attirance du cable actuel du perso
+       
 
         rbEnd = newRb;
         springEnd = newSpring;
@@ -394,6 +394,7 @@ public class CableCreator : MonoBehaviour
     public void ChangeFirstNode(GameObject newAnchor, Rigidbody newRb, SpringJoint newSpring)
     {
         origin.spring1.connectedBody = newRb;
+        springOrigin.connectedBody = null;
 
         isLinked = true;
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
