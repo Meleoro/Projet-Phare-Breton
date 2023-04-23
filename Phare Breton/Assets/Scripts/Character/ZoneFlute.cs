@@ -16,8 +16,10 @@ public class ZoneFlute : MonoBehaviour
             {
                 ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
 
+
                 scriptFlute.selectedObjects.Add(other.GetComponent<ObjetInteractible>());
                 _object.Select();
+                
             }
         }
     }
