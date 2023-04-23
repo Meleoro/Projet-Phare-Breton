@@ -15,7 +15,6 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger && !isUsed)
         {
-            Debug.Log(other.gameObject.name);
             if (objectHasToBeRoped)
             {
                 if(other.GetComponent<ObjetInteractible>().isLinked)
