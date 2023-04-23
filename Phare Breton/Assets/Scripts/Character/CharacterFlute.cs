@@ -192,7 +192,9 @@ public class CharacterFlute : MonoBehaviour
         {
             for (int i = 0; i < currentObject.linkedObject.Count; i++)
             {
-                CableCreator currentCable = currentObject.linkedObject[i].GetComponent<ObjetInteractible>().cable;
+                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
+                CableCreator currentCable = currentLinkedObject.cable;
+
 
                 if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().isStart)
                 {
@@ -202,7 +204,17 @@ public class CharacterFlute : MonoBehaviour
                 {
                     currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
                 }
+
+                currentLinkedObject.linkedObject = null;
+                currentLinkedObject.isLinked = false;
+
+                cables.Add(currentCable.gameObject);
             }
+;
+            ropedObject.Add(selectedObjects[0]);
+            manager.hasRope = true;
+
+            currentObject.linkedObject.Clear();
 
             return true;
         }
