@@ -181,7 +181,7 @@ public class CameraMovements : MonoBehaviour
     {
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].meshRenderer.material.SetFloat("Opacity", 1);
+            desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", 1);
         }
         
         desactivatedObjects = objects;
@@ -196,12 +196,12 @@ public class CameraMovements : MonoBehaviour
                 distObject -= distMin;
                 distObject /= distMax - distMin;
 
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", distObject);
             }
 
             else
             {
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+                desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", desactivatedObjects[k].alpha);
             }
         }
     }
