@@ -214,7 +214,7 @@ public class CameraMovements : MonoBehaviour
             {
                 float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
                 distObject -= currentMinAlpha;
-                distObject /= currentMaxAlpha - currentMinAlpha;
+                distObject /= currentMaxAlpha;
 
                 desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
             }
