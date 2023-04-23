@@ -34,6 +34,11 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool canPlayMusic;
     [HideInInspector] public int currentMelodyIndex;
 
+    [Header("Powers")]
+    public bool canMoveObjects;
+    public bool canCable;
+    public bool canStase;
+
     [Header("Animations")]
     private bool isWalking;
 
@@ -90,8 +95,6 @@ public class CharaManager : MonoBehaviour
             }
 
 
-
-
             if(nearObjects.Count != 0)
             {
                 UIInteraction.SetActive(VerificationInteractionUI());
@@ -132,8 +135,6 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
-                Debug.Log(12);
-                
                 // Si c'est une note
                 if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                 {
@@ -180,19 +181,19 @@ public class CharaManager : MonoBehaviour
                 movementScript.RotateCharacterCamera();
                 movementScript.RotateCharacter(direction);
 
-                if (cable && fluteScript.selectedObjects.Count != 0)
+                if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
                 {
                     cable = false;
                     fluteScript.CreateLien();
                     fluteScript.PlayVFX();
                 }
-                else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0)
+                else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0 && canMoveObjects)
                 {
                     moveObject = false;
                     fluteScript.MoveObject(false, null);
                     fluteScript.PlayVFX();
                 }
-                else if (stase && fluteScript.selectedObjects.Count != 0)
+                else if (stase && fluteScript.selectedObjects.Count != 0 && canStase)
                 {
                     stase = false;
                     fluteScript.Stase();

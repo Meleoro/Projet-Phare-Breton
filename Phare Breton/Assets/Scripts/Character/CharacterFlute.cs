@@ -129,24 +129,27 @@ public class CharacterFlute : MonoBehaviour
         {
             if (selectedObjects.Count == 1)
             {
-                // Références
-                GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
-                Cable currentCable = newRope.GetComponent<Cable>();
-                CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
+                if (!VerifyIfLinked(selectedObjects[0]))
+                {
+                    // Références
+                    GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
+                    Cable currentCable = newRope.GetComponent<Cable>();
+                    CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
-                // On place le début et la fin du câble
-                currentCable.InitialiseStartEnd(selectedObjects[0].gameObject, gameObject);
-                
-                // On crée le câble physiquement
-                currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(), 
-                    selectedObjects[0], null, selectedObjects[0].GetComponent<Rigidbody>(), 
-                    gameObject.GetComponent<Rigidbody>());
-                
-                // On récupère les informations sur le câble et les objets liés à lui
-                cables.Add(newRope);
-                ropedObject.Add(selectedObjects[0]);
-                
-                manager.hasRope = true;
+                    // On place le début et la fin du câble
+                    currentCable.InitialiseStartEnd(selectedObjects[0].gameObject, gameObject);
+
+                    // On crée le câble physiquement
+                    currentCableCreator.CreateNodes(selectedObjects[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(),
+                        selectedObjects[0], null, selectedObjects[0].GetComponent<Rigidbody>(),
+                        gameObject.GetComponent<Rigidbody>());
+
+                    // On récupère les informations sur le câble et les objets liés à lui
+                    cables.Add(newRope);
+                    ropedObject.Add(selectedObjects[0]);
+
+                    manager.hasRope = true;
+                }
             }
 
             else
@@ -180,6 +183,47 @@ public class CharacterFlute : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public bool VerifyIfLinked(ObjetInteractible currentObject)
+    {
+        if (currentObject.isLinked)
+        {
+            for (int i = 0; i < currentObject.linkedObject.Count; i++)
+            {
+                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
+                CableCreator currentCable = currentLinkedObject.cable;
+
+
+                if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().isStart)
+                {
+                    currentCable.ChangeFirstNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
+                }
+                else
+                {
+                    currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
+                }
+
+                currentCable.isLinked = false;
+
+
+                currentLinkedObject.linkedObject.Clear();
+                currentLinkedObject.isLinked = false;
+
+                cables.Add(currentCable.gameObject);
+            }
+;
+            ropedObject.Add(selectedObjects[0]);
+            manager.hasRope = true;
+
+            currentObject.linkedObject.Clear();
+
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -252,7 +296,7 @@ public class CharacterFlute : MonoBehaviour
             manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
             manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
 
-            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = manager.movementScript.hauteurObject + movedObject.transform.position.y;
+            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = movedObject.transform.position.y;
             
             manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
         }
@@ -272,7 +316,7 @@ public class CharacterFlute : MonoBehaviour
                 manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
                 manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
 
-                manager.scriptsMovedObjects[k].currentHauteur = manager.movementScript.hauteurObject + selectedObjects[k].transform.position.y;
+                manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
                 
                 VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
             }
