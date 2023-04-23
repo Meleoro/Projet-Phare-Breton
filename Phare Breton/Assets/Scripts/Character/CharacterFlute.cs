@@ -206,6 +206,11 @@ public class CharacterFlute : MonoBehaviour
                 ropedObject[k].linkedObject.Add(manager.nearObjects[0]);
                 manager.nearObjects[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
 
+                if (ropedObject[k].linkedObject[0] == ropedObject[k].gameObject)
+                {
+                    Destroy(currentCableCreator.gameObject);
+                }
+
                 // Vérification des objets liés
                 ropedObject[k].VerifyLinkedObject();
             }
