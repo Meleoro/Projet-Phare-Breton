@@ -56,6 +56,34 @@ public class ObjetInteractible : MonoBehaviour
         {
             transform.position = originalPos;
         }
+
+        if (isMoved)
+        {
+            ActualiseHauteur();
+        }
+    }
+
+
+    public void ActualiseHauteur()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        RaycastHit raycastHit;
+
+        if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject))
+        {
+            if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
+            {
+                currentHauteur += Time.deltaTime * 3;
+            }
+            
+        }
+
+        else
+        {
+            currentHauteur -= Time.deltaTime * 2;
+        }
+
+        Debug.DrawRay(transform.position, Vector3.down);
     }
 
 
