@@ -132,6 +132,8 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
             {
+                Debug.Log(12);
+                
                 // Si c'est une note
                 if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                 {

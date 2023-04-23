@@ -42,7 +42,7 @@ public class CharacterNotes : MonoBehaviour
     {
         if (collectedNotes[melodyIndex].currentCollectedNotes.Contains(false))
         {
-            // On récupère chaque bande de cette mélodie
+            // On recupere chaque bande de cette melodie
             bandes.Clear();
 
             for(int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes.Count; k++)
