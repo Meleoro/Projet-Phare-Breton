@@ -205,7 +205,10 @@ public class CharacterFlute : MonoBehaviour
                     currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
                 }
 
-                currentLinkedObject.linkedObject = null;
+                currentCable.isLinked = false;
+
+
+                currentLinkedObject.linkedObject.Clear();
                 currentLinkedObject.isLinked = false;
 
                 cables.Add(currentCable.gameObject);
