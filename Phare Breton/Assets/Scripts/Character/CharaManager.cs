@@ -23,6 +23,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool R2;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
+    [HideInInspector] public bool cable;
     [HideInInspector] public bool stase;
     [HideInInspector] public bool escape;
 
@@ -177,9 +178,9 @@ public class CharaManager : MonoBehaviour
                 movementScript.RotateCharacterCamera();
                 movementScript.RotateCharacter(direction);
 
-                if (interaction && fluteScript.selectedObjects.Count != 0)
+                if (cable && fluteScript.selectedObjects.Count != 0)
                 {
-                    interaction = false;
+                    cable = false;
                     fluteScript.CreateLien();
                     fluteScript.PlayVFX();
                 }
@@ -206,7 +207,7 @@ public class CharaManager : MonoBehaviour
 
             
             // Partie arrêt des pouvoirs
-            if (interaction && hasRope)
+            if (cable && hasRope)
             {
                 fluteScript.PlaceLien();
             }
@@ -218,6 +219,7 @@ public class CharaManager : MonoBehaviour
             
             // Pour les effets des contrôles se fasssent qu'une fois
             interaction = false;
+            cable = false;
             moveObject = false;
             stase = false;
         }
@@ -273,11 +275,11 @@ public class CharaManager : MonoBehaviour
 
     public void OnLien(InputAction.CallbackContext context)
     {
-        if(context.started)
-            interaction = true;
-        
+        if (context.started)
+            cable = true;
+
         if (context.canceled)
-            interaction = false;
+            cable = false;
     }
 
     public void OnMoveObject(InputAction.CallbackContext context)
@@ -287,6 +289,13 @@ public class CharaManager : MonoBehaviour
         
         if (context.canceled)
             moveObject = false;
+
+
+        if (context.started)
+            interaction = true;
+
+        if (context.canceled)
+            interaction = false;
     }
 
     public void OnStase(InputAction.CallbackContext context)
