@@ -63,7 +63,11 @@ public class AutoAimScript : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            autoAimedObjects.Add(other.GetComponent<ObjetInteractible>());
+            Note note;
+            if (!other.TryGetComponent<Note>(out note))
+            {
+                autoAimedObjects.Add(other.GetComponent<ObjetInteractible>());
+            }
         }
     }
 
@@ -71,7 +75,12 @@ public class AutoAimScript : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            autoAimedObjects.Remove(other.GetComponent<ObjetInteractible>());
+            Note note;
+            if (!other.TryGetComponent<Note>(out note))
+            {
+                autoAimedObjects.Remove(other.GetComponent<ObjetInteractible>());
+            }
+            
         }
     }
 }
