@@ -145,14 +145,14 @@ public class Porte : MonoBehaviour
         if (currentObject.CompareTag("Interactible"))
         {
             if(currentObject.GetComponent<ObjetInteractible>().isStart)
-                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
+                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
         
             else 
-                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
+                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
         }
         else
         {
-            currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), null);
+            currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
         }
 
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
@@ -170,6 +170,8 @@ public class Porte : MonoBehaviour
 
         newScriptCreator.maxLength = lenghtNewCable;
         newScriptCreator.nbrMaxNodes = nbrNodesNewCable;
+
+        newScriptCreator.isLinked = true;
 
         newScriptCable.InitialiseStartEnd(currentObject, startNewCable);
 

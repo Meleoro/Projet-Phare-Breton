@@ -75,7 +75,7 @@ public class ObjetInteractible : MonoBehaviour
             {
                 if(raycastHit.collider.gameObject != gameObject)
                     if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
-                        currentHauteur += Time.deltaTime * 3;
+                        currentHauteur += Time.deltaTime * 2;
             }
             
         }
