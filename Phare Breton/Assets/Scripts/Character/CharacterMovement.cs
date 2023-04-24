@@ -308,8 +308,6 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log(difference4);
-            
             return true;
         }
 
