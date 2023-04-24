@@ -39,6 +39,14 @@ public class Ampoule : ObjetInteractible
             {
                 ampouleActive = true;
             }
+
+
+            Boite currentBoite;
+            if (linkedObject[k].TryGetComponent<Boite>(out currentBoite))
+            {
+                if(currentBoite.isElectrified)
+                    ampouleActive = true;
+            }
         }
     }
     
