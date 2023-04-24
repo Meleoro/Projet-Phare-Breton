@@ -79,7 +79,7 @@ public class ObjetInteractible : MonoBehaviour
             
         }
 
-        else
+        else if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject * 1.5f))
         {
             currentHauteur -= Time.deltaTime * 2;
         }
