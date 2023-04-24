@@ -238,6 +238,7 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction)
     {
+        
         Vector3 point1 = new Vector3(0, -5000, 0);
         Vector3 point2 = new Vector3(0, -5000, 0);
         Vector3 point3 = new Vector3(0, -5000, 0);
@@ -249,7 +250,11 @@ public class CharacterMovement : MonoBehaviour
         
         if(Physics.Raycast(ray, out raycastHit, 10, layerFall))
         {
-            point1 = raycastHit.point;
+            if(raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
+                point1 = raycastHit.point;
+            
+            else
+                point1 = new Vector3(0, transform.position.y - 0.5f, 0);
         }
         
         
@@ -261,7 +266,11 @@ public class CharacterMovement : MonoBehaviour
 
         if(Physics.Raycast(ray, out raycastHit3, 10, layerFall))
         {
-            point3 = raycastHit3.point;
+            if (raycastHit3.collider.gameObject != gameObject && !raycastHit3.collider.isTrigger)
+                point3 = raycastHit3.point;
+
+            else
+                point3 = new Vector3(0, transform.position.y - 0.5f, 0);
         }
 
 
@@ -271,14 +280,22 @@ public class CharacterMovement : MonoBehaviour
 
         if (Physics.Raycast(ray, out raycastHit2, 10, layerFall))
         {
-            point2 = raycastHit2.point;
+            if(raycastHit2.collider.gameObject != gameObject && !raycastHit2.collider.isTrigger)
+                point2 = raycastHit2.point;
+            
+            else
+                point2 = new Vector3(0, transform.position.y - 0.5f, 0);
         }
 
 
-
-
-        float difference1 = Mathf.Abs(point1.y - point2.y);
-        float difference2 = Mathf.Abs(point2.y - point3.y);
+        float difference1 = 0;
+        float difference2 = 0;
+        
+        if(point2.y <= point1.y)
+            difference1 = Mathf.Abs(point1.y - point2.y);
+        
+        if(point3.y <= point2.y)
+            difference2 = Mathf.Abs(point2.y - point3.y);
 
         float difference3 = point1.y - point3.y;
 
@@ -291,6 +308,8 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            Debug.Log(difference4);
+            
             return true;
         }
 
