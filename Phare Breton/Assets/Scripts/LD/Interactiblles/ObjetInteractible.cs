@@ -57,7 +57,7 @@ public class ObjetInteractible : MonoBehaviour
             transform.position = originalPos;
         }
 
-        if (isMoved)
+        if (isMoved && !isMagneted)
         {
             ActualiseHauteur();
         }
@@ -73,8 +73,9 @@ public class ObjetInteractible : MonoBehaviour
         {
             if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
             {
-                if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
-                    currentHauteur += Time.deltaTime * 3;
+                if(raycastHit.collider.gameObject != gameObject)
+                    if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
+                        currentHauteur += Time.deltaTime * 3;
             }
             
         }
