@@ -193,17 +193,29 @@ public class CharacterMovement : MonoBehaviour
 
 
     // PLACE LE JOUEUR AU DESSUS D'UN OBJET
-    public void ClimbObject(GameObject climbedObject)
+    public void ClimbObject(List<GameObject> climbedObject)
     {
-        if (climbedObject.GetComponent<ObjetInteractible>().isClimbable)
+        GameObject currentClimbedObject = climbedObject[0];
+
+        for (int i = 0; i < climbedObject.Count; i++)
         {
-            if (VerifyFall(stockageDirection))
+            if (climbedObject[i].transform.position.y > currentClimbedObject.transform.position.y && climbedObject[i].transform.position.y < transform.position.y + 1)
+            {
+                currentClimbedObject = climbedObject[i];
+            }
+        }
+        
+        if (currentClimbedObject.GetComponent<ObjetInteractible>().isClimbable)
+        {
+            float distance = Vector3.Distance(currentClimbedObject.transform.position, transform.position);
+            
+            if (VerifyFall(stockageDirection) && (currentClimbedObject.transform.position.y < transform.position.y - 0.5f || distance > 2))
             {
                 transform.position = CalculateFallPos(stockageDirection);
             }
             else
             {
-                transform.position = climbedObject.transform.position + Vector3.up * 2;
+                transform.position = currentClimbedObject.transform.position + Vector3.up * 2;
             }
         }
     }
@@ -334,7 +346,7 @@ public class CharacterMovement : MonoBehaviour
         Ray ray = new Ray(transform.position + direction2 * 1.5f, Vector3.down);
         RaycastHit raycastHit2;
 
-        if(Physics.Raycast(ray, out raycastHit2, 5))
+        if(Physics.Raycast(ray, out raycastHit2, 10))
         {
             posFall = raycastHit2.point + Vector3.up;
         }
