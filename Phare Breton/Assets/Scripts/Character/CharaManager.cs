@@ -133,7 +133,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Interaction
-            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder)
+            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && !nearLadder && !isMovingObjects)
             {
                 // Si c'est une note
                 if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
@@ -149,7 +149,7 @@ public class CharaManager : MonoBehaviour
 
                 else 
                 {
-                    movementScript.ClimbObject(nearObjects[0]);
+                    movementScript.ClimbObject(nearObjects);
                 }
                 
                 interaction = false;

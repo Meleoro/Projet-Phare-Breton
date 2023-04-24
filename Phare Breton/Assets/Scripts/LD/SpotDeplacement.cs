@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class SpotDeplacement : MonoBehaviour
 {
@@ -15,17 +16,19 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger && !isUsed)
         {
+            ObjetInteractible currentObject = other.GetComponent<ObjetInteractible>();
+            
             if (objectHasToBeRoped)
             {
-                if(other.GetComponent<ObjetInteractible>().isLinked)
+                if(currentObject.isLinked && !currentObject.isMagneted)
                 {
-                    other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+                    currentObject.ActivateMagnet(transform);
                     isUsed = true;
                 }
             }
-            else
+            else if(!currentObject.isMagneted)
             {
-                other.GetComponent<ObjetInteractible>().ActivateMagnet(transform);
+                currentObject.ActivateMagnet(transform);
                 isUsed = true;
             }
         }
@@ -35,7 +38,7 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            if (other.GetComponent<ObjetInteractible>().currentMagnet == gameObject)
+            if (other.GetComponent<ObjetInteractible>().currentMagnet == gameObject && isUsed)
             {
                 isUsed = false;
 
