@@ -42,7 +42,8 @@ public class CharaManager : MonoBehaviour
     [Header("Animations")]
     private bool isWalking;
 
-    [Header("Autres")] public string menuScene;
+    [Header("Autres")] 
+    public string menuScene;
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool hasRope;
@@ -50,9 +51,8 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
-    [HideInInspector] public bool nearLadder;
+    [HideInInspector] public Echelle nearLadder;
     [HideInInspector] public bool inJumpZone;
-    [HideInInspector] public Vector3 ladderTPPos;
     [HideInInspector] public Vector3 movedObjectPosition;
     [HideInInspector] public bool isInLightSource;
 
@@ -155,10 +155,12 @@ public class CharaManager : MonoBehaviour
                 interaction = false;
             }
 
-            else if (nearLadder && interaction)
+            else if (nearLadder != null && interaction)
             {
                 interaction = false;
-                movementScript.ClimbLadder(ladderTPPos);
+                rb.velocity = new Vector3(0, 0, 0);
+                
+                nearLadder.TakeLadder(transform);
             }
 
 
