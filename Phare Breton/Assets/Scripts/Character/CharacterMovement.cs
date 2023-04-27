@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -139,6 +140,26 @@ public class CharacterMovement : MonoBehaviour
             }
         }
     }
+
+
+    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin)
+    {
+        manager.noControl = true;
+
+        transform.DOMove(origin, 0.4f);
+        yield return new WaitForSeconds(0.4f);
+
+        transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(1);
+
+        transform.DOMove(finalDestination, 0.5f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        manager.noControl = false;
+    }
+        
 
     // ORIENTATION LES CONTROLES DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
     public void RotateCharacterCamera()

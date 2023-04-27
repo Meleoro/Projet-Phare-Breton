@@ -158,8 +158,7 @@ public class CharaManager : MonoBehaviour
             else if (nearLadder != null && interaction)
             {
                 interaction = false;
-                rb.velocity = new Vector3(0, 0, 0);
-                
+
                 nearLadder.TakeLadder(transform);
             }
 
