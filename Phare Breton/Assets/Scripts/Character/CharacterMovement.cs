@@ -142,20 +142,35 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin)
+    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp)
     {
         manager.noControl = true;
 
         transform.DOMove(origin, 0.4f);
+        
         yield return new WaitForSeconds(0.4f);
 
-        transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
+        if (goUp)
+        {
+            transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
 
-        transform.DOMove(finalDestination, 0.5f);
+            transform.DOMove(finalDestination, 0.5f);
 
-        yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        else
+        {
+            transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.5f).SetEase(Ease.Linear);
+
+            yield return new WaitForSeconds(0.5f);
+
+            transform.DOMove(finalDestination, 1f);
+
+            yield return new WaitForSeconds(1f);
+        }
 
         manager.noControl = false;
     }

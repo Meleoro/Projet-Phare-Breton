@@ -88,8 +88,10 @@ public class Echelle : ObjetInteractible
     {
         //chara.position = FindTPPos(chara, false);
 
+        bool goUp = center.position.y > chara.position.y;
+
         StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(FindTPPos(chara, false),
-            FindTPPos(chara, true)));
+            FindTPPos(chara, true), goUp));
     }
     
     
