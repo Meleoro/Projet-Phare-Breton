@@ -24,16 +24,16 @@ public class AlphaGizmos : MonoBehaviour
             if (sphereGizmos)
             {
                 Gizmos.color = minColor;
-                Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMin);
+                Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMinCamera);
 
                 Gizmos.color = maxColor;
-                Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMax);
+                Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMaxCamera);
             }
 
             else
             {
-                Vector3 minPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMin;
-                Vector3 maxPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMax;
+                Vector3 minPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMinCamera;
+                Vector3 maxPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMaxCamera;
 
                 Gizmos.color = minColor;
                 Gizmos.DrawLine(posCamera.position, minPoint);
@@ -50,16 +50,16 @@ public class AlphaGizmos : MonoBehaviour
         if (sphereGizmos)
         {
             Gizmos.color = minColor;
-            Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMin);
+            Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMinCamera);
 
             Gizmos.color = maxColor;
-            Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMax);
+            Gizmos.DrawWireSphere(posCamera.position, scriptPorte.distanceMaxCamera);
         }
 
         else
         {
-            Vector3 minPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMin;
-            Vector3 maxPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMax;
+            Vector3 minPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMinCamera;
+            Vector3 maxPoint = posCamera.position + posCamera.forward * scriptPorte.distanceMaxCamera;
 
             Gizmos.color = minColor;
             Gizmos.DrawLine(posCamera.position, minPoint);

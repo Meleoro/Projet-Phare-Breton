@@ -33,8 +33,10 @@ public class CameraMovements : MonoBehaviour
     private Vector3 saveCameraRefPos;
 
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
-    private float currentMinAlpha;
-    private float currentMaxAlpha;
+    private float currentMinAlphaCamera;
+    private float currentMaxAlphaCamera;
+    private float currentMinAlphaChara;
+    private float currentMaxAlphaChara;
 
 
     private void Start()
@@ -68,9 +70,9 @@ public class CameraMovements : MonoBehaviour
 
             wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
             transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
-            
-            UpdateAlpha();
         }
+        
+        UpdateAlpha();
     }
 
 
@@ -177,51 +179,57 @@ public class CameraMovements : MonoBehaviour
 
 
     // REND INVISIBLES LES OBJETS EN PARAMETRE
-    public void ActualiseDesactivatedObjects(List<TransparencyObject> objects, float distMin, float distMax)
+    public void ActualiseDesactivatedObjects(List<TransparencyObject> objects, float distMinCamera, float distMaxCamera, float distMinChara, float distMaxChara)
     {
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", 1);
+            for (int i = 0; i < desactivatedObjects[k].meshRenderers.Count; i++)
+            {
+                desactivatedObjects[k].meshRenderers[i].material.SetFloat("_alpha", 1);
+            }
         }
         
         desactivatedObjects = objects;
-        currentMinAlpha = distMin;
-        currentMaxAlpha = distMax;
         
-        for (int k = 0; k < desactivatedObjects.Count; k++)
-        {
-            if (!desactivatedObjects[k].alphaManuelle)
-            {
-                float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
-                distObject -= distMin;
-                distObject /= distMax;
+        currentMinAlphaCamera = distMinCamera;
+        currentMaxAlphaChara = distMaxCamera;
 
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", distObject);
-            }
-
-            else
-            {
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_alpha", desactivatedObjects[k].alpha);
-            }
-        }
+        currentMinAlphaChara = distMinChara;
+        currentMaxAlphaChara = distMaxChara;
+        
+        UpdateAlpha();
     }
 
     public void UpdateAlpha()
     {
         for (int k = 0; k < desactivatedObjects.Count; k++)
         {
-            if (!desactivatedObjects[k].alphaManuelle)
+            for (int i = 0; i < desactivatedObjects[k].meshRenderers.Count; i++)
             {
-                float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderer.transform.position);
-                distObject -= currentMinAlpha;
-                distObject /= currentMaxAlpha;
+                if (!desactivatedObjects[k].alphaManuelle)
+                {
+                    if (!desactivatedObjects[k].fromChara)
+                    {
+                        float distObject = Vector3.Distance(transform.position, desactivatedObjects[k].meshRenderers[i].transform.position);
+                        distObject -= currentMinAlphaCamera;
+                        distObject /= currentMaxAlphaCamera;
 
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", distObject);
-            }
+                        desactivatedObjects[k].meshRenderers[i].material.SetFloat("_alpha", distObject);
+                    }
+                    else
+                    {
+                        float distObject = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position, desactivatedObjects[k].meshRenderers[i].transform.position);
+                        distObject -= currentMinAlphaChara;
+                        distObject /= currentMaxAlphaChara;
 
-            else
-            {
-                desactivatedObjects[k].meshRenderer.material.SetFloat("_Opacity", desactivatedObjects[k].alpha);
+                        desactivatedObjects[k].meshRenderers[i].material.SetFloat("_alpha", distObject);
+                    }
+                }
+
+                else
+                {
+                    desactivatedObjects[k].meshRenderers[i].material.SetFloat("_alpha", desactivatedObjects[k].alpha);
+                }
             }
         }
     }
