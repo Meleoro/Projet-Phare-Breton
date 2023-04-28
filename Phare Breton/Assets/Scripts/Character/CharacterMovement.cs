@@ -247,13 +247,52 @@ public class CharacterMovement : MonoBehaviour
             
             if (VerifyFall(stockageDirection) && (currentClimbedObject.transform.position.y < transform.position.y - 0.5f || distance > 2))
             {
-                transform.position = CalculateFallPos(stockageDirection);
+                StartCoroutine(ClimbObject(CalculateFallPos(stockageDirection), transform.position, false));
+                //transform.position = CalculateFallPos(stockageDirection);
             }
             else
             {
-                transform.position = currentClimbedObject.transform.position + Vector3.up * 2;
+                StartCoroutine(ClimbObject(currentClimbedObject.transform.position + Vector3.up * 2, transform.position, true));
+                //transform.position = currentClimbedObject.transform.position + Vector3.up * 2;
             }
         }
+    }
+
+    public IEnumerator ClimbObject(Vector3 finalPos, Vector3 originPos, bool goDown)
+    {
+        manager.noControl = true;
+
+        Vector3 direction = originPos - finalPos;
+        Vector3 startPos = finalPos + direction.normalized * Vector3.Distance(finalPos, originPos) * 0.9f;
+        
+        transform.DOMove(new Vector3(startPos.x, transform.position.y, startPos.z), 0.2f);
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        if (goDown)
+        {
+            transform.DOMoveY(finalPos.y, 1);
+        
+            yield return new WaitForSeconds(1f);
+        
+            transform.DOMove(finalPos, 0.5f);
+        
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        else
+        {
+            transform.DOMove(new Vector3(finalPos.x, transform.position.y, finalPos.z), 0.5f);
+        
+            yield return new WaitForSeconds(0.5f);
+            
+            transform.DOMoveY(finalPos.y, 1);
+        
+            yield return new WaitForSeconds(1f);
+        }
+        
+
+        manager.noControl = false;
     }
 
     public void GoDown()
@@ -262,13 +301,6 @@ public class CharacterMovement : MonoBehaviour
         {
             transform.position = CalculateFallPos(stockageDirection);
         }
-    }
-    
-
-    // PERMET AU JOUEUR D'UTILISER UNE ECHELLE
-    public void ClimbLadder(Vector3 newPos)
-    {
-        transform.position = newPos;
     }
 
 
