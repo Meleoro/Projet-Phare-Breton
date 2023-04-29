@@ -22,6 +22,8 @@ public class EntreePorte : MonoBehaviour
     [HideInInspector] public CableCreator cableThisSide;
     [HideInInspector] public CableCreator cableOtherSide;
 
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
@@ -38,6 +40,8 @@ public class EntreePorte : MonoBehaviour
             }
         }
     }
+
+
 
     private void CreateListDesactivatedObjects()
     {

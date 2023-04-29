@@ -124,6 +124,8 @@ public class CameraMovements : MonoBehaviour
 
         cameraPosRef.rotation = minXZ.rotation;
         refMax = min.InverseTransformPoint(max.position);
+
+        EnterRoom(false);
     }
     
     

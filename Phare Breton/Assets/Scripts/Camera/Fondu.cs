@@ -112,7 +112,8 @@ public class Fondu : MonoBehaviour
 
     public void ActualisePos(Vector3 objectNewPos, Transform cameraNewPos, GameObject gameObject)
     {
-        gameObject.transform.position = objectNewPos;
+        if(gameObject != null)
+            gameObject.transform.position = objectNewPos;
 
         ReferenceManager.Instance.cameraReference.transform.position = cameraNewPos.position;
         ReferenceManager.Instance.cameraReference.transform.rotation = cameraNewPos.rotation;

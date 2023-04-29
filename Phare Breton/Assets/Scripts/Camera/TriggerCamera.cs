@@ -9,6 +9,11 @@ public class TriggerCamera : MonoBehaviour
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private Transform cameraPos;
 
+    [Header("MouvementCamera")]
+    [SerializeField] private bool isStatic;
+    [SerializeField] Transform minXZ;
+    [SerializeField] Transform maxXZ;
+
     [Header("Gestion des alpha")]
     [SerializeField] private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
     [SerializeField] private float distanceMinCamera = 1;
@@ -38,10 +43,21 @@ public class TriggerCamera : MonoBehaviour
                 Vector3.Distance(posAvant, other.transform.position))
             {
                 ReferenceManager.Instance.cameraReference.isStatic = true;
-                
+
                 ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
                 ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
-                
+
+                ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
+
+                if (!isStatic)
+                {
+                    ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
+                }
+                else
+                {
+                    ReferenceManager.Instance.cameraReference.isStatic = true;
+                }
+
                 CreateListDesactivatedObjects();
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
                     distanceMinChara, distanceMaxChara);
@@ -72,12 +88,28 @@ public class TriggerCamera : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
+        if (!isStatic)
+        {
+            Vector3 max = minXZ.transform.InverseTransformPoint(maxXZ.position);
+
+            Vector3 point1 = new Vector3(0, 0, max.z);
+            Vector3 point2 = new Vector3(max.x, max.y, 0);
+
+            point1 = minXZ.transform.TransformPoint(point1);
+            point2 = minXZ.transform.TransformPoint(point2);
+
+            Gizmos.DrawLine(minXZ.position, point1);
+            Gizmos.DrawLine(minXZ.position, point2);
+            Gizmos.DrawLine(maxXZ.position, point1);
+            Gizmos.DrawLine(maxXZ.position, point2);
+        }
+
         if (cameraView)
         {
             Gizmos.color = cameraViewColor;
 
             Matrix4x4 tempMatrix = Gizmos.matrix;
-            
+
             if (currentCamera == null)
                 currentCamera = ReferenceManager.Instance._camera;
 
