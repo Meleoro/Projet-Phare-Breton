@@ -321,6 +321,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 524c4e87-c725-47ee-bb4b-7fddebe1df29
     m_ActionName: Character/Down[/XInputControllerWindows/leftStick/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 64885500}
+        m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 931be67e-5b49-4971-8d15-41047a0cb531
+    m_ActionName: Character/Pause[/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Character
