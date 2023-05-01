@@ -26,6 +26,8 @@ public class CharacterFlute : MonoBehaviour
     public GameObject zoneFlute;
     public GameObject modeVisée;
     public GameObject modeZone;
+    public ParticleSystemRenderer viseeVFX;
+    public ParticleSystemRenderer zoneVFX;
     public AutoAimScript autoAimScript;
     public GameObject cablePoint;
     public GameObject VFXFluteUsed;
@@ -34,6 +36,9 @@ public class CharacterFlute : MonoBehaviour
     private void Start()
     {
         manager = GetComponent<CharaManager>();
+        
+        onZone = true;
+        onVisee = true;
     }
 
     
@@ -54,6 +59,9 @@ public class CharacterFlute : MonoBehaviour
                     selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                     selectedObjects.RemoveAt(i);
                 }
+                
+                StopAllCoroutines();
+                StartCoroutine(ApparitionVFX(true));
             }
             
             modeVisée.SetActive(false);
@@ -72,6 +80,9 @@ public class CharacterFlute : MonoBehaviour
                     selectedObjects[i].GetComponent<ObjetInteractible>().Deselect();
                     selectedObjects.RemoveAt(i);
                 }
+                
+                StopAllCoroutines();
+                StartCoroutine(ApparitionVFX(false));
             }
             
             modeVisée.SetActive(true); 
@@ -103,7 +114,38 @@ public class CharacterFlute : MonoBehaviour
                 selectedObjects.RemoveAt(i);
             }
 
+            onZone = true;
+            onVisee = true;
+
             doOnce = true;
+        }
+    }
+
+    IEnumerator ApparitionVFX(bool bulleVFX)
+    {
+        float avancee = 1;
+        float wantedYBulle = 0;
+        
+        if (bulleVFX)
+        {
+            avancee = 1.5f;
+            wantedYBulle = transform.position.y + 4;
+        }
+
+        while (avancee > 0)
+        {
+            if (bulleVFX)
+            {
+                zoneVFX.material.SetFloat("_CurOffHeight", wantedYBulle - avancee * 5);
+            }
+            else
+            {
+                viseeVFX.material.SetFloat("_CurOffHeight", 1 - avancee);
+            }
+
+            avancee -= Time.fixedDeltaTime * 3;
+
+            yield return new WaitForSeconds(Time.fixedDeltaTime);
         }
     }
 

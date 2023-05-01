@@ -1014,9 +1014,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1604713492887267752, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
+      propertyPath: zoneVFX
+      value: 
+      objectReference: {fileID: 7555001598903455418}
+    - target: {fileID: 1604713492887267752, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
       propertyPath: modeZone
       value: 
       objectReference: {fileID: 2802771430993603886}
+    - target: {fileID: 1604713492887267752, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: viseeVFX
+      value: 
+      objectReference: {fileID: 7541137662671450389}
     - target: {fileID: 1604713492887267752, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: "modeVis\xE9e"
@@ -1246,7 +1256,7 @@ PrefabInstance:
     - target: {fileID: 6003510672969178683, guid: 49372af18b4f93243afcf1614f62dd70,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 6003510672969178683, guid: 49372af18b4f93243afcf1614f62dd70,
         type: 3}
@@ -1352,6 +1362,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptFlute: {fileID: 1594060493157237609}
+--- !u!199 &7555001598903455418 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 2470387703814497136, guid: 49372af18b4f93243afcf1614f62dd70,
+    type: 3}
+  m_PrefabInstance: {fileID: 5372888270071737802}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6595687797511019483
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1656,7 +1672,7 @@ PrefabInstance:
     - target: {fileID: 8754071953922760269, guid: 24e7cbb385f93624ba5d0b263bb4c5e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.8
+      value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 8754071953922760269, guid: 24e7cbb385f93624ba5d0b263bb4c5e2,
         type: 3}
@@ -1757,3 +1773,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptFlute: {fileID: 1594060493157237609}
+--- !u!199 &7541137662671450389 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 1362254613702718687, guid: 24e7cbb385f93624ba5d0b263bb4c5e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8809097931500733898}
+  m_PrefabAsset: {fileID: 0}
