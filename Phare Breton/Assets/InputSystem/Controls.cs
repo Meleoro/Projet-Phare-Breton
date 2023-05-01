@@ -64,18 +64,36 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RetourMenu"",
+                    ""name"": ""Fixation"",
                     ""type"": ""Button"",
-                    ""id"": ""8fa7797c-d4b0-4778-a319-c486a39ba9fc"",
+                    ""id"": ""bc5ddb68-b0ca-429a-b1ed-8c3834a6870c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Fixation"",
+                    ""name"": ""Up"",
                     ""type"": ""Button"",
-                    ""id"": ""bc5ddb68-b0ca-429a-b1ed-8c3834a6870c"",
+                    ""id"": ""f7cc8223-eee5-4a5c-9659-1146365f7f83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""524c4e87-c725-47ee-bb4b-7fddebe1df29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""931be67e-5b49-4971-8d15-41047a0cb531"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -217,28 +235,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""11ce5ddb-c1ff-4fd7-a257-bb79f689180a"",
-                    ""path"": ""<Gamepad>/start"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RetourMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""8fef3dcb-0eb8-4d73-ac1e-c20bdabf580a"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RetourMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fa6e4f95-17fb-49a4-a6e8-3b5db5776477"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -258,6 +254,39 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Fixation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eb41daf6-c5eb-488e-9a37-2d4887526587"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0276ced-40ad-4067-811c-6160bee602cd"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ccf0f41-eece-45ef-a8f3-868de1917484"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -270,8 +299,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character_Flute = m_Character.FindAction("Flute", throwIfNotFound: true);
         m_Character_Interaction = m_Character.FindAction("Interaction", throwIfNotFound: true);
         m_Character_Deplacement = m_Character.FindAction("Deplacement", throwIfNotFound: true);
-        m_Character_RetourMenu = m_Character.FindAction("RetourMenu", throwIfNotFound: true);
         m_Character_Fixation = m_Character.FindAction("Fixation", throwIfNotFound: true);
+        m_Character_Up = m_Character.FindAction("Up", throwIfNotFound: true);
+        m_Character_Down = m_Character.FindAction("Down", throwIfNotFound: true);
+        m_Character_Pause = m_Character.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,8 +368,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Flute;
     private readonly InputAction m_Character_Interaction;
     private readonly InputAction m_Character_Deplacement;
-    private readonly InputAction m_Character_RetourMenu;
     private readonly InputAction m_Character_Fixation;
+    private readonly InputAction m_Character_Up;
+    private readonly InputAction m_Character_Down;
+    private readonly InputAction m_Character_Pause;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
@@ -347,8 +380,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Flute => m_Wrapper.m_Character_Flute;
         public InputAction @Interaction => m_Wrapper.m_Character_Interaction;
         public InputAction @Deplacement => m_Wrapper.m_Character_Deplacement;
-        public InputAction @RetourMenu => m_Wrapper.m_Character_RetourMenu;
         public InputAction @Fixation => m_Wrapper.m_Character_Fixation;
+        public InputAction @Up => m_Wrapper.m_Character_Up;
+        public InputAction @Down => m_Wrapper.m_Character_Down;
+        public InputAction @Pause => m_Wrapper.m_Character_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -370,12 +405,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Deplacement.started += instance.OnDeplacement;
             @Deplacement.performed += instance.OnDeplacement;
             @Deplacement.canceled += instance.OnDeplacement;
-            @RetourMenu.started += instance.OnRetourMenu;
-            @RetourMenu.performed += instance.OnRetourMenu;
-            @RetourMenu.canceled += instance.OnRetourMenu;
             @Fixation.started += instance.OnFixation;
             @Fixation.performed += instance.OnFixation;
             @Fixation.canceled += instance.OnFixation;
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -392,12 +433,18 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Deplacement.started -= instance.OnDeplacement;
             @Deplacement.performed -= instance.OnDeplacement;
             @Deplacement.canceled -= instance.OnDeplacement;
-            @RetourMenu.started -= instance.OnRetourMenu;
-            @RetourMenu.performed -= instance.OnRetourMenu;
-            @RetourMenu.canceled -= instance.OnRetourMenu;
             @Fixation.started -= instance.OnFixation;
             @Fixation.performed -= instance.OnFixation;
             @Fixation.canceled -= instance.OnFixation;
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -421,7 +468,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnFlute(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnDeplacement(InputAction.CallbackContext context);
-        void OnRetourMenu(InputAction.CallbackContext context);
         void OnFixation(InputAction.CallbackContext context);
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

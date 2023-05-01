@@ -42,18 +42,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RetourMenu",
+                    "name": "Fixation",
                     "type": "Button",
-                    "id": "8fa7797c-d4b0-4778-a319-c486a39ba9fc",
+                    "id": "bc5ddb68-b0ca-429a-b1ed-8c3834a6870c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fixation",
+                    "name": "Up",
                     "type": "Button",
-                    "id": "bc5ddb68-b0ca-429a-b1ed-8c3834a6870c",
+                    "id": "f7cc8223-eee5-4a5c-9659-1146365f7f83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "524c4e87-c725-47ee-bb4b-7fddebe1df29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "931be67e-5b49-4971-8d15-41047a0cb531",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -195,28 +213,6 @@
                 },
                 {
                     "name": "",
-                    "id": "11ce5ddb-c1ff-4fd7-a257-bb79f689180a",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RetourMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8fef3dcb-0eb8-4d73-ac1e-c20bdabf580a",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RetourMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fa6e4f95-17fb-49a4-a6e8-3b5db5776477",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -234,6 +230,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fixation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb41daf6-c5eb-488e-9a37-2d4887526587",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0276ced-40ad-4067-811c-6160bee602cd",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ccf0f41-eece-45ef-a8f3-868de1917484",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
