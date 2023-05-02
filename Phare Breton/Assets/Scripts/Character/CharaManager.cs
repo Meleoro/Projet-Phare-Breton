@@ -20,6 +20,7 @@ public class CharaManager : MonoBehaviour
 
     [Header("Inputs")]
     [HideInInspector] public Vector2 direction;
+    [HideInInspector] public Vector2 wantedDirection;
     [HideInInspector] public bool R2;
     [HideInInspector] public bool moveObject;
     [HideInInspector] public bool interaction;
@@ -66,6 +67,8 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
+        direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 20);
+        
         if(!isMovingObjects)
         {
             movedObjectPosition = transform.position;
@@ -238,6 +241,7 @@ public class CharaManager : MonoBehaviour
     }
     
     
+    
     public bool VerificationInteractionUI()
     {
         for (int i = 0; i < nearObjects.Count; i++)
@@ -274,7 +278,7 @@ public class CharaManager : MonoBehaviour
     //RECUPERE INPUT DE DIRECTION
     public void OnDirection(InputAction.CallbackContext context)
     {
-        direction = context.ReadValue<Vector2>();
+        wantedDirection = context.ReadValue<Vector2>();
     }
 
     public void OnLien(InputAction.CallbackContext context)

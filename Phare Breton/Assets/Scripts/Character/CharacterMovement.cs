@@ -17,6 +17,7 @@ public class CharacterMovement : MonoBehaviour
     private Vector3 velocity;
     [HideInInspector] public bool doOnce;
     [HideInInspector] public Vector3 resistanceCable;
+    private Vector3 currentRotation;
 
     [Header("MovementsObjets")]
     public float hauteurObject = 0.5f;
@@ -180,13 +181,13 @@ public class CharacterMovement : MonoBehaviour
     // ORIENTE LE MESH DU PERSONNAGE
     public void RotateCharacter(Vector2 direction)
     {
-        Debug.Log(direction.magnitude);
-        
         if (direction != Vector2.zero && direction.magnitude > 0.03f)
         {
             Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+            
+            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.deltaTime * 15);
 
-            mesh.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 180, 0);
+            mesh.rotation = Quaternion.LookRotation(currentRotation, Vector3.up) * Quaternion.Euler(0, 180, 0);
         }
     }
 

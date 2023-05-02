@@ -46,7 +46,7 @@ public class CharacterFlute : MonoBehaviour
     public void FluteActive(Vector2 direction)
     {
         // Choix du mode de visée
-        if (direction.magnitude < 0.1f)
+        if (direction.magnitude < 0.2f)
         {
             onZone = true;
             
