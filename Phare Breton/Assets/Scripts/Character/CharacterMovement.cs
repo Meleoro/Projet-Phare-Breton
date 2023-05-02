@@ -61,6 +61,11 @@ public class CharacterMovement : MonoBehaviour
             desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
             float maxSpeedChange = maxAcceleration * Time.deltaTime;
+            
+            if (direction == Vector2.zero)
+            {
+                maxSpeedChange *= 2;
+            }
 
             // Acceleration du personnage
             velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
@@ -103,25 +108,15 @@ public class CharacterMovement : MonoBehaviour
                 }
             }
 
-            if (directionFound1)
+            if (directionFound1 || directionFound2)
             {
-                Vector3 desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed;
-            
-                Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
-                desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
-        
-                float maxSpeedChange = maxAcceleration * Time.deltaTime;
-
-                // Acceleration du personnage
-                velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
-                velocity.x = Mathf.MoveTowards(velocity.x, desiredVelocity.x, maxSpeedChange);
-                velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
-                manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
-            }
-            
-            else if (directionFound2)
-            {
-                Vector3 desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed;
+                Vector3 desiredVelocity;
+                
+                if(directionFound1)
+                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed;
+                
+                else
+                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed;
             
                 Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
                 desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
@@ -185,9 +180,14 @@ public class CharacterMovement : MonoBehaviour
     // ORIENTE LE MESH DU PERSONNAGE
     public void RotateCharacter(Vector2 direction)
     {
-        Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+        Debug.Log(direction.magnitude);
+        
+        if (direction != Vector2.zero && direction.magnitude > 0.03f)
+        {
+            Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
 
-        mesh.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 180, 0);
+            mesh.rotation = Quaternion.LookRotation(newDirection, Vector3.up) * Quaternion.Euler(0, 180, 0);
+        }
     }
 
 

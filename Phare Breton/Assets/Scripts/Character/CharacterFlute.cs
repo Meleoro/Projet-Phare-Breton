@@ -46,7 +46,7 @@ public class CharacterFlute : MonoBehaviour
     public void FluteActive(Vector2 direction)
     {
         // Choix du mode de visée
-        if (direction == Vector2.zero)
+        if (direction.magnitude < 0.1f)
         {
             onZone = true;
             
@@ -87,16 +87,17 @@ public class CharacterFlute : MonoBehaviour
             
             modeVisée.SetActive(true); 
             modeZone.SetActive(false);
+            
+            Vector2 newDirection = autoAimScript.ChooseDirection(direction);
+            
+            if(direction.magnitude > 0.03f)
+                zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(newDirection.y, 0, -newDirection.x), Vector3.up);
         }
         
         // On immobilise le joueur et oriente la visée
         manager.noMovement = true;
         zoneFlute.SetActive(true);
         doOnce = false;
-
-        Vector2 newDirection = autoAimScript.ChooseDirection(direction);
-
-        zoneFlute.transform.localRotation = Quaternion.LookRotation(new Vector3(newDirection.y, 0, -newDirection.x), Vector3.up);
     }
 
     
