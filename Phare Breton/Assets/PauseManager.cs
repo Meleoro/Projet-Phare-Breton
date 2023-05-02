@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
@@ -104,7 +105,7 @@ public class PauseManager : MonoBehaviour
 
         else
         {
-            
+            SceneManager.LoadScene("MainMenu");
         }
     }
     
