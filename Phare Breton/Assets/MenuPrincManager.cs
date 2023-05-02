@@ -1,16 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DG.Tweening;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
-public class PauseManager : MonoBehaviour
+public class MenuPrincManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform pauseObject;
-    private bool pauseOpen;
+    [SerializeField] private RectTransform menuObject;
     private int currentButton = 1;
     private bool isMoving;
 
@@ -27,65 +26,39 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
-        QuitPause();
+        OpenMenu();
         currentButton = 1;
     }
 
 
     private void Update()
     {
-        if (pauseOpen)
+
+        if ((up || down) && !isMoving)
         {
-            if ((up || down) && !isMoving)
-            {
-                ChangeSelected();
+            ChangeSelected();
 
-                up = false;
-                down = false;
-            }
+            up = false;
+            down = false;
+        }
 
-            if (interaction && !isMoving)
-            {
-                UseButton();
-            }
+        if (interaction && !isMoving)
+        {
+            UseButton();
         }
         
-        if (pause)
-        {
-            if (pauseOpen)
-            {
-                QuitPause();
-            }
-            else
-            {
-                OpenPause();
-            }
-
-            pause = false;
-        }
     }
 
 
-    public void OpenPause()
+    public void OpenMenu()
     {
-        pauseObject.gameObject.SetActive(true);
-        ReferenceManager.Instance.characterReference.noControl = true;
+        menuObject.gameObject.SetActive(true);
 
-        pauseOpen = true;
-        
         textsButtons[currentButton - 1].DOFade(1, 0.5f).OnComplete((() => isMoving = false));
         textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), 0.5f);
         textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 30, 0.5f);
         
         isMoving = true;
-    }
-
-    public void QuitPause()
-    {
-        pauseObject.gameObject.SetActive(false);
-        ReferenceManager.Instance.characterReference.noControl = false;
-        
-        pauseOpen = false;
     }
 
 
@@ -94,7 +67,7 @@ public class PauseManager : MonoBehaviour
     {
         if (currentButton == 1)
         {
-            QuitPause();
+            SceneManager.LoadScene("LevelDesign - BlockMesh");
         }
         
         else if (currentButton == 2)
@@ -104,7 +77,7 @@ public class PauseManager : MonoBehaviour
 
         else
         {
-            
+            Application.Quit();
         }
     }
     
@@ -129,7 +102,7 @@ public class PauseManager : MonoBehaviour
 
     public void GoUp()
     {
-        pauseObject.DOMoveY(pauseObject.position.y - 125, 0.5f).OnComplete((() => isMoving = false));
+        menuObject.DOMoveY(menuObject.position.y - 125, 0.5f).OnComplete((() => isMoving = false));
 
         isMoving = true;
 
@@ -144,7 +117,7 @@ public class PauseManager : MonoBehaviour
 
     public void GoDown()
     {
-        pauseObject.DOMoveY(pauseObject.position.y + 125, 0.5f).OnComplete((() => isMoving = false));
+        menuObject.DOMoveY(menuObject.position.y + 125, 0.5f).OnComplete((() => isMoving = false));
         
         isMoving = true;
         
@@ -161,15 +134,6 @@ public class PauseManager : MonoBehaviour
     // ----------------------------------------------------------------------
     // INPUTS
 
-    public void OnPause(InputAction.CallbackContext context)
-    {
-        if (context.started)
-            pause = true;
-
-        if (context.canceled)
-            pause = false;
-    }
-    
     public void OnInteraction(InputAction.CallbackContext context)
     {
         if (context.started)
