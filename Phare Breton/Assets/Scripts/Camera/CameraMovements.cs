@@ -27,8 +27,11 @@ public class CameraMovements : MonoBehaviour
 
     [Header("PlayMusic")] 
     [HideInInspector] public Transform posCameraRythme;
+    [HideInInspector] public Transform posCameraRythme2;
+    [HideInInspector] public float durationRythme;
     private bool moveCameraRythme;
     private float timerMoveRythme;
+    
     
     [Header("Autres")]
     private Vector3 savePosition;
@@ -126,15 +129,36 @@ public class CameraMovements : MonoBehaviour
 
     public void MoveCameraRythme()
     {
-        timerMoveRythme += Time.deltaTime * 0.2f;
-        
-        transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme);
-        transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme);
+        timerMoveRythme += Time.deltaTime;
+
+        if (timerMoveRythme < 2)
+        {
+            transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme * 0.2f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme * 0.2f);
+        }
+
+        else
+        {
+            float avancee = timerMoveRythme / durationRythme;
+            float depart = 2 / durationRythme;
+            
+            Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  avancee - depart);
+            Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, avancee - depart);
+
+            transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, wanterRot, Time.deltaTime);
+        }
     }
 
     public void StartMoveCameraRythme()
     {
         timerMoveRythme = 0;
+        moveCameraRythme = true;
+    }
+    
+    public void RestartMoveCameraRythme()
+    {
+        timerMoveRythme = 1.5f;
         moveCameraRythme = true;
     }
 

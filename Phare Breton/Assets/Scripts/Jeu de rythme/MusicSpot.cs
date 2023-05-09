@@ -7,6 +7,7 @@ public class MusicSpot : MonoBehaviour
     [Range(1, 3)] public int melodyIndex;
 
     [SerializeField] private Transform cameraPos;
+    [SerializeField] private Transform cameraPos2;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,6 +17,7 @@ public class MusicSpot : MonoBehaviour
             ReferenceManager.Instance.characterReference.currentMelodyIndex = melodyIndex;
 
             ReferenceManager.Instance.cameraReference.posCameraRythme = cameraPos;
+            ReferenceManager.Instance.cameraReference.posCameraRythme2 = cameraPos2;
         }
     }
 
@@ -27,6 +29,7 @@ public class MusicSpot : MonoBehaviour
             ReferenceManager.Instance.characterReference.currentMelodyIndex = melodyIndex;
             
             ReferenceManager.Instance.cameraReference.posCameraRythme = null;
+            ReferenceManager.Instance.cameraReference.posCameraRythme2 = null;
         }
     }
 }
