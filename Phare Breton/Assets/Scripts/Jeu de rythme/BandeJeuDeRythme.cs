@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,21 +9,27 @@ using DG.Tweening;
 
 public class BandeJeuDeRythme : MonoBehaviour
 {
-    [Header("Infos Node Selectionnée")]
+    [Header("Infos Node Selectionnee")]
     [HideInInspector] public MusicNode currentNode;
-    [HideInInspector] public bool isOnGreen;
-    [HideInInspector] public bool isOnYellow;
-    [HideInInspector] public bool isOnBlue;
+    [HideInInspector] public bool isOnX;
+    [HideInInspector] public bool isOnY;
+    [HideInInspector] public bool isOnZ;
 
 
-    [Header("Parametres déroulement")]
+    [Header("Parametres deroulement")]
     public float dureePreparation;
-    public float speedMoveBarre;
+    public float speedMoveNode;
+    public List<Node> nodes = new List<Node>();
 
 
-    [Header("References")]
+    [Header("References")] 
+    public GameObject nodeObject;
+    public RectTransform posSpawnLeft;
+    public RectTransform posSpawnRight;
     public RectTransform barreAvancement;
+    public RectTransform fond;
 
+    
     [Header("Inputs")]
     private bool pressX;
     private bool pressY;
@@ -33,14 +40,13 @@ public class BandeJeuDeRythme : MonoBehaviour
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
-    public List<MusicNode> nodesErased = new List<MusicNode>();
-    private Vector3 originBarre;
+    [HideInInspector] public List<MusicNode> nodesErased = new List<MusicNode>();
+    [HideInInspector] public List<MusicNode> nodesCreated = new List<MusicNode>();
     [HideInInspector] public bool stop;
 
 
     private void Start()
     {
-        originBarre = barreAvancement.position;
         stop = false;
     }
 
@@ -51,17 +57,12 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             if (gameStarted)
             {
-                timer += Time.deltaTime;
+                UpdateTimer();
 
                 if (timer > dureePreparation && !startMoveBarre)
                 {
                     startMoveBarre = true;
                 }
-            }
-
-            if (startMoveBarre)
-            {
-                barreAvancement.localPosition += Vector3.right * speedMoveBarre * Time.deltaTime;
             }
 
             if (pressX || pressY || pressZ)
@@ -73,23 +74,17 @@ public class BandeJeuDeRythme : MonoBehaviour
                     if (isRight)
                     {
                         currentNode.EraseNode();
-                        nodesErased.Add(currentNode);
+
+                        nodesCreated.Remove(currentNode);
+                        
+                        Destroy(currentNode);
+                        Destroy(currentNode.gameObject);
                     }
-
-                    else
-                    {
-                        RestartGame();
-                    }
-
-                    pressX = false;
-                    pressY = false;
-                    pressZ = false;
                 }
-
-                else
-                {
-                    RestartGame();
-                }
+                
+                pressX = false;
+                pressY = false;
+                pressZ = false;
             }
         }
     }
@@ -99,6 +94,31 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void LaunchGame()
     {
         timer = 0;
+
+        StartCoroutine(StartGameFeel());
+    }
+
+    public IEnumerator StartGameFeel()
+    {
+        Image imageBarre =  barreAvancement.GetComponent<Image>();
+        Image image = GetComponent<Image>();
+
+        imageBarre.DOFade(0, 0);
+        image.DOFade(0, 0);
+
+        barreAvancement.DOMoveY(barreAvancement.position.y - 200, 0);
+        fond.DOMoveY(fond.position.y - 200, 0);
+        
+        yield return new WaitForSeconds(0.01f);
+        
+        imageBarre.DOFade(1, 1.8f);
+        image.DOFade(0.9f, 1.8f);
+        
+        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.8f);
+        fond.DOMoveY(fond.position.y + 200, 1.8f);
+        
+        yield return new WaitForSeconds(2);
+
         gameStarted = true;
     }
 
@@ -106,20 +126,22 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void RestartGame()
     {
         timer = 0;
-        startMoveBarre = false;
 
-        barreAvancement.position = originBarre;
-
-        for(int i = 0; i < nodesErased.Count; i++)
+        for(int i = 0; i < nodes.Count; i++)
         {
-            nodesErased[i].ReappearNode();
+            nodes[i].isSpawned = false;
         }
 
-        nodesErased.Clear();
+        for (int i = nodesCreated.Count - 1; i >= 0; i--)
+        {
+            Destroy(nodesCreated[i].gameObject);
+        }
+        
+        nodesCreated.Clear();
 
-        isOnBlue = false;
-        isOnGreen = false;
-        isOnYellow = false;
+        isOnX = false;
+        isOnY = false;
+        isOnZ = false;
         currentNode = null;
     }
 
@@ -134,20 +156,46 @@ public class BandeJeuDeRythme : MonoBehaviour
     }
 
 
+    public void UpdateTimer()
+    {
+        timer += Time.deltaTime;
+
+        for (int i = 0; i < nodes.Count; i++)
+        {
+            if (!nodes[i].isSpawned)
+            {
+                if (timer > nodes[i].spawnTiming)
+                {
+                     MusicNode newNode = Instantiate(nodeObject, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                     
+                     newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this);
+
+                     nodes[i].isSpawned = true;
+                     nodesCreated.Add(newNode);
+                }
+            }
+        }
+
+        for (int i = 0; i < nodesCreated.Count; i++)
+        {
+            nodesCreated[i].MoveNode(speedMoveNode);
+        }
+    }
+
 
     public bool VerifyNote()
     {
-        if(pressX && isOnGreen)
+        if(pressX && isOnX)
         {
             return true;
         }
 
-        else if(pressY && isOnYellow)
+        else if(pressY && isOnY)
         {
             return true;
         }
 
-        else if(pressZ && isOnBlue)
+        else if(pressZ && isOnZ)
         {
             return true;
         }
@@ -186,4 +234,30 @@ public class BandeJeuDeRythme : MonoBehaviour
         if (context.canceled)
             pressZ = false;
     }
+}
+
+
+[Serializable]
+public class Node
+{
+    public enum InputNeeded
+    {
+        x,
+        y,
+        z
+    }
+    
+    public enum SpawnPos
+    {
+        left,
+        right
+    }
+
+    public InputNeeded nodeType;
+    public SpawnPos spawnPos;
+    
+    public float spawnTiming;
+
+    [HideInInspector] public bool isSpawned = false;
+    [HideInInspector] public bool isDestroyed = false;
 }

@@ -9,21 +9,78 @@ public class MusicNode : MonoBehaviour
 {
     public BandeJeuDeRythme currentBande;
 
-    public bool isGreen;
-    public bool isYellow;
-    public bool isBlue;
+    [HideInInspector] public bool isX;
+    [HideInInspector] public bool isY;
+    [HideInInspector] public bool isZ;
 
     [HideInInspector] public bool erased;
 
-    [Header("Références")]
+    [Header("Movement")] 
+    public AnimationCurve moveX;
+    public AnimationCurve moveY;
+    [HideInInspector] public Vector3 originPos;
+    private float timer;
+    private bool goLeft;
+
+    [Header("References")]
     private Image image;
+
+    private RectTransform rectTransform;
 
 
     private void Start()
     {
         image = GetComponent<Image>();
+        rectTransform = GetComponent<RectTransform>();
     }
 
+
+    public void InitialiseNode(Node.InputNeeded inputNeeded, Node.SpawnPos spawnPos, BandeJeuDeRythme bande)
+    {
+        rectTransform = GetComponent<RectTransform>();
+        currentBande = bande;
+        
+        switch (inputNeeded)
+        {
+            case Node.InputNeeded.x :
+                isX = true;
+                break;
+            
+            case Node.InputNeeded.y :
+                isY = true;
+                break;
+            
+            case Node.InputNeeded.z :
+                isZ = true;
+                break;
+        }
+        
+        switch (spawnPos)
+        {
+            case Node.SpawnPos.left :
+                originPos = bande.posSpawnLeft.position;
+                goLeft = false;
+                break;
+            
+            case Node.SpawnPos.right :
+                originPos = bande.posSpawnRight.position;
+                goLeft = true;
+                break;
+        }
+    }
+    
+
+    public void MoveNode(float speed)
+    {
+        timer += Time.deltaTime * speed;
+
+        if(goLeft) 
+            rectTransform.position = originPos + (new Vector3(-moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);
+        
+        else
+            rectTransform.position = originPos + (new Vector3(moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);
+    }
+    
 
     public void EraseNode()
     {
@@ -47,14 +104,14 @@ public class MusicNode : MonoBehaviour
         {
             currentBande.currentNode = this;
 
-            if (isGreen)
-                currentBande.isOnGreen = true;
+            if (isX)
+                currentBande.isOnX = true;
 
-            else if (isYellow)
-                currentBande.isOnYellow = true;
+            else if (isY)
+                currentBande.isOnY = true;
 
             else
-                currentBande.isOnBlue = true;
+                currentBande.isOnZ = true;
         }
     }
 
@@ -65,17 +122,17 @@ public class MusicNode : MonoBehaviour
         {
             currentBande.currentNode = null;
 
-            if (isGreen)
-                currentBande.isOnGreen = false;
+            if (isX)
+                currentBande.isOnX = false;
 
-            else if (isYellow)
-                currentBande.isOnYellow = false;
+            else if (isY)
+                currentBande.isOnY = false;
 
             else
-                currentBande.isOnBlue = false;
+                currentBande.isOnZ = false;
 
 
-            // Si le joueur n'a pas appuyé 
+            // Si le joueur n'a pas appuye 
             if (!erased)
             {
                 currentBande.RestartGame();

@@ -45,6 +45,8 @@ public class CharacterNotes : MonoBehaviour
 
         if (!collectedNotes[melodyIndex - 1].currentCollectedNotes.Contains(false))
         {
+            ReferenceManager.Instance.cameraReference.StartMoveCameraRythme();
+            
             // On recupere chaque bande de cette melodie
             bandes.Clear();
 

@@ -25,6 +25,11 @@ public class CameraMovements : MonoBehaviour
     public Transform startMinXZ;
     public Transform startMaxXZ;
 
+    [Header("PlayMusic")] 
+    [HideInInspector] public Transform posCameraRythme;
+    private bool moveCameraRythme;
+    private float timerMoveRythme;
+    
     [Header("Autres")]
     private Vector3 savePosition;
     private Quaternion saveRotation;
@@ -66,10 +71,23 @@ public class CameraMovements : MonoBehaviour
     {
         if (!isStatic)
         {
-            Vector3 newPos = MoveCamera();
+            if (!moveCameraRythme)
+            {
+                Vector3 newPos = MoveCamera();
 
-            wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
-            transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
+                wantedPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+                transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime * 3);
+            }
+
+            else
+            {
+                MoveCameraRythme();
+            }
+        }
+
+        if (moveCameraRythme)
+        {
+            MoveCameraRythme();
         }
         
         UpdateAlpha();
@@ -82,15 +100,7 @@ public class CameraMovements : MonoBehaviour
     {
         Vector3 newPos = new Vector3(0, 0, 0);
         Vector3 charaPos = minXZ.InverseTransformPoint(ReferenceManager.Instance.characterReference.movedObjectPosition);
-        
-        
-        /*if ((charaPos.x < 0 || charaPos.x > refMax.x) || (charaPos.z < 0 || charaPos.z > refMax.z))
-        {
-            newPos.x = charaPos.x;
-            newPos.z = charaPos.z;
-        }*/
 
-        
         if (charaPos.x < 0)
         {
             newPos.x = charaPos.x;
@@ -100,9 +110,7 @@ public class CameraMovements : MonoBehaviour
             newPos.x = charaPos.x - refMax.x;
         }
         
-        //newPos.y = charaPos.y;
-
-         
+        
         if (charaPos.z < 0)
         {
             newPos.z = charaPos.z;
@@ -114,6 +122,20 @@ public class CameraMovements : MonoBehaviour
 
         
         return cameraPosRef.TransformPoint(newPos);
+    }
+
+    public void MoveCameraRythme()
+    {
+        timerMoveRythme += Time.deltaTime * 0.2f;
+        
+        transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme);
+        transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme);
+    }
+
+    public void StartMoveCameraRythme()
+    {
+        timerMoveRythme = 0;
+        moveCameraRythme = true;
     }
 
 
