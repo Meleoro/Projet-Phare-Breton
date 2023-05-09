@@ -27,6 +27,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     public RectTransform posSpawnLeft;
     public RectTransform posSpawnRight;
     public RectTransform barreAvancement;
+    public RectTransform fond;
 
     
     [Header("Inputs")]
@@ -79,11 +80,11 @@ public class BandeJeuDeRythme : MonoBehaviour
                         Destroy(currentNode);
                         Destroy(currentNode.gameObject);
                     }
-
-                    pressX = false;
-                    pressY = false;
-                    pressZ = false;
                 }
+                
+                pressX = false;
+                pressY = false;
+                pressZ = false;
             }
         }
     }
@@ -93,6 +94,30 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void LaunchGame()
     {
         timer = 0;
+
+        StartCoroutine(StartGameFeel());
+    }
+
+    public IEnumerator StartGameFeel()
+    {
+        Image imageBarre =  barreAvancement.GetComponent<Image>();
+        Image image = GetComponent<Image>();
+
+        imageBarre.DOFade(0, 0);
+        image.DOFade(0, 0);
+
+        barreAvancement.DOMoveY(barreAvancement.position.y - 200, 0);
+        fond.DOMoveY(fond.position.y - 200, 0);
+        
+        yield return new WaitForSeconds(0.01f);
+        
+        imageBarre.DOFade(1, 1.8f);
+        image.DOFade(0.9f, 1.8f);
+        
+        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.8f);
+        fond.DOMoveY(fond.position.y + 200, 1.8f);
+        
+        yield return new WaitForSeconds(2);
 
         gameStarted = true;
     }
