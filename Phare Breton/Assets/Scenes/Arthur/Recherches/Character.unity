@@ -647,7 +647,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2594
+  m_Name: pb_Mesh-8204
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2294,7 +2294,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1274
+  m_Name: pb_Mesh-8326
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3223,6 +3223,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MusicSpot
       objectReference: {fileID: 0}
+    - target: {fileID: 5643642421724186199, guid: 4fa544d787703f64a90d70139641f497,
+        type: 3}
+      propertyPath: melodyIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8857476027817506994, guid: 4fa544d787703f64a90d70139641f497,
         type: 3}
       propertyPath: m_RootOrder
@@ -3355,6 +3360,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.data[1]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
