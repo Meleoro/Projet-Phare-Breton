@@ -133,8 +133,8 @@ public class CameraMovements : MonoBehaviour
 
         if (timerMoveRythme < 2)
         {
-            transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme * 0.2f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme * 0.2f);
+            transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme * 0.1f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme * 0.1f);
         }
 
         else

@@ -75,6 +75,8 @@ public class BandeJeuDeRythme : MonoBehaviour
                         
                         Destroy(currentNode);
                         Destroy(currentNode.gameObject);
+
+                        erasedNotes += 1;
                     }
                 }
                 
@@ -90,6 +92,8 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void LaunchGame()
     {
         timer = 0;
+        erasedNotes = 0;
+            
         ReferenceManager.Instance.cameraReference.durationRythme = duration;
 
         StartCoroutine(StartGameFeel());
@@ -108,11 +112,11 @@ public class BandeJeuDeRythme : MonoBehaviour
         
         yield return new WaitForSeconds(0.01f);
         
-        imageBarre.DOFade(1, 1.3f).SetEase(Ease.Linear);
-        image.DOFade(0.9f, 1.3f).SetEase(Ease.Linear);
+        imageBarre.DOFade(1, 1.5f).SetEase(Ease.Linear);
+        image.DOFade(0.9f, 1.5f).SetEase(Ease.Linear);
         
-        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.3f).SetEase(Ease.Flash);
-        fond.DOMoveY(fond.position.y + 200, 1.3f).SetEase(Ease.Flash);
+        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
+        fond.DOMoveY(fond.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
         
         yield return new WaitForSeconds(1.6f);
 
@@ -123,6 +127,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void RestartGame()
     {
         timer = -0.5f;
+        erasedNotes = 0;
 
         for(int i = 0; i < nodes.Count; i++)
         {
