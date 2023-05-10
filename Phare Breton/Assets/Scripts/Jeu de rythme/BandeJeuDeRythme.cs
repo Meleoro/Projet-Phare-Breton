@@ -19,6 +19,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     [Header("Parametres deroulement")]
     public float dureePreparation;
     public float speedMoveNode;
+    public float duration;
     public List<Node> nodes = new List<Node>();
 
 
@@ -40,9 +41,9 @@ public class BandeJeuDeRythme : MonoBehaviour
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
-    [HideInInspector] public List<MusicNode> nodesErased = new List<MusicNode>();
     [HideInInspector] public List<MusicNode> nodesCreated = new List<MusicNode>();
     [HideInInspector] public bool stop;
+    [HideInInspector] public int erasedNotes;
 
 
     private void Start()
@@ -58,11 +59,6 @@ public class BandeJeuDeRythme : MonoBehaviour
             if (gameStarted)
             {
                 UpdateTimer();
-
-                if (timer > dureePreparation && !startMoveBarre)
-                {
-                    startMoveBarre = true;
-                }
             }
 
             if (pressX || pressY || pressZ)
@@ -79,6 +75,8 @@ public class BandeJeuDeRythme : MonoBehaviour
                         
                         Destroy(currentNode);
                         Destroy(currentNode.gameObject);
+
+                        erasedNotes += 1;
                     }
                 }
                 
@@ -94,6 +92,9 @@ public class BandeJeuDeRythme : MonoBehaviour
     public void LaunchGame()
     {
         timer = 0;
+        erasedNotes = 0;
+            
+        ReferenceManager.Instance.cameraReference.durationRythme = duration;
 
         StartCoroutine(StartGameFeel());
     }
@@ -111,13 +112,13 @@ public class BandeJeuDeRythme : MonoBehaviour
         
         yield return new WaitForSeconds(0.01f);
         
-        imageBarre.DOFade(1, 1.8f);
-        image.DOFade(0.9f, 1.8f);
+        imageBarre.DOFade(1, 1.5f).SetEase(Ease.Linear);
+        image.DOFade(0.9f, 1.5f).SetEase(Ease.Linear);
         
-        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.8f);
-        fond.DOMoveY(fond.position.y + 200, 1.8f);
+        barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
+        fond.DOMoveY(fond.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
         
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.6f);
 
         gameStarted = true;
     }
@@ -125,7 +126,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
     public void RestartGame()
     {
-        timer = 0;
+        timer = -0.5f;
+        erasedNotes = 0;
 
         for(int i = 0; i < nodes.Count; i++)
         {
@@ -143,6 +145,8 @@ public class BandeJeuDeRythme : MonoBehaviour
         isOnY = false;
         isOnZ = false;
         currentNode = null;
+
+        ReferenceManager.Instance.cameraReference.RestartMoveCameraRythme();
     }
 
 
