@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 
 public class BandeJeuDeRythme : MonoBehaviour
@@ -24,7 +25,9 @@ public class BandeJeuDeRythme : MonoBehaviour
 
 
     [Header("References")] 
-    public GameObject nodeObject;
+    public GameObject nodeObjectX;
+    public GameObject nodeObjectY;
+    public GameObject nodeObjectZ;
     public RectTransform posSpawnLeft;
     public RectTransform posSpawnRight;
     public RectTransform barreAvancement;
@@ -44,6 +47,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     [HideInInspector] public List<MusicNode> nodesCreated = new List<MusicNode>();
     [HideInInspector] public bool stop;
     [HideInInspector] public int erasedNotes;
+    private bool usingBarre;
 
 
     private void Start()
@@ -63,12 +67,14 @@ public class BandeJeuDeRythme : MonoBehaviour
 
             if (pressX || pressY || pressZ)
             {
-                if (currentNode != null)
+                if (currentNode != null && !usingBarre)
                 {
                     bool isRight = VerifyNote();
 
                     if (isRight)
                     {
+                        Debug.Log(12);
+                        
                         currentNode.EraseNode();
 
                         nodesCreated.Remove(currentNode);
@@ -77,13 +83,25 @@ public class BandeJeuDeRythme : MonoBehaviour
                         Destroy(currentNode.gameObject);
 
                         erasedNotes += 1;
+
+                        StartCoroutine(FeelDestroyNode());
+                    }
+                    else
+                    {
+                        RestartGame();
                     }
                 }
                 
                 pressX = false;
                 pressY = false;
                 pressZ = false;
+                
+                if (!usingBarre)
+                {
+                    StartCoroutine(FeelBarre());
+                }
             }
+            
         }
     }
 
@@ -123,11 +141,52 @@ public class BandeJeuDeRythme : MonoBehaviour
         gameStarted = true;
     }
 
+    IEnumerator FeelBarre()
+    {
+        Vector3 originalScale = barreAvancement.localScale;
+        float duration = 0.08f;
+        
+        usingBarre = true;
+        barreAvancement.DOScale(barreAvancement.localScale * 1.2f, duration * 0.7f);
+        
+        yield return new WaitForSeconds(duration * 0.7f);
+        
+        barreAvancement.DOScale(originalScale, duration);
+        
+        yield return new WaitForSeconds(duration);
+        
+        usingBarre = false;
+    }
+    
+
+    IEnumerator FeelDestroyNode()
+    {
+        float duration = 0.23f;
+        Volume volume = ReferenceManager.Instance.cameraReference.rythmeVolume;
+
+        DOTween.To(() => volume.weight, x => volume.weight = x, 0.7f, duration * 0.5f);
+
+        yield return new WaitForSeconds(duration * 0.5f);
+            
+        DOTween.To(() => volume.weight, x => volume.weight = x, 0, duration);
+    }
+    
+    IEnumerator LoseEffects()
+    {
+        float duration = 0.23f;
+        
+        ReferenceManager.Instance.cameraReference.DoCameraShake(0.4f, 0.2f);
+
+        yield return new WaitForSeconds(duration);
+    }
+
 
     public void RestartGame()
     {
-        timer = -0.5f;
+        timer = -1.5f;
         erasedNotes = 0;
+
+        StartCoroutine(LoseEffects());
 
         for(int i = 0; i < nodes.Count; i++)
         {
@@ -152,11 +211,11 @@ public class BandeJeuDeRythme : MonoBehaviour
 
     public void EndGame()
     {
+        Debug.Log(21);
+        
         stop = true;
 
         ReferenceManager.Instance.characterReference.notesScript.NextBande();
-
-        GetComponent<RectTransform>().DOMoveY(GetComponent<RectTransform>().position.y - 50, 0.5f);
     }
 
 
@@ -164,15 +223,35 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        if (timer > duration)
+        {
+            EndGame();
+        }
+
         for (int i = 0; i < nodes.Count; i++)
         {
             if (!nodes[i].isSpawned)
             {
                 if (timer > nodes[i].spawnTiming)
                 {
-                     MusicNode newNode = Instantiate(nodeObject, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
-                     
-                     newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this);
+                    MusicNode newNode = null;
+                    
+                    switch (nodes[i].nodeType)
+                    {
+                        case Node.InputNeeded.x :
+                            newNode = Instantiate(nodeObjectX, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                            break;
+                        
+                        case Node.InputNeeded.y :
+                            newNode = Instantiate(nodeObjectY, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                            break;
+                        
+                        case Node.InputNeeded.z :
+                            newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                            break;
+                    } 
+
+                    newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this);
 
                      nodes[i].isSpawned = true;
                      nodesCreated.Add(newNode);

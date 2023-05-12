@@ -313,7 +313,7 @@ GameObject:
   - component: {fileID: 6103243265949677628}
   - component: {fileID: 6921755257406399830}
   m_Layer: 5
-  m_Name: Bande 1.1
+  m_Name: Bande 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,14 +423,14 @@ MonoBehaviour:
   isOnZ: 0
   dureePreparation: 1
   speedMoveNode: 0.3
-  duration: 25
+  duration: 18
   nodes:
   - nodeType: 0
     spawnPos: 0
     spawnTiming: 0
     isSpawned: 0
     isDestroyed: 0
-  - nodeType: 0
+  - nodeType: 1
     spawnPos: 1
     spawnTiming: 0.5
     isSpawned: 0
@@ -440,15 +440,54 @@ MonoBehaviour:
     spawnTiming: 1.5
     isSpawned: 0
     isDestroyed: 0
-  nodeObject: {fileID: 2960185977775737702, guid: 1f19e94890a68954e99a332b3a53abb5,
+  - nodeType: 0
+    spawnPos: 1
+    spawnTiming: 3.5
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 1
+    spawnPos: 0
+    spawnTiming: 4
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 0
+    spawnPos: 1
+    spawnTiming: 5
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 0
+    spawnPos: 1
+    spawnTiming: 7
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 1
+    spawnPos: 0
+    spawnTiming: 7.5
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 0
+    spawnPos: 1
+    spawnTiming: 8.5
+    isSpawned: 0
+    isDestroyed: 0
+  - nodeType: 1
+    spawnPos: 0
+    spawnTiming: 9
+    isSpawned: 0
+    isDestroyed: 0
+  nodeObjectX: {fileID: 2960185977775737702, guid: 1f19e94890a68954e99a332b3a53abb5,
+    type: 3}
+  nodeObjectY: {fileID: 2960185977775737702, guid: 20dff3b78524056448c4a45887a108f9,
+    type: 3}
+  nodeObjectZ: {fileID: 2960185977775737702, guid: 7fdc8a21acb5da541bbe1b19ba6b23f2,
     type: 3}
   posSpawnLeft: {fileID: 2359338487303982640}
   posSpawnRight: {fileID: 2361926631548434664}
   barreAvancement: {fileID: 5974979816344026753}
   fond: {fileID: 7970090532466519524}
-  nodesErased: []
   nodesCreated: []
   stop: 0
+  erasedNotes: 0
 --- !u!114 &6921755257406399830
 MonoBehaviour:
   m_ObjectHideFlags: 0

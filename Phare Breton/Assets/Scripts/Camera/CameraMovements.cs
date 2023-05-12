@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CameraMovements : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public Fondu scriptFondu;
     public Camera _camera;
     public Transform cameraPosRef;
+    public Volume rythmeVolume;
     private CameraRotationRef cameraRotationRefScript;
 
     [Header("CameraRoom")]
@@ -45,6 +47,7 @@ public class CameraMovements : MonoBehaviour
     private float currentMaxAlphaCamera;
     private float currentMinAlphaChara;
     private float currentMaxAlphaChara;
+    private bool isShaking;
 
 
     private void Start()
@@ -129,24 +132,27 @@ public class CameraMovements : MonoBehaviour
 
     public void MoveCameraRythme()
     {
-        timerMoveRythme += Time.deltaTime;
-
-        if (timerMoveRythme < 2)
+        if (!isShaking)
         {
-            transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme * 0.1f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme * 0.1f);
-        }
+            timerMoveRythme += Time.deltaTime;
 
-        else
-        {
-            float avancee = timerMoveRythme / durationRythme;
-            float depart = 2 / durationRythme;
+            if (timerMoveRythme < 2)
+            {
+                transform.position = Vector3.Lerp(transform.position, posCameraRythme.position, timerMoveRythme * 0.1f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, posCameraRythme.rotation, timerMoveRythme * 0.1f);
+            }
+
+            else
+            {
+                float avancee = timerMoveRythme / durationRythme;
+                float depart = 2 / durationRythme;
             
-            Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  avancee - depart);
-            Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, avancee - depart);
+                Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  avancee - depart);
+                Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, avancee - depart);
 
-            transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, wanterRot, Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime);
+                transform.rotation = Quaternion.Lerp(transform.rotation, wanterRot, Time.deltaTime);
+            }
         }
     }
 
@@ -158,8 +164,14 @@ public class CameraMovements : MonoBehaviour
     
     public void RestartMoveCameraRythme()
     {
-        timerMoveRythme = 1.5f;
+        timerMoveRythme = 0.5f;
         moveCameraRythme = true;
+    }
+    
+    public void StopMoveCameraRythme()
+    {
+        timerMoveRythme = 0;
+        moveCameraRythme = false;
     }
 
 
@@ -195,6 +207,13 @@ public class CameraMovements : MonoBehaviour
         {
             isStatic = true;
         }
+    }
+
+    public void DoCameraShake(float duration, float intensity)
+    {
+        isShaking = true;
+        
+        transform.DOShakePosition(duration, intensity).OnComplete((() => isShaking = false));
     }
 
 
