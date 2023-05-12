@@ -138,40 +138,57 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp)
+    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects)
     {
-        Debug.Log(origin);
-        Debug.Log(finalDestination);
-        
-        manager.noControl = true;
-
-        transform.DOMove(origin, 0.4f);
-        
-        yield return new WaitForSeconds(0.4f);
-
-        if (goUp)
+        if (nearObjects.Count > 1 && VerifyFall(stockageDirection))
         {
-            transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
+            List<GameObject> objectToClimb = new List<GameObject>();
 
-            yield return new WaitForSeconds(1);
+            for (int i = 0; i < nearObjects.Count; i++)
+            {
+                Boite currentBoite;
 
-            transform.DOMove(finalDestination, 0.5f);
+                if (nearObjects[i].TryGetComponent(out currentBoite))
+                {
+                    objectToClimb.Add(nearObjects[i]);
+                }
+            }
 
-            yield return new WaitForSeconds(0.5f);
+            ClimbObject(objectToClimb);
         }
 
         else
         {
-            transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.5f).SetEase(Ease.Linear);
+            manager.noControl = true;
 
-            yield return new WaitForSeconds(0.5f);
+            transform.DOMove(origin, 0.4f);
+        
+            yield return new WaitForSeconds(0.4f);
 
-            transform.DOMove(finalDestination, 1f);
+            if (goUp)
+            {
+                transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
 
-            yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1);
+
+                transform.DOMove(finalDestination, 0.5f);
+
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            else
+            {
+                transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.5f).SetEase(Ease.Linear);
+
+                yield return new WaitForSeconds(0.5f);
+
+                transform.DOMove(finalDestination, 1f);
+
+                yield return new WaitForSeconds(1f);
+            }
+
+            manager.noControl = false;
         }
-
-        manager.noControl = false;
     }
         
 
@@ -235,6 +252,8 @@ public class CharacterMovement : MonoBehaviour
     // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(List<GameObject> climbedObject)
     {
+        Debug.Log(climbedObject.Count);
+        
         GameObject currentClimbedObject = climbedObject[0];
 
         for (int i = 0; i < climbedObject.Count; i++)
