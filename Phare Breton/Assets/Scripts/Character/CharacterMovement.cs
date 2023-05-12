@@ -140,6 +140,9 @@ public class CharacterMovement : MonoBehaviour
 
     public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp)
     {
+        Debug.Log(origin);
+        Debug.Log(finalDestination);
+        
         manager.noControl = true;
 
         transform.DOMove(origin, 0.4f);
