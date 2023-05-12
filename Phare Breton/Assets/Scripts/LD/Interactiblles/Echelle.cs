@@ -13,28 +13,87 @@ public class Echelle : ObjetInteractible
 
     public Vector3 FindTPPos(Transform posChara, bool inverse)
     {
-        float angle = 0;
         pointsGround.Clear();
 
+        Vector3 finalPos = Vector3.zero;
+        
+        
+        RaycastPos(posChara, inverse, 3);
+
+        if (pointsGround.Count != 0)
+        {
+            for (int i = 0; i < pointsGround.Count; i++)
+            {
+                finalPos += pointsGround[i];
+            }
+            
+            finalPos /= pointsGround.Count;
+        }
+        
+        else
+        {
+            RaycastPos(posChara, inverse, 1.5f);
+
+            if (pointsGround.Count != 0)
+            {
+                for (int i = 0; i < pointsGround.Count; i++)
+                {
+                    finalPos += pointsGround[i];
+                }
+                
+                finalPos /= pointsGround.Count;
+            }
+            
+            else
+            {
+                if (posChara.position.y < center.position.y)
+                {
+                    return ReferenceManager.Instance.characterReference.transform.position;
+                }
+
+                else
+                {
+                    return TPPosBas.position;
+                }
+            }
+        }
+        
+
+        
+        return finalPos + new Vector3(0, 1, 0);
+    }
+
+
+    public void RaycastPos(Transform posChara, bool inverse, float rayon)
+    {
+        float angle = 0;
+        
         if (!inverse)
         {
             for (int i = 0; i < 8; i++)
             {
                 angle += 45;
                 
-                Vector2 direction = new Vector2(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle)) * 3;
+                Vector2 direction = new Vector2(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle)) * rayon;
                 Vector3 posRaycast;
-                
-                if(posChara.position.y > center.position.y)
+                float distance;
+
+                if (posChara.position.y > center.position.y)
+                {
                     posRaycast = TPPosBas.position + new Vector3(direction.x, 0.5f, direction.y);
-                
+                    distance = 2;
+                }
+
                 else
+                {
                     posRaycast = TPPosHaut.position + new Vector3(direction.x, 0.5f, direction.y);
-                
+                    distance = 5;
+                }
+
                 Ray ray = new Ray(posRaycast, Vector3.down);
                 RaycastHit raycastHit;
 
-                if (Physics.Raycast(ray, out raycastHit, 3, LayerMask.NameToLayer("Player")))
+                if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
                 {
                     if (raycastHit.collider.gameObject != gameObject)
                     {
@@ -49,19 +108,28 @@ public class Echelle : ObjetInteractible
             {
                 angle += 45;
                 
-                Vector2 direction = new Vector2(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle)) * 3;
+                Vector2 direction = new Vector2(Mathf.Sin(Mathf.Deg2Rad * angle), Mathf.Cos(Mathf.Deg2Rad * angle)) * rayon;
                 Vector3 posRaycast;
-                
-                if(posChara.position.y < center.position.y)
+                float distance;
+
+                if (posChara.position.y < center.position.y)
+                {
                     posRaycast = TPPosBas.position + new Vector3(direction.x, 0.5f, direction.y);
-                
+                    distance = 2;
+                }
+
                 else
+                {
                     posRaycast = TPPosHaut.position + new Vector3(direction.x, 0.5f, direction.y);
+                    distance = 5;
+                }
 
                 Ray ray = new Ray(posRaycast, Vector3.down);
                 RaycastHit raycastHit;
+                
+                //Debug.DrawRay(posRaycast, Vector3.down, Color.blue, 5);
 
-                if (Physics.Raycast(ray, out raycastHit, 3, LayerMask.NameToLayer("Player")))
+                if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
                 {
                     if (raycastHit.collider.gameObject != gameObject)
                     {
@@ -70,17 +138,6 @@ public class Echelle : ObjetInteractible
                 }
             }
         }
-        
-        Vector3 finalPos = Vector3.zero;
-        
-        for (int i = 0; i < pointsGround.Count; i++)
-        {
-            finalPos += pointsGround[i];
-        }
-
-        finalPos /= pointsGround.Count;
-
-        return finalPos + new Vector3(0, 1, 0);
     }
 
 
