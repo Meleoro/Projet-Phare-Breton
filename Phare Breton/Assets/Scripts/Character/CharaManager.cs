@@ -67,7 +67,7 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
-        direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 20);
+        direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 25);
         
         if(!isMovingObjects)
         {
@@ -120,7 +120,7 @@ public class CharaManager : MonoBehaviour
                     movementScript.RotateCharacterCamera();
 
 
-                if (direction != Vector2.zero)
+                if (direction.magnitude > 0.5f)
                     isWalking = true;
 
                 else
@@ -160,8 +160,6 @@ public class CharaManager : MonoBehaviour
 
             else if (nearLadder != null && interaction)
             {
-                Debug.Log(12);
-                
                 interaction = false;
 
                 nearLadder.TakeLadder(transform);
