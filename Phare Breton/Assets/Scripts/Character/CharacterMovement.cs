@@ -47,7 +47,7 @@ public class CharacterMovement : MonoBehaviour
     // BOUGE LE PERSONNAGE
     public void MoveCharacter(Vector2 direction)
     {
-        if (direction != Vector2.zero)
+        if (direction != Vector2.zero && direction.magnitude > 0.9f)
         {
             stockageDirection = direction;
         }
@@ -271,11 +271,14 @@ public class CharacterMovement : MonoBehaviour
             if (VerifyFall(stockageDirection) && (currentClimbedObject.transform.position.y < transform.position.y - 0.5f || distance > 2))
             {
                 StartCoroutine(ClimbObject(CalculateFallPos(stockageDirection), transform.position, false));
-                //transform.position = CalculateFallPos(stockageDirection);
+
+                manager.anim.SetTrigger("startChute");
             }
-            else
+            else if (!(currentClimbedObject.transform.position.y + 0.5f < transform.position.y))
             {
                 StartCoroutine(ClimbObject(currentClimbedObject.transform.position + Vector3.up * 2, transform.position, true));
+
+                manager.anim.SetTrigger("startBigClimb");
             }
         }
     }
@@ -288,15 +291,16 @@ public class CharacterMovement : MonoBehaviour
         direction = direction.normalized;
 
         Vector3 startPos = finalPos + direction * 1.9f;
-        Vector3 endPos = new Vector3(finalPos.x + direction.x * 0.5f, finalPos.y, finalPos.z + direction.z * 0.5f);
+        Vector3 endPos = finalPos;
 
-
-        transform.DOMove(new Vector3(startPos.x, transform.position.y, startPos.z), 0.2f);
         
         yield return new WaitForSeconds(0.2f);
         
         if (goDown)
         {
+            transform.DOMove(new Vector3(startPos.x, transform.position.y, startPos.z), 0.2f);
+            endPos = new Vector3(finalPos.x + direction.x * 0.5f, finalPos.y, finalPos.z + direction.z * 0.5f);
+
             transform.DOMoveY(finalPos.y - 1.2f, 0.5f).SetEase(Ease.InOutBack);
         
             yield return new WaitForSeconds(0.5f);
@@ -308,13 +312,14 @@ public class CharacterMovement : MonoBehaviour
 
         else
         {
-            transform.DOMove(new Vector3(finalPos.x, transform.position.y, finalPos.z), 0.7f);
+            //transform.DOMove(new Vector3(finalPos.x, transform.position.y, finalPos.z), 0.2f);
+
+            transform.DOMoveX(finalPos.x, 0.4f).SetEase(Ease.OutSine);
+            transform.DOMoveZ(finalPos.z, 0.4f).SetEase(Ease.OutSine);
+
+            transform.DOMoveY(finalPos.y, 0.4f).SetEase(Ease.InCubic);
         
-            yield return new WaitForSeconds(0.7f);
-            
-            transform.DOMoveY(finalPos.y, 0.5f);
-        
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.4f);
         }
         
 

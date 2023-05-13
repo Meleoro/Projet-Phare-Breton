@@ -14,7 +14,7 @@ public class CharaManager : MonoBehaviour
     public CharacterNotes notesScript;
 
     [Header("Références")]
-    [SerializeField] private Animator anim;
+    [SerializeField] public Animator anim;
     [SerializeField] private GameObject UIInteraction;
     [HideInInspector] public Rigidbody rb;
 
@@ -154,8 +154,6 @@ public class CharaManager : MonoBehaviour
                 else 
                 {
                     movementScript.ClimbObject(nearObjects);
-
-                    anim.SetTrigger("startBigClimb");
                 }
                 
                 interaction = false;
