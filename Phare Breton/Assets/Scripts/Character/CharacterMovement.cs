@@ -276,7 +276,6 @@ public class CharacterMovement : MonoBehaviour
             else
             {
                 StartCoroutine(ClimbObject(currentClimbedObject.transform.position + Vector3.up * 2, transform.position, true));
-                //transform.position = currentClimbedObject.transform.position + Vector3.up * 2;
             }
         }
     }
@@ -286,32 +285,36 @@ public class CharacterMovement : MonoBehaviour
         manager.noControl = true;
 
         Vector3 direction = originPos - finalPos;
-        Vector3 startPos = finalPos + direction.normalized * Vector3.Distance(finalPos, originPos) * 0.9f;
-        
+        direction = direction.normalized;
+
+        Vector3 startPos = finalPos + direction * 1.9f;
+        Vector3 endPos = new Vector3(finalPos.x + direction.x * 0.5f, finalPos.y, finalPos.z + direction.z * 0.5f);
+
+
         transform.DOMove(new Vector3(startPos.x, transform.position.y, startPos.z), 0.2f);
         
         yield return new WaitForSeconds(0.2f);
         
         if (goDown)
         {
-            transform.DOMoveY(finalPos.y, 1);
-        
-            yield return new WaitForSeconds(1f);
-        
-            transform.DOMove(finalPos, 0.5f);
+            transform.DOMoveY(finalPos.y - 1.2f, 0.5f).SetEase(Ease.InOutBack);
         
             yield return new WaitForSeconds(0.5f);
+        
+            transform.DOMove(endPos, 0.6f).SetEase(Ease.InOutSine);
+
+            yield return new WaitForSeconds(0.6f);
         }
 
         else
         {
-            transform.DOMove(new Vector3(finalPos.x, transform.position.y, finalPos.z), 0.5f);
+            transform.DOMove(new Vector3(finalPos.x, transform.position.y, finalPos.z), 0.7f);
+        
+            yield return new WaitForSeconds(0.7f);
+            
+            transform.DOMoveY(finalPos.y, 0.5f);
         
             yield return new WaitForSeconds(0.5f);
-            
-            transform.DOMoveY(finalPos.y, 1);
-        
-            yield return new WaitForSeconds(1f);
         }
         
 
