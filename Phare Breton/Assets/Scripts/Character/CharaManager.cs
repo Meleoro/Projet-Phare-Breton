@@ -42,6 +42,7 @@ public class CharaManager : MonoBehaviour
 
     [Header("Animations")]
     private bool isWalking;
+    private bool fluteActive;
 
     [Header("Autres")] 
     public string menuScene;
@@ -204,11 +205,17 @@ public class CharaManager : MonoBehaviour
                     fluteScript.PlayVFX();
                 }
 
+                if (!fluteActive)
+                {
+                    fluteActive = true;
+                    anim.SetTrigger("startFlute");
+                }
                 isWalking = false;
             }
             
             else
             {
+                fluteActive = false;
                 fluteScript.FluteUnactive();
             }
 
@@ -238,6 +245,7 @@ public class CharaManager : MonoBehaviour
         }
 
         anim.SetBool("isWalking", isWalking);
+        anim.SetBool("fluteActive", fluteActive);
     }
     
     

@@ -33,6 +33,7 @@ public class CharacterFlute : MonoBehaviour
     public GameObject VFXFluteUsed;
     private CharaManager manager;
 
+
     private void Start()
     {
         manager = GetComponent<CharaManager>();
