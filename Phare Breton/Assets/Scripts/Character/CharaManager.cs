@@ -115,7 +115,7 @@ public class CharaManager : MonoBehaviour
                 movementScript.MoveCharacter(direction);
                 
                 if(direction != Vector2.zero) 
-                    movementScript.RotateCharacter(direction);
+                    movementScript.RotateCharacter(direction, false);
 
                 if (direction == Vector2.zero)
                     movementScript.RotateCharacterCamera();
@@ -184,7 +184,7 @@ public class CharaManager : MonoBehaviour
                 fluteScript.FluteActive(direction);
 
                 movementScript.RotateCharacterCamera();
-                movementScript.RotateCharacter(direction);
+                movementScript.RotateCharacter(direction, false);
 
                 if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
                 {

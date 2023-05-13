@@ -159,21 +159,32 @@ public class CharacterMovement : MonoBehaviour
 
         else
         {
+            float hauteur = Mathf.Abs(origin.y - finalDestination.y);
+            Vector3 direction = (finalDestination - origin).normalized;
+
+            StartCoroutine(RotateCharaLadder(direction));
+
             manager.noControl = true;
 
-            transform.DOMove(origin, 0.4f);
-        
+            transform.DOMove(origin, 0.4f).SetEase(Ease.OutQuad);
+
+            manager.anim.SetTrigger("startLadder");
+
             yield return new WaitForSeconds(0.4f);
 
             if (goUp)
             {
-                transform.DOMoveY(finalDestination.y, 1).SetEase(Ease.Linear);
+                transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(hauteur * 0.22f);
 
-                transform.DOMove(finalDestination, 0.5f);
+                manager.anim.SetTrigger("endLadder");
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(hauteur * 0.18f);
+
+                transform.DOMove(finalDestination, 0.55f).SetEase(Ease.OutQuad);
+
+                yield return new WaitForSeconds(0.55f);
             }
 
             else
@@ -190,6 +201,20 @@ public class CharacterMovement : MonoBehaviour
             manager.noControl = false;
         }
     }
+
+    IEnumerator RotateCharaLadder(Vector3 direction)
+    {
+        float timer = 0.4f;
+
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            RotateCharacter(new Vector2(direction.x, direction.z), true);
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+    }
         
 
     // ORIENTATION LES CONTROLES DU PERSONNAGE EN FONCTION DE L'ANGLE DE CAMERA
@@ -199,13 +224,16 @@ public class CharacterMovement : MonoBehaviour
     }
 
     // ORIENTE LE MESH DU PERSONNAGE
-    public void RotateCharacter(Vector2 direction)
+    public void RotateCharacter(Vector2 direction, bool isLadder)
     {
         if (direction != Vector2.zero && direction.magnitude > 0.03f)
         {
             Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+
+            if (isLadder)
+                newDirection = new Vector3(direction.x, 0, direction.y);
             
-            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.deltaTime * 15);
+            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.deltaTime * 17);
 
             mesh.rotation = Quaternion.LookRotation(currentRotation, Vector3.up) * Quaternion.Euler(0, 180, 0);
         }
@@ -252,8 +280,6 @@ public class CharacterMovement : MonoBehaviour
     // PLACE LE JOUEUR AU DESSUS D'UN OBJET
     public void ClimbObject(List<GameObject> climbedObject)
     {
-        Debug.Log(climbedObject.Count);
-        
         GameObject currentClimbedObject = climbedObject[0];
 
         for (int i = 0; i < climbedObject.Count; i++)
