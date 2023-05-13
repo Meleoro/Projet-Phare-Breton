@@ -154,6 +154,8 @@ public class CharaManager : MonoBehaviour
                 else 
                 {
                     movementScript.ClimbObject(nearObjects);
+
+                    anim.SetTrigger("startBigClimb");
                 }
                 
                 interaction = false;
