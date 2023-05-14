@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5534844253461498671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.94, y: 0, z: 7.08}
+  m_LocalPosition: {x: 11.01, y: -0.24, z: 14.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -86,7 +86,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6516270376796422007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.98, y: 0, z: -0.72}
+  m_LocalPosition: {x: 12.98, y: -0.86, z: -0.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -127,7 +127,7 @@ Transform:
   - {fileID: 4984637185252268059}
   - {fileID: 6813094882275477688}
   m_Father: {fileID: 0}
-  m_RootOrder: 32
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &9030545467804838472
 BoxCollider:
@@ -167,9 +167,11 @@ MonoBehaviour:
   - {fileID: 4984637185252268059}
   - {fileID: 6813094882275477688}
   grueSpeed: 10
+  distanceTriggerGrue: 15
   grueObject: {fileID: 8782218043780803960, guid: 7108bf95608194c4ebc25ca59644d143,
     type: 3}
   trigger: {fileID: 9030545467804838472}
+  animGrue: {fileID: 0}
   onlyOnSelected: 0
   triggerColor: {r: 0.38431373, g: 0.6084497, b: 0.8392157, a: 0.72156864}
   pathColor: {r: 0.18823427, g: 0.5520909, b: 0.8867924, a: 1}
