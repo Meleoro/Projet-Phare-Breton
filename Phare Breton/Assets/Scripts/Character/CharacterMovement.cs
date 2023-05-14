@@ -159,16 +159,24 @@ public class CharacterMovement : MonoBehaviour
 
         else
         {
+            manager.anim.SetBool("isGoingUp", goUp);
+
+
             float hauteur = Mathf.Abs(origin.y - finalDestination.y);
             Vector3 direction = (finalDestination - origin).normalized;
 
-            StartCoroutine(RotateCharaLadder(direction));
+            StartCoroutine(RotateCharaLadder(direction, goUp));
 
             manager.noControl = true;
 
             transform.DOMove(origin, 0.4f).SetEase(Ease.OutQuad);
 
-            manager.anim.SetTrigger("startLadder");
+            if(goUp)
+                manager.anim.SetTrigger("startLadder");
+
+            else
+                manager.anim.SetTrigger("endLadder");
+
 
             yield return new WaitForSeconds(0.4f);
 
@@ -193,16 +201,20 @@ public class CharacterMovement : MonoBehaviour
 
                 yield return new WaitForSeconds(0.5f);
 
-                transform.DOMove(finalDestination, 1f);
+                transform.DOMove(finalDestination, hauteur * 0.4f);
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(hauteur * 0.22f);
+
+                manager.anim.SetTrigger("startLadder");
+
+                yield return new WaitForSeconds(hauteur * 0.18f);
             }
 
             manager.noControl = false;
         }
     }
 
-    IEnumerator RotateCharaLadder(Vector3 direction)
+    IEnumerator RotateCharaLadder(Vector3 direction, bool goUp)
     {
         float timer = 0.4f;
 
@@ -210,7 +222,11 @@ public class CharacterMovement : MonoBehaviour
         {
             timer -= Time.deltaTime;
 
-            RotateCharacter(new Vector2(direction.x, direction.z), true);
+            if(goUp)
+                RotateCharacter(new Vector2(direction.x, direction.z), true);
+
+            else
+                RotateCharacter(new Vector2(-direction.x, -direction.z), true);
 
             yield return new WaitForSeconds(Time.deltaTime);
         }
