@@ -18,7 +18,7 @@ public class Echelle : ObjetInteractible
         Vector3 finalPos = Vector3.zero;
         
         
-        RaycastPos(posChara, inverse, 1.3f);
+        RaycastPos(posChara, inverse, 1.2f);
 
         if (pointsGround.Count != 0)
         {
@@ -34,9 +34,9 @@ public class Echelle : ObjetInteractible
             {
                 Vector2 direction = new Vector2(transform.position.x - finalPos.x, transform.position.z - finalPos.z);
 
-                if (direction.magnitude > 0.5f)
+                if (direction.magnitude > 0.4f)
                 {
-                    finalPos = new Vector3(transform.position.x, finalPos.y, transform.position.z) - new Vector3(direction.normalized.x * 0.5f, 0, direction.normalized.y * 0.5f);
+                    finalPos = new Vector3(transform.position.x, finalPos.y, transform.position.z) - new Vector3(direction.normalized.x * 0.4f, 0, direction.normalized.y * 0.4f);
                 }
             }
         }

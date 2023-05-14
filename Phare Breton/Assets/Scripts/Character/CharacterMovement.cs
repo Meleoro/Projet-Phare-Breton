@@ -335,6 +335,8 @@ public class CharacterMovement : MonoBehaviour
         Vector3 startPos = finalPos + direction * 1.9f;
         Vector3 endPos = finalPos;
 
+        StartCoroutine(RotateCharaLadder(-direction, true));
+
         
         yield return new WaitForSeconds(0.2f);
         
