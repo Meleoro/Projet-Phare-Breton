@@ -8,7 +8,7 @@ public class TriggerGrue : MonoBehaviour
     [Header("Paramètres")]
     [SerializeField] private List<Transform> positionsGrue;
     [SerializeField] private float grueSpeed;
-    [SerializeField] private AnimationCurve grueFlyCurve;
+    [SerializeField] private float distanceTriggerGrue;
 
     [Header("Références")]
     [SerializeField] private GameObject grueObject;
@@ -25,15 +25,15 @@ public class TriggerGrue : MonoBehaviour
     private bool isActivated;
     private Vector3 currentRotation;
     private bool launchFly;
-    private bool goDown;
-    private float flyTimer;
     private float currentY;
+    private int currentIndex;
 
 
 
     private void Start()
     {
         trigger = GetComponent<BoxCollider>();
+        currentIndex = 0;
 
         Initialise();
     }
@@ -43,9 +43,17 @@ public class TriggerGrue : MonoBehaviour
     {
         if (!launchFly)
         {
-            Vector3 direction = ReferenceManager.Instance.characterReference.transform.position - transform.position;
+            Vector3 direction = ReferenceManager.Instance.characterReference.transform.position - currentGrue.transform.position;
 
             RotateGrue(new Vector2(direction.x, direction.z));
+
+
+            float distance = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position, currentGrue.transform.position);
+
+            if(distance < distanceTriggerGrue)
+            {
+                StartCoroutine(MoveGrue(currentIndex));
+            }
         }
     }
 
@@ -71,13 +79,11 @@ public class TriggerGrue : MonoBehaviour
 
         animGrue.SetTrigger("startVol");
 
+        launchFly = true;
+        currentY = transform.position.y;
+
 
         yield return new WaitForSeconds(0.9f);
-
-
-        launchFly = true;
-        goDown = false;
-        currentY = transform.position.y;
 
 
         float distance = Vector3.Distance(positionsGrue[index].position, positionsGrue[index + 1].position);
@@ -88,38 +94,35 @@ public class TriggerGrue : MonoBehaviour
         currentGrue.transform.DOMoveX(midPos.x, speed);
         currentGrue.transform.DOMoveZ(midPos.z, speed);
 
-        currentGrue.transform.DOMoveY(currentY + 20, speed);
+        currentGrue.transform.DOMoveY(currentY + 13, speed);
 
 
         yield return new WaitForSeconds(speed);
 
+
+        if (index + 1 >= positionsGrue.Count - 1)
+        {
+            Destroy(currentGrue);
+            Destroy(gameObject);
+        }
 
         currentGrue.transform.DOMoveX(positionsGrue[index + 1].position.x, speed);
         currentGrue.transform.DOMoveZ(positionsGrue[index + 1].position.z, speed);
 
         currentGrue.transform.DOMoveY(positionsGrue[index + 1].position.y, speed);
 
-        goDown = true;
 
-
-        yield return new WaitForSeconds(speed * 0.9f);
+        yield return new WaitForSeconds(speed - 1);
 
 
         animGrue.SetTrigger("endVol");
+        currentIndex += 1;
 
 
-        yield return new WaitForSeconds(speed * 0.1f);
+        yield return new WaitForSeconds(1.5f);
 
 
-        if (index + 1 >= positionsGrue.Count - 1)
-        {
-            Destroy(currentGrue);
-        }
-
-        /*else
-        {
-            StartCoroutine(MoveGrue(index + 1));
-        }*/
+        launchFly = false;
     }
 
 
@@ -135,7 +138,7 @@ public class TriggerGrue : MonoBehaviour
 
             yield return new WaitForSeconds(Time.deltaTime);
 
-            currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime);
+            currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime * 5);
 
             currentGrue.transform.rotation = Quaternion.LookRotation(currentRotation, Vector3.up);
         }
@@ -153,7 +156,7 @@ public class TriggerGrue : MonoBehaviour
 
 
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player") && !other.isTrigger && !isActivated)
         {
@@ -161,7 +164,7 @@ public class TriggerGrue : MonoBehaviour
 
             StartCoroutine(MoveGrue(0));
         }
-    }
+    }*/
 
 
 
