@@ -301,8 +301,12 @@ public class CharacterMovement : MonoBehaviour
                 }
             }
 
-
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
+
+            if (manager.R2)
+            {
+                desiredVelocity = Vector3.zero;
+            }
 
             if (scripts[k].isLinked)
             {

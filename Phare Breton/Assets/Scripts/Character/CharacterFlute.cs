@@ -145,7 +145,7 @@ public class CharacterFlute : MonoBehaviour
                 viseeVFX.material.SetFloat("_CurOffHeight", 1 - avancee);
             }
 
-            avancee -= Time.fixedDeltaTime * 3;
+            avancee -= Time.fixedDeltaTime * 4;
 
             yield return new WaitForSeconds(Time.fixedDeltaTime);
         }

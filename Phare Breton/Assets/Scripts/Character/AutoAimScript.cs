@@ -6,7 +6,7 @@ using UnityEngine;
 public class AutoAimScript : MonoBehaviour
 {
     public List<ObjetInteractible> autoAimedObjects = new List<ObjetInteractible>();
-    private List<Vector2> directionsAutoAim = new List<Vector2>();
+    public List<Vector2> directionsAutoAim = new List<Vector2>();
 
     [SerializeField] private Transform zoneAncrage;
 
@@ -19,7 +19,7 @@ public class AutoAimScript : MonoBehaviour
         
         for (int k = 0; k < autoAimedObjects.Count; k++)
         {
-            if (Mathf.Abs(autoAimedObjects[k].transform.position.y - transform.transform.position.y) < 1f)
+            if (Mathf.Abs(autoAimedObjects[k].transform.position.y - transform.transform.position.y) < 2.5f)
             {
                 if (autoAimedObjects[k].VerifySelection())
                 {

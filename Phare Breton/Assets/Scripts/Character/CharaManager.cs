@@ -189,18 +189,21 @@ public class CharaManager : MonoBehaviour
                 if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
                 {
                     cable = false;
+                    R2 = false;
                     fluteScript.CreateLien();
                     fluteScript.PlayVFX();
                 }
                 else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0 && canMoveObjects)
                 {
                     moveObject = false;
+                    R2 = false;
                     fluteScript.MoveObject(false, null);
                     fluteScript.PlayVFX();
                 }
                 else if (stase && fluteScript.selectedObjects.Count != 0 && canStase)
                 {
                     stase = false;
+                    R2 = false;
                     fluteScript.Stase();
                     fluteScript.PlayVFX();
                 }
