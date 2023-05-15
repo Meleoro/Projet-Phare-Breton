@@ -68,7 +68,7 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
-        direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 25);
+        direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 50);
         
         if(!isMovingObjects)
         {

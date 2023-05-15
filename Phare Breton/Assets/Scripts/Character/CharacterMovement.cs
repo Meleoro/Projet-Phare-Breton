@@ -24,6 +24,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
+    [HideInInspector] public Vector3 resistanceCableObject1;
+    [HideInInspector] public Vector3 resistanceCableObject2;
 
     [Header("Fall")] 
     [SerializeField] private LayerMask layerFall;
@@ -33,11 +35,14 @@ public class CharacterMovement : MonoBehaviour
     private bool directionFound1;
     private bool directionFound2;
     private int iteration;
+    private Vector3 fallDir;
 
 
     private void Awake()
     {
         manager = GetComponent<CharaManager>();
+
+        fallDir = Vector3.down * 250;
     }
 
 
@@ -51,6 +56,10 @@ public class CharacterMovement : MonoBehaviour
         {
             stockageDirection = direction;
         }
+        
+        // Gravité
+        manager.rb.AddForce(fallDir * Time.deltaTime, ForceMode.Force);
+
 
         bool willFall = VerifyFall(direction);
 
@@ -74,17 +83,21 @@ public class CharacterMovement : MonoBehaviour
             velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
             manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
         }
-        else
+        else if(direction.magnitude > 0.5f)
         {
+            iteration = 0;
+            
             newDirection1 = direction;
             newDirection2 = direction;
             directionFound1 = false;
             directionFound2 = false;
             
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 if (!directionFound1 && !directionFound2)
                 {
+                    iteration = i + 1;
+                    
                     if (i % 2 == 0)
                     {
                         newDirection1 = TryNewDirection(newDirection1, true);
@@ -92,7 +105,6 @@ public class CharacterMovement : MonoBehaviour
                         if (!VerifyFall(newDirection1))
                         {
                             directionFound1 = true;
-                            iteration = i;
                         }
                     }
 
@@ -103,7 +115,6 @@ public class CharacterMovement : MonoBehaviour
                         if (!VerifyFall(newDirection2))
                         {
                             directionFound2 = true;
-                            iteration = i;
                         }
                     }
                 }
@@ -112,13 +123,24 @@ public class CharacterMovement : MonoBehaviour
             if (directionFound1 || directionFound2)
             {
                 Vector3 desiredVelocity;
-                
-                if(directionFound1)
-                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed;
-                
+                float ratio = 1 - (float)iteration / 10 ;
+
+                if (directionFound1)
+                {
+                    newDirection1 = TryNewDirection(newDirection1, true);
+                    newDirection1 *= direction.magnitude;
+
+                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed * ratio;
+                }
+
                 else
-                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed;
-            
+                {
+                    newDirection2 = TryNewDirection(newDirection2, false);
+                    newDirection2 *= direction.magnitude;
+                    
+                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed * ratio; 
+                }
+
                 Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
                 desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
@@ -184,30 +206,30 @@ public class CharacterMovement : MonoBehaviour
             {
                 transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(hauteur * 0.22f);
+                yield return new WaitForSeconds(hauteur * 0.4f - 0.7f);
 
                 manager.anim.SetTrigger("endLadder");
 
-                yield return new WaitForSeconds(hauteur * 0.18f);
+                yield return new WaitForSeconds(0.3f);
 
-                transform.DOMove(finalDestination, 0.55f).SetEase(Ease.OutQuad);
+                transform.DOMove(finalDestination, 0.6f + 0.4f).SetEase(Ease.OutQuad);
 
-                yield return new WaitForSeconds(0.55f);
+                yield return new WaitForSeconds(0.6f + 0.4f);
             }
 
             else
             {
-                transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.5f).SetEase(Ease.Linear);
+                transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.3f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(0.5f);
+                //yield return new WaitForSeconds(0.5f);
 
-                transform.DOMove(finalDestination, hauteur * 0.4f);
+                transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);;
 
-                yield return new WaitForSeconds(hauteur * 0.22f);
+                yield return new WaitForSeconds(hauteur * 0.4f - 0.5f);
 
                 manager.anim.SetTrigger("startLadder");
 
-                yield return new WaitForSeconds(hauteur * 0.18f);
+                yield return new WaitForSeconds(0.5f);
             }
 
             manager.noControl = false;
@@ -281,6 +303,12 @@ public class CharacterMovement : MonoBehaviour
 
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
+
+            if (scripts[k].isLinked)
+            {
+                Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(scripts[k].resistanceCable);
+                desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
+            }
 
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
@@ -381,7 +409,6 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction)
     {
-        
         Vector3 point1 = new Vector3(0, -5000, 0);
         Vector3 point2 = new Vector3(0, -5000, 0);
         Vector3 point3 = new Vector3(0, -5000, 0);
@@ -471,27 +498,35 @@ public class CharacterMovement : MonoBehaviour
 
         float newAngle = 0;
         
+        if (currentDirection.x < 0)
+            currentAngle = -currentAngle;
+        
         if (!negatif)
         {
-            if(iteration <= 1)
-                newAngle = currentAngle + 30;
+            if(iteration <= 2)
+                newAngle = currentAngle + 20;
             
             else
-                newAngle = currentAngle + 20;
+                newAngle = currentAngle + 10;
         }
         else
         {
-            if(iteration <= 1)
-                newAngle = currentAngle - 30;
+            if(iteration <= 2)
+                newAngle = currentAngle - 20;
             
             else
-                newAngle = currentAngle - 20;
+                newAngle = currentAngle - 10;
         }
 
-        if (currentDirection.x < 0)
-            newAngle = -newAngle;
-
         Vector2 newDirection = new Vector2(Mathf.Sin(Mathf.Deg2Rad * newAngle), Mathf.Cos(Mathf.Deg2Rad * newAngle));
+
+        Vector3 debugDir = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(newDirection.x, 0, newDirection.y));
+        
+        if(iteration <= 2)
+            Debug.DrawRay(transform.position + (debugDir.normalized * 1f), Vector3.down, Color.blue);
+        
+        else if(iteration <= 4)
+            Debug.DrawRay(transform.position + (debugDir.normalized * 1f), Vector3.down, Color.red);
 
         return newDirection;
     }
