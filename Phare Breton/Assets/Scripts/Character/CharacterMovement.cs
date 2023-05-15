@@ -33,11 +33,14 @@ public class CharacterMovement : MonoBehaviour
     private bool directionFound1;
     private bool directionFound2;
     private int iteration;
+    private Vector3 fallDir;
 
 
     private void Awake()
     {
         manager = GetComponent<CharaManager>();
+
+        fallDir = Vector3.down * 250;
     }
 
 
@@ -51,6 +54,10 @@ public class CharacterMovement : MonoBehaviour
         {
             stockageDirection = direction;
         }
+        
+        // Gravité
+        manager.rb.AddForce(fallDir * Time.deltaTime, ForceMode.Force);
+
 
         bool willFall = VerifyFall(direction);
 
