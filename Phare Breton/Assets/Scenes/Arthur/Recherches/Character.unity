@@ -1992,7 +1992,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carton (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8668899877448638908, guid: 80e77516c8e3c02428956e2edea2ab29,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2913452933169571690, guid: 80e77516c8e3c02428956e2edea2ab29, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2271,7 +2277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693029649}
   m_LocalRotation: {x: -0.24868238, y: 0.36855942, z: 0.103007615, w: 0.8897812}
-  m_LocalPosition: {x: -8.1, y: 0, z: -43}
+  m_LocalPosition: {x: -12.82, y: 0, z: -53.99}
   m_LocalScale: {x: 35, y: 50, z: 35}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3359,6 +3365,21 @@ PrefabInstance:
     - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
       propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: canCable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: canStase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: canMoveObjects
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:

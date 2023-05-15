@@ -301,6 +301,9 @@ public class CharacterMovement : MonoBehaviour
 
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
+            
+            Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
+            desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
 
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
