@@ -24,6 +24,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
+    [HideInInspector] public Vector3 resistanceCableObject1;
+    [HideInInspector] public Vector3 resistanceCableObject2;
 
     [Header("Fall")] 
     [SerializeField] private LayerMask layerFall;
@@ -204,30 +206,30 @@ public class CharacterMovement : MonoBehaviour
             {
                 transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(hauteur * 0.22f);
+                yield return new WaitForSeconds(hauteur * 0.4f - 0.7f);
 
                 manager.anim.SetTrigger("endLadder");
 
-                yield return new WaitForSeconds(hauteur * 0.18f);
+                yield return new WaitForSeconds(0.3f);
 
-                transform.DOMove(finalDestination, 0.55f).SetEase(Ease.OutQuad);
+                transform.DOMove(finalDestination, 0.6f + 0.4f).SetEase(Ease.OutQuad);
 
-                yield return new WaitForSeconds(0.55f);
+                yield return new WaitForSeconds(0.6f + 0.4f);
             }
 
             else
             {
-                transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.5f).SetEase(Ease.Linear);
+                transform.DOMove(new Vector3(finalDestination.x, transform.position.y, finalDestination.z), 0.3f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(0.5f);
+                //yield return new WaitForSeconds(0.5f);
 
-                transform.DOMove(finalDestination, hauteur * 0.4f);
+                transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);;
 
-                yield return new WaitForSeconds(hauteur * 0.22f);
+                yield return new WaitForSeconds(hauteur * 0.4f - 0.5f);
 
                 manager.anim.SetTrigger("startLadder");
 
-                yield return new WaitForSeconds(hauteur * 0.18f);
+                yield return new WaitForSeconds(0.5f);
             }
 
             manager.noControl = false;
@@ -301,6 +303,12 @@ public class CharacterMovement : MonoBehaviour
 
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
+
+            if (scripts[k].isLinked)
+            {
+                Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(scripts[k].resistanceCable);
+                desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
+            }
 
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
