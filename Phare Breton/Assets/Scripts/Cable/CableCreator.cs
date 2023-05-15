@@ -280,6 +280,9 @@ public class CableCreator : MonoBehaviour
                     
                     if(!isLinked)
                         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
+                    
+                    else
+                        rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
                 }
             }
 
@@ -293,6 +296,9 @@ public class CableCreator : MonoBehaviour
 
                     if(!isLinked) 
                         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
+                    
+                    else
+                        rbEnd.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
                 }
             }
         }
@@ -314,6 +320,9 @@ public class CableCreator : MonoBehaviour
                 
                     if(!isLinked)
                         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                    
+                    else
+                        rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
                 }
             }
 
@@ -333,6 +342,9 @@ public class CableCreator : MonoBehaviour
 
                     if(!isLinked)
                         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                    
+                    else
+                        rbEnd.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
                 }
             }
         }

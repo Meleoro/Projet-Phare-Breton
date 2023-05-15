@@ -24,6 +24,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField, Range(0f, 100f)] float maxSpeedObject = 10f;
     [SerializeField, Range(0f, 100f)] float maxAccelerationObject = 10f;
     private Vector3 velocityObject;
+    [HideInInspector] public Vector3 resistanceCableObject1;
+    [HideInInspector] public Vector3 resistanceCableObject2;
 
     [Header("Fall")] 
     [SerializeField] private LayerMask layerFall;
@@ -301,9 +303,12 @@ public class CharacterMovement : MonoBehaviour
 
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
-            
-            Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
-            desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
+
+            if (scripts[k].isLinked)
+            {
+                Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(scripts[k].resistanceCable);
+                desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
+            }
 
             float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
 
