@@ -81,17 +81,21 @@ public class CharacterMovement : MonoBehaviour
             velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
             manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
         }
-        else
+        else if(direction.magnitude > 0.5f)
         {
+            iteration = 0;
+            
             newDirection1 = direction;
             newDirection2 = direction;
             directionFound1 = false;
             directionFound2 = false;
             
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 9; i++)
             {
                 if (!directionFound1 && !directionFound2)
                 {
+                    iteration = i + 1;
+                    
                     if (i % 2 == 0)
                     {
                         newDirection1 = TryNewDirection(newDirection1, true);
@@ -99,7 +103,6 @@ public class CharacterMovement : MonoBehaviour
                         if (!VerifyFall(newDirection1))
                         {
                             directionFound1 = true;
-                            iteration = i;
                         }
                     }
 
@@ -110,7 +113,6 @@ public class CharacterMovement : MonoBehaviour
                         if (!VerifyFall(newDirection2))
                         {
                             directionFound2 = true;
-                            iteration = i;
                         }
                     }
                 }
@@ -119,13 +121,24 @@ public class CharacterMovement : MonoBehaviour
             if (directionFound1 || directionFound2)
             {
                 Vector3 desiredVelocity;
-                
-                if(directionFound1)
-                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed;
-                
+                float ratio = 1 - (float)iteration / 10 ;
+
+                if (directionFound1)
+                {
+                    newDirection1 = TryNewDirection(newDirection1, true);
+                    newDirection1 *= direction.magnitude;
+
+                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed * ratio;
+                }
+
                 else
-                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed;
-            
+                {
+                    newDirection2 = TryNewDirection(newDirection2, false);
+                    newDirection2 *= direction.magnitude;
+                    
+                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed * ratio; 
+                }
+
                 Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
                 desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
@@ -388,7 +401,6 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction)
     {
-        
         Vector3 point1 = new Vector3(0, -5000, 0);
         Vector3 point2 = new Vector3(0, -5000, 0);
         Vector3 point3 = new Vector3(0, -5000, 0);
@@ -478,27 +490,35 @@ public class CharacterMovement : MonoBehaviour
 
         float newAngle = 0;
         
+        if (currentDirection.x < 0)
+            currentAngle = -currentAngle;
+        
         if (!negatif)
         {
-            if(iteration <= 1)
-                newAngle = currentAngle + 30;
+            if(iteration <= 2)
+                newAngle = currentAngle + 20;
             
             else
-                newAngle = currentAngle + 20;
+                newAngle = currentAngle + 10;
         }
         else
         {
-            if(iteration <= 1)
-                newAngle = currentAngle - 30;
+            if(iteration <= 2)
+                newAngle = currentAngle - 20;
             
             else
-                newAngle = currentAngle - 20;
+                newAngle = currentAngle - 10;
         }
 
-        if (currentDirection.x < 0)
-            newAngle = -newAngle;
-
         Vector2 newDirection = new Vector2(Mathf.Sin(Mathf.Deg2Rad * newAngle), Mathf.Cos(Mathf.Deg2Rad * newAngle));
+
+        Vector3 debugDir = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(newDirection.x, 0, newDirection.y));
+        
+        if(iteration <= 2)
+            Debug.DrawRay(transform.position + (debugDir.normalized * 1f), Vector3.down, Color.blue);
+        
+        else if(iteration <= 4)
+            Debug.DrawRay(transform.position + (debugDir.normalized * 1f), Vector3.down, Color.red);
 
         return newDirection;
     }
