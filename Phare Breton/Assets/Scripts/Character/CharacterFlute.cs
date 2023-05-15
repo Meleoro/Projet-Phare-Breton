@@ -154,7 +154,9 @@ public class CharacterFlute : MonoBehaviour
     public void PlayVFX()
     {
         GameObject newVFX = Instantiate(VFXFluteUsed, transform.position + Vector3.down * 0.9f, Quaternion.identity);
-        StartCoroutine(DestroyVFX(newVFX));
+
+        Destroy(newVFX, 5);
+        //StartCoroutine(DestroyVFX(newVFX));
     }
 
     IEnumerator DestroyVFX(GameObject currentVFX)
