@@ -409,16 +409,24 @@ public class CharacterFlute : MonoBehaviour
         {
             if (!selectedObjects[i].isInStase)
             {
-                selectedObjects[i].isInStase = true;
+                selectedObjects[i].ActivateStase();
                 selectedObjects[i].rb.isKinematic = true;
+
+                Boite currentBoite;
+                if (selectedObjects[i].TryGetComponent<Boite>(out currentBoite))
+                {
+                    currentBoite.VFXDeplacement.Stop(true);
+                }
             }
 
             else
             {
-                selectedObjects[i].isInStase = false;
+                selectedObjects[i].DesactivateStase();
                 selectedObjects[i].rb.isKinematic = false;
             }
         }
+
+        StopMoveObject();
     }
 
 

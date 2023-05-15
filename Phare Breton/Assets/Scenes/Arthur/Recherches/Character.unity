@@ -794,7 +794,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-31168
+  m_Name: pb_Mesh-3174
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -959,7 +959,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-32734
+  m_Name: pb_Mesh-2698
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1164,6 +1164,7 @@ MonoBehaviour:
   resistanceCable: {x: 0, y: 0, z: 0}
   isMoved: 0
   currentHauteur: 0
+  staseVFX: {fileID: 0}
   isInStase: 0
   rb: {fileID: 0}
 --- !u!65 &873220319
@@ -2158,18 +2159,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Carton (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 8668899877448638908, guid: 80e77516c8e3c02428956e2edea2ab29,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 8668899877448638908, guid: 80e77516c8e3c02428956e2edea2ab29,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2913452933169571690, guid: 80e77516c8e3c02428956e2edea2ab29, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2547,7 +2537,7 @@ PrefabInstance:
     - target: {fileID: 2344974902973312890, guid: 98d4f670071a9a141bcdf13b01dede62,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 76
+      value: 79
       objectReference: {fileID: 0}
     - target: {fileID: 3720575259704634953, guid: 98d4f670071a9a141bcdf13b01dede62,
         type: 3}

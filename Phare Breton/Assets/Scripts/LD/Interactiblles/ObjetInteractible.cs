@@ -27,6 +27,7 @@ public class ObjetInteractible : MonoBehaviour
     [HideInInspector] public float currentHauteur;
 
     [Header("Stase")]
+    [SerializeField] private ParticleSystem staseVFX;
     [HideInInspector] public bool isInStase;
                                                                                 
     [Header("Références")]
@@ -38,6 +39,12 @@ public class ObjetInteractible : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         StartCoroutine(PutRigidbodyKinematic());
+
+        Boite currentBoite;
+        if(TryGetComponent<Boite>(out currentBoite))
+        {
+            DesactivateStase();
+        }
 
         isMagneted = false;
         isLighted = false;
@@ -62,6 +69,20 @@ public class ObjetInteractible : MonoBehaviour
         {
             ActualiseHauteur();
         }
+    }
+
+
+    public void ActivateStase()
+    {
+        staseVFX.Play();
+        isInStase = true;
+    }
+
+
+    public void DesactivateStase()
+    {
+        staseVFX.Stop();
+        isInStase = false;
     }
 
 
