@@ -13,7 +13,10 @@ public class Boite : ObjetInteractible
     // VERIFIE SI UN PANNEAU EST RELIE
     public override void VerifyLinkedObject()
     {
-        isElectrified = false;
+        if (!isInStase)
+        {
+            isElectrified = false;
+        }
 
         for (int k = 0; k < linkedObject.Count; k++)
         {
