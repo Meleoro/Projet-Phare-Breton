@@ -83,6 +83,8 @@ public class CharacterNotes : MonoBehaviour
         else
         {
             mainSript.noControl = false;
+            
+            ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
 
             UnlockPower();
 

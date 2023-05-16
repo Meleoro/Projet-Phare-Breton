@@ -83,7 +83,7 @@ public class CharacterMovement : MonoBehaviour
             velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
             manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
         }
-        else if(direction.magnitude > 0.5f)
+        else if(direction.magnitude > 0.4f)
         {
             iteration = 0;
             
@@ -329,6 +329,14 @@ public class CharacterMovement : MonoBehaviour
     public void ClimbObject(List<GameObject> climbedObject)
     {
         GameObject currentClimbedObject = climbedObject[0];
+        
+        for (int i = 0; i < climbedObject.Count; i++)
+        {
+            if (Vector3.Distance(climbedObject[i].transform.position, transform.position) < Vector3.Distance(currentClimbedObject.transform.position, transform.position))
+            {
+                currentClimbedObject = climbedObject[i];
+            }
+        }
 
         for (int i = 0; i < climbedObject.Count; i++)
         {
@@ -357,7 +365,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    public IEnumerator ClimbObject(Vector3 finalPos, Vector3 originPos, bool goDown)
+    public IEnumerator ClimbObject(Vector3 finalPos, Vector3 originPos, bool goUp)
     {
         manager.noControl = true;
 
@@ -372,7 +380,7 @@ public class CharacterMovement : MonoBehaviour
         
         yield return new WaitForSeconds(0.2f);
         
-        if (goDown)
+        if (goUp)
         {
             transform.DOMove(new Vector3(startPos.x, transform.position.y, startPos.z), 0.2f);
             endPos = new Vector3(finalPos.x + direction.x * 0.5f, finalPos.y, finalPos.z + direction.z * 0.5f);
@@ -398,7 +406,6 @@ public class CharacterMovement : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
         }
         
-
         manager.noControl = false;
     }
 

@@ -159,13 +159,6 @@ public class CharacterFlute : MonoBehaviour
         //StartCoroutine(DestroyVFX(newVFX));
     }
 
-    IEnumerator DestroyVFX(GameObject currentVFX)
-    {
-        yield return new WaitForSeconds(5);
-        
-        Destroy(currentVFX);
-    }
-
 
 
     // QUAND LE JOUEUR CREE UN CABLE AVEC SA FLUTE
