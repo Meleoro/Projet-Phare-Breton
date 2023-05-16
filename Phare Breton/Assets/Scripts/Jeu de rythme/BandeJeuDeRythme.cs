@@ -73,8 +73,6 @@ public class BandeJeuDeRythme : MonoBehaviour
 
                     if (isRight)
                     {
-                        Debug.Log(12);
-                        
                         currentNode.EraseNode();
 
                         nodesCreated.Remove(currentNode);
@@ -211,8 +209,6 @@ public class BandeJeuDeRythme : MonoBehaviour
 
     public void EndGame()
     {
-        Debug.Log(21);
-        
         stop = true;
 
         ReferenceManager.Instance.characterReference.notesScript.NextBande();

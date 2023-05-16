@@ -33,6 +33,9 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public float durationRythme;
     private bool moveCameraRythme;
     private float timerMoveRythme;
+    private Vector3 savePosRythme;
+    private Quaternion saveRotRythme;
+    private bool goToSave;
     
     
     [Header("Autres")]
@@ -91,9 +94,20 @@ public class CameraMovements : MonoBehaviour
             }
         }
 
-        if (moveCameraRythme)
+        else if (moveCameraRythme)
         {
             MoveCameraRythme();
+        }
+
+        if (goToSave)
+        {
+            transform.position = Vector3.Lerp(transform.position, savePosRythme, Time.deltaTime * 2.5f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, saveRotRythme, Time.deltaTime * 3);
+
+            if (Vector3.Distance(transform.position, savePosRythme) < 0.01f)
+            {
+                goToSave = false;
+            }
         }
         
         UpdateAlpha();
@@ -160,6 +174,9 @@ public class CameraMovements : MonoBehaviour
     {
         timerMoveRythme = 0;
         moveCameraRythme = true;
+
+        savePosRythme = transform.position;
+        saveRotRythme = transform.rotation;
     }
     
     public void RestartMoveCameraRythme()
@@ -172,6 +189,7 @@ public class CameraMovements : MonoBehaviour
     {
         timerMoveRythme = 0;
         moveCameraRythme = false;
+        goToSave = true;
     }
 
 
