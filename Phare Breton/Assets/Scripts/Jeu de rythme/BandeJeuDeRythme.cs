@@ -32,8 +32,9 @@ public class BandeJeuDeRythme : MonoBehaviour
     public RectTransform posSpawnRight;
     public RectTransform barreAvancement;
     public RectTransform fond;
+    public RectTransform arc;
 
-    
+
     [Header("Inputs")]
     private bool pressX;
     private bool pressY;
@@ -67,7 +68,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
             if (pressX || pressY || pressZ)
             {
-                if (currentNode != null && !usingBarre)
+                if (currentNode != null)
                 {
                     bool isRight = VerifyNote();
 
@@ -89,10 +90,6 @@ public class BandeJeuDeRythme : MonoBehaviour
                         RestartGame();
                     }
                 }
-                
-                pressX = false;
-                pressY = false;
-                pressZ = false;
                 
                 if (!usingBarre)
                 {
@@ -118,22 +115,27 @@ public class BandeJeuDeRythme : MonoBehaviour
     public IEnumerator StartGameFeel()
     {
         Image imageBarre =  barreAvancement.GetComponent<Image>();
-        Image image = GetComponent<Image>();
+        Image imageFond = fond.GetComponent<Image>();
+        Image imageArc = arc.GetComponent<Image>();
 
         imageBarre.DOFade(0, 0);
-        image.DOFade(0, 0);
+        imageFond.DOFade(0, 0);
+        imageArc.DOFade(0, 0);
 
         barreAvancement.DOMoveY(barreAvancement.position.y - 200, 0);
         fond.DOMoveY(fond.position.y - 200, 0);
-        
+        arc.DOMoveY(arc.position.y - 200, 0);
+
         yield return new WaitForSeconds(0.01f);
         
         imageBarre.DOFade(1, 1.5f).SetEase(Ease.Linear);
-        image.DOFade(0.9f, 1.5f).SetEase(Ease.Linear);
-        
+        imageFond.DOFade(0.4f, 1.5f).SetEase(Ease.Linear);
+        imageArc.DOFade(1f, 1.5f).SetEase(Ease.Linear);
+
         barreAvancement.DOMoveY(barreAvancement.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
         fond.DOMoveY(fond.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
-        
+        arc.DOMoveY(arc.position.y + 200, 1.3f).SetEase(Ease.OutCubic);
+
         yield return new WaitForSeconds(1.6f);
 
         gameStarted = true;
@@ -146,8 +148,14 @@ public class BandeJeuDeRythme : MonoBehaviour
         
         usingBarre = true;
         barreAvancement.DOScale(barreAvancement.localScale * 1.2f, duration * 0.7f);
-        
-        yield return new WaitForSeconds(duration * 0.7f);
+
+        yield return new WaitForSeconds(duration * 0.5f);
+
+        pressX = false;
+        pressY = false;
+        pressZ = false;
+
+        yield return new WaitForSeconds(duration * 0.2f);
         
         barreAvancement.DOScale(originalScale, duration);
         
