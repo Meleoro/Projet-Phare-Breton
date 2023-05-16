@@ -2066,6 +2066,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoAimedObjects: []
+  directionsAutoAim: []
   zoneAncrage: {fileID: 3313839952954704557}
 --- !u!135 &2279731425710763559
 SphereCollider:
@@ -2220,7 +2221,7 @@ PrefabInstance:
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: hauteurObject
-      value: 3
+      value: 3.2
       objectReference: {fileID: 0}
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
@@ -2364,6 +2365,7 @@ PrefabInstance:
       objectReference: {fileID: 6153896602546410641}
     m_RemovedComponents:
     - {fileID: 3378701548504057700, guid: d45a5586b24669a4bab29e12b01b5703, type: 3}
+    - {fileID: 3799776982024782300, guid: d45a5586b24669a4bab29e12b01b5703, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 305866493858369999, guid: d45a5586b24669a4bab29e12b01b5703,

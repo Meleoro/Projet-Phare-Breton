@@ -7,6 +7,13 @@ public class ZonePoseCables : MonoBehaviour
 {
     public CharacterFlute scriptFlute;
 
+    public void VerifySelection()
+    {
+        
+    }
+    
+    
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
@@ -44,4 +51,5 @@ public class ZonePoseCables : MonoBehaviour
             }
         }
     }
+    
 }
