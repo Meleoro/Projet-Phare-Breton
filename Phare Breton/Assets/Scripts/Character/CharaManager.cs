@@ -125,50 +125,11 @@ public class CharaManager : MonoBehaviour
             }
 
 
-            // Interaction
-            if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
-            {
-                // Si c'est une note
-                if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
-                {
-                    nearObjects.Clear();
-                    
-                    notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
-
-                    Destroy(nearNoteObject);
-                    nearNoteNumber = 0;
-                    nearNotePartitionNumber = 0;
-                }
-
-                else 
-                {
-                    movementScript.ClimbObject(nearObjects);
-                }
-                
-                interaction = false;
-            }
-
-            else if (nearLadder != null && interaction)
-            {
-                interaction = false;
-
-                nearLadder.TakeLadder(transform);
-            }
-
-
-            // Saut du personnage
-            if (interaction)
-            {
-                if (inJumpZone)
-                {
-                    movementScript.GoDown();
-                }
-            }
-
-
             // Partie flûte 
             if (R2 && !hasRope)
             {
+                interaction = false;
+                
                 movementScript.MoveCharacter(Vector2.zero);
                 fluteScript.FluteActive(direction);
 
@@ -210,8 +171,52 @@ public class CharaManager : MonoBehaviour
                 fluteActive = false;
                 fluteScript.FluteUnactive();
             }
-
             
+            
+            // Interaction
+
+            if (!fluteActive)
+            {
+                if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
+                {
+                    // Si c'est une note
+                    if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
+                    {
+                        nearObjects.Clear();
+                    
+                        notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
+
+                        Destroy(nearNoteObject);
+                        nearNoteNumber = 0;
+                        nearNotePartitionNumber = 0;
+                    }
+
+                    else 
+                    {
+                        movementScript.ClimbObject(nearObjects);
+                    }
+                
+                    interaction = false;
+                }
+
+                else if (nearLadder != null && interaction)
+                {
+                    interaction = false;
+
+                    nearLadder.TakeLadder(transform);
+                }
+            
+                // Saut du personnage
+                if (interaction)
+                {
+                    if (inJumpZone)
+                    {
+                        movementScript.GoDown();
+                    }
+                }
+            }
+
+
             // Partie arrêt des pouvoirs
             if (cable && hasRope)
             {
