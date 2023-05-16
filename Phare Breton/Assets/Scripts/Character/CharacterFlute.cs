@@ -282,7 +282,16 @@ public class CharacterFlute : MonoBehaviour
                     .GetComponent<Rigidbody>();
 
                 // On relie les objets physiquement 
-                currentCableCreator.ChangeLastNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
+
+                if(currentCableCreator.rbOrigin == manager.rb)
+                {
+                    currentCableCreator.ChangeFirstNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
+                }
+                else
+                {
+                    currentCableCreator.ChangeLastNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
+                }
+
                 cables.RemoveAt(k);
 
                 // On informe les scripts de chaque objets qu'ils sont connectés 

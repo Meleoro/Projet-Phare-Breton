@@ -138,7 +138,7 @@ public class TriggerGrue : MonoBehaviour
 
             yield return new WaitForSeconds(Time.deltaTime);
 
-            currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime * 5);
+            currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime * 10);
 
             currentGrue.transform.rotation = Quaternion.LookRotation(currentRotation, Vector3.up);
         }
@@ -180,8 +180,8 @@ public class TriggerGrue : MonoBehaviour
             Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.lossyScale);
             Gizmos.matrix = rotationMatrix;
 
-            Gizmos.color = triggerColor;
-            Gizmos.DrawCube(trigger.center, trigger.size);
+            /*Gizmos.color = triggerColor;
+            Gizmos.DrawCube(trigger.center, trigger.size);*/
 
             Gizmos.matrix = save;
 

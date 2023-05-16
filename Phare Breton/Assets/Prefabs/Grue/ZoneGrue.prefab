@@ -102,7 +102,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 560950281199159541}
-  - component: {fileID: 9030545467804838472}
   - component: {fileID: 2705547862337083675}
   m_Layer: 0
   m_Name: ZoneGrue
@@ -129,27 +128,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &9030545467804838472
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7037001289364638253}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 2.057434}
-  m_Center: {x: 0, y: 0, z: -0.52871704}
 --- !u!114 &2705547862337083675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +148,7 @@ MonoBehaviour:
   distanceTriggerGrue: 15
   grueObject: {fileID: 8782218043780803960, guid: 7108bf95608194c4ebc25ca59644d143,
     type: 3}
-  trigger: {fileID: 9030545467804838472}
+  trigger: {fileID: 0}
   animGrue: {fileID: 0}
   onlyOnSelected: 0
   triggerColor: {r: 0.38431373, g: 0.6084497, b: 0.8392157, a: 0.72156864}
