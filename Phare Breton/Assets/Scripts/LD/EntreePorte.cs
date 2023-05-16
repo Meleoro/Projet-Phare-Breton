@@ -49,8 +49,17 @@ public class EntreePorte : MonoBehaviour
         
         for (int i = 0; i < desactivatedObjects.Count; i++)
         {
-            desactivatedObjects[i].meshRenderers =
-                desactivatedObjects[i].objectsParent.GetComponentsInChildren<MeshRenderer>().ToList();
+            if (desactivatedObjects[i].objectsParent.TryGetComponent(out MeshRenderer currentMesh))
+            {
+                desactivatedObjects[i].meshRenderers = new List<MeshRenderer>();
+                
+                desactivatedObjects[i].meshRenderers.Add(desactivatedObjects[i].objectsParent.GetComponent<MeshRenderer>());
+            }
+            else
+            {
+                desactivatedObjects[i].meshRenderers =
+                    desactivatedObjects[i].objectsParent.GetComponentsInChildren<MeshRenderer>().ToList();
+            }
         }
     }
 }

@@ -7,22 +7,36 @@ public class ZonePoseCables : MonoBehaviour
 {
     public CharacterFlute scriptFlute;
 
-    public void VerifySelection()
+    
+    
+    public bool VerifySelection(GameObject currentObject)
     {
+        if (!Physics.Raycast(currentObject.transform.position, Vector3.up, 1.5f))
+        {
+            if (Mathf.Abs(transform.position.y - currentObject.transform.position.y) < 1.5f)
+            {
+                return true;
+            }
+
+            return false;
+        }
         
+        return false;
     }
     
-    
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
 
-            _object.Select();
-            ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
-            
+            if (VerifySelection(other.gameObject))
+            {
+                _object.Select();
+                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
+            }
+
             if (_object.TryGetComponent<Note>(out Note currentNote))
             {
                 ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
