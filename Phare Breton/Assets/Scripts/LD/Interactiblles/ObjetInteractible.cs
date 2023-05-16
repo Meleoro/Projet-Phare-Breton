@@ -220,6 +220,9 @@ public class ObjetInteractible : MonoBehaviour
 
     public IEnumerator PutRigidbodyKinematic()
     {
+        if(isInStase)
+            rb.isKinematic = true;
+
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         
         yield return new WaitForSeconds(3);
