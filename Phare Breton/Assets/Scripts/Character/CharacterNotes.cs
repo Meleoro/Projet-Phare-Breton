@@ -28,7 +28,7 @@ public class CharacterNotes : MonoBehaviour
         {
             for (int j = 0; j < ReferenceManager.Instance.noteManagerReference.Melodies[k].nbrNotes; j++)
             {
-                collectedNotes[k].currentCollectedNotes.Add(false);
+                collectedNotes[k].currentCollectedNotes.Add(true);
             }
         }
     }
