@@ -1777,9 +1777,7 @@ MonoBehaviour:
     - {fileID: 8980207317900242794, guid: 04732591f3943fe4db63d3d42d547125, type: 3}
   - nbrNotes: 2
     bandes:
-    - {fileID: 8980207317900242794, guid: 5964e0547b235a14caea1fb529756822, type: 3}
-    - {fileID: 8980207317900242794, guid: 3718b0aaa249fed4ab06bf4ed784defd, type: 3}
-    - {fileID: 8980207317900242794, guid: ef5149da3635415448fdd40f3e14f57e, type: 3}
+    - {fileID: 8980207317900242794, guid: 04732591f3943fe4db63d3d42d547125, type: 3}
   - nbrNotes: 2
     bandes: []
   currentMelody: 1
@@ -2225,6 +2223,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
+      propertyPath: maxSpeedObject
+      value: 6.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
       propertyPath: maxAcceleration
       value: 60
       objectReference: {fileID: 0}
@@ -2236,7 +2239,7 @@ PrefabInstance:
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: maxAccelerationObject
-      value: 50
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 5527187700211497055, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}

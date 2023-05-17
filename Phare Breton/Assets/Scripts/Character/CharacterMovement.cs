@@ -92,7 +92,7 @@ public class CharacterMovement : MonoBehaviour
             directionFound1 = false;
             directionFound2 = false;
             
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 15; i++)
             {
                 if (!directionFound1 && !directionFound2)
                 {
@@ -100,7 +100,7 @@ public class CharacterMovement : MonoBehaviour
                     
                     if (i % 2 == 0)
                     {
-                        newDirection1 = TryNewDirection(newDirection1, true);
+                        newDirection1 = TryNewDirection(newDirection1, true, 0);
                     
                         if (!VerifyFall(newDirection1))
                         {
@@ -110,7 +110,7 @@ public class CharacterMovement : MonoBehaviour
 
                     else
                     {
-                        newDirection2 = TryNewDirection(newDirection2, false);
+                        newDirection2 = TryNewDirection(newDirection2, false, 0);
                     
                         if (!VerifyFall(newDirection2))
                         {
@@ -123,11 +123,11 @@ public class CharacterMovement : MonoBehaviour
             if (directionFound1 || directionFound2)
             {
                 Vector3 desiredVelocity;
-                float ratio = 1 - (float)iteration / 10 ;
+                float ratio = 1 - (float)iteration / 15 ;
 
                 if (directionFound1)
                 {
-                    newDirection1 = TryNewDirection(newDirection1, true);
+                    newDirection1 = TryNewDirection(newDirection1, true, 30);
                     newDirection1 *= direction.magnitude;
 
                     desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed * ratio;
@@ -135,7 +135,7 @@ public class CharacterMovement : MonoBehaviour
 
                 else
                 {
-                    newDirection2 = TryNewDirection(newDirection2, false);
+                    newDirection2 = TryNewDirection(newDirection2, false, 30);
                     newDirection2 *= direction.magnitude;
                     
                     desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed * ratio; 
@@ -287,8 +287,6 @@ public class CharacterMovement : MonoBehaviour
             {
                 if (!ReferenceManager.Instance.cameraReference.scriptFondu.isInTransition)
                 {
-
-
                     // Levitation de l'objet
                     if (objects[k].transform.position.y < scripts[k].currentHauteur)
                     {
@@ -472,38 +470,31 @@ public class CharacterMovement : MonoBehaviour
         float difference1 = 0;
         float difference2 = 0;
         
-        if(point2.y <= point1.y)
+        /*if(point2.y <= point1.y)
             difference1 = Mathf.Abs(point1.y - point2.y);
         
         if(point3.y <= point2.y)
-            difference2 = Mathf.Abs(point2.y - point3.y);
+            difference2 = Mathf.Abs(point2.y - point3.y);*/
+        
+        difference1 = Mathf.Abs(point1.y - point2.y);
+        difference2 = Mathf.Abs(point2.y - point3.y);
 
         float difference3 = point1.y - point3.y;
 
         float difference4 = difference2 - difference1;
 
 
-        if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 3)
+        if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 3 && difference1 < 3)
         {
             return false;
         }
         else
         {
             return true;
-        }
-
-
-        if (difference1 > 0.5f)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 
-    public Vector2 TryNewDirection(Vector2 currentDirection, bool negatif)
+    public Vector2 TryNewDirection(Vector2 currentDirection, bool negatif, float angleAdded)
     {
         float currentAngle = Vector2.Angle(currentDirection, Vector2.up);
 
@@ -514,16 +505,16 @@ public class CharacterMovement : MonoBehaviour
         
         if (!negatif)
         {
-            if(iteration <= 2)
-                newAngle = currentAngle + 20;
+            if(angleAdded > 0)
+                newAngle = currentAngle + angleAdded;
             
             else
                 newAngle = currentAngle + 10;
         }
         else
         {
-            if(iteration <= 2)
-                newAngle = currentAngle - 20;
+            if(angleAdded > 0)
+                newAngle = currentAngle - angleAdded;
             
             else
                 newAngle = currentAngle - 10;
@@ -548,16 +539,89 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 posFall = Vector3.zero;
         Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+
+        List<Vector3> possibleFallPos = new List<Vector3>();
+
+        for (int i = 0; i < 8; i++)
+        {
+            Ray ray = new Ray(transform.position + direction2 * (1f + i * 0.2f), Vector3.down);
+            RaycastHit raycastHit2;
+
+            if(Physics.Raycast(ray, out raycastHit2, 5))
+            {
+                possibleFallPos.Add(raycastHit2.point + Vector3.up);
+            }
+        }
+
         
-        Ray ray = new Ray(transform.position + direction2 * 1.5f, Vector3.down);
+        List<Hauteur> hauteurs = new List<Hauteur>();
+
+        for (int i = 0; i < possibleFallPos.Count; i++)
+        {
+            float currentHauteur = Mathf.Abs(possibleFallPos[i].y - transform.position.y);
+            bool addHauteur = true;
+
+            for (int k = 0; k < hauteurs.Count; k++)
+            {
+                if (Mathf.Abs(hauteurs[k].hauteurDiff - currentHauteur) < 0.1f)
+                {
+                    addHauteur = false;
+                    hauteurs[k].nbrIterations += 1;
+                    
+                    hauteurs[k].positions.Add(possibleFallPos[i]);
+                }
+            }
+
+            if (addHauteur)
+            {
+                hauteurs.Add(new Hauteur());
+
+                hauteurs[hauteurs.Count - 1].hauteurDiff = currentHauteur;
+                hauteurs[hauteurs.Count - 1].nbrIterations = 1;
+                
+                hauteurs[hauteurs.Count - 1].positions.Add(possibleFallPos[i]);
+            }
+        }
+
+        int indexChose = 0;
+        int currentNbrIterations = 0;
+        
+        for (int i = 0; i < hauteurs.Count; i++)
+        {
+            if (currentNbrIterations < hauteurs[i].nbrIterations)
+            {
+                indexChose = i;
+                currentNbrIterations = hauteurs[i].nbrIterations;
+            }
+        }
+
+
+        for (int i = 0; i < hauteurs[indexChose].positions.Count; i++)
+        {
+            posFall += hauteurs[indexChose].positions[i];
+        }
+
+        posFall /= hauteurs[indexChose].nbrIterations;
+        
+        
+        /*Ray ray = new Ray(transform.position + direction2 * 1.5f, Vector3.down);
         RaycastHit raycastHit2;
 
         if(Physics.Raycast(ray, out raycastHit2, 10))
         {
             posFall = raycastHit2.point + Vector3.up;
-        }
+        }*/
         
         return posFall;
     }
     
+}
+
+
+public class Hauteur
+{
+    public List<Vector3> positions = new List<Vector3>();
+
+    public float hauteurDiff;
+    public int nbrIterations;
 }

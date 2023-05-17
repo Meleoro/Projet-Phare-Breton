@@ -91,7 +91,7 @@ public class ObjetInteractible : MonoBehaviour
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit raycastHit;
 
-        if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject))
+        if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + transform.localScale.y * 0.5f))
         {
             if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
             {
