@@ -5,23 +5,41 @@ using UnityEngine;
 
 public class ZonePoseCables : MonoBehaviour
 {
-    public CharacterFlute scriptFlute;
+    public LayerMask ignoreLayer;
 
-    
-    
-    public bool VerifySelection(GameObject currentObject)
+    private List<ObjetInteractible> objectsAtRange = new List<ObjetInteractible>();
+
+
+    private void Update()
     {
-        if (!Physics.Raycast(currentObject.transform.position, Vector3.up, 1.5f))
-        {
-            if (Mathf.Abs(transform.position.y - currentObject.transform.position.y) < 1.5f)
-            {
-                return true;
-            }
+        VerifySelection();
+    }
 
-            return false;
-        }
+
+    public void VerifySelection()
+    {
+        ReferenceManager.Instance.characterReference.nearObjects.Clear();
+        ReferenceManager.Instance.characterReference.nearBoxes.Clear();
         
-        return false;
+        for (int i = 0; i < objectsAtRange.Count; i++)
+        {
+            if (objectsAtRange[i].TryGetComponent(out Echelle currentEchelle))
+            {
+                if (currentEchelle.VerifyUse(transform))
+                {
+                    ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                }
+            }
+            
+            else if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
+            {
+                if (Mathf.Abs(transform.position.y - 0.5f - objectsAtRange[i].transform.position.y) < 1.5f)
+                {
+                    ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                    ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                }
+            }
+        }
     }
     
 
@@ -30,13 +48,9 @@ public class ZonePoseCables : MonoBehaviour
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
-
-            if (VerifySelection(other.gameObject))
-            {
-                _object.Select();
-                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
-            }
-
+            
+            objectsAtRange.Add(_object);
+            
             if (_object.TryGetComponent<Note>(out Note currentNote))
             {
                 ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
@@ -44,6 +58,12 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearNotePartitionNumber = currentNote.partitionNumber;
                 ReferenceManager.Instance.characterReference.nearNoteNumber = currentNote.posInPartitionNumber;
             }
+
+            /*if (VerifySelection(other.gameObject))
+            {
+                _object.Select();
+                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
+            }*/
         }
     }
 
@@ -53,8 +73,7 @@ public class ZonePoseCables : MonoBehaviour
         {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
-            _object.Deselect();
-            ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
+            objectsAtRange.Remove(_object);
             
             if (_object.TryGetComponent<Note>(out Note currentNote))
             {
@@ -63,6 +82,20 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
                 ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
             }
+
+            /*if (ReferenceManager.Instance.characterReference.nearObjects.Contains(other.gameObject))
+            {
+                _object.Deselect();
+                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
+            
+                if (_object.TryGetComponent<Note>(out Note currentNote))
+                {
+                    ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
+                    ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
+                    ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
+                    ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
+                }
+            }*/
         }
     }
     

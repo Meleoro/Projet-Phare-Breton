@@ -14,6 +14,7 @@ public class ObjetInteractible : MonoBehaviour
     [HideInInspector] public GameObject currentMagnet;
     [HideInInspector] public Transform magnetedPos;
     private Vector3 originalPos;
+    [HideInInspector] public bool mustVerify;
     
     [Header("Link")]
     public bool isLinked;
