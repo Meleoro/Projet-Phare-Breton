@@ -548,16 +548,89 @@ public class CharacterMovement : MonoBehaviour
     {
         Vector3 posFall = Vector3.zero;
         Vector3 direction2 = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+
+        List<Vector3> possibleFallPos = new List<Vector3>();
+
+        for (int i = 0; i < 8; i++)
+        {
+            Ray ray = new Ray(transform.position + direction2 * (1f + i * 0.2f), Vector3.down);
+            RaycastHit raycastHit2;
+
+            if(Physics.Raycast(ray, out raycastHit2, 5))
+            {
+                possibleFallPos.Add(raycastHit2.point + Vector3.up);
+            }
+        }
+
         
-        Ray ray = new Ray(transform.position + direction2 * 1.5f, Vector3.down);
+        List<Hauteur> hauteurs = new List<Hauteur>();
+
+        for (int i = 0; i < possibleFallPos.Count; i++)
+        {
+            float currentHauteur = Mathf.Abs(possibleFallPos[i].y - transform.position.y);
+            bool addHauteur = true;
+
+            for (int k = 0; k < hauteurs.Count; k++)
+            {
+                if (Mathf.Abs(hauteurs[k].hauteurDiff - currentHauteur) < 0.1f)
+                {
+                    addHauteur = false;
+                    hauteurs[k].nbrIterations += 1;
+                    
+                    hauteurs[k].positions.Add(possibleFallPos[i]);
+                }
+            }
+
+            if (addHauteur)
+            {
+                hauteurs.Add(new Hauteur());
+
+                hauteurs[hauteurs.Count - 1].hauteurDiff = currentHauteur;
+                hauteurs[hauteurs.Count - 1].nbrIterations = 1;
+                
+                hauteurs[hauteurs.Count - 1].positions.Add(possibleFallPos[i]);
+            }
+        }
+
+        int indexChose = 0;
+        int currentNbrIterations = 0;
+        
+        for (int i = 0; i < hauteurs.Count; i++)
+        {
+            if (currentNbrIterations < hauteurs[i].nbrIterations)
+            {
+                indexChose = i;
+                currentNbrIterations = hauteurs[i].nbrIterations;
+            }
+        }
+
+
+        for (int i = 0; i < hauteurs[indexChose].positions.Count; i++)
+        {
+            posFall += hauteurs[indexChose].positions[i];
+        }
+
+        posFall /= hauteurs[indexChose].nbrIterations;
+        
+        
+        /*Ray ray = new Ray(transform.position + direction2 * 1.5f, Vector3.down);
         RaycastHit raycastHit2;
 
         if(Physics.Raycast(ray, out raycastHit2, 10))
         {
             posFall = raycastHit2.point + Vector3.up;
-        }
+        }*/
         
         return posFall;
     }
     
+}
+
+
+public class Hauteur
+{
+    public List<Vector3> positions = new List<Vector3>();
+
+    public float hauteurDiff;
+    public int nbrIterations;
 }
