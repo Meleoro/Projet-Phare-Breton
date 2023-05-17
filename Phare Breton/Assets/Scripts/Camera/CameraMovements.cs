@@ -78,7 +78,7 @@ public class CameraMovements : MonoBehaviour
 
     private void Update()
     {
-        if (!isStatic)
+        if (!isStatic && !goToSave)
         {
             if (!moveCameraRythme)
             {
