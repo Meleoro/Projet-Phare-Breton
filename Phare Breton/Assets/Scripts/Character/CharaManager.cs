@@ -52,6 +52,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool isMovingObjects;
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
     [HideInInspector] public Echelle nearLadder;
     [HideInInspector] public bool inJumpZone;
@@ -85,16 +86,6 @@ public class CharaManager : MonoBehaviour
             if(interaction && canPlayMusic)
             {
                 notesScript.StartPlay(currentMelodyIndex);
-            }
-
-
-            if(nearObjects.Count != 0)
-            {
-                UIInteraction.SetActive(VerificationInteractionUI());
-            }
-            else
-            {
-                UIInteraction.SetActive(false);
             }
 
 
@@ -177,6 +168,15 @@ public class CharaManager : MonoBehaviour
 
             if (!fluteActive)
             {
+                if(nearObjects.Count != 0)
+                {
+                    UIInteraction.SetActive(VerificationInteractionUI());
+                }
+                else
+                {
+                    UIInteraction.SetActive(false);
+                }
+                
                 if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                 {
                     // Si c'est une note
@@ -193,7 +193,7 @@ public class CharaManager : MonoBehaviour
 
                     else 
                     {
-                        movementScript.ClimbObject(nearObjects);
+                        movementScript.ClimbObject(nearBoxes);
                     }
                 
                     interaction = false;
@@ -203,7 +203,8 @@ public class CharaManager : MonoBehaviour
                 {
                     interaction = false;
 
-                    nearLadder.TakeLadder(transform);
+                    if(nearLadder.VerifyUse(transform))
+                        nearLadder.TakeLadder(transform);
                 }
             
                 // Saut du personnage

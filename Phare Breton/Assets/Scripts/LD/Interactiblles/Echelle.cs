@@ -11,6 +11,24 @@ public class Echelle : ObjetInteractible
     
     private List<Vector3> pointsGround = new List<Vector3>();
 
+
+    public bool VerifyUse(Transform posChara)
+    {
+        pointsGround.Clear();
+        
+        RaycastPos(posChara, false, 1.2f);
+
+        if (pointsGround.Count == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+    
     public Vector3 FindTPPos(Transform posChara, bool inverse)
     {
         pointsGround.Clear();
@@ -68,8 +86,6 @@ public class Echelle : ObjetInteractible
                 }
             }
         }
-        
-
         
         return finalPos + new Vector3(0, 1, 0);
     }
