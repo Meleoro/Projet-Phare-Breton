@@ -179,7 +179,7 @@ public class Echelle : ObjetInteractible
     }
     
     
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -193,7 +193,7 @@ public class Echelle : ObjetInteractible
         {
             ReferenceManager.Instance.characterReference.nearLadder = null;
         }
-    }
+    }*/
     
     
 }

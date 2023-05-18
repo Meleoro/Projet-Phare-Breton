@@ -43,6 +43,13 @@ public class CharaManager : MonoBehaviour
     [Header("Animations")]
     private bool isWalking;
     private bool fluteActive;
+    
+    [Header("Selection")]
+    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxesUp = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxesDown = new List<GameObject>();
+    [HideInInspector] public Echelle nearLadder;
 
     [Header("Autres")] 
     public string menuScene;
@@ -51,10 +58,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool hasRope;
     [HideInInspector] public bool isMovingObjects;
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
-    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
-    [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
-    [HideInInspector] public Echelle nearLadder;
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 movedObjectPosition;
     [HideInInspector] public bool isInLightSource;
@@ -165,7 +169,6 @@ public class CharaManager : MonoBehaviour
             
             
             // Interaction
-
             if (!fluteActive)
             {
                 if(nearObjects.Count != 0)
@@ -191,7 +194,7 @@ public class CharaManager : MonoBehaviour
                         nearNotePartitionNumber = 0;
                     }
 
-                    else 
+                    else
                     {
                         movementScript.ClimbObject(nearBoxes);
                     }
@@ -250,15 +253,16 @@ public class CharaManager : MonoBehaviour
     
     public bool VerificationInteractionUI()
     {
-        for (int i = 0; i < nearObjects.Count; i++)
-        {
-            Boite newObject;
-            Echelle newEchelle;
+        if (nearLadder != null)
+            return true;
 
-            if(nearObjects[i].TryGetComponent<Boite>(out newObject) || nearObjects[i].TryGetComponent<Echelle>(out newEchelle))
-            {
+        if (nearBoxesUp.Count != 0)
+            return true;
+        
+        for (int i = 0; i < nearBoxesDown.Count; i++)
+        {
+            if (movementScript.VerifyFall(movementScript.stockageDirection))
                 return true;
-            }
         }
 
         return false;

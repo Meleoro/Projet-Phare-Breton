@@ -20,23 +20,40 @@ public class ZonePoseCables : MonoBehaviour
     {
         ReferenceManager.Instance.characterReference.nearObjects.Clear();
         ReferenceManager.Instance.characterReference.nearBoxes.Clear();
+        ReferenceManager.Instance.characterReference.nearBoxesUp.Clear();
+        ReferenceManager.Instance.characterReference.nearBoxesDown.Clear();
+        ReferenceManager.Instance.characterReference.nearLadder = null;
         
         for (int i = 0; i < objectsAtRange.Count; i++)
         {
+            // Echelle
             if (objectsAtRange[i].TryGetComponent(out Echelle currentEchelle))
             {
                 if (currentEchelle.VerifyUse(transform))
                 {
                     ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                    ReferenceManager.Instance.characterReference.nearLadder = currentEchelle;
                 }
             }
             
-            else if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
+            // Boite
+            else if (objectsAtRange[i].TryGetComponent(out Boite currentBoite))
             {
-                if (Mathf.Abs(transform.position.y - 0.5f - objectsAtRange[i].transform.position.y) < 1.5f)
+                if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
                 {
-                    ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
-                    ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    if (transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
+                    {
+                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxesUp.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    }
+
+                    else
+                    {
+                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    }
                 }
             }
         }

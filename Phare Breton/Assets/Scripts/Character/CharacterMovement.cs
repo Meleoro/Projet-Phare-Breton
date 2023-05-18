@@ -29,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Fall")] 
     [SerializeField] private LayerMask layerFall;
-    private Vector2 stockageDirection;
+    [HideInInspector] public Vector2 stockageDirection;
     private Vector2 newDirection1;
     private Vector2 newDirection2;
     private bool directionFound1;
@@ -92,7 +92,7 @@ public class CharacterMovement : MonoBehaviour
             directionFound1 = false;
             directionFound2 = false;
             
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 13; i++)
             {
                 if (!directionFound1 && !directionFound2)
                 {
@@ -123,7 +123,7 @@ public class CharacterMovement : MonoBehaviour
             if (directionFound1 || directionFound2)
             {
                 Vector3 desiredVelocity;
-                float ratio = 1 - (float)iteration / 15 ;
+                float ratio = 1 - (float)iteration / 13 ;
 
                 if (directionFound1)
                 {
