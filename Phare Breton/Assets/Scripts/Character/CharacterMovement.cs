@@ -418,11 +418,13 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction)
     {
-        Vector3 point1 = new Vector3(0, -5000, 0);
-        Vector3 point2 = new Vector3(0, -5000, 0);
-        Vector3 point3 = new Vector3(0, -5000, 0);
+        Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
+        
+        Vector3 point1 = DoRaycast(transform.position, 10);
+        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.5f), 10);
+        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 1f), 10);
 
-
+/*
         // Raycast 1
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit raycastHit;
@@ -438,8 +440,6 @@ public class CharacterMovement : MonoBehaviour
         
         
         // Raycast 2
-        Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
-        
         ray = new Ray(transform.position + (newDirection.normalized * 1f), Vector3.down);
         RaycastHit raycastHit3;
 
@@ -464,7 +464,7 @@ public class CharacterMovement : MonoBehaviour
             
             else
                 point2 = new Vector3(0, transform.position.y - 0.5f, 0);
-        }
+        }*/
 
 
         float difference1 = 0;
@@ -492,6 +492,29 @@ public class CharacterMovement : MonoBehaviour
         {
             return true;
         }
+    }
+
+    public Vector3 DoRaycast(Vector3 startPos, float lenght)
+    {
+        Ray ray = new Ray(startPos, Vector3.down);
+        RaycastHit raycastHit;
+
+        if(lenght <= 0)
+            return new Vector3(0, -5000, 0);
+        
+        if (Physics.Raycast(ray, out raycastHit, lenght, layerFall))
+        {
+            if (raycastHit.collider.isTrigger)
+                DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+            
+            else if(raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
+                return raycastHit.point;
+            
+            else
+                return  new Vector3(0, transform.position.y - 0.5f, 0);
+        }
+
+        return new Vector3(0, -5000, 0);
     }
 
     public Vector2 TryNewDirection(Vector2 currentDirection, bool negatif, float angleAdded)
