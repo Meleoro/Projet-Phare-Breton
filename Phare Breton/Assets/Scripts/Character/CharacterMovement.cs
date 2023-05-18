@@ -570,7 +570,7 @@ public class CharacterMovement : MonoBehaviour
             Ray ray = new Ray(transform.position + direction2 * (1f + i * 0.2f), Vector3.down);
             RaycastHit raycastHit2;
 
-            if(Physics.Raycast(ray, out raycastHit2, 5))
+            if(Physics.Raycast(ray, out raycastHit2, 5, layerFall))
             {
                 possibleFallPos.Add(raycastHit2.point + Vector3.up);
             }
