@@ -13,6 +13,59 @@ public class ZonePoseCables : MonoBehaviour
     private void Update()
     {
         VerifySelection();
+
+        if (ReferenceManager.Instance.characterReference.hasRope)
+        {
+            FindPlaceCable();
+        }
+    }
+
+
+    
+    public void FindPlaceCable()
+    {
+        ReferenceManager.Instance.characterReference.cableObject = null;
+
+        int currentIndex = -1;
+        float currentDistance = 100;
+        
+        for (int i = 0; i < ReferenceManager.Instance.characterReference.nearObjects.Count; i++)
+        {
+            float distance = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position,
+                ReferenceManager.Instance.characterReference.nearObjects[i].transform.position);
+            
+            if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Boite currentBoite))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+            
+            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Ampoule currentAmpoule))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+            
+            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+        }
+
+        if (currentIndex >= 0)
+        {
+            ReferenceManager.Instance.characterReference.cableObject = ReferenceManager.Instance.characterReference.nearObjects[currentIndex];
+        }
     }
 
 
