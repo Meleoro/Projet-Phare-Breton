@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharaManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class CharaManager : MonoBehaviour
     [Header("Références")]
     [SerializeField] public Animator anim;
     [SerializeField] private GameObject UIInteraction;
+    [SerializeField] private Image UIImageX;
+    [SerializeField] private Image UIImageY;
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
@@ -43,6 +46,16 @@ public class CharaManager : MonoBehaviour
     [Header("Animations")]
     private bool isWalking;
     private bool fluteActive;
+    
+    [Header("Selection")]
+    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxesUp = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearBoxesDown = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearGenerator = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearAmpoule = new List<GameObject>();
+    [HideInInspector] public GameObject cableObject;
+    [HideInInspector] public Echelle nearLadder;
 
     [Header("Autres")] 
     public string menuScene;
@@ -51,10 +64,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool hasRope;
     [HideInInspector] public bool isMovingObjects;
     [HideInInspector] public List<Rigidbody> movedObjects = new List<Rigidbody>();
-    [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
-    [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
-    [HideInInspector] public Echelle nearLadder;
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 movedObjectPosition;
     [HideInInspector] public bool isInLightSource;
@@ -165,10 +175,9 @@ public class CharaManager : MonoBehaviour
             
             
             // Interaction
-
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0)
+                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic)
                 {
                     UIInteraction.SetActive(VerificationInteractionUI());
                 }
@@ -176,10 +185,9 @@ public class CharaManager : MonoBehaviour
                 {
                     UIInteraction.SetActive(false);
                 }
-                
-                if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
+
+                if (interaction)
                 {
-                    // Si c'est une note
                     if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                     {
                         nearObjects.Clear();
@@ -190,23 +198,23 @@ public class CharaManager : MonoBehaviour
                         nearNoteNumber = 0;
                         nearNotePartitionNumber = 0;
                     }
-
-                    else 
+                    
+                    if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                     {
                         movementScript.ClimbObject(nearBoxes);
+
+                        interaction = false;
                     }
-                
-                    interaction = false;
+                    
+                    else if (nearLadder != null)
+                    {
+                        interaction = false;
+
+                        if(nearLadder.VerifyUse(transform))
+                            nearLadder.TakeLadder(transform);
+                    }
                 }
 
-                else if (nearLadder != null && interaction)
-                {
-                    interaction = false;
-
-                    if(nearLadder.VerifyUse(transform))
-                        nearLadder.TakeLadder(transform);
-                }
-            
                 // Saut du personnage
                 if (interaction)
                 {
@@ -250,17 +258,45 @@ public class CharaManager : MonoBehaviour
     
     public bool VerificationInteractionUI()
     {
-        for (int i = 0; i < nearObjects.Count; i++)
+        if (!hasRope)
         {
-            Boite newObject;
-            Echelle newEchelle;
-
-            if(nearObjects[i].TryGetComponent<Boite>(out newObject) || nearObjects[i].TryGetComponent<Echelle>(out newEchelle))
-            {
+            UIImageX.enabled = true;
+            UIImageY.enabled = false;
+            
+            if (nearLadder != null)
                 return true;
+
+            if (nearBoxesUp.Count != 0)
+                return true;
+
+            if (nearNoteNumber != 0)
+                return true;
+
+            if (canPlayMusic)
+                return true;
+        
+            for (int i = 0; i < nearBoxesDown.Count; i++)
+            {
+                if (movementScript.VerifyFall(movementScript.stockageDirection))
+                    return true;
             }
         }
+        
+        else
+        {
+            UIImageX.enabled = false;
+            UIImageY.enabled = true;
 
+            if (nearBoxes.Count != 0)
+                return true;
+
+            if (nearAmpoule.Count != 0)
+                return true;
+
+            if (nearGenerator.Count != 0)
+                return true;
+        }
+        
         return false;
     }
 

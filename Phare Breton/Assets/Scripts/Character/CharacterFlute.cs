@@ -270,54 +270,52 @@ public class CharacterFlute : MonoBehaviour
     // QUAND LE JOUEUR PLACE LE(S) CABLE(S) QU'IL TRANSPORTE SUR UN OBJET
     public void PlaceLien()
     {
-        if (manager.nearObjects.Count == 1)
-        {
-            SpringJoint objectSpring = manager.nearObjects[0].GetComponentInChildren<SpringJoint>();
+        SpringJoint objectSpring = manager.cableObject.GetComponentInChildren<SpringJoint>();
             
-            for (int k = cables.Count - 1; k >= 0; k--)
-            {
-                CableCreator currentCableCreator = cables[k].GetComponent<CableCreator>();
+        for (int k = cables.Count - 1; k >= 0; k--)
+        {
+            CableCreator currentCableCreator = cables[k].GetComponent<CableCreator>();
 
-                objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 1]
-                    .GetComponent<Rigidbody>();
+            objectSpring.connectedBody = currentCableCreator.nodesRope[currentCableCreator.nodesRope.Count - 1]
+                .GetComponent<Rigidbody>();
 
-                // On relie les objets physiquement 
+            // On relie les objets physiquement 
 
-                if(currentCableCreator.rbOrigin == manager.rb)
-                {
-                    currentCableCreator.ChangeFirstNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
-                }
-                else
-                {
-                    currentCableCreator.ChangeLastNode(manager.nearObjects[0], manager.nearObjects[0].GetComponent<Rigidbody>(), manager.nearObjects[0].GetComponentInChildren<SpringJoint>());
-                }
-
-                cables.RemoveAt(k);
-
-                // On informe les scripts de chaque objets qu'ils sont connectés 
-                ropedObject[k].linkedObject.Add(manager.nearObjects[0]);
-                manager.nearObjects[0].GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
-
-                if (ropedObject[k].linkedObject[0] == ropedObject[k].gameObject)
-                {
-                    Destroy(currentCableCreator.gameObject);
-                }
-
-                // Vérification des objets liés
-                ropedObject[k].VerifyLinkedObject();
+            if(currentCableCreator.rbOrigin == manager.rb)
+            { 
+                currentCableCreator.ChangeFirstNode(manager.cableObject, manager.nearObjects[0].GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
+            }
+            else
+            { 
+                currentCableCreator.ChangeLastNode(manager.cableObject, manager.nearObjects[0].GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
             }
 
-            manager.nearObjects[0].GetComponent<ObjetInteractible>().VerifyLinkedObject();
+            cables.RemoveAt(k);
 
-            SpringJoint charaSpring = cablePoint.GetComponent<SpringJoint>();
-        
-            charaSpring.spring = 0;
-            charaSpring.connectedBody = null;
+            // On informe les scripts de chaque objets qu'ils sont connectés 
+            ropedObject[k].linkedObject.Add(manager.cableObject);
+            manager.cableObject.GetComponent<ObjetInteractible>().linkedObject.Add(ropedObject[k].gameObject);
 
-            manager.hasRope = false;
-            
-            ropedObject.Clear();
+            if (ropedObject[k].linkedObject[0] == ropedObject[k].gameObject)
+            {
+                Destroy(currentCableCreator.gameObject);
+            }
+
+            // Vérification des objets liés
+            ropedObject[k].VerifyLinkedObject();
         }
+
+        manager.cableObject.GetComponent<ObjetInteractible>().VerifyLinkedObject();
+
+        SpringJoint charaSpring = cablePoint.GetComponent<SpringJoint>();
+        
+        charaSpring.spring = 0;
+        charaSpring.connectedBody = null;
+
+        manager.hasRope = false;
+            
+        ropedObject.Clear();
+        
     }
 
 

@@ -5,12 +5,12 @@ using DG.Tweening;
 
 public class TriggerGrue : MonoBehaviour
 {
-    [Header("Paramètres")]
+    [Header("Paramï¿½tres")]
     [SerializeField] private List<Transform> positionsGrue;
     [SerializeField] private float grueSpeed;
     [SerializeField] private float distanceTriggerGrue;
 
-    [Header("Références")]
+    [Header("Rï¿½fï¿½rences")]
     [SerializeField] private GameObject grueObject;
     private GameObject currentGrue;
     [SerializeField] private BoxCollider trigger;
@@ -102,27 +102,33 @@ public class TriggerGrue : MonoBehaviour
 
         if (index + 1 >= positionsGrue.Count - 1)
         {
+            StopAllCoroutines();
+            DOTween.KillAll();
+            
             Destroy(currentGrue);
             Destroy(gameObject);
         }
 
-        currentGrue.transform.DOMoveX(positionsGrue[index + 1].position.x, speed);
-        currentGrue.transform.DOMoveZ(positionsGrue[index + 1].position.z, speed);
+        else
+        {
+            currentGrue.transform.DOMoveX(positionsGrue[index + 1].position.x, speed);
+            currentGrue.transform.DOMoveZ(positionsGrue[index + 1].position.z, speed);
 
-        currentGrue.transform.DOMoveY(positionsGrue[index + 1].position.y, speed);
-
-
-        yield return new WaitForSeconds(speed - 1);
-
-
-        animGrue.SetTrigger("endVol");
-        currentIndex += 1;
+            currentGrue.transform.DOMoveY(positionsGrue[index + 1].position.y, speed);
 
 
-        yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(speed - 1);
 
 
-        launchFly = false;
+            animGrue.SetTrigger("endVol");
+            currentIndex += 1;
+
+
+            yield return new WaitForSeconds(1.5f);
+
+
+            launchFly = false;
+        }
     }
 
 

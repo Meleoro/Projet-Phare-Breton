@@ -13,6 +13,59 @@ public class ZonePoseCables : MonoBehaviour
     private void Update()
     {
         VerifySelection();
+
+        if (ReferenceManager.Instance.characterReference.hasRope)
+        {
+            FindPlaceCable();
+        }
+    }
+
+
+    
+    public void FindPlaceCable()
+    {
+        ReferenceManager.Instance.characterReference.cableObject = null;
+
+        int currentIndex = -1;
+        float currentDistance = 100;
+        
+        for (int i = 0; i < ReferenceManager.Instance.characterReference.nearObjects.Count; i++)
+        {
+            float distance = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position,
+                ReferenceManager.Instance.characterReference.nearObjects[i].transform.position);
+            
+            if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Boite currentBoite))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+            
+            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Ampoule currentAmpoule))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+            
+            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
+            {
+                if (distance < currentDistance)
+                {
+                    currentDistance = distance;
+                    currentIndex = i;
+                }
+            }
+        }
+
+        if (currentIndex >= 0)
+        {
+            ReferenceManager.Instance.characterReference.cableObject = ReferenceManager.Instance.characterReference.nearObjects[currentIndex];
+        }
     }
 
 
@@ -20,24 +73,57 @@ public class ZonePoseCables : MonoBehaviour
     {
         ReferenceManager.Instance.characterReference.nearObjects.Clear();
         ReferenceManager.Instance.characterReference.nearBoxes.Clear();
+        ReferenceManager.Instance.characterReference.nearBoxesUp.Clear();
+        ReferenceManager.Instance.characterReference.nearBoxesDown.Clear();
+        ReferenceManager.Instance.characterReference.nearAmpoule.Clear();
+        ReferenceManager.Instance.characterReference.nearGenerator.Clear();
+        ReferenceManager.Instance.characterReference.nearLadder = null;
         
         for (int i = 0; i < objectsAtRange.Count; i++)
         {
+            // Echelle
             if (objectsAtRange[i].TryGetComponent(out Echelle currentEchelle))
             {
                 if (currentEchelle.VerifyUse(transform))
                 {
                     ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                    ReferenceManager.Instance.characterReference.nearLadder = currentEchelle;
                 }
             }
             
-            else if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
+            // Boite
+            else if (objectsAtRange[i].TryGetComponent(out Boite currentBoite))
             {
-                if (Mathf.Abs(transform.position.y - 0.5f - objectsAtRange[i].transform.position.y) < 1.5f)
+                if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
                 {
-                    ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
-                    ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    if (transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
+                    {
+                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxesUp.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    }
+
+                    else
+                    {
+                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
+                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                    }
                 }
+            }
+            
+            // Ampoule
+            else if (objectsAtRange[i].TryGetComponent(out Ampoule currentAmpoule))
+            {
+                ReferenceManager.Instance.characterReference.nearAmpoule.Add(objectsAtRange[i].gameObject);
+                ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+            }
+            
+            // Generateur
+            else if (objectsAtRange[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
+            {
+                ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
+                ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
         }
     }
@@ -45,57 +131,21 @@ public class ZonePoseCables : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
+        if (other.CompareTag("Interactible") && !other.isTrigger && !other.TryGetComponent<Note>(out Note currentNote))
         {
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
             objectsAtRange.Add(_object);
-            
-            if (_object.TryGetComponent<Note>(out Note currentNote))
-            {
-                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
-                ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
-                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = currentNote.partitionNumber;
-                ReferenceManager.Instance.characterReference.nearNoteNumber = currentNote.posInPartitionNumber;
-            }
-
-            /*if (VerifySelection(other.gameObject))
-            {
-                _object.Select();
-                ReferenceManager.Instance.characterReference.nearObjects.Add(other.gameObject);
-            }*/
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
+        if (other.CompareTag("Interactible") && !other.isTrigger && !other.TryGetComponent<Note>(out Note currentNote))
         {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
             objectsAtRange.Remove(_object);
-            
-            if (_object.TryGetComponent<Note>(out Note currentNote))
-            {
-                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
-                ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
-                ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
-                ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
-            }
-
-            /*if (ReferenceManager.Instance.characterReference.nearObjects.Contains(other.gameObject))
-            {
-                _object.Deselect();
-                ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
-            
-                if (_object.TryGetComponent<Note>(out Note currentNote))
-                {
-                    ReferenceManager.Instance.characterReference.nearObjects.Remove(other.gameObject);
-                    ReferenceManager.Instance.characterReference.nearNoteObject = _object.gameObject;
-                    ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
-                    ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
-                }
-            }*/
         }
     }
     
