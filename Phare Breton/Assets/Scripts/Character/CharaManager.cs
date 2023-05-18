@@ -177,7 +177,7 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0 || nearNoteNumber != 0)
+                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic)
                 {
                     UIInteraction.SetActive(VerificationInteractionUI());
                 }
@@ -270,6 +270,9 @@ public class CharaManager : MonoBehaviour
                 return true;
 
             if (nearNoteNumber != 0)
+                return true;
+
+            if (canPlayMusic)
                 return true;
         
             for (int i = 0; i < nearBoxesDown.Count; i++)
