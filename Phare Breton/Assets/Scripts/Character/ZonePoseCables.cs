@@ -22,6 +22,8 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearBoxes.Clear();
         ReferenceManager.Instance.characterReference.nearBoxesUp.Clear();
         ReferenceManager.Instance.characterReference.nearBoxesDown.Clear();
+        ReferenceManager.Instance.characterReference.nearAmpoule.Clear();
+        ReferenceManager.Instance.characterReference.nearGenerator.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
         
         for (int i = 0; i < objectsAtRange.Count; i++)
@@ -55,6 +57,20 @@ public class ZonePoseCables : MonoBehaviour
                         ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
                     }
                 }
+            }
+            
+            // Ampoule
+            else if (objectsAtRange[i].TryGetComponent(out Ampoule currentAmpoule))
+            {
+                ReferenceManager.Instance.characterReference.nearAmpoule.Add(objectsAtRange[i].gameObject);
+                ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+            }
+            
+            // Generateur
+            else if (objectsAtRange[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
+            {
+                ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
+                ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CharaManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class CharaManager : MonoBehaviour
     [Header("Références")]
     [SerializeField] public Animator anim;
     [SerializeField] private GameObject UIInteraction;
+    [SerializeField] private Image UIImageX;
+    [SerializeField] private Image UIImageY;
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
@@ -49,6 +52,8 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearBoxesUp = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearBoxesDown = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearGenerator = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearAmpoule = new List<GameObject>();
     [HideInInspector] public Echelle nearLadder;
 
     [Header("Autres")] 
@@ -253,18 +258,41 @@ public class CharaManager : MonoBehaviour
     
     public bool VerificationInteractionUI()
     {
-        if (nearLadder != null)
-            return true;
-
-        if (nearBoxesUp.Count != 0)
-            return true;
-        
-        for (int i = 0; i < nearBoxesDown.Count; i++)
+        if (!hasRope)
         {
-            if (movementScript.VerifyFall(movementScript.stockageDirection))
+            UIImageX.enabled = true;
+            UIImageY.enabled = false;
+            
+            if (nearLadder != null)
+                return true;
+
+            if (nearBoxesUp.Count != 0)
+                return true;
+        
+            for (int i = 0; i < nearBoxesDown.Count; i++)
+            {
+                if (movementScript.VerifyFall(movementScript.stockageDirection))
+                    return true;
+            }
+        }
+        
+        else
+        {
+            UIImageX.enabled = false;
+            UIImageY.enabled = true;
+
+            Debug.Log(nearAmpoule);
+            
+            if (nearBoxes.Count != 0)
+                return true;
+
+            if (nearAmpoule.Count != 0)
+                return true;
+
+            if (nearGenerator.Count != 0)
                 return true;
         }
-
+        
         return false;
     }
 
