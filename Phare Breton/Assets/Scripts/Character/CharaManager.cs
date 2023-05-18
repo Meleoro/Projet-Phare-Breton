@@ -177,7 +177,7 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0)
+                if(nearObjects.Count != 0 || nearNoteNumber != 0)
                 {
                     UIInteraction.SetActive(VerificationInteractionUI());
                 }
@@ -185,10 +185,9 @@ public class CharaManager : MonoBehaviour
                 {
                     UIInteraction.SetActive(false);
                 }
-                
-                if(nearObjects.Count > 0 && interaction && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
+
+                if (interaction)
                 {
-                    // Si c'est une note
                     if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                     {
                         nearObjects.Clear();
@@ -199,23 +198,23 @@ public class CharaManager : MonoBehaviour
                         nearNoteNumber = 0;
                         nearNotePartitionNumber = 0;
                     }
-
-                    else
+                    
+                    if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                     {
                         movementScript.ClimbObject(nearBoxes);
+
+                        interaction = false;
                     }
-                
-                    interaction = false;
+                    
+                    else if (nearLadder != null)
+                    {
+                        interaction = false;
+
+                        if(nearLadder.VerifyUse(transform))
+                            nearLadder.TakeLadder(transform);
+                    }
                 }
 
-                else if (nearLadder != null && interaction)
-                {
-                    interaction = false;
-
-                    if(nearLadder.VerifyUse(transform))
-                        nearLadder.TakeLadder(transform);
-                }
-            
                 // Saut du personnage
                 if (interaction)
                 {
@@ -269,6 +268,9 @@ public class CharaManager : MonoBehaviour
 
             if (nearBoxesUp.Count != 0)
                 return true;
+
+            if (nearNoteNumber != 0)
+                return true;
         
             for (int i = 0; i < nearBoxesDown.Count; i++)
             {
@@ -282,8 +284,6 @@ public class CharaManager : MonoBehaviour
             UIImageX.enabled = false;
             UIImageY.enabled = true;
 
-            Debug.Log(nearAmpoule);
-            
             if (nearBoxes.Count != 0)
                 return true;
 
