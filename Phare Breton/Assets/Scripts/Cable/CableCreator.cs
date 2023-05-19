@@ -8,6 +8,11 @@ using UnityEngine;
 
 public class CableCreator : MonoBehaviour
 {
+    [Header("Manual Setup")]
+    public bool manualSetup;
+    public GameObject manualOrigin;
+    public GameObject manualEnd;
+
     [Header("Paramètres")] 
     public int nbrMaxNodes;
     [SerializeField] private float spring;
@@ -40,6 +45,21 @@ public class CableCreator : MonoBehaviour
     private void Start()
     {
         _lineRenderer = GetComponent<LineRenderer>();
+
+        if (manualSetup)
+        {
+            SpringJoint spring1 = manualOrigin.GetComponentInChildren<SpringJoint>();
+            SpringJoint spring2 = manualEnd.GetComponentInChildren<SpringJoint>();
+
+            ObjetInteractible object1 = manualOrigin.GetComponentInChildren<ObjetInteractible>();
+            ObjetInteractible object2 = manualEnd.GetComponentInChildren<ObjetInteractible>();
+
+            Rigidbody rb1 = manualOrigin.GetComponentInChildren<Rigidbody>();
+            Rigidbody rb2 = manualEnd.GetComponentInChildren<Rigidbody>();
+
+            
+            CreateNodes(spring1, spring2, object1, object2, rb1, rb2);
+        }
     }
 
 
