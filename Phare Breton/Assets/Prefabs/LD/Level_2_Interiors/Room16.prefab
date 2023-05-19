@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776960081561801163}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -132,7 +132,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2973471409845190232}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -215,7 +215,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7821823298249276490}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 2
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -2160,7 +2160,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
@@ -2234,6 +2234,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5ab1036a36908264c94937a83ba7af2b, type: 2}
     - target: {fileID: -3337277409293486363, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -3337277409293486363, guid: 1f01c5b207189da4ea42259f2a64d240,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5ab1036a36908264c94937a83ba7af2b, type: 2}
@@ -2274,6 +2279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6120964635897327296, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120964635897327296, guid: 1f01c5b207189da4ea42259f2a64d240,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5ab1036a36908264c94937a83ba7af2b, type: 2}
@@ -2284,9 +2294,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d2ab11e0b3899194f858d46e66daffad, type: 2}
     - target: {fileID: 8232565308825732860, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8232565308825732860, guid: 1f01c5b207189da4ea42259f2a64d240,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5ab1036a36908264c94937a83ba7af2b, type: 2}
+    - target: {fileID: 8628197163018886022, guid: 1f01c5b207189da4ea42259f2a64d240,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8628197163018886022, guid: 1f01c5b207189da4ea42259f2a64d240,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
