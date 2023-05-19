@@ -1905,6 +1905,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93b842c21db9fbf4c923d89da6d57f1e, type: 3}
+--- !u!23 &1328207582 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3071537029172610348, guid: a159f5861fb015d4d901249fa2f958d9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5209479903800370464}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1405726397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3460,19 +3466,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
-      propertyPath: canCable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      propertyPath: canStase
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8793358076578007543, guid: a159f5861fb015d4d901249fa2f958d9,
-        type: 3}
-      propertyPath: canMoveObjects
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: flute
+      value: 
+      objectReference: {fileID: 1328207582}
     m_RemovedComponents:
     - {fileID: 3810519113055759133, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
     m_RemovedGameObjects: []

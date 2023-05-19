@@ -19,6 +19,7 @@ public class CharaManager : MonoBehaviour
     [SerializeField] private GameObject UIInteraction;
     [SerializeField] private Image UIImageX;
     [SerializeField] private Image UIImageY;
+    [SerializeField] private MeshRenderer fluteMesh;
     [HideInInspector] public Rigidbody rb;
 
     [Header("Inputs")]
@@ -93,7 +94,9 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl)
         {
-            if(interaction && canPlayMusic)
+            fluteMesh.enabled = false;
+
+            if (interaction && canPlayMusic)
             {
                 notesScript.StartPlay(currentMelodyIndex);
             }
@@ -133,6 +136,8 @@ public class CharaManager : MonoBehaviour
                 
                 movementScript.MoveCharacter(Vector2.zero);
                 fluteScript.FluteActive(direction);
+
+                fluteMesh.enabled = true;
 
                 movementScript.RotateCharacterCamera();
                 movementScript.RotateCharacter(direction, false);
