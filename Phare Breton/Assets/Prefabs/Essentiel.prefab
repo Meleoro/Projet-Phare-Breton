@@ -2460,6 +2460,21 @@ PrefabInstance:
       objectReference: {fileID: 112813932301047285}
     - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
+      propertyPath: canCable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: canStase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: fluteMesh
+      value: 
+      objectReference: {fileID: 3071537029172610348}
+    - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
       propertyPath: menuScene
       value: LevelDesign - BlockMesh
       objectReference: {fileID: 0}
@@ -2468,6 +2483,11 @@ PrefabInstance:
       propertyPath: UIInteraction
       value: 
       objectReference: {fileID: 6153896602546410641}
+    - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: canMoveObjects
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3378701548504057700, guid: d45a5586b24669a4bab29e12b01b5703, type: 3}
     - {fileID: 3799776982024782300, guid: d45a5586b24669a4bab29e12b01b5703, type: 3}
@@ -2921,6 +2941,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1803170789934380108}
   m_SourcePrefab: {fileID: 100100000, guid: 2908d21f552c66f43b1c6c5e2ae93b24, type: 3}
+--- !u!23 &3071537029172610348 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -895732562913838570, guid: 2908d21f552c66f43b1c6c5e2ae93b24,
+    type: 3}
+  m_PrefabInstance: {fileID: 6427196720577249082}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6192612819662455403 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2908d21f552c66f43b1c6c5e2ae93b24,
