@@ -421,8 +421,8 @@ public class CharacterMovement : MonoBehaviour
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
         Vector3 point1 = DoRaycast(transform.position, 10);
-        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.4f), 10);
-        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.8f), 10);
+        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.35f), 10);
+        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.7f), 10);
 
 /*
         // Raycast 1
