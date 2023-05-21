@@ -251,6 +251,7 @@ public class CharaManager : MonoBehaviour
         else
         {
             movementScript.MoveCharacter(Vector2.zero);
+            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
 
             isWalking = false;
         }
