@@ -142,7 +142,6 @@ public class ZonePoseCables : MonoBehaviour
             {
                 return false;
             }
-z
             else
             {
                 return RaycastOnBox(raycastHit.point + Vector3.up * 0.01f, distance - raycastHit.distance);
