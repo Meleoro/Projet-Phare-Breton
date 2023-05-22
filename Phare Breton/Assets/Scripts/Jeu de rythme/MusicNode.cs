@@ -22,11 +22,11 @@ public class MusicNode : MonoBehaviour
     public AnimationCurve moveY;*/
     [HideInInspector] public Vector3 originPos;
     private float timer;
-    private bool goLeft;
     private int currentIndex;
     private List<RectTransform> waypoints = new List<RectTransform>();
 
-    [Header("References")]
+    [Header("References")] 
+    [SerializeField] private ParticleSystem VFXDestroy;
     private Image image;
 
     private RectTransform rectTransform;
@@ -63,12 +63,10 @@ public class MusicNode : MonoBehaviour
         {
             case Node.SpawnPos.left :
                 rectTransform.position = bande.posSpawnLeft.position;
-                goLeft = false;
                 break;
             
             case Node.SpawnPos.right :
                 rectTransform.position = bande.posSpawnRight.position;
-                goLeft = true;
                 break;
         }
 
@@ -92,15 +90,6 @@ public class MusicNode : MonoBehaviour
                 rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
                 timer = ratio;
         }
-        
-        
-        /*timer += Time.deltaTime * speed;
-
-        if(goLeft) 
-            rectTransform.position = originPos + (new Vector3(-moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);
-        
-        else
-            rectTransform.position = originPos + (new Vector3(moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);*/
     }
     
 
@@ -109,6 +98,8 @@ public class MusicNode : MonoBehaviour
         image.enabled = false;
         GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         erased = true;
+
+        currentBande.PlayVFXDestroy();
     }
 
     public void ReappearNode()

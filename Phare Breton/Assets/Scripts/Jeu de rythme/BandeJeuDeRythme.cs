@@ -36,6 +36,10 @@ public class BandeJeuDeRythme : MonoBehaviour
     public List<RectTransform> waypointsLeft = new List<RectTransform>();
     public List<RectTransform> waypointsRight = new List<RectTransform>();
 
+    [Header("ReferencesVFX")] 
+    public Canvas canvaVFX;
+    public ParticleSystem VFXNoteDestroy;
+
 
     [Header("Inputs")]
     private bool pressX;
@@ -51,6 +55,12 @@ public class BandeJeuDeRythme : MonoBehaviour
     [HideInInspector] public bool stop;
     [HideInInspector] public int erasedNotes;
     private bool usingBarre;
+
+
+    private void Awake()
+    {
+        canvaVFX.worldCamera = ReferenceManager.Instance._cameraUI;
+    }
 
 
     private void Start()
@@ -183,6 +193,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         float duration = 0.23f;
         
+        ReferenceManager.Instance.characterReference.notesScript.DoVFXEchec();
         ReferenceManager.Instance.cameraReference.DoCameraShake(0.4f, 0.2f);
 
         yield return new WaitForSeconds(duration);
@@ -278,6 +289,12 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             nodesCreated[i].MoveNode(speedMoveNode);
         }
+    }
+
+
+    public void PlayVFXDestroy()
+    {
+        VFXNoteDestroy.Play();
     }
 
 
