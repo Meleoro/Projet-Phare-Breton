@@ -33,6 +33,8 @@ public class BandeJeuDeRythme : MonoBehaviour
     public RectTransform barreAvancement;
     public RectTransform fond;
     public RectTransform arc;
+    public List<RectTransform> waypointsLeft = new List<RectTransform>();
+    public List<RectTransform> waypointsRight = new List<RectTransform>();
 
 
     [Header("Inputs")]
@@ -253,12 +255,21 @@ public class BandeJeuDeRythme : MonoBehaviour
                         case Node.InputNeeded.z :
                             newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
                             break;
-                    } 
+                    }
 
-                    newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this);
-
-                     nodes[i].isSpawned = true;
-                     nodesCreated.Add(newNode);
+                    switch (nodes[i].spawnPos)
+                    {
+                        case Node.SpawnPos.left :
+                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsLeft);
+                            break;
+                        
+                        case Node.SpawnPos.right :
+                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsRight);
+                            break;
+                    }
+                    
+                    nodes[i].isSpawned = true;
+                    nodesCreated.Add(newNode);
                 }
             }
         }
