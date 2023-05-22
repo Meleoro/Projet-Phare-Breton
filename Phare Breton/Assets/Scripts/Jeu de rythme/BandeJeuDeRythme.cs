@@ -33,6 +33,12 @@ public class BandeJeuDeRythme : MonoBehaviour
     public RectTransform barreAvancement;
     public RectTransform fond;
     public RectTransform arc;
+    public List<RectTransform> waypointsLeft = new List<RectTransform>();
+    public List<RectTransform> waypointsRight = new List<RectTransform>();
+
+    [Header("ReferencesVFX")] 
+    public Canvas canvaVFX;
+    public ParticleSystem VFXNoteDestroy;
 
 
     [Header("Inputs")]
@@ -49,6 +55,12 @@ public class BandeJeuDeRythme : MonoBehaviour
     [HideInInspector] public bool stop;
     [HideInInspector] public int erasedNotes;
     private bool usingBarre;
+
+
+    private void Awake()
+    {
+        canvaVFX.worldCamera = ReferenceManager.Instance._cameraUI;
+    }
 
 
     private void Start()
@@ -181,6 +193,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         float duration = 0.23f;
         
+        ReferenceManager.Instance.characterReference.notesScript.DoVFXEchec();
         ReferenceManager.Instance.cameraReference.DoCameraShake(0.4f, 0.2f);
 
         yield return new WaitForSeconds(duration);
@@ -253,12 +266,21 @@ public class BandeJeuDeRythme : MonoBehaviour
                         case Node.InputNeeded.z :
                             newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
                             break;
-                    } 
+                    }
 
-                    newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this);
-
-                     nodes[i].isSpawned = true;
-                     nodesCreated.Add(newNode);
+                    switch (nodes[i].spawnPos)
+                    {
+                        case Node.SpawnPos.left :
+                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsLeft);
+                            break;
+                        
+                        case Node.SpawnPos.right :
+                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsRight);
+                            break;
+                    }
+                    
+                    nodes[i].isSpawned = true;
+                    nodesCreated.Add(newNode);
                 }
             }
         }
@@ -267,6 +289,12 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             nodesCreated[i].MoveNode(speedMoveNode);
         }
+    }
+
+
+    public void PlayVFXDestroy()
+    {
+        VFXNoteDestroy.Play();
     }
 
 

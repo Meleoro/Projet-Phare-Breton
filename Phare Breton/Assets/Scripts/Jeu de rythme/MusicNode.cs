@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,13 +17,16 @@ public class MusicNode : MonoBehaviour
     [HideInInspector] public bool erased;
 
     [Header("Movement")] 
-    public AnimationCurve moveX;
-    public AnimationCurve moveY;
+    public float movementSpeed;
+    /*public AnimationCurve moveX;
+    public AnimationCurve moveY;*/
     [HideInInspector] public Vector3 originPos;
     private float timer;
-    private bool goLeft;
+    private int currentIndex;
+    private List<RectTransform> waypoints = new List<RectTransform>();
 
-    [Header("References")]
+    [Header("References")] 
+    [SerializeField] private ParticleSystem VFXDestroy;
     private Image image;
 
     private RectTransform rectTransform;
@@ -35,7 +39,7 @@ public class MusicNode : MonoBehaviour
     }
 
 
-    public void InitialiseNode(Node.InputNeeded inputNeeded, Node.SpawnPos spawnPos, BandeJeuDeRythme bande)
+    public void InitialiseNode(Node.InputNeeded inputNeeded, Node.SpawnPos spawnPos, BandeJeuDeRythme bande, List<RectTransform> currentWaypoints)
     {
         rectTransform = GetComponent<RectTransform>();
         currentBande = bande;
@@ -58,27 +62,34 @@ public class MusicNode : MonoBehaviour
         switch (spawnPos)
         {
             case Node.SpawnPos.left :
-                originPos = bande.posSpawnLeft.position;
-                goLeft = false;
+                rectTransform.position = bande.posSpawnLeft.position;
                 break;
             
             case Node.SpawnPos.right :
-                originPos = bande.posSpawnRight.position;
-                goLeft = true;
+                rectTransform.position = bande.posSpawnRight.position;
                 break;
         }
+
+        currentIndex = -1;
+        timer = 0;
+
+        waypoints = currentWaypoints;
     }
-    
+
 
     public void MoveNode(float speed)
     {
-        timer += Time.deltaTime * speed;
+        timer -= Time.deltaTime;
 
-        if(goLeft) 
-            rectTransform.position = originPos + (new Vector3(-moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);
-        
-        else
-            rectTransform.position = originPos + (new Vector3(moveX.Evaluate(timer), moveY.Evaluate(timer), 0) * 225);
+        if (timer <= 0) 
+        {
+                currentIndex += 1;
+                float distance = Vector3.Distance(rectTransform.position, waypoints[currentIndex].position);
+                float ratio = distance / movementSpeed;
+
+                rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
+                timer = ratio;
+        }
     }
     
 
@@ -87,6 +98,8 @@ public class MusicNode : MonoBehaviour
         image.enabled = false;
         GetComponentInChildren<TextMeshProUGUI>().enabled = false;
         erased = true;
+
+        currentBande.PlayVFXDestroy();
     }
 
     public void ReappearNode()

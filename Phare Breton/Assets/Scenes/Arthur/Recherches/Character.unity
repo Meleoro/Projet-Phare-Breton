@@ -441,11 +441,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2705547862337083675, guid: b4740c0ad6eddf844aa95dfb3944f7e5,
-        type: 3}
-      propertyPath: trigger
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7037001289364638253, guid: b4740c0ad6eddf844aa95dfb3944f7e5,
         type: 3}
       propertyPath: m_Name
@@ -472,7 +467,7 @@ PrefabInstance:
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.2
+      value: -14.94
       objectReference: {fileID: 0}
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
@@ -482,7 +477,7 @@ PrefabInstance:
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 34.3
+      value: 37.99
       objectReference: {fileID: 0}
     - target: {fileID: 3998944032081651606, guid: 80e77516c8e3c02428956e2edea2ab29,
         type: 3}
@@ -799,7 +794,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-77006
+  m_Name: pb_Mesh-770830
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -964,7 +959,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-78520
+  m_Name: pb_Mesh-770950
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3063,6 +3058,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6296503458671365497, guid: 9f83174d22e644c4c9585dc37916e446,
+        type: 3}
+      propertyPath: ampouleActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8068703083323967954, guid: 9f83174d22e644c4c9585dc37916e446,
         type: 3}
       propertyPath: m_Name
@@ -3159,10 +3159,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essentiel
       objectReference: {fileID: 0}
+    - target: {fileID: 1174603870151915392, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4347323062234379913, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 4788136811231265027, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: m_VolumeLayerMask.m_Bits
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 6087425077177480877, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
@@ -3171,9 +3181,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6564153844785076590, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
+      propertyPath: Melodies.Array.data[0].bandes.Array.data[0]
+      value: 
+      objectReference: {fileID: 3978613970394017375, guid: dbb600a93ae077b47b3698ee6fc1dce9,
+        type: 3}
+    - target: {fileID: 6564153844785076590, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
       propertyPath: Melodies.Array.data[0].bandes.Array.data[1]
       value: 
       objectReference: {fileID: 8980207317900242794, guid: a131157db89dcab44abc9ebb7144ee13,
+        type: 3}
+    - target: {fileID: 6564153844785076590, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: Melodies.Array.data[1].bandes.Array.data[0]
+      value: 
+      objectReference: {fileID: 3978613970394017375, guid: dbb600a93ae077b47b3698ee6fc1dce9,
         type: 3}
     - target: {fileID: 6564153844785076590, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
@@ -3293,6 +3315,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
         type: 3}
+      propertyPath: VFXEchec
+      value: 
+      objectReference: {fileID: 4328004115717042907, guid: 6a3965dd92461e3479e0f91d60642e8a,
+        type: 3}
+    - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
+      propertyPath: VFXReussite
+      value: 
+      objectReference: {fileID: 1476729043392410367, guid: 61cf1d225cecd554db18b3a3fc8635f3,
+        type: 3}
+    - target: {fileID: 8334704342451035898, guid: a159f5861fb015d4d901249fa2f958d9,
+        type: 3}
       propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.data[0]
       value: 1
       objectReference: {fileID: 0}
@@ -3308,6 +3342,7 @@ PrefabInstance:
       objectReference: {fileID: 1328207582}
     m_RemovedComponents:
     - {fileID: 3810519113055759133, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
+    - {fileID: 7262588645257634159, guid: a159f5861fb015d4d901249fa2f958d9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

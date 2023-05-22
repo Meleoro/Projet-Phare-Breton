@@ -14,6 +14,10 @@ public class CharacterNotes : MonoBehaviour
     private int currentBande;
     private int currentMelody;
 
+    [Header("References")] 
+    [SerializeField] private ParticleSystem VFXReussite;
+    [SerializeField] private ParticleSystem VFXEchec;
+
 
     private void Start()
     {
@@ -58,7 +62,7 @@ public class CharacterNotes : MonoBehaviour
 
             // On commence le mini jeu
             GameObject newBande = Instantiate(bandes[0]);
-            newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
+            newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
 
             bandesObjects.Add(newBande);
 
@@ -73,7 +77,7 @@ public class CharacterNotes : MonoBehaviour
         if(currentBande < bandes.Count)
         {
             GameObject newBande = Instantiate(bandes[currentBande]);
-            newBande.GetComponent<BandeJeuDeRythme>().LaunchGame();
+            newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
 
             bandesObjects.Add(newBande);
 
@@ -85,7 +89,8 @@ public class CharacterNotes : MonoBehaviour
             mainSript.noControl = false;
             
             ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
-
+            DoVFXReussite();
+    
             UnlockPower();
 
             for (int i = 0; i < bandes.Count; i++)
@@ -115,6 +120,20 @@ public class CharacterNotes : MonoBehaviour
         }
     }
 
+
+    public void DoVFXReussite()
+    {
+        ParticleSystem newParticle = Instantiate(VFXReussite, transform.position, Quaternion.Euler(-90, 0, 0));
+        
+        Destroy(newParticle.gameObject, 10f);
+    }
+
+    public void DoVFXEchec()
+    {
+        ParticleSystem newParticle = Instantiate(VFXEchec, transform.position, Quaternion.Euler(-90, 0, 0));
+        
+        Destroy(newParticle.gameObject, 10f);
+    }
 }
 
 

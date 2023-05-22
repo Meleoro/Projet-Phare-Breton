@@ -101,8 +101,8 @@ public class CameraMovements : MonoBehaviour
 
         if (goToSave)
         {
-            transform.position = Vector3.Lerp(transform.position, savePosRythme, Time.deltaTime * 2.5f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, saveRotRythme, Time.deltaTime * 3);
+            transform.position = Vector3.Lerp(transform.position, savePosRythme, Time.deltaTime * 5.5f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, saveRotRythme, Time.deltaTime * 6);
 
             if (Vector3.Distance(transform.position, savePosRythme) < 0.01f)
             {

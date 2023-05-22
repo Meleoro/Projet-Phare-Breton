@@ -5,20 +5,21 @@ using DG.Tweening;
 
 public class TriggerGrue : MonoBehaviour
 {
-    [Header("Param�tres")]
+    [Header("Parametres")]
     [SerializeField] private List<Transform> positionsGrue;
     [SerializeField] private float grueSpeed;
     [SerializeField] private float distanceTriggerGrue;
 
-    [Header("R�f�rences")]
+    [Header("References")]
     [SerializeField] private GameObject grueObject;
     private GameObject currentGrue;
-    [SerializeField] private BoxCollider trigger;
-    [SerializeField] private Animator animGrue;
+    private BoxCollider trigger;
+    private Animator animGrue;
+    [SerializeField] private ParticleSystem plumeGrueVFX;
 
     [Header("Gizmos")]
     [SerializeField] private bool onlyOnSelected;
-    [SerializeField] private Color triggerColor;
+    private Color triggerColor;
     [SerializeField] private Color pathColor;
 
     [Header("Autres")]
@@ -84,12 +85,14 @@ public class TriggerGrue : MonoBehaviour
 
 
         yield return new WaitForSeconds(0.9f);
+        
+        StartCoroutine(VFXSpawn(4));
 
 
         float distance = Vector3.Distance(positionsGrue[index].position, positionsGrue[index + 1].position);
         float speed = distance / grueSpeed;
 
-        Vector3 midPos = positionsGrue[index].position + direction.normalized * distance * 0.5f;
+        Vector3 midPos = positionsGrue[index].position + direction.normalized * (distance * 0.5f);
 
         currentGrue.transform.DOMoveX(midPos.x, speed);
         currentGrue.transform.DOMoveZ(midPos.z, speed);
@@ -98,6 +101,8 @@ public class TriggerGrue : MonoBehaviour
 
 
         yield return new WaitForSeconds(speed);
+        
+        StartCoroutine(VFXSpawn(4));
 
 
         if (index + 1 >= positionsGrue.Count - 1)
@@ -106,7 +111,6 @@ public class TriggerGrue : MonoBehaviour
             DOTween.KillAll();
             
             Destroy(currentGrue);
-            Destroy(gameObject);
         }
 
         else
@@ -128,6 +132,20 @@ public class TriggerGrue : MonoBehaviour
 
 
             launchFly = false;
+        }
+    }
+
+    IEnumerator VFXSpawn(int occurence)
+    {
+        ParticleSystem newParticle = Instantiate(plumeGrueVFX, currentGrue.transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+        yield return new WaitForSeconds(0.2f);
+
+        occurence -= 1;
+        
+        if (occurence > 0)
+        {
+            StartCoroutine(VFXSpawn(occurence));
         }
     }
 
