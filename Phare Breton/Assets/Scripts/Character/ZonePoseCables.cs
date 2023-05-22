@@ -94,7 +94,7 @@ public class ZonePoseCables : MonoBehaviour
             // Boite
             else if (objectsAtRange[i].TryGetComponent(out Boite currentBoite))
             {
-                if (!Physics.Raycast(objectsAtRange[i].transform.position, Vector3.up, 1.5f, ignoreLayer))
+                if (RaycastOnBox(objectsAtRange[i].transform.position, 1.5f))
                 {
                     if (transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
                     {
@@ -125,6 +125,33 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
+        }
+    }
+
+
+    public bool RaycastOnBox(Vector3 origin, float distance)
+    {
+        RaycastHit raycastHit;
+
+        if (distance < 0)
+            return true;
+        
+        if (Physics.Raycast(origin, Vector3.up, out raycastHit, distance, ignoreLayer))
+        {
+            if (!raycastHit.collider.isTrigger)
+            {
+                return false;
+            }
+z
+            else
+            {
+                return RaycastOnBox(raycastHit.point + Vector3.up * 0.01f, distance - raycastHit.distance);
+            }
+        }
+
+        else
+        {
+            return true;
         }
     }
     
