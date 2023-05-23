@@ -15,7 +15,10 @@ public class PauseManager : MonoBehaviour
     private int currentButton = 1;
     private bool isMoving;
 
+    public float screenSizeMultiplicator;
+
     private float saveX;
+    private float screenSize;
 
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
@@ -31,6 +34,8 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
+        screenSize = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
+
         saveX = textsButtons[currentButton - 1].rectTransform.position.x;
 
         QuitPause();
@@ -40,6 +45,8 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
+        screenSize = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
+
         if (pauseOpen)
         {
             if ((up || down) && !isMoving)
@@ -81,7 +88,7 @@ public class PauseManager : MonoBehaviour
         
         textsButtons[currentButton - 1].DOFade(1, 0.5f).OnComplete((() => isMoving = false));
         textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, 0.3f);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenSize * screenSizeMultiplicator, 0.3f);
 
         notesImages[currentButton - 1].DOFade(1, 0.3f);
         notesImages[currentButton - 1].transform.DOScale(new Vector3(1.4f, 1.4f, 1.4f), 0.3f);
@@ -155,11 +162,11 @@ public class PauseManager : MonoBehaviour
         // Textes
         textsButtons[currentButton].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
         textsButtons[currentButton].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
-        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - 50, duration);
+        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - screenSize * screenSizeMultiplicator, duration);
 
         textsButtons[currentButton - 1].DOFade(1, duration);
         textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), duration);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenSize * screenSizeMultiplicator, duration);
 
 
         // Images 
@@ -186,11 +193,11 @@ public class PauseManager : MonoBehaviour
         // Textes
         textsButtons[currentButton - 2].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
         textsButtons[currentButton - 2].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
-        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - 50, duration);
+        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - screenSize * screenSizeMultiplicator, duration);
 
         textsButtons[currentButton - 1].DOFade(1, duration);
         textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), duration);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenSize * screenSizeMultiplicator, duration);
 
 
         // Images 
