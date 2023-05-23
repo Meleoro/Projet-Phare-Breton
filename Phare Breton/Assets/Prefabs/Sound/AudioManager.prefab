@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3274826481607473877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 846.30615, y: -70.79244, z: 1887.0074}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ebcbd981f598849a112883f55905d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundList: []
+  soundList:
+  - name: PlayerSounds
+    listSoundIdentities:
+    - name: SndWalk-01
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndWalk-02
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndWalk-03
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndWalkRubble-01
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndWalkRubble-02
+      audioClip: {fileID: 0}
+      volume: 1
+  - name: Interactibles
+    listSoundIdentities: []
+  - name: RythmGame
+    listSoundIdentities:
+    - name: MusicRythmGame-01
+      audioClip: {fileID: 8300000, guid: 238a7fdc43824fa4cba8139324547f20, type: 3}
+      volume: 1
+    - name: MusicRythmGame-02
+      audioClip: {fileID: 8300000, guid: c40a0d6febd4e3c439386947b0cdd471, type: 3}
+      volume: 1
+    - name: MusicRythmGame-03
+      audioClip: {fileID: 8300000, guid: eb974e518f46f6c4caf4c9cb910609da, type: 3}
+      volume: 1
   audioSources: []
-  masterVolume: 0
+  masterVolume: 1
   mainMenu: 0
