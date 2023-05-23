@@ -12,8 +12,12 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private RectTransform menuObject;
     private int currentButton = 1;
     private bool isMoving;
+    public float multiplier1;
+    private float multiplier2;
+    private float screenWidth;
+    private float screenHeight;
 
-    
+
     [Header("Shake")]
     public float amplitude;
     public float amplitudeRot;
@@ -26,10 +30,12 @@ public class MenuPrincManager : MonoBehaviour
     private Vector3 posScroll;
     private Vector3 posModificateur;
 
+
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
+
 
     [Header("Inputs")] 
     private bool pause;
@@ -50,6 +56,9 @@ public class MenuPrincManager : MonoBehaviour
 
     private void Update()
     {
+        screenWidth = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
+        screenHeight = ReferenceManager.Instance.cameraReference._camera.pixelHeight;
+
         MoveBande();
 
         if ((up || down) && !isMoving)
