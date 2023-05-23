@@ -16,10 +16,15 @@ public class MenuPrincManager : MonoBehaviour
     
     [Header("Shake")]
     public float amplitude;
+    public float amplitudeRot;
     public float duration;
     private Vector3 wantedPos;
     private Vector2 modificateur;
     private Vector2 modificateur2;
+    private float modificateurRot;
+    private float modificateurRot2;
+    private Vector3 posScroll;
+    private Vector3 posModificateur;
 
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
@@ -65,12 +70,17 @@ public class MenuPrincManager : MonoBehaviour
 
     public void MoveBande()
     {
-        menuObject.position = Vector3.Lerp(menuObject.position, wantedPos + new Vector3(modificateur.x + modificateur2.x, modificateur.y + modificateur2.y, 0), Time.deltaTime);
+        posScroll =  Vector3.Lerp(posScroll, wantedPos, Time.deltaTime * 1f);
+        posModificateur = Vector3.Lerp(posModificateur, new Vector3(modificateur.x + modificateur2.x, modificateur.y + modificateur2.y, 0), Time.deltaTime * 0.2f);
+        
+        menuObject.position = posScroll + posModificateur;
+        menuObject.rotation = Quaternion.Euler(0,0, Mathf.Lerp(menuObject.rotation.z, modificateurRot + modificateurRot2, Time.deltaTime * 0.5f));
     }
 
     private IEnumerator FindNewShakePos()
     {
         modificateur = new Vector2(Random.Range(-amplitude, amplitude), Random.Range(-amplitude, amplitude));
+        modificateurRot = Random.Range(-amplitudeRot, amplitudeRot);
         
         yield return new WaitForSeconds(duration);
 
@@ -82,6 +92,7 @@ public class MenuPrincManager : MonoBehaviour
         yield return new WaitForSeconds(duration / 2);
         
         modificateur2 = new Vector2(Random.Range(-amplitude, amplitude), Random.Range(-amplitude, amplitude));
+        modificateurRot2 = Random.Range(-amplitudeRot, amplitudeRot);
         
         yield return new WaitForSeconds(duration / 2);
 
@@ -95,6 +106,7 @@ public class MenuPrincManager : MonoBehaviour
         menuObject.gameObject.SetActive(true);
 
         wantedPos = menuObject.position;
+        posScroll = wantedPos;
 
         textsButtons[currentButton - 1].DOFade(1, duration).OnComplete((() => isMoving = false));
         textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
