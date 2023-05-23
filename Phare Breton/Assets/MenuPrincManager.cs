@@ -180,21 +180,15 @@ public class MenuPrincManager : MonoBehaviour
         // Images 
         notesImages[currentButton].DOFade(0.4f, duration);
         notesImages[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        //notesImages[currentButton].transform.DOMoveX(notesImages[currentButton].rectTransform.position.x - 10, duration);
 
         notesImages[currentButton - 1].DOFade(1, duration);
         notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.4f, 1.4f, 1.4f), duration);
-        //notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);
         
         
         // Bandes
         bandesImages[currentButton].DOFade(0f, duration);
-        /*notesImages[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        notesImages[currentButton].transform.DOMoveX(notesImages[currentButton].rectTransform.position.x - 10, duration);*/
 
         bandesImages[currentButton - 1].DOFade(1, duration);
-        /*notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
-        notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);*/
     }
 
     public void GoDown()
@@ -218,21 +212,15 @@ public class MenuPrincManager : MonoBehaviour
         // Images 
         notesImages[currentButton - 2].DOFade(0.4f, duration);
         notesImages[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        //notesImages[currentButton - 2].transform.DOMoveX(notesImages[currentButton - 2].rectTransform.position.x - 10, duration);
         
         notesImages[currentButton - 1].DOFade(1, duration);
         notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.4f, 1.4f, 1.4f), duration);
-        //notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);
         
         
         // Bandes
         bandesImages[currentButton - 2].DOFade(0f, duration);
-        /*notesImages[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        notesImages[currentButton - 2].transform.DOMoveX(notesImages[currentButton - 2].rectTransform.position.x - 10, duration);*/
         
         bandesImages[currentButton - 1].DOFade(1, duration);
-        /*notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
-        notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);*/
     }
     
     

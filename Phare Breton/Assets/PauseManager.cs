@@ -15,9 +15,12 @@ public class PauseManager : MonoBehaviour
     private int currentButton = 1;
     private bool isMoving;
 
+    private float saveX;
+
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
     [SerializeField] private List<Image> notesImages = new List<Image>();
+    [SerializeField] private List<Image> bandesImages = new List<Image>();
 
     [Header("Inputs")] 
     private bool pause;
@@ -28,6 +31,8 @@ public class PauseManager : MonoBehaviour
 
     private void Start()
     {
+        saveX = textsButtons[currentButton - 1].rectTransform.position.x;
+
         QuitPause();
         currentButton = 1;
     }
@@ -75,14 +80,26 @@ public class PauseManager : MonoBehaviour
         pauseOpen = true;
         
         textsButtons[currentButton - 1].DOFade(1, 0.5f).OnComplete((() => isMoving = false));
-        textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), 0.5f);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 30, 0.5f);
-        
+        textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, 0.3f);
+
+        notesImages[currentButton - 1].DOFade(1, 0.3f);
+        notesImages[currentButton - 1].transform.DOScale(new Vector3(1.4f, 1.4f, 1.4f), 0.3f);
+
         isMoving = true;
     }
 
     public void QuitPause()
     {
+        DOTween.KillAll();
+
+        textsButtons[currentButton - 1].DOFade(0.5f, 0);
+        textsButtons[currentButton - 1].transform.DOScale(new Vector3(1f, 1f, 1f), 0);
+        textsButtons[currentButton - 1].transform.DOMoveX(saveX, 0);
+
+        notesImages[currentButton - 1].DOFade(1, 0);
+        notesImages[currentButton - 1].transform.DOScale(new Vector3(1, 1, 1), 0);
+
         pauseObject.gameObject.SetActive(false);
         ReferenceManager.Instance.characterReference.noControl = false;
         
@@ -130,32 +147,64 @@ public class PauseManager : MonoBehaviour
 
     public void GoUp()
     {
-        pauseObject.DOMoveY(pauseObject.position.y - 125, 0.5f).OnComplete((() => isMoving = false));
+        float duration = 0.3f;
 
         isMoving = true;
+        saveX = textsButtons[currentButton - 1].rectTransform.position.x;
 
-        textsButtons[currentButton].DOFade(0.5f, 0.5f);
-        textsButtons[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), 0.5f);
-        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - 30, 0.5f);
-        
-        textsButtons[currentButton - 1].DOFade(1, 0.5f);
-        textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), 0.5f);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 30, 0.5f);
+        // Textes
+        textsButtons[currentButton].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
+        textsButtons[currentButton].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
+        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - 50, duration);
+
+        textsButtons[currentButton - 1].DOFade(1, duration);
+        textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+
+
+        // Images 
+        notesImages[currentButton].DOFade(0.4f, duration);
+        notesImages[currentButton].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
+
+        notesImages[currentButton - 1].DOFade(1, duration);
+        notesImages[currentButton - 1].transform.DOScale(new Vector3(1.4f, 1.4f, 1.4f), duration);
+
+
+        // Bandes
+       /* bandesImages[currentButton].DOFade(0f, duration);
+
+        bandesImages[currentButton - 1].DOFade(1, duration);*/
     }
 
     public void GoDown()
     {
-        pauseObject.DOMoveY(pauseObject.position.y + 125, 0.5f).OnComplete((() => isMoving = false));
-        
+        float duration = 0.3f;
+
         isMoving = true;
-        
-        textsButtons[currentButton - 2].DOFade(0.5f, 0.5f);
-        textsButtons[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), 0.5f);
-        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - 30, 0.5f);
-        
-        textsButtons[currentButton - 1].DOFade(1, 0.5f);
-        textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), 0.5f);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 30, 0.5f);
+        saveX = textsButtons[currentButton - 1].rectTransform.position.x;
+
+        // Textes
+        textsButtons[currentButton - 2].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
+        textsButtons[currentButton - 2].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
+        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - 50, duration);
+
+        textsButtons[currentButton - 1].DOFade(1, duration);
+        textsButtons[currentButton - 1].transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+
+
+        // Images 
+        notesImages[currentButton - 2].DOFade(0.4f, duration);
+        notesImages[currentButton - 2].transform.DOScale(new Vector3(1f, 1f, 1f), duration);
+
+        notesImages[currentButton - 1].DOFade(1, duration);
+        notesImages[currentButton - 1].transform.DOScale(new Vector3(1.4f, 1.4f, 1.4f), duration);
+
+
+        // Bandes
+        /*bandesImages[currentButton - 2].DOFade(0f, duration);
+
+        bandesImages[currentButton - 1].DOFade(1, duration);*/
     }
     
     
