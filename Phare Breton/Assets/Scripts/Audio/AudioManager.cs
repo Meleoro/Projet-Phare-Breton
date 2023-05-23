@@ -62,7 +62,12 @@ public class AudioManager : MonoBehaviour
         float volumeToGet = currentAudioSource.volume;
         currentAudioSource.volume = 0;
         currentAudioSource.DOFade(volumeToGet, timeToFade).SetDelay(timeBeforeFadingIn).SetUpdate(true);
+    }
 
+    public void FadeOutAudioSource(float timeBeforeFadingOut, float timeToFade, int audioSourceId = 0, AudioSource audioSource = null)
+    {
+        AudioSource currentAudioSource = audioSource != null ? audioSource : audioSources[audioSourceId];
+        currentAudioSource.DOFade(0, timeToFade).SetDelay(timeBeforeFadingOut).SetUpdate(true);
     }
 
     public void SetMasterVolume(float newMasterVolume)
