@@ -146,15 +146,31 @@ public class Porte : MonoBehaviour
 
         if (currentObject.CompareTag("Interactible"))
         {
-            if(currentObject.GetComponent<ObjetInteractible>().isStart)
-                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
-        
-            else 
-                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
+            if (currentObject.GetComponent<ObjetInteractible>().isStart)
+            {
+                currentScript.rbEnd.isKinematic = true;
+                
+                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());   
+            }
+
+            else
+            {
+                currentScript.rbOrigin.isKinematic = true;
+                
+                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());                
+            }
         }
         else
         {
-            currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
+            if (currentScript.rbOrigin == ReferenceManager.Instance.characterReference.rb)
+            {
+                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
+            }
+
+            else
+            {
+                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
+            }
         }
 
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
@@ -178,7 +194,7 @@ public class Porte : MonoBehaviour
         newScriptCable.InitialiseStartEnd(currentObject, startNewCable);
 
         newScriptCreator.CreateNodes(currentObject.GetComponentInChildren<SpringJoint>(), startNewCable.GetComponent<SpringJoint>(), null, null,
-            currentObject.GetComponent<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
+            currentObject.GetComponentInChildren<Rigidbody>(), startNewCable.GetComponent<Rigidbody>());
 
 
         // On assigne tous ces éléments à la porte
