@@ -6,9 +6,14 @@ using UnityEngine;
 
 public class EntreePorte : MonoBehaviour
 {
+    [Header("Général")]
     [Range(1, 2)] public int numeroEntree;
     public bool staticCamera;
-    
+
+    [Header("Lights")] 
+    public GameObject activatedLights;
+    public GameObject desactivatedLights;
+
     [Header("Gestion des alpha")]
     public List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
     public float distanceMinCamera = 1;     // Distance à partir de laquelle on va calculer un alpha différent de 0
@@ -36,7 +41,7 @@ public class EntreePorte : MonoBehaviour
                 // Changements camera
                 ReferenceManager.Instance.cameraReference.isStatic = true;
 
-                GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera);
+                GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera, activatedLights, desactivatedLights);
             }
         }
     }

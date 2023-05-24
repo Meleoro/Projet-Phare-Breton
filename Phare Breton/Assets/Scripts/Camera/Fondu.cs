@@ -27,7 +27,7 @@ public class Fondu : MonoBehaviour
     }
 
 
-    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera)
+    public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera, GameObject activatedL, GameObject desactivatedL)
     {
         SaveDoorCrossed();
         
@@ -42,6 +42,12 @@ public class Fondu : MonoBehaviour
         
         ActualisePos(objectNewPos, cameraNewPos, movedObject);
         doorScript.EnterDoor(movedObject, doorNumber);
+
+        if(activatedL != null)
+            activatedL.SetActive(true);
+        
+        if(desactivatedL != null)
+            desactivatedL.SetActive(false);
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);

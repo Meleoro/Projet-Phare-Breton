@@ -125,16 +125,16 @@ public class Porte : MonoBehaviour
     }
 
     
-    public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera)
+    public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera, GameObject activatedLight, GameObject desactivatedLight)
     {
         if (doorNumber == 1)
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber, staticCamera));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
 
         else
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber, staticCamera));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
     }
 

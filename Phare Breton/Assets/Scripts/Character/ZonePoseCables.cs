@@ -96,18 +96,30 @@ public class ZonePoseCables : MonoBehaviour
             {
                 if (RaycastOnBox(objectsAtRange[i].transform.position, 1.5f))
                 {
-                    if (transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
+                    if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
                     {
-                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
-                        ReferenceManager.Instance.characterReference.nearBoxesUp.Add(objectsAtRange[i].gameObject);
-                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                        if (ReferenceManager.Instance.characterReference.transform.position.y - (objectsAtRange[i].transform.position.y -
+                                                    objectsAtRange[i].transform.localScale.y * 0.5f) - 0.5f > 0)
+                        {
+                            ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                            ReferenceManager.Instance.characterReference.nearBoxesUp.Add(objectsAtRange[i].gameObject);
+                            ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                        }
                     }
 
                     else
                     {
-                        ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
-                        ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
-                        ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                        Vector2 direction = ReferenceManager.Instance.characterReference.movementScript
+                            .stockageDirection;
+
+                        if (!Physics.Raycast(transform.position,
+                                ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(
+                                    new Vector3(direction.x, 0, direction.y)), 1.5f))
+                        {
+                            ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                            ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
+                            ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                        }
                     }
                 }
             }
