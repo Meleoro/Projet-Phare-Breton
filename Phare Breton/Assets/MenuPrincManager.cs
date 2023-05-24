@@ -12,8 +12,12 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private RectTransform menuObject;
     private int currentButton = 1;
     private bool isMoving;
+    public float multiplier1;
+    private float multiplier2;
+    private float screenWidth;
+    private float screenHeight;
 
-    
+
     [Header("Shake")]
     public float amplitude;
     public float amplitudeRot;
@@ -26,10 +30,12 @@ public class MenuPrincManager : MonoBehaviour
     private Vector3 posScroll;
     private Vector3 posModificateur;
 
+
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
+
 
     [Header("Inputs")] 
     private bool pause;
@@ -50,6 +56,9 @@ public class MenuPrincManager : MonoBehaviour
 
     private void Update()
     {
+        screenWidth = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
+        screenHeight = ReferenceManager.Instance.cameraReference._camera.pixelHeight;
+
         MoveBande();
 
         if ((up || down) && !isMoving)
@@ -180,21 +189,15 @@ public class MenuPrincManager : MonoBehaviour
         // Images 
         notesImages[currentButton].DOFade(0.4f, duration);
         notesImages[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        //notesImages[currentButton].transform.DOMoveX(notesImages[currentButton].rectTransform.position.x - 10, duration);
 
         notesImages[currentButton - 1].DOFade(1, duration);
         notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.4f, 1.4f, 1.4f), duration);
-        //notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);
         
         
         // Bandes
         bandesImages[currentButton].DOFade(0f, duration);
-        /*notesImages[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        notesImages[currentButton].transform.DOMoveX(notesImages[currentButton].rectTransform.position.x - 10, duration);*/
 
         bandesImages[currentButton - 1].DOFade(1, duration);
-        /*notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
-        notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);*/
     }
 
     public void GoDown()
@@ -218,21 +221,15 @@ public class MenuPrincManager : MonoBehaviour
         // Images 
         notesImages[currentButton - 2].DOFade(0.4f, duration);
         notesImages[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        //notesImages[currentButton - 2].transform.DOMoveX(notesImages[currentButton - 2].rectTransform.position.x - 10, duration);
         
         notesImages[currentButton - 1].DOFade(1, duration);
         notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.4f, 1.4f, 1.4f), duration);
-        //notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);
         
         
         // Bandes
         bandesImages[currentButton - 2].DOFade(0f, duration);
-        /*notesImages[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        notesImages[currentButton - 2].transform.DOMoveX(notesImages[currentButton - 2].rectTransform.position.x - 10, duration);*/
         
         bandesImages[currentButton - 1].DOFade(1, duration);
-        /*notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
-        notesImages[currentButton - 1].transform.DOMoveX(notesImages[currentButton - 1].rectTransform.position.x + 10, duration);*/
     }
     
     
