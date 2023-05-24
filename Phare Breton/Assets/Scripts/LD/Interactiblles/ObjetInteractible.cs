@@ -148,42 +148,15 @@ public class ObjetInteractible : MonoBehaviour
 
     public void MagnetEffect()
     {
-        if (isMoved)
-        {
-            float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
-            magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
+        float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
+        magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
+        
+        transform.rotation = magnetedPos.rotation;
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength), 
+            Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
 
-            transform.rotation = magnetedPos.rotation;
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength),
-                Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
-
-
-            float difference = magnetedPos.position.y - transform.position.y;
-
-            rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
-        }
-
-        else
-        {
-            rb.isKinematic = true;
-        }
-       
-
-
-        /*if (difference > 0)
-        {
-            rb.AddForce(new Vector3(0, (-Physics.gravity.y + difference * 3) * Time.deltaTime, 0),
-                ForceMode.VelocityChange);
-        }
-
-        else if (difference < -0.1f)
-        {
-            rb.AddForce(new Vector3(0, (difference * 3) * Time.deltaTime, 0),
-                ForceMode.VelocityChange);
-        }
-
-        else 
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);*/
+        float difference = magnetedPos.position.y - transform.position.y;
+        rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
     }
 
 
