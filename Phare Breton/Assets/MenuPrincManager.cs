@@ -10,10 +10,12 @@ using UnityEngine.SceneManagement;
 public class MenuPrincManager : MonoBehaviour
 {
     [SerializeField] private RectTransform menuObject;
+    [SerializeField] private Camera _camera;
     private int currentButton = 1;
     private bool isMoving;
     public float multiplier1;
-    private float multiplier2;
+    public float multiplier2;
+    public float multiplier3;
     private float screenWidth;
     private float screenHeight;
 
@@ -46,6 +48,9 @@ public class MenuPrincManager : MonoBehaviour
 
     private void Start()
     {
+        screenWidth = _camera.pixelWidth;
+        screenHeight = _camera.pixelHeight;
+        
         OpenMenu();
         StartCoroutine(FindNewShakePos());
         StartCoroutine(FindNewShakePos2());
@@ -56,8 +61,8 @@ public class MenuPrincManager : MonoBehaviour
 
     private void Update()
     {
-        screenWidth = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
-        screenHeight = ReferenceManager.Instance.cameraReference._camera.pixelHeight;
+        screenWidth = _camera.pixelWidth;
+        screenHeight = _camera.pixelHeight;
 
         MoveBande();
 
@@ -88,7 +93,7 @@ public class MenuPrincManager : MonoBehaviour
 
     private IEnumerator FindNewShakePos()
     {
-        modificateur = new Vector2(Random.Range(-amplitude, amplitude), Random.Range(-amplitude, amplitude));
+        modificateur = new Vector2(Random.Range(-amplitude * screenWidth * multiplier3, amplitude * screenWidth * multiplier3), Random.Range(-amplitude * screenHeight * multiplier3, amplitude * screenHeight * multiplier3));
         modificateurRot = Random.Range(-amplitudeRot, amplitudeRot);
         
         yield return new WaitForSeconds(duration);
@@ -100,7 +105,7 @@ public class MenuPrincManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration / 2);
         
-        modificateur2 = new Vector2(Random.Range(-amplitude, amplitude), Random.Range(-amplitude, amplitude));
+        modificateur2 = new Vector2(Random.Range(-amplitude * screenWidth * multiplier3, amplitude * screenWidth * multiplier3), Random.Range(-amplitude * screenHeight * multiplier3, amplitude * screenHeight * multiplier3));
         modificateurRot2 = Random.Range(-amplitudeRot, amplitudeRot);
         
         yield return new WaitForSeconds(duration / 2);
@@ -119,7 +124,7 @@ public class MenuPrincManager : MonoBehaviour
 
         textsButtons[currentButton - 1].DOFade(1, duration).OnComplete((() => isMoving = false));
         textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.2f, 1.2f, 1.2f), duration);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenWidth * multiplier1, duration);
         
         notesImages[currentButton - 1].DOFade(1, duration);
         notesImages[currentButton - 1].transform.DOScale(new Vector3( 1.4f, 1.4f, 1.4f), duration);
@@ -172,18 +177,18 @@ public class MenuPrincManager : MonoBehaviour
     {
         float duration = 0.3f;
 
-        wantedPos += Vector3.down * 10f;
+        wantedPos += Vector3.down * (screenHeight * multiplier2);
 
         isMoving = true;
 
         // Textes
         textsButtons[currentButton].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
         textsButtons[currentButton].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - 50, duration);
+        textsButtons[currentButton].transform.DOMoveX(textsButtons[currentButton].rectTransform.position.x - screenWidth * multiplier1, duration);
 
         textsButtons[currentButton - 1].DOFade(1, duration);
         textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.3f, 1.3f, 1.3f), duration);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenWidth * multiplier1, duration);
         
         
         // Images 
@@ -204,18 +209,18 @@ public class MenuPrincManager : MonoBehaviour
     {
         float duration = 0.3f;
         
-        wantedPos -= Vector3.down * 10f;
+        wantedPos -= Vector3.down * (screenHeight * multiplier2);
         
         isMoving = true;
         
         // Textes
         textsButtons[currentButton - 2].DOFade(0.4f, duration).OnComplete(() => isMoving = false);
         textsButtons[currentButton - 2].transform.DOScale(new Vector3( 1f, 1f, 1f), duration);
-        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - 50, duration);
+        textsButtons[currentButton - 2].transform.DOMoveX(textsButtons[currentButton - 2].rectTransform.position.x - screenWidth * multiplier1, duration);
         
         textsButtons[currentButton - 1].DOFade(1, duration);
         textsButtons[currentButton - 1].transform.DOScale(new Vector3( 1.3f, 1.3f, 1.3f), duration);
-        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + 50, duration);
+        textsButtons[currentButton - 1].transform.DOMoveX(textsButtons[currentButton - 1].rectTransform.position.x + screenWidth * multiplier1, duration);
         
         
         // Images 
