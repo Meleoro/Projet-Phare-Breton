@@ -34,7 +34,7 @@ public class CableCreator : MonoBehaviour
     public NodeCable origin;
     public NodeCable end;
     private LineRenderer _lineRenderer;
-    [HideInInspector] public bool isLinked;
+    public bool isLinked;
     private float distanceBetweenNodes;
 
     public List<GameObject> nodesRope = new List<GameObject>();
@@ -292,33 +292,39 @@ public class CableCreator : MonoBehaviour
         {
             if (rbOrigin != null && !lockStart)
             {
-                if (!rbOrigin.isKinematic)
+                if (rbOrigin.CompareTag("Interactible") || rbOrigin.CompareTag("Player"))
                 {
-                    Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
+                    if (!rbOrigin.isKinematic)
+                    {
+                        Vector3 directionResistance = origin.transform.position - rbOrigin.transform.position;
 
-                    float newRatio = (ratioLength - 0.8f) * 5;
-                    
-                    if(!isLinked)
-                        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
-                    
-                    else
-                        rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
+                        float newRatio = (ratioLength - 0.8f) * 5;
+                        
+                        if(rbOrigin.CompareTag("Player"))
+                            ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
+                        
+                        else
+                            rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
+                    }
                 }
             }
 
             if (rbEnd != null && !lockEnd)
             {
-                if (!rbEnd.isKinematic)
+                if (rbEnd.CompareTag("Interactible") || rbEnd.CompareTag("Player"))
                 {
-                    Vector3 directionResistance = end.transform.position - rbEnd.transform.position;
-                    
-                    float newRatio = (ratioLength - 0.8f) * 5;
+                    if (!rbEnd.isKinematic)
+                    {
+                        Vector3 directionResistance = end.transform.position - rbEnd.transform.position;
+                        
+                        float newRatio = (ratioLength - 0.8f) * 5;
 
-                    if(!isLinked) 
-                        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
-                    
-                    else
-                        rbEnd.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
+                        if(rbEnd.CompareTag("Player")) 
+                            ReferenceManager.Instance.characterReference.movementScript.resistanceCable = directionResistance.normalized * newRatio;
+                        
+                        else
+                            rbEnd.GetComponent<ObjetInteractible>().resistanceCable = directionResistance.normalized * newRatio;
+                    }
                 }
             }
         }
@@ -326,45 +332,51 @@ public class CableCreator : MonoBehaviour
         {
             if (rbOrigin != null && !lockStart)
             {
-                if (rbOrigin.isKinematic)
+                if (rbOrigin.CompareTag("Interactible") || rbOrigin.CompareTag("Player"))
                 {
-                    origin.spring1.spring = spring;
-                    origin.spring2.spring = spring;
-                    origin.spring2.damper = damper;
-                }
-                else
-                {
-                    origin.spring1.spring = 0;
-                    origin.spring1.damper = 0;
-                    origin.spring2.spring = spring;
-                
-                    if(!isLinked)
-                        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
-                    
+                    if (rbOrigin.isKinematic)
+                    {
+                        origin.spring1.spring = spring;
+                        origin.spring2.spring = spring;
+                        origin.spring2.damper = damper;
+                    }
                     else
-                        rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
+                    {
+                        origin.spring1.spring = 0;
+                        origin.spring1.damper = 0;
+                        origin.spring2.spring = spring;
+                
+                        if(rbOrigin.CompareTag("Player"))
+                            ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                    
+                        else
+                            rbOrigin.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
+                    }
                 }
             }
 
             if (rbEnd != null && !lockEnd)
             {
-                if (rbEnd.isKinematic)
+                if (rbEnd.CompareTag("Interactible") || rbEnd.CompareTag("Player"))
                 {
-                    end.spring1.spring = spring;
-                    end.spring2.spring = spring;
-                    end.spring2.damper = damper;
-                }
-                else
-                {
-                    end.spring1.spring = spring;
-                    end.spring2.spring = 0;
-                    end.spring2.damper = 0;
-
-                    if(!isLinked)
-                        ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
-                    
+                    if (rbEnd.isKinematic)
+                    {
+                        end.spring1.spring = spring;
+                        end.spring2.spring = spring;
+                        end.spring2.damper = damper;
+                    }
                     else
-                        rbEnd.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
+                    {
+                        end.spring1.spring = spring;
+                        end.spring2.spring = 0;
+                        end.spring2.damper = 0;
+
+                        if(rbEnd.CompareTag("Player"))
+                            ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
+                        
+                        else
+                            rbEnd.GetComponent<ObjetInteractible>().resistanceCable = Vector3.zero;
+                    }
                 }
             }
         }

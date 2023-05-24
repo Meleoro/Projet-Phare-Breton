@@ -11,6 +11,7 @@ public class CharacterNotes : MonoBehaviour
 
     private List<GameObject> bandes = new List<GameObject>();
     private List<GameObject> bandesObjects = new List<GameObject>();
+    public List<bool> wonMelodies = new List<bool>();
     private int currentBande;
     private int currentMelody;
 
@@ -92,6 +93,9 @@ public class CharacterNotes : MonoBehaviour
             DoVFXReussite();
     
             UnlockPower();
+
+            wonMelodies[currentMelody - 1] = true;
+            mainSript.canPlayMusic = false;
 
             for (int i = 0; i < bandes.Count; i++)
             {

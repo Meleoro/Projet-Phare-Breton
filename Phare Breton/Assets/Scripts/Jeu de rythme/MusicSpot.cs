@@ -8,16 +8,21 @@ public class MusicSpot : MonoBehaviour
 
     [SerializeField] private Transform cameraPos;
     [SerializeField] private Transform cameraPos2;
+    
+    
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player") && !other.isTrigger)
+        if (!ReferenceManager.Instance.characterReference.notesScript.wonMelodies[melodyIndex - 1])
         {
-            ReferenceManager.Instance.characterReference.canPlayMusic = true;
-            ReferenceManager.Instance.characterReference.currentMelodyIndex = melodyIndex;
+            if(other.CompareTag("Player") && !other.isTrigger)
+            {
+                ReferenceManager.Instance.characterReference.canPlayMusic = true;
+                ReferenceManager.Instance.characterReference.currentMelodyIndex = melodyIndex;
 
-            ReferenceManager.Instance.cameraReference.posCameraRythme = cameraPos;
-            ReferenceManager.Instance.cameraReference.posCameraRythme2 = cameraPos2;
+                ReferenceManager.Instance.cameraReference.posCameraRythme = cameraPos;
+                ReferenceManager.Instance.cameraReference.posCameraRythme2 = cameraPos2;
+            }
         }
     }
 
