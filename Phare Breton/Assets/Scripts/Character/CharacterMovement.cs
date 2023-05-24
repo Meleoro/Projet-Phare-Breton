@@ -130,7 +130,7 @@ public class CharacterMovement : MonoBehaviour
                     newDirection1 = TryNewDirection(newDirection1, true, 30);
                     newDirection1 *= direction.magnitude;
 
-                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * maxSpeed * ratio;
+                    desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * (maxSpeed * ratio);
                 }
 
                 else
@@ -138,7 +138,7 @@ public class CharacterMovement : MonoBehaviour
                     newDirection2 = TryNewDirection(newDirection2, false, 30);
                     newDirection2 *= direction.magnitude;
                     
-                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * maxSpeed * ratio; 
+                    desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * (maxSpeed * ratio); 
                 }
 
                 Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
