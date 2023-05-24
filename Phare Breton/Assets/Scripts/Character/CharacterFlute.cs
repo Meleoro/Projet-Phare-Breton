@@ -21,6 +21,7 @@ public class CharacterFlute : MonoBehaviour
     public GameObject ropeObject;
     [HideInInspector] public List<GameObject> cables = new List<GameObject>();
     private List<ObjetInteractible> ropedObject = new List<ObjetInteractible>();
+    public List<Rigidbody> staticObjects = new List<Rigidbody>();
 
     [Header("References")] 
     public GameObject zoneFlute;
@@ -386,6 +387,8 @@ public class CharacterFlute : MonoBehaviour
 
         for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
         {
+            manager.scriptsMovedObjects[i].rb.isKinematic = false;
+                
             StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
             
             Boite currentBoite;
@@ -396,7 +399,7 @@ public class CharacterFlute : MonoBehaviour
             
             manager.scriptsMovedObjects[i].isMoved = false;
         }
-
+        
         manager.movedObjects.Clear();
         manager.scriptsMovedObjects.Clear();
 

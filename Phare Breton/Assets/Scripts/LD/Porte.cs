@@ -146,11 +146,19 @@ public class Porte : MonoBehaviour
 
         if (currentObject.CompareTag("Interactible"))
         {
-            if(currentObject.GetComponent<ObjetInteractible>().isStart)
-                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
-        
-            else 
-                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());
+            if (currentObject.GetComponent<ObjetInteractible>().isStart)
+            {
+                currentScript.rbEnd.isKinematic = true;
+                
+                currentScript.ChangeFirstNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());   
+            }
+
+            else
+            {
+                currentScript.rbOrigin.isKinematic = true;
+                
+                currentScript.ChangeLastNode(endOldCable, endOldCable.GetComponent<Rigidbody>(), endOldCable.GetComponent<SpringJoint>());                
+            }
         }
         else
         {
