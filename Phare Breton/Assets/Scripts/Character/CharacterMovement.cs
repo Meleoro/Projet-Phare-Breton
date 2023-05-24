@@ -288,7 +288,7 @@ public class CharacterMovement : MonoBehaviour
                 // Levitation de l'objet
                 if (objects[k].transform.position.y < scripts[k].currentHauteur)
                 {
-                    objects[k].AddForce(Vector3.up * 1000 * Time.deltaTime, ForceMode.Acceleration);
+                    objects[k].AddForce(Vector3.up * (1000 * Time.deltaTime), ForceMode.Acceleration);
                 }
                 else
                 {
