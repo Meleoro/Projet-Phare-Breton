@@ -35,7 +35,7 @@ public class CameraMovements : MonoBehaviour
     private float timerMoveRythme;
     private Vector3 savePosRythme;
     private Quaternion saveRotRythme;
-    private bool goToSave;
+    [HideInInspector] public bool goToSave;
     
     
     [Header("Autres")]
@@ -174,6 +174,7 @@ public class CameraMovements : MonoBehaviour
     {
         timerMoveRythme = 0;
         moveCameraRythme = true;
+        goToSave = false;
 
         savePosRythme = transform.position;
         saveRotRythme = transform.rotation;

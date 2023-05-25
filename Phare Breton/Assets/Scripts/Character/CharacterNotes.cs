@@ -46,30 +46,33 @@ public class CharacterNotes : MonoBehaviour
 
     public void StartPlay(int melodyIndex)
     {
-        currentMelody = melodyIndex;
-
-        if (!collectedNotes[melodyIndex - 1].currentCollectedNotes.Contains(false))
+        if (!ReferenceManager.Instance.cameraReference.goToSave)
         {
-            ReferenceManager.Instance.cameraReference.StartMoveCameraRythme();
-            
-            // On recupere chaque bande de cette melodie
-            bandes.Clear();
+            currentMelody = melodyIndex;
 
-            for(int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes.Count; k++)
+            if (!collectedNotes[melodyIndex - 1].currentCollectedNotes.Contains(false))
             {
-                bandes.Add(ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes[k]);
+                ReferenceManager.Instance.cameraReference.StartMoveCameraRythme();
+            
+                // On recupere chaque bande de cette melodie
+                bandes.Clear();
+
+                for(int k = 0; k < ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes.Count; k++)
+                {
+                    bandes.Add(ReferenceManager.Instance.noteManagerReference.Melodies[melodyIndex - 1].bandes[k]);
+                }
+
+
+                // On commence le mini jeu
+                GameObject newBande = Instantiate(bandes[0]);
+                newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
+
+                bandesObjects.Add(newBande);
+
+                currentBande = 1;
+
+                mainSript.noControl = true;
             }
-
-
-            // On commence le mini jeu
-            GameObject newBande = Instantiate(bandes[0]);
-            newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
-
-            bandesObjects.Add(newBande);
-
-            currentBande = 1;
-
-            mainSript.noControl = true;
         }
     }
 
