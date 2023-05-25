@@ -111,17 +111,17 @@ public class BandeJeuDeRythme : MonoBehaviour
 
 
 
-    public void LaunchGame()
+    public void LaunchGame(int index)
     {
         timer = 0;
         erasedNotes = 0;
             
         ReferenceManager.Instance.cameraReference.durationRythme = duration;
 
-        StartCoroutine(StartGameFeel());
+        StartCoroutine(StartGameFeel(index));
     }
 
-    public IEnumerator StartGameFeel()
+    public IEnumerator StartGameFeel(int index)
     {
         Image imageBarre =  barreAvancement.GetComponent<Image>();
         Image imageFond = fond.GetComponent<Image>();
@@ -147,6 +147,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         yield return new WaitForSeconds(1.6f);
 
+        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+        
         gameStarted = true;
     }
 
