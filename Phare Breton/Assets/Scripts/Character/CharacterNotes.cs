@@ -18,6 +18,7 @@ public class CharacterNotes : MonoBehaviour
     [Header("References")] 
     [SerializeField] private ParticleSystem VFXReussite;
     [SerializeField] private ParticleSystem VFXEchec;
+    [SerializeField] private UINotes UIScript;
 
 
     private void Start()
@@ -41,6 +42,8 @@ public class CharacterNotes : MonoBehaviour
     public void AddNote(int partition, int notePos)
     {
         collectedNotes[partition - 1].currentCollectedNotes[notePos - 1] = true;
+
+        StartCoroutine(UIScript.GainNote(notePos));
     }
 
 
@@ -73,6 +76,12 @@ public class CharacterNotes : MonoBehaviour
 
                 mainSript.noControl = true;
             }
+
+            else
+            {
+                StartCoroutine(ReferenceManager.Instance.characterReference.SayNo());
+                StartCoroutine(UIScript.NoNotes());
+            }
         }
     }
 
@@ -97,6 +106,7 @@ public class CharacterNotes : MonoBehaviour
             
             ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
             DoVFXReussite();
+            StartCoroutine(UIScript.PutEverythingGray(false));
     
             UnlockPower();
 
