@@ -1349,12 +1349,12 @@ MonoBehaviour:
   nodes:
   - nodeType: 0
     spawnPos: 0
-    spawnTiming: 0
+    spawnTiming: 1
     isSpawned: 0
     isDestroyed: 0
-  - nodeType: 1
+  - nodeType: 0
     spawnPos: 1
-    spawnTiming: 0.5
+    spawnTiming: 1.2
     isSpawned: 0
     isDestroyed: 0
   - nodeType: 0
@@ -1363,8 +1363,8 @@ MonoBehaviour:
     isSpawned: 0
     isDestroyed: 0
   - nodeType: 0
-    spawnPos: 1
-    spawnTiming: 3.5
+    spawnPos: 0
+    spawnTiming: 1.9
     isSpawned: 0
     isDestroyed: 0
   - nodeType: 1
@@ -1428,9 +1428,11 @@ MonoBehaviour:
   - {fileID: 6268505491097976864}
   - {fileID: 3458284157336102081}
   - {fileID: 278766947231472281}
+  canvaVFX: {fileID: 0}
   VFXNoteDestroy: {fileID: 3398435743917716089}
   nodesCreated: []
   stop: 0
+  isFinishing: 0
   erasedNotes: 0
 --- !u!114 &6921755257406399830
 MonoBehaviour:
