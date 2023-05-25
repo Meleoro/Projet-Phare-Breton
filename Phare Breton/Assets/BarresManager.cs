@@ -27,12 +27,12 @@ public class BarresManager : MonoBehaviour
         {
             if (i % 2 == 0)
             {
-                barres[i].transform.DOMoveZ(transform.position.z + 10, 1);
+                barres[i].transform.DOMoveZ( barres[i].transform.position.z + 10, 2).SetEase(Ease.InCubic);
             }
 
             else
             {
-                barres[i].transform.DOMoveZ(transform.position.z - 10, 1);
+                barres[i].transform.DOMoveZ( barres[i].transform.position.z - 10, 2).SetEase(Ease.InCubic);
             }
         }
     }
