@@ -15,7 +15,8 @@ public class CharaManager : MonoBehaviour
     public CharacterNotes notesScript;
 
     [Header("Références")]
-    [SerializeField] public Animator anim;
+    [HideInInspector] public AudioSource playerAudioSource;
+    public Animator anim;
     [SerializeField] private GameObject UIInteraction;
     [SerializeField] private Image UIImageX;
     [SerializeField] private Image UIImageY;
@@ -74,6 +75,7 @@ public class CharaManager : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerAudioSource = GetComponent<AudioSource>();
 
         hasRope = false;
     }
