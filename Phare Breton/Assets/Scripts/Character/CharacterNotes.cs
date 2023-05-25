@@ -105,6 +105,7 @@ public class CharacterNotes : MonoBehaviour
             
             ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
             DoVFXReussite();
+            StartCoroutine(UIScript.PutEverythingGray(false));
     
             UnlockPower();
 
