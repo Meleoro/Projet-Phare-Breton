@@ -79,6 +79,7 @@ public class CharacterNotes : MonoBehaviour
 
             else
             {
+                StartCoroutine(ReferenceManager.Instance.characterReference.SayNo());
                 StartCoroutine(UIScript.NoNotes());
             }
         }

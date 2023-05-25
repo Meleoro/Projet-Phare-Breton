@@ -130,50 +130,13 @@ public class CharaManager : MonoBehaviour
                 isWalking = false;
             }
 
-
-            // Partie flûte 
-            if (R2 && !hasRope)
-            {
-                interaction = false;
-                
-                movementScript.MoveCharacter(Vector2.zero);
-                fluteScript.FluteActive(direction);
-
-                fluteMesh.enabled = true;
-
-                movementScript.RotateCharacterCamera();
-                movementScript.RotateCharacter(direction, false);
-
-                if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
-                {
-                    cable = false;
-                    R2 = false;
-                    fluteScript.CreateLien();
-                    fluteScript.PlayVFX();
-                }
-                else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0 && canMoveObjects)
-                {
-                    moveObject = false;
-                    R2 = false;
-                    fluteScript.MoveObject(false, null);
-                    fluteScript.PlayVFX();
-                }
-                else if (stase && fluteScript.selectedObjects.Count != 0 && canStase)
-                {
-                    stase = false;
-                    R2 = false;
-                    fluteScript.Stase();
-                    fluteScript.PlayVFX();
-                }
-
-                if (!fluteActive)
-                {
-                    fluteActive = true;
-                    anim.SetTrigger("startFlute");
-                }
-                isWalking = false;
-            }
             
+            // Partie flute
+            if (R2)
+            {
+                FlutePart();
+            }
+
             else
             {
                 fluteActive = false;
@@ -306,6 +269,73 @@ public class CharaManager : MonoBehaviour
         }
         
         return false;
+    }
+
+
+    public void FlutePart()
+    {
+        if (canMoveObjects)
+        {
+            if (!hasRope)
+            {
+                interaction = false;
+                
+                movementScript.MoveCharacter(Vector2.zero);
+                fluteScript.FluteActive(direction);
+
+                fluteMesh.enabled = true;
+
+                movementScript.RotateCharacterCamera();
+                movementScript.RotateCharacter(direction, false);
+
+                if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
+                {
+                    cable = false;
+                    R2 = false;
+                    fluteScript.CreateLien();
+                    fluteScript.PlayVFX();
+                }
+                else if (moveObject && !isMovingObjects && fluteScript.selectedObjects.Count != 0 && canMoveObjects)
+                {
+                    moveObject = false;
+                    R2 = false;
+                    fluteScript.MoveObject(false, null);
+                    fluteScript.PlayVFX();
+                }
+                else if (stase && fluteScript.selectedObjects.Count != 0 && canStase)
+                {
+                    stase = false;
+                    R2 = false;
+                    fluteScript.Stase();
+                    fluteScript.PlayVFX();
+                }
+
+                if (!fluteActive)
+                {
+                    fluteActive = true;
+                    anim.SetTrigger("startFlute");
+                }
+                isWalking = false;
+            }
+        }
+
+        else
+        {
+            R2 = false;
+
+            StartCoroutine(SayNo());
+        }
+    }
+    
+
+    public IEnumerator SayNo()
+    {
+        anim.SetTrigger("no");
+        noControl = true;
+        
+        yield return new WaitForSeconds(0.5f);
+
+        noControl = false;
     }
 
     
