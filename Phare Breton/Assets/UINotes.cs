@@ -30,7 +30,7 @@ public class UINotes : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(PutEverythingGray());
+        StartCoroutine(PutEverythingGray(true));
     }
 
     private void Update()
@@ -148,10 +148,22 @@ public class UINotes : MonoBehaviour
     
     
 
-    public IEnumerator PutEverythingGray()
+    public IEnumerator PutEverythingGray(bool start)
     {
         float duration1 = 0.05f;
         float duration2 = 0.3f;
+        float duration3 = 1;
+
+        for (int i = 0; i < activatedNotes.Count; i++)
+        {
+            activatedNotes[i] = false;
+        }
+        
+        if (!start)
+        {
+            GoLeft(duration3);
+            yield return new WaitForSeconds(duration3 + 0.5f);
+        }
         
         note1.DOFade(yesFade + 0.1f, duration1);
         note2.DOFade(yesFade + 0.1f, duration1);
@@ -170,5 +182,12 @@ public class UINotes : MonoBehaviour
         note1.rectTransform.DOScale(Vector3.one * (noScale), duration2);
         note2.rectTransform.DOScale(Vector3.one * (noScale), duration2);
         note3.rectTransform.DOScale(Vector3.one * (noScale), duration2);
+        
+        if (!start)
+        {
+            yield return new WaitForSeconds(duration2 + 0.5f);
+            
+            GoRight(duration3);
+        }
     }
 }
