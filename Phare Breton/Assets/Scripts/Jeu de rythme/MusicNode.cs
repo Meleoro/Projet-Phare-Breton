@@ -17,9 +17,7 @@ public class MusicNode : MonoBehaviour
     [HideInInspector] public bool erased;
 
     [Header("Movement")] 
-    public float movementSpeed;
-    /*public AnimationCurve moveX;
-    public AnimationCurve moveY;*/
+    [HideInInspector] public float movementSpeed;
     [HideInInspector] public Vector3 originPos;
     private float timer;
     private int currentIndex;
@@ -43,6 +41,8 @@ public class MusicNode : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         currentBande = bande;
+
+        movementSpeed = bande.speedMoveNode;
         
         switch (inputNeeded)
         {
@@ -83,23 +83,26 @@ public class MusicNode : MonoBehaviour
 
         if (timer <= 0) 
         {
-                currentIndex += 1;
-                float distance = Vector3.Distance(rectTransform.position, waypoints[currentIndex].position);
-                float ratio = distance / movementSpeed;
-
-                rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
-                timer = ratio;
+            currentIndex += 1;
+            float distance = Vector3.Distance(rectTransform.position, waypoints[currentIndex].position);
+            float ratio = distance / movementSpeed;
+            
+            rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
+            timer = ratio;
         }
     }
     
 
     public void EraseNode()
     {
-        image.enabled = false;
-        GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-        erased = true;
+        if (!erased)
+        {
+            image.enabled = false;
+            GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+            erased = true;
 
-        currentBande.PlayVFXDestroy();
+            currentBande.PlayVFXDestroy();
+        }
     }
 
     public void ReappearNode()

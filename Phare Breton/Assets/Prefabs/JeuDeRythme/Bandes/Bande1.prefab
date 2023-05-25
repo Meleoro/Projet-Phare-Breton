@@ -74,12 +74,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -619,7 +619,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -32.7, y: -218.40002}
+  m_AnchoredPosition: {x: -32.7, y: -216.4}
   m_SizeDelta: {x: 17, y: 258}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4843250329122144480
@@ -1189,8 +1189,8 @@ MonoBehaviour:
   isOnY: 0
   isOnZ: 0
   dureePreparation: 1
-  speedMoveNode: 0.3
-  duration: 14
+  speedMoveNode: 100
+  duration: 20
   nodes:
   - nodeType: 0
     spawnPos: 0
@@ -1277,6 +1277,7 @@ MonoBehaviour:
   VFXNoteDestroy: {fileID: 5173934003231069389}
   nodesCreated: []
   stop: 0
+  isFinishing: 0
   erasedNotes: 0
 --- !u!114 &96356193552032636
 MonoBehaviour:
@@ -1799,17 +1800,17 @@ PrefabInstance:
     - target: {fileID: 2098755852352139345, guid: 7fde74aaf8b6a1d4caab2f3d7ac1b76a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.088
+      value: -22.2
       objectReference: {fileID: 0}
     - target: {fileID: 2098755852352139345, guid: 7fde74aaf8b6a1d4caab2f3d7ac1b76a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -167.81079
+      value: -156.9
       objectReference: {fileID: 0}
     - target: {fileID: 2098755852352139345, guid: 7fde74aaf8b6a1d4caab2f3d7ac1b76a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2098755852352139345, guid: 7fde74aaf8b6a1d4caab2f3d7ac1b76a,
         type: 3}

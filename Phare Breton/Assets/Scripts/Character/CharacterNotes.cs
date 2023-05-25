@@ -107,6 +107,21 @@ public class CharacterNotes : MonoBehaviour
         }
     }
 
+    public void StopPlay()
+    {
+        mainSript.noControl = false;
+            
+        ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
+
+        for (int i = 0; i < bandes.Count; i++)
+        {
+            Destroy(bandesObjects[i]);
+        }
+
+        bandes.Clear();
+        bandesObjects.Clear();
+    }
+
 
     public void UnlockPower()
     {

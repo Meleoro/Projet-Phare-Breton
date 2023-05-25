@@ -15,15 +15,13 @@ public class BandeJeuDeRythme : MonoBehaviour
     [HideInInspector] public bool isOnX;
     [HideInInspector] public bool isOnY;
     [HideInInspector] public bool isOnZ;
-
-
+    
     [Header("Parametres deroulement")]
     public float dureePreparation;
     public float speedMoveNode;
     public float duration;
     public List<Node> nodes = new List<Node>();
-
-
+    
     [Header("References")] 
     public GameObject nodeObjectX;
     public GameObject nodeObjectY;
@@ -40,20 +38,19 @@ public class BandeJeuDeRythme : MonoBehaviour
     public Canvas canvaVFX;
     public ParticleSystem VFXNoteDestroy;
 
-
     [Header("Inputs")]
     private bool pressX;
     private bool pressY;
     private bool pressZ;
-
-
+    
     [Header("Autre")]
     private float timer;
     private bool gameStarted;
     private bool startMoveBarre;
     [HideInInspector] public List<MusicNode> nodesCreated = new List<MusicNode>();
     [HideInInspector] public bool stop;
-    [HideInInspector] public int erasedNotes;
+    [HideInInspector] public bool isFinishing;
+    public int erasedNotes;
     private bool usingBarre;
 
 
@@ -197,14 +194,18 @@ public class BandeJeuDeRythme : MonoBehaviour
         ReferenceManager.Instance.cameraReference.DoCameraShake(0.4f, 0.2f);
 
         yield return new WaitForSeconds(duration);
+        
+        ReferenceManager.Instance.characterReference.notesScript.StopPlay();
     }
 
 
     public void RestartGame()
     {
-        timer = -1.5f;
+        timer = 0f;
         erasedNotes = 0;
 
+        stop = true;
+        
         StartCoroutine(LoseEffects());
 
         for(int i = 0; i < nodes.Count; i++)
@@ -224,14 +225,18 @@ public class BandeJeuDeRythme : MonoBehaviour
         isOnZ = false;
         currentNode = null;
 
-        ReferenceManager.Instance.cameraReference.RestartMoveCameraRythme();
+        //ReferenceManager.Instance.cameraReference.RestartMoveCameraRythme();
     }
 
 
-    public void EndGame()
+    public IEnumerator EndGame()
     {
-        stop = true;
+        isFinishing = true;
 
+        yield return new WaitForSeconds(0.5f);
+
+        stop = true;
+        
         ReferenceManager.Instance.characterReference.notesScript.NextBande();
     }
 
@@ -240,9 +245,9 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > duration)
+        if ((timer > duration || erasedNotes >= nodes.Count) && !isFinishing)
         {
-            EndGame();
+            StartCoroutine(EndGame());
         }
 
         for (int i = 0; i < nodes.Count; i++)
