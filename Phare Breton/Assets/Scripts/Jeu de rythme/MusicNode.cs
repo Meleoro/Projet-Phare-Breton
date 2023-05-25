@@ -17,11 +17,12 @@ public class MusicNode : MonoBehaviour
     [HideInInspector] public bool erased;
 
     [Header("Movement")] 
-    [HideInInspector] public float movementSpeed;
+    [HideInInspector] public float timeToReach;
     [HideInInspector] public Vector3 originPos;
     private float timer;
     private int currentIndex;
     private List<RectTransform> waypoints = new List<RectTransform>();
+    private List<float> ratios = new List<float>();
 
     [Header("References")] 
     [SerializeField] private ParticleSystem VFXDestroy;
@@ -42,7 +43,8 @@ public class MusicNode : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         currentBande = bande;
 
-        movementSpeed = bande.speedMoveNode;
+        
+        timeToReach = bande.speedMoveNode;
         
         switch (inputNeeded)
         {
@@ -74,6 +76,8 @@ public class MusicNode : MonoBehaviour
         timer = 0;
 
         waypoints = currentWaypoints;
+
+        CalculateRatios();
     }
 
 
@@ -84,11 +88,35 @@ public class MusicNode : MonoBehaviour
         if (timer <= 0) 
         {
             currentIndex += 1;
-            float distance = Vector3.Distance(rectTransform.position, waypoints[currentIndex].position);
-            float ratio = distance / movementSpeed;
+            float ratio = ratios[currentIndex] * timeToReach;
             
             rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
             timer = ratio;
+        }
+    }
+
+    public void CalculateRatios()
+    {
+        ratios.Clear();
+        
+        float totalDistance = 0;
+        List<float> distances = new List<float>();
+
+        ratios.Add(0.1f);
+        
+        for (int i = 1; i < waypoints.Count; i++)
+        {
+            float currentDistance = Vector3.Distance(waypoints[i - 1].position, waypoints[i].position);
+
+            totalDistance += currentDistance;
+            distances.Add(currentDistance);
+        }
+        
+        for (int i = 0; i < distances.Count; i++)
+        {
+            float currentRatio = distances[i] / totalDistance;
+
+            ratios.Add(currentRatio);
         }
     }
     
