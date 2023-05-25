@@ -49,7 +49,7 @@ public class CharacterNotes : MonoBehaviour
         if (!ReferenceManager.Instance.cameraReference.goToSave)
         {
             currentMelody = melodyIndex;
-
+            
             if (!collectedNotes[melodyIndex - 1].currentCollectedNotes.Contains(false))
             {
                 ReferenceManager.Instance.cameraReference.StartMoveCameraRythme();
@@ -65,7 +65,7 @@ public class CharacterNotes : MonoBehaviour
 
                 // On commence le mini jeu
                 GameObject newBande = Instantiate(bandes[0]);
-                newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
+                newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame(currentMelody - 1);
 
                 bandesObjects.Add(newBande);
 
@@ -81,7 +81,7 @@ public class CharacterNotes : MonoBehaviour
         if(currentBande < bandes.Count)
         {
             GameObject newBande = Instantiate(bandes[currentBande]);
-            newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame();
+            newBande.GetComponentInChildren<BandeJeuDeRythme>().LaunchGame(currentMelody - 1);
 
             bandesObjects.Add(newBande);
 
@@ -90,6 +90,9 @@ public class CharacterNotes : MonoBehaviour
 
         else
         {
+            AudioManager.instance.FadeOutAudioSource(0.2f, 0.5f, 0,
+                ReferenceManager.Instance.characterReference.playerAudioSource);
+            
             mainSript.noControl = false;
             
             ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
@@ -112,6 +115,9 @@ public class CharacterNotes : MonoBehaviour
 
     public void StopPlay()
     {
+        AudioManager.instance.FadeOutAudioSource(0.2f, 0.5f, 0,
+            ReferenceManager.Instance.characterReference.playerAudioSource);
+        
         mainSript.noControl = false;
             
         ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
