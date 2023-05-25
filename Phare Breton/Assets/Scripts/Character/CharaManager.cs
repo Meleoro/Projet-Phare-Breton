@@ -39,6 +39,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public int nearNoteNumber;
     [HideInInspector] public bool canPlayMusic;
     [HideInInspector] public int currentMelodyIndex;
+    [HideInInspector] public bool isInBiblio;
 
     [Header("Powers")]
     public bool canMoveObjects;
@@ -164,9 +165,13 @@ public class CharaManager : MonoBehaviour
                     
                         notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
 
+                        if(isInBiblio)
+                            BarresManager.Instance.MoveBarres();
+                        
                         Destroy(nearNoteObject);
                         nearNoteNumber = 0;
                         nearNotePartitionNumber = 0;
+                        isInBiblio = false;
                     }
                     
                     if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)

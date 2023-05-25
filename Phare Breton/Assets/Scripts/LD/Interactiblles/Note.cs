@@ -8,6 +8,8 @@ public class Note : ObjetInteractible
     [Min(1)] public int partitionNumber;   // Quelle partition
     [Min(1)] public int posInPartitionNumber;   // Quelle place dans cette partition
 
+    public bool isInBiblio;
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && !other.isTrigger)
@@ -15,6 +17,7 @@ public class Note : ObjetInteractible
             ReferenceManager.Instance.characterReference.nearNoteObject = gameObject;
             ReferenceManager.Instance.characterReference.nearNotePartitionNumber = partitionNumber;
             ReferenceManager.Instance.characterReference.nearNoteNumber = posInPartitionNumber;
+            ReferenceManager.Instance.characterReference.isInBiblio = isInBiblio;
         }
     }
 
@@ -24,6 +27,7 @@ public class Note : ObjetInteractible
         {
             ReferenceManager.Instance.characterReference.nearNotePartitionNumber = 0;
             ReferenceManager.Instance.characterReference.nearNoteNumber = 0;
+            ReferenceManager.Instance.characterReference.isInBiblio = false;
         }
     }
 }
