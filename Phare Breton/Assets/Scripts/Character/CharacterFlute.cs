@@ -238,13 +238,22 @@ public class CharacterFlute : MonoBehaviour
 
                 if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().isStart)
                 {
+                    ObjetInteractible stockage = currentCable.rbOrigin.GetComponent<ObjetInteractible>();
+                    
                     currentCable.ChangeFirstNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
+
+                    stockage.VerifyLinkedObject();
                 }
                 else
                 {
+                    ObjetInteractible stockage = currentCable.rbEnd.GetComponent<ObjetInteractible>();
+                    
                     currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
+                    
+                    stockage.VerifyLinkedObject();
                 }
 
+                currentObject.VerifyLinkedObject();
                 currentCable.isLinked = false;
 
 

@@ -36,6 +36,7 @@ Transform:
   - {fileID: 3400563353375576985}
   - {fileID: 6158762136579536880}
   - {fileID: 4432037110099629952}
+  - {fileID: 4386397468980863157}
   m_Father: {fileID: 0}
   m_RootOrder: 59
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -129,6 +130,7 @@ MonoBehaviour:
   isMagneted: 0
   currentMagnet: {fileID: 0}
   magnetedPos: {fileID: 0}
+  mustVerify: 0
   isLinked: 0
   linkedObject: []
   cable: {fileID: 0}
@@ -141,6 +143,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   VFXDeplacement: {fileID: 722293483158568288}
   isElectrified: 0
+  VFXelectricity: {fileID: 3741351157557553547}
 --- !u!54 &8668899877448638908
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -601,4 +604,89 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 172383472610877969, guid: 01d941fe55f352c4c8cb829f38351ccc,
     type: 3}
   m_PrefabInstance: {fileID: 6276958306702218721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8500641248235183899
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3998944032081651606}
+    m_Modifications:
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753921531760337095, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+        type: 3}
+      propertyPath: m_Name
+      value: "FX_Electricit\xE9"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9dc8ca279e89044429f3d27f4fb888b6, type: 3}
+--- !u!198 &3741351157557553547 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5049567775805257360, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8500641248235183899}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4386397468980863157 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5271398970639368110, guid: 9dc8ca279e89044429f3d27f4fb888b6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8500641248235183899}
   m_PrefabAsset: {fileID: 0}
