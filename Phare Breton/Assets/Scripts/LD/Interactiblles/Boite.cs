@@ -8,6 +8,7 @@ public class Boite : ObjetInteractible
     public ParticleSystem VFXDeplacement;
 
     public bool isElectrified;
+    public ParticleSystem VFXelectricity;
     
     
     // VERIFIE SI UN PANNEAU EST RELIE
@@ -22,19 +23,29 @@ public class Boite : ObjetInteractible
         {
             PanneauElectrique currentPanneau;
 
-            if (linkedObject[k].TryGetComponent<PanneauElectrique>(out currentPanneau))
+            if (linkedObject[k].TryGetComponent(out currentPanneau))
             {
                 isElectrified = true;
             }
 
 
             Boite currentBoite;
-            if (linkedObject[k].TryGetComponent<Boite>(out currentBoite))
+            if (linkedObject[k].TryGetComponent(out currentBoite))
             {
                 if(currentBoite.isElectrified)
                     
                     isElectrified = true;
             }
+        }
+
+
+        if (isElectrified)
+        {
+            VFXelectricity.Play();
+        }
+        else
+        {
+            VFXelectricity.Stop();
         }
     }
 }

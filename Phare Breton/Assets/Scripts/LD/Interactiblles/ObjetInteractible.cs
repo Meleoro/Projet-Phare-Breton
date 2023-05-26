@@ -42,7 +42,7 @@ public class ObjetInteractible : MonoBehaviour
         StartCoroutine(PutRigidbodyKinematic());
 
         Boite currentBoite;
-        if(TryGetComponent<Boite>(out currentBoite))
+        if(TryGetComponent(out currentBoite))
         {
             DesactivateStase();
         }
@@ -51,6 +51,8 @@ public class ObjetInteractible : MonoBehaviour
         isLighted = false;
 
         originalPos = transform.position;
+        
+        VerifyLinkedObject();
     }
 
 
