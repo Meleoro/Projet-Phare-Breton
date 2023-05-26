@@ -24,7 +24,10 @@ public class ObjetInteractible : MonoBehaviour
     [HideInInspector] public bool isStart;
     [HideInInspector] public Vector3 resistanceCable;
 
-    [Header("MoveObject")]
+    [Header("MoveObject")] 
+    public bool hauteurFigee;
+    private float wantedHauteur;
+    public float hauteurRespawn = 20;
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
 
@@ -54,6 +57,9 @@ public class ObjetInteractible : MonoBehaviour
         originalPos = transform.position;
         
         VerifyLinkedObject();
+
+        wantedHauteur = transform.position.y +
+                        ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
     }
 
 
@@ -64,7 +70,7 @@ public class ObjetInteractible : MonoBehaviour
             MagnetEffect();
         }
 
-        if (originalPos.y - 15 > transform.position.y)
+        if (originalPos.y - hauteurRespawn > transform.position.y)
         {
             transform.position = originalPos;
         }
@@ -92,23 +98,32 @@ public class ObjetInteractible : MonoBehaviour
 
     public void ActualiseHauteur()
     {
-        Ray ray = new Ray(transform.position, Vector3.down);
-        RaycastHit raycastHit;
-
-        if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + transform.localScale.y * 0.5f))
+        if (!hauteurFigee)
         {
-            if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
+            Ray ray = new Ray(transform.position, Vector3.down);
+            RaycastHit raycastHit;
+
+            if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + transform.localScale.y * 0.5f))
             {
-                if(raycastHit.collider.gameObject != gameObject)
-                    if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
-                        currentHauteur += Time.deltaTime * 2;
-            }
+                if(!raycastHit.collider.CompareTag("Player") && !raycastHit.collider.isTrigger)
+                {
+                    if(raycastHit.collider.gameObject != gameObject)
+                        if(transform.position.y - ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.1f < raycastHit.point.y)
+                            currentHauteur += Time.deltaTime * 2;
+                }
             
+            }
+
+            else if (!Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.2f))
+            {
+                currentHauteur -= Time.deltaTime * 2;
+            }
         }
 
-        else if (!Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.2f))
+        else
         {
-            currentHauteur -= Time.deltaTime * 2;
+            if(currentHauteur < wantedHauteur)
+                currentHauteur = Mathf.Lerp(transform.position.y, wantedHauteur, Time.deltaTime * 2);
         }
     }
 
