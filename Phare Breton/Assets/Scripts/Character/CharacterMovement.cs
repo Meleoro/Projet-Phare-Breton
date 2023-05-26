@@ -37,6 +37,7 @@ public class CharacterMovement : MonoBehaviour
     private int iteration;
     private Vector3 fallDir;
     public bool willFall;
+    private RaycastHit fallRaycastHit;
 
 
     private void Awake()
@@ -471,14 +472,11 @@ public class CharacterMovement : MonoBehaviour
             
             if(raycastHit.collider.gameObject != gameObject)
                 return raycastHit.point;
-            
-            /*else
-                return new Vector3(0, transform.position.y - 0.5f, 0);*/
         }
         
         return new Vector3(startPos.x, -5000, startPos.z);
-        
     }
+    
 
     public Vector2 TryNewDirection(Vector2 currentDirection, bool negatif, float angleAdded)
     {
@@ -530,12 +528,17 @@ public class CharacterMovement : MonoBehaviour
 
         for (int i = 0; i < 8; i++)
         {
-            Ray ray = new Ray(transform.position + direction2 * (1f + i * 0.2f), Vector3.down);
+            /*Ray ray = new Ray(transform.position + direction2 * (1f + i * 0.2f), Vector3.down);
             RaycastHit raycastHit2;
 
             if(Physics.Raycast(ray, out raycastHit2, 5, layerFall))
             {
                 possibleFallPos.Add(raycastHit2.point + Vector3.up);
+            }*/
+
+            if (DoRaycastFallPos(transform.position + direction2 * (1f + i * 0.2f), 5))
+            {
+                possibleFallPos.Add(fallRaycastHit.point + Vector3.up);
             }
         }
 
@@ -599,6 +602,32 @@ public class CharacterMovement : MonoBehaviour
         }*/
         
         return posFall;
+    }
+    
+    public bool DoRaycastFallPos(Vector3 startPos, float lenght)
+    {
+        Ray ray = new Ray(startPos, Vector3.down);
+        RaycastHit raycastHit;
+
+        if(lenght <= 0)
+            return false;
+        
+        if (Physics.Raycast(ray, out raycastHit, lenght, layerFall))
+        {
+            Debug.DrawLine(startPos, raycastHit.point);
+            
+            if (raycastHit.collider.isTrigger)
+                return DoRaycastFallPos(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+
+            if (raycastHit.collider.gameObject != gameObject)
+            {
+                fallRaycastHit = raycastHit;
+                
+                return true;
+            }
+        }
+        
+        return false;
     }
     
 }
