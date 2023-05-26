@@ -203,11 +203,41 @@ public class Porte : MonoBehaviour
         currentDoor.hasCableThrough = true;
         currentDoor.cableOtherSide = currentScript;
         currentDoor.cableThisSide = newScriptCreator;
+        
+        
+        currentDoor = endOldCable.GetComponent<EntreePorte>();
+        
+        currentDoor.hasCableThrough = true;
+        currentDoor.cableOtherSide = newScriptCreator;
+        currentDoor.cableThisSide = currentScript;
+        
     }
 
     
     public void DestroyCableThroughDoor(EntreePorte doorCrossed, GameObject currentObject)
     {
+        // On détruit la partie du câble qui sert à rien
+        Destroy(doorCrossed.cableThisSide.gameObject);
+
+        // On relie le câble de l'autre côté à l'objet
+        if (currentObject.CompareTag("Interactible"))
+        {
+            if(currentObject.GetComponent<ObjetInteractible>().isStart)
+                doorCrossed.cableOtherSide.ChangeFirstNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+        
+            else 
+                doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+        }
+        else
+        {
+            doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+            doorCrossed.cableOtherSide.isLinked = false;
+        }
+
+        doorCrossed.hasCableThrough = false;
+
+
+        /*// Si retour arriere
         if (doorCrossed.hasCableThrough)
         {
             // On détruit la partie du câble qui sert à rien
@@ -229,6 +259,32 @@ public class Porte : MonoBehaviour
                 doorCrossed.cableOtherSide.isLinked = false;
             }
         }
+
+        // Si deux blocs meme porte
+        else
+        {
+            // On détruit la partie du câble qui sert à rien
+            Destroy(doorCrossed.cableThisSide.gameObject);
+            
+            // On relie le câble de l'autre côté à l'objet
+            if (currentObject.CompareTag("Interactible"))
+            {
+                if (currentObject.GetComponent<ObjetInteractible>().isStart)
+                {
+                    doorCrossed.cableOtherSide.ChangeFirstNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+                }
+
+                else
+                {
+                    doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+                }
+            }
+            else
+            {
+                doorCrossed.cableOtherSide.ChangeLastNode(currentObject, currentObject.GetComponent<Rigidbody>(), currentObject.GetComponentInChildren<SpringJoint>());
+                doorCrossed.cableOtherSide.isLinked = false;
+            }
+        }*/
     }
 
 

@@ -434,63 +434,14 @@ public class CharacterMovement : MonoBehaviour
         Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.35f), 10);
         Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.7f), 10);
 
-/*
-        // Raycast 1
-        Ray ray = new Ray(transform.position, Vector3.down);
-        RaycastHit raycastHit;
-        
-        if(Physics.Raycast(ray, out raycastHit, 10, layerFall))
-        {
-            if(raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
-                point1 = raycastHit.point;
-            
-            else
-                point1 = new Vector3(0, transform.position.y - 0.5f, 0);
-        }
-        
-        
-        // Raycast 2
-        ray = new Ray(transform.position + (newDirection.normalized * 1f), Vector3.down);
-        RaycastHit raycastHit3;
-
-        if(Physics.Raycast(ray, out raycastHit3, 10, layerFall))
-        {
-            if (raycastHit3.collider.gameObject != gameObject && !raycastHit3.collider.isTrigger)
-                point3 = raycastHit3.point;
-
-            else
-                point3 = new Vector3(0, transform.position.y - 0.5f, 0);
-        }
-
-
-        // Raycast3 (pentes)
-        ray = new Ray(transform.position + (newDirection.normalized * 0.5f), Vector3.down);
-        RaycastHit raycastHit2;
-
-        if (Physics.Raycast(ray, out raycastHit2, 10, layerFall))
-        {
-            if(raycastHit2.collider.gameObject != gameObject && !raycastHit2.collider.isTrigger)
-                point2 = raycastHit2.point;
-            
-            else
-                point2 = new Vector3(0, transform.position.y - 0.5f, 0);
-        }*/
-
 
         float difference1 = 0;
         float difference2 = 0;
-        
-        /*if(point2.y <= point1.y)
-            difference1 = Mathf.Abs(point1.y - point2.y);
-        
-        if(point3.y <= point2.y)
-            difference2 = Mathf.Abs(point2.y - point3.y);*/
         
         difference1 = Mathf.Abs(point1.y - point2.y);
         difference2 = Mathf.Abs(point2.y - point3.y);
 
         float difference3 = point1.y - point3.y;
-
         float difference4 = difference2 - difference1;
 
 
@@ -503,6 +454,7 @@ public class CharacterMovement : MonoBehaviour
             return true;
         }
     }
+    
 
     public Vector3 DoRaycast(Vector3 startPos, float lenght)
     {
