@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -106,7 +107,7 @@ public class CharaManager : MonoBehaviour
 
 
             // Partie déplacement player / objets
-            if (!noMovement && !isMovingObjects)
+            /*if (!noMovement && !isMovingObjects)
             {
                 movementScript.MoveCharacter(direction);
                 
@@ -129,7 +130,7 @@ public class CharaManager : MonoBehaviour
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
 
                 isWalking = false;
-            }
+            }*/
 
             
             // Partie flute
@@ -220,18 +221,53 @@ public class CharaManager : MonoBehaviour
         }
         else
         {
-            movementScript.MoveCharacter(Vector2.zero);
-            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
-
             isWalking = false;
         }
 
         anim.SetBool("isWalking", isWalking);
         anim.SetBool("fluteActive", fluteActive);
     }
-    
-    
-    
+
+    private void FixedUpdate()
+    {
+        IsMovingObjects();
+
+        if (!noControl)
+        {
+            // Partie déplacement player / objets
+            if (!noMovement && !isMovingObjects)
+            {
+                movementScript.MoveCharacter(direction);
+                
+                if(direction != Vector2.zero) 
+                    movementScript.RotateCharacter(direction, false);
+
+                if (direction == Vector2.zero)
+                    movementScript.RotateCharacterCamera();
+
+
+                if (direction.magnitude > 0.5f)
+                    isWalking = true;
+
+                else
+                    isWalking = false;
+            }
+
+            else if (isMovingObjects)
+            {
+                movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
+
+                isWalking = false;
+            }
+        }
+        else
+        {
+            movementScript.MoveCharacter(Vector2.zero);
+            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
+        }
+    }
+
+
     public bool VerificationInteractionUI()
     {
         if (!hasRope)
