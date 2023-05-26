@@ -13,6 +13,7 @@ public class ObjetInteractible : MonoBehaviour
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public GameObject currentMagnet;
     [HideInInspector] public Transform magnetedPos;
+    private bool isMagnetedBlock;
     private Vector3 originalPos;
     [HideInInspector] public bool mustVerify;
     
@@ -42,7 +43,7 @@ public class ObjetInteractible : MonoBehaviour
         StartCoroutine(PutRigidbodyKinematic());
 
         Boite currentBoite;
-        if(TryGetComponent<Boite>(out currentBoite))
+        if(TryGetComponent(out currentBoite))
         {
             DesactivateStase();
         }
@@ -51,6 +52,8 @@ public class ObjetInteractible : MonoBehaviour
         isLighted = false;
 
         originalPos = transform.position;
+        
+        VerifyLinkedObject();
     }
 
 
@@ -148,15 +151,30 @@ public class ObjetInteractible : MonoBehaviour
 
     public void MagnetEffect()
     {
-        float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
-        magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
+        if (!isMagnetedBlock)
+        {
+            float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
+            magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
         
-        transform.rotation = magnetedPos.rotation;
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength), 
-            Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
+            transform.rotation = magnetedPos.rotation;
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength), 
+                Mathf.Lerp(transform.position.y, magnetedPos.position.y, magnetStrength), Mathf.Lerp(transform.position.z, magnetedPos.position.z, magnetStrength));
 
-        float difference = magnetedPos.position.y - transform.position.y;
-        rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
+            float difference = magnetedPos.position.y - transform.position.y;
+            rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
+        }
+
+        if (Vector3.Distance(transform.position, magnetedPos.position) < 0.02f && !isMoved)
+        {
+            isMagnetedBlock = true;
+            rb.isKinematic = true;
+        }
+
+        else
+        {
+            isMagnetedBlock = false;
+            rb.isKinematic = false;
+        }
     }
 
 

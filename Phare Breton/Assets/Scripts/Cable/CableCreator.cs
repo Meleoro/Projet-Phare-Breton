@@ -408,6 +408,15 @@ public class CableCreator : MonoBehaviour
         end.spring2.connectedBody = newRb;
         springEnd.connectedBody = null;
 
+        /*if (springEnd != null)
+        {
+            if (springEnd.CompareTag("Interactible"))
+            {
+                springEnd.GetComponent<ObjetInteractible>().linkedObject.Remove(springOrigin.gameObject);
+                springEnd.GetComponent<ObjetInteractible>().isLinked = false;
+            }
+        }*/
+
         isLinked = true;
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;
        
@@ -439,6 +448,15 @@ public class CableCreator : MonoBehaviour
     {
         origin.spring1.connectedBody = newRb;
         springOrigin.connectedBody = null;
+        
+        /*if (springOrigin != null)
+        {
+            if (springOrigin.CompareTag("Interactible"))
+            {
+                springOrigin.GetComponent<ObjetInteractible>().linkedObject.Remove(springEnd.gameObject);
+                springOrigin.GetComponent<ObjetInteractible>().isLinked = false;
+            }
+        }*/
 
         isLinked = true;
         ReferenceManager.Instance.characterReference.movementScript.resistanceCable = Vector3.zero;

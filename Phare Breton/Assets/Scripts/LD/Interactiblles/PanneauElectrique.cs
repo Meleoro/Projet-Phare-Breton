@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class PanneauElectrique : ObjetInteractible
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("PanneauElectrique")] 
+    public ParticleSystem etincelles;
+    public ParticleSystem energie;
+    private bool isUsed;
+    
+    
+    public override void VerifyLinkedObject()
     {
-        
-    }
+        if (!isInStase)
+        {
+            isUsed = false;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int k = 0; k < linkedObject.Count; k++)
+        {
+            Boite currentBoite;
+            if (linkedObject[k].TryGetComponent(out currentBoite))
+            {
+                isUsed = true;
+            }
+        }
+
+
+        if (isUsed)
+        {
+            energie.Play();
+            
+            etincelles.Stop();
+        }
+        else
+        {
+            etincelles.Play();
+            
+            energie.Stop();
+        }
     }
 }

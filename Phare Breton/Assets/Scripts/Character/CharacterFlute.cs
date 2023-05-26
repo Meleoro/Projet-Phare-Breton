@@ -244,20 +244,23 @@ public class CharacterFlute : MonoBehaviour
                 {
                     currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
                 }
-
                 currentCable.isLinked = false;
 
 
                 currentLinkedObject.linkedObject.Clear();
                 currentLinkedObject.isLinked = false;
+                
+                currentLinkedObject.VerifyLinkedObject();
 
                 cables.Add(currentCable.gameObject);
             }
-;
+
             ropedObject.Add(selectedObjects[0]);
             manager.hasRope = true;
 
             currentObject.linkedObject.Clear();
+            
+            currentObject.VerifyLinkedObject();
 
             return true;
         }
