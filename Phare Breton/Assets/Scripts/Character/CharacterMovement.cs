@@ -301,19 +301,6 @@ public class CharacterMovement : MonoBehaviour
                 {
                     objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
                 }
-
-                /*if (!ReferenceManager.Instance.cameraReference.scriptFondu.isInTransition)
-                {
-                    // Levitation de l'objet
-                    if (objects[k].transform.position.y < scripts[k].currentHauteur)
-                    {
-                        objects[k].AddForce(Vector3.up * 1000 * Time.deltaTime, ForceMode.Acceleration);
-                    }
-                    else
-                    {
-                        objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
-                    }
-                }*/
             }
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
