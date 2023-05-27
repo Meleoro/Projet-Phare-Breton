@@ -289,7 +289,7 @@ public class CharaManager : MonoBehaviour
         
             for (int i = 0; i < nearBoxesDown.Count; i++)
             {
-                if (movementScript.VerifyFall(movementScript.stockageDirection))
+                if (movementScript.VerifyFall(movementScript.stockageDirection, true))
                     return true;
             }
         }
