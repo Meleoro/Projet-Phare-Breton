@@ -30,6 +30,7 @@ public class ObjetInteractible : MonoBehaviour
     public float hauteurRespawn = 20;
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+    private float newPos;
 
     [Header("Stase")]
     [SerializeField] private ParticleSystem staseVFX;
@@ -58,8 +59,7 @@ public class ObjetInteractible : MonoBehaviour
         
         VerifyLinkedObject();
 
-        wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
-                        transform.localScale.y * 0.5f;
+        wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
     }
 
 
@@ -115,10 +115,9 @@ public class ObjetInteractible : MonoBehaviour
             }*/
 
             if (DoRaycast(transform.position,
-                    ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
-                    transform.localScale.y * 0.5f))
+                    ReferenceManager.Instance.characterReference.movementScript.hauteurObject + (transform.localScale.y * 0.5f)))
             {
-                currentHauteur += Time.deltaTime * 2;
+                currentHauteur = newPos;
             }
 
             else if (!DoRaycast(transform.position,
@@ -131,8 +130,8 @@ public class ObjetInteractible : MonoBehaviour
 
         else
         {
-            if(currentHauteur < wantedHauteur)
-                currentHauteur += Time.deltaTime * 2;
+            if (currentHauteur < wantedHauteur)
+                currentHauteur = wantedHauteur;
         }
     }
     
@@ -146,11 +145,13 @@ public class ObjetInteractible : MonoBehaviour
         
         if (Physics.Raycast(ray, out raycastHit, lenght))
         {
-            if (raycastHit.collider.isTrigger || raycastHit.collider.CompareTag("Player"))
-                return DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+            Debug.DrawLine(startPos, raycastHit.point);
             
-            if(raycastHit.collider.gameObject != gameObject)
-                return true;
+            if (raycastHit.collider.isTrigger || raycastHit.collider.CompareTag("Player") || raycastHit.collider.gameObject == gameObject)
+                return DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+
+            newPos = raycastHit.point.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject + (transform.localScale.y * 0.5f);
+            return true;
         }
         
         return false;

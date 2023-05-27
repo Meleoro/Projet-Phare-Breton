@@ -294,14 +294,18 @@ public class CharacterMovement : MonoBehaviour
             if (!scripts[k].isMagneted)
             {
                 // Levitation de l'objet
-                if (objects[k].transform.position.y < scripts[k].currentHauteur)
+                /*if (objects[k].transform.position.y < scripts[k].currentHauteur)
                 {
                     objects[k].AddForce(Vector3.up * (1000 * Time.fixedDeltaTime), ForceMode.Acceleration);
                 }
                 else
                 {
                     objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
-                }
+                }*/
+                
+                objects[k].transform.position = new Vector3(objects[k].transform.position.x, Mathf.Lerp(objects[k].transform.position.y, scripts[k].currentHauteur, Time.deltaTime * 2), 
+                    objects[k].transform.position.z);
+                scripts[k].rb.velocity = new Vector3(scripts[k].rb.velocity.x, 0, scripts[k].rb.velocity.z);
             }
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
