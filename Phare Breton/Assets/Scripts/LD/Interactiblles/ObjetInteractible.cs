@@ -30,6 +30,7 @@ public class ObjetInteractible : MonoBehaviour
     public float hauteurRespawn = 20;
     [HideInInspector] public bool isMoved;
     [HideInInspector] public float currentHauteur;
+    private float newPos;
 
     [Header("Stase")]
     [SerializeField] private ParticleSystem staseVFX;
@@ -58,8 +59,7 @@ public class ObjetInteractible : MonoBehaviour
         
         VerifyLinkedObject();
 
-        wantedHauteur = transform.position.y +
-                        ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
+        wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
     }
 
 
@@ -100,7 +100,7 @@ public class ObjetInteractible : MonoBehaviour
     {
         if (!hauteurFigee)
         {
-            Ray ray = new Ray(transform.position, Vector3.down);
+            /*Ray ray = new Ray(transform.position, Vector3.down);
             RaycastHit raycastHit;
 
             if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + transform.localScale.y * 0.5f))
@@ -112,9 +112,17 @@ public class ObjetInteractible : MonoBehaviour
                             currentHauteur += Time.deltaTime * 2;
                 }
             
+            }*/
+
+            if (DoRaycast(transform.position,
+                    ReferenceManager.Instance.characterReference.movementScript.hauteurObject + (transform.localScale.y * 0.5f)))
+            {
+                currentHauteur = newPos;
             }
 
-            else if (!Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.2f))
+            else if (!DoRaycast(transform.position,
+                         ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
+                         transform.localScale.y * 0.5f + 0.2f))
             {
                 currentHauteur -= Time.deltaTime * 2;
             }
@@ -122,9 +130,31 @@ public class ObjetInteractible : MonoBehaviour
 
         else
         {
-            if(currentHauteur < wantedHauteur)
-                currentHauteur += Time.deltaTime * 2;
+            if (currentHauteur < wantedHauteur)
+                currentHauteur = wantedHauteur;
         }
+    }
+    
+    public bool DoRaycast(Vector3 startPos, float lenght)
+    {
+        Ray ray = new Ray(startPos, Vector3.down);
+        RaycastHit raycastHit;
+
+        if(lenght <= 0)
+            return false;
+        
+        if (Physics.Raycast(ray, out raycastHit, lenght))
+        {
+            Debug.DrawLine(startPos, raycastHit.point);
+            
+            if (raycastHit.collider.isTrigger || raycastHit.collider.CompareTag("Player") || raycastHit.collider.gameObject == gameObject)
+                return DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+
+            newPos = raycastHit.point.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject + (transform.localScale.y * 0.5f);
+            return true;
+        }
+        
+        return false;
     }
 
 

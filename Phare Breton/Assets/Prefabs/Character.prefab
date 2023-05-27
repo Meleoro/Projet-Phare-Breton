@@ -218,7 +218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aa99af5620167e4f94a122bdab89738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scriptFlute: {fileID: 1604713492887267752}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &4926958696441916369
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,11 +565,19 @@ MonoBehaviour:
   movementScript: {fileID: 4042080586474578226}
   fluteScript: {fileID: 1604713492887267752}
   notesScript: {fileID: 8354452777228727355}
+  playerAudioSource: {fileID: 0}
+  anim: {fileID: 0}
+  UIInteraction: {fileID: 0}
+  UIImageX: {fileID: 0}
+  UIImageY: {fileID: 0}
+  fluteMesh: {fileID: 0}
   rb: {fileID: 0}
   direction: {x: 0, y: 0}
+  wantedDirection: {x: 0, y: 0}
   R2: 0
   moveObject: 0
   interaction: 0
+  cable: 0
   stase: 0
   escape: 0
   nearNoteObject: {fileID: 0}
@@ -575,16 +585,28 @@ MonoBehaviour:
   nearNoteNumber: 0
   canPlayMusic: 0
   currentMelodyIndex: 0
+  isInBiblio: 0
+  canMoveObjects: 0
+  canCable: 0
+  canStase: 0
+  nearObjects: []
+  nearBoxes: []
+  nearBoxesUp: []
+  nearBoxesDown: []
+  nearGenerator: []
+  nearAmpoule: []
+  cableObject: {fileID: 0}
+  nearLadder: {fileID: 0}
   menuScene: 
   noMovement: 0
   noControl: 0
   hasRope: 0
   isMovingObjects: 0
   movedObjects: []
-  nearObjects: []
   scriptsMovedObjects: []
-  nearLadder: 0
-  ladderTPPos: {x: 0, y: 0, z: 0}
+  inJumpZone: 0
+  movedObjectPosition: {x: 0, y: 0, z: 0}
+  isInLightSource: 0
 --- !u!114 &4042080586474578226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,13 +619,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab80aa96ff73f0419b23d882adee2a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
   maxSpeed: 6.5
   maxAcceleration: 30
   doOnce: 0
   resistanceCable: {x: 0, y: 0, z: 0}
-  hauteurObject: 2
+  hauteurObject: 1.1
   maxSpeedObject: 5
   maxAccelerationObject: 20
+  resistanceCableObject1: {x: 0, y: 0, z: 0}
+  resistanceCableObject2: {x: 0, y: 0, z: 0}
+  layerFall:
+    serializedVersion: 2
+    m_Bits: 0
+  stockageDirection: {x: 0, y: 0}
+  willFall: 0
 --- !u!114 &1604713492887267752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,11 +650,15 @@ MonoBehaviour:
   ropeObject: {fileID: 2692012225170031430, guid: 04c86582e8370764a86d7d260b76f224,
     type: 3}
   cables: []
+  staticObjects: []
   zoneFlute: {fileID: 1388160980174438419}
   "modeVis\xE9e": {fileID: 320360803324039071}
   modeZone: {fileID: 8308329533933117268}
+  viseeVFX: {fileID: 0}
+  zoneVFX: {fileID: 0}
   autoAimScript: {fileID: 0}
   cablePoint: {fileID: 8294402505379973197}
+  VFXFluteUsed: {fileID: 0}
 --- !u!114 &8354452777228727355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,6 +672,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectedNotes: []
+  wonMelodies: 
+  VFXReussite: {fileID: 0}
+  VFXEchec: {fileID: 0}
+  UIScript: {fileID: 0}
 --- !u!95 &3799776982024782300
 Animator:
   serializedVersion: 5

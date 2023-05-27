@@ -155,22 +155,22 @@ public class BandeJeuDeRythme : MonoBehaviour
     IEnumerator FeelBarre()
     {
         Vector3 originalScale = barreAvancement.localScale;
-        float duration = 0.08f;
+        float duration = 0.07f;
         
         usingBarre = true;
         barreAvancement.DOScale(barreAvancement.localScale * 1.2f, duration * 0.7f);
 
-        yield return new WaitForSeconds(duration * 0.5f);
+        yield return new WaitForSeconds(duration * 0.7f);
 
+        barreAvancement.DOScale(originalScale, duration);
+        
+        yield return new WaitForSeconds(duration * 0.2f);
+        
         pressX = false;
         pressY = false;
         pressZ = false;
-
-        yield return new WaitForSeconds(duration * 0.2f);
         
-        barreAvancement.DOScale(originalScale, duration);
-        
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration * 0.8f);
         
         usingBarre = false;
     }

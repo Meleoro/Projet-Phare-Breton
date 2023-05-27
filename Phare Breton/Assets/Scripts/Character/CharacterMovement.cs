@@ -48,12 +48,6 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        willFall = VerifyFall(stockageDirection);
-    }
-
-
     //------------------------------------------------------------------------------------------------------------------
     
 
@@ -69,7 +63,7 @@ public class CharacterMovement : MonoBehaviour
         manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
 
 
-        bool willFall = VerifyFall(direction);
+        bool willFall = VerifyFall(direction, true);
 
         if (!willFall)
         {
@@ -110,7 +104,7 @@ public class CharacterMovement : MonoBehaviour
                     {
                         newDirection1 = TryNewDirection(newDirection1, true, 0);
                     
-                        if (!VerifyFall(newDirection1))
+                        if (!VerifyFall(newDirection1, false))
                         {
                             directionFound1 = true;
                         }
@@ -120,7 +114,7 @@ public class CharacterMovement : MonoBehaviour
                     {
                         newDirection2 = TryNewDirection(newDirection2, false, 0);
                     
-                        if (!VerifyFall(newDirection2))
+                        if (!VerifyFall(newDirection2, false))
                         {
                             directionFound2 = true;
                         }
@@ -170,7 +164,7 @@ public class CharacterMovement : MonoBehaviour
 
     public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects)
     {
-        if (nearObjects.Count > 1 && VerifyFall(stockageDirection))
+        if (nearObjects.Count > 1 && VerifyFall(stockageDirection, true))
         {
             List<GameObject> objectToClimb = new List<GameObject>();
 
@@ -294,14 +288,18 @@ public class CharacterMovement : MonoBehaviour
             if (!scripts[k].isMagneted)
             {
                 // Levitation de l'objet
-                if (objects[k].transform.position.y < scripts[k].currentHauteur)
+                /*if (objects[k].transform.position.y < scripts[k].currentHauteur)
                 {
                     objects[k].AddForce(Vector3.up * (1000 * Time.fixedDeltaTime), ForceMode.Acceleration);
                 }
                 else
                 {
                     objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
-                }
+                }*/
+                
+                objects[k].transform.position = new Vector3(objects[k].transform.position.x, Mathf.Lerp(objects[k].transform.position.y, scripts[k].currentHauteur, Time.deltaTime * 2), 
+                    objects[k].transform.position.z);
+                scripts[k].rb.velocity = new Vector3(scripts[k].rb.velocity.x, 0, scripts[k].rb.velocity.z);
             }
 
             Vector3 desiredVelocity = new Vector3(direction.x, 0f, direction.y) * maxSpeedObject;
@@ -353,7 +351,7 @@ public class CharacterMovement : MonoBehaviour
         {
             float distance = Vector3.Distance(currentClimbedObject.transform.position, transform.position);
             
-            if (VerifyFall(stockageDirection) && (currentClimbedObject.transform.position.y < transform.position.y - 0.5f || distance > 2))
+            if (VerifyFall(stockageDirection, true) && (currentClimbedObject.transform.position.y < transform.position.y - 0.5f || distance > 2))
             {
                 StartCoroutine(ClimbObject(CalculateFallPos(stockageDirection), transform.position, false));
 
@@ -414,14 +412,14 @@ public class CharacterMovement : MonoBehaviour
 
     public void GoDown()
     {
-        if (VerifyFall(stockageDirection))
+        if (VerifyFall(stockageDirection, true))
         {
             transform.position = CalculateFallPos(stockageDirection);
         }
     }
 
 
-    public bool VerifyFall(Vector2 direction)
+    public bool VerifyFall(Vector2 direction, bool enFace)
     {
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
@@ -431,7 +429,51 @@ public class CharacterMovement : MonoBehaviour
         Debug.DrawLine(point3, point2);
         Debug.DrawLine(point1, point2);
 
-        Debug.Log(point1);
+
+        if (enFace && Mathf.Abs(point1.y - transform.position.y) > 2)
+        {
+            float decalage = 0.35f;
+            
+            Vector3 point21 = DoRaycast(transform.position - mesh.transform.right * decalage, 10);
+            Vector3 point22 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
+            Vector3 point23 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
+            Debug.DrawLine(point23, point22);
+            Debug.DrawLine(point21, point22);
+        
+            Vector3 point31 = DoRaycast(transform.position + mesh.transform.right * decalage, 10);
+            Vector3 point32 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
+            Vector3 point33 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
+            Debug.DrawLine(point33, point32);
+            Debug.DrawLine(point31, point32);
+            
+            float difference21 = 0;
+            float difference22 = 0;
+        
+            difference21 = Mathf.Abs(point21.y - point22.y);
+            difference22 = Mathf.Abs(point22.y - point33.y);
+
+            float difference23 = point21.y - point33.y;
+            float difference24 = difference22 - difference21;
+            
+            float difference31 = 0;
+            float difference32 = 0;
+        
+            difference31 = Mathf.Abs(point31.y - point32.y);
+            difference32 = Mathf.Abs(point32.y - point33.y);
+
+            float difference33 = point1.y - point33.y;
+            float difference34 = difference32 - difference31;
+
+
+            if (Mathf.Abs(difference24) > 0.8f || Mathf.Abs(difference23) > 2.5f || difference21 > 2.5f)
+            {
+                return true;
+            }
+            if (Mathf.Abs(difference34) > 0.8f || Mathf.Abs(difference33) > 2.5f || difference31 > 2.5f)
+            {
+                return true;
+            }
+        }
 
 
         float difference1 = 0;
@@ -444,7 +486,7 @@ public class CharacterMovement : MonoBehaviour
         float difference4 = difference2 - difference1;
 
 
-        if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 3 && difference1 < 3)
+        if (Mathf.Abs(difference4) < 0.8f && Mathf.Abs(difference3) < 2.5f && difference1 < 2.5f)
         {
             return false;
         }
