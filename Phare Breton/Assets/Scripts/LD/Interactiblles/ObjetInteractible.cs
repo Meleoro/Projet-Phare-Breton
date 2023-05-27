@@ -58,8 +58,8 @@ public class ObjetInteractible : MonoBehaviour
         
         VerifyLinkedObject();
 
-        wantedHauteur = transform.position.y +
-                        ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
+        wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
+                        transform.localScale.y * 0.5f;
     }
 
 
