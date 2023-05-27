@@ -465,11 +465,11 @@ public class CharacterMovement : MonoBehaviour
             float difference34 = difference32 - difference31;
 
 
-            if (Mathf.Abs(difference24) > 0.6f || Mathf.Abs(difference23) > 3 || difference21 > 3)
+            if (Mathf.Abs(difference24) > 0.8f || Mathf.Abs(difference23) > 2.5f || difference21 > 2.5f)
             {
                 return true;
             }
-            if (Mathf.Abs(difference34) > 0.6f || Mathf.Abs(difference33) > 3 || difference31 > 3)
+            if (Mathf.Abs(difference34) > 0.8f || Mathf.Abs(difference33) > 2.5f || difference31 > 2.5f)
             {
                 return true;
             }
@@ -486,7 +486,7 @@ public class CharacterMovement : MonoBehaviour
         float difference4 = difference2 - difference1;
 
 
-        if (Mathf.Abs(difference4) < 0.6f && Mathf.Abs(difference3) < 3 && difference1 < 3)
+        if (Mathf.Abs(difference4) < 0.8f && Mathf.Abs(difference3) < 2.5f && difference1 < 2.5f)
         {
             return false;
         }

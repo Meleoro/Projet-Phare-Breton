@@ -5,9 +5,12 @@ using UnityEngine;
 public class Echelle : ObjetInteractible
 {
     [Header("Ladder")]
-    [SerializeField] private Transform TPPosBas;
-    [SerializeField] private Transform center;
-    [SerializeField] private Transform TPPosHaut;
+    [HideInInspector] public Transform TPPosBas;
+    [HideInInspector] public Transform center;
+    [HideInInspector] public Transform TPPosHaut;
+    [SerializeField] private bool hautNeedCollider;
+    [SerializeField] private bool basNeedCollider;
+    [SerializeField] private LayerMask layerColliderEchelle;
     
     private List<Vector3> pointsGround = new List<Vector3>();
 
@@ -94,6 +97,7 @@ public class Echelle : ObjetInteractible
     public void RaycastPos(Transform posChara, bool inverse, float rayon)
     {
         float angle = 0;
+        bool needLayer = false;
         
         if (!inverse)
         {
@@ -109,22 +113,41 @@ public class Echelle : ObjetInteractible
                 {
                     posRaycast = TPPosBas.position + new Vector3(direction.x, 0.5f, direction.y);
                     distance = 2;
+                    
+                    if(basNeedCollider)
+                        needLayer = true;
                 }
 
                 else
                 {
                     posRaycast = TPPosHaut.position + new Vector3(direction.x, 0.5f, direction.y);
                     distance = 5;
+                    
+                    if(hautNeedCollider)
+                        needLayer = true;
                 }
 
                 Ray ray = new Ray(posRaycast, Vector3.down);
                 RaycastHit raycastHit;
 
-                if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
+                if (needLayer)
                 {
-                    if (raycastHit.collider.gameObject != gameObject)
+                    if (Physics.Raycast(ray, out raycastHit, distance, layerColliderEchelle))
                     {
-                        pointsGround.Add(raycastHit.point);
+                        if (raycastHit.collider.gameObject != gameObject)
+                        {
+                            pointsGround.Add(raycastHit.point);
+                        }
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
+                    {
+                        if (raycastHit.collider.gameObject != gameObject)
+                        {
+                            pointsGround.Add(raycastHit.point);
+                        }
                     }
                 }
             }
@@ -143,24 +166,42 @@ public class Echelle : ObjetInteractible
                 {
                     posRaycast = TPPosBas.position + new Vector3(direction.x, 0.5f, direction.y);
                     distance = 2;
+                    
+                    if(basNeedCollider)
+                        needLayer = true;
                 }
 
                 else
                 {
                     posRaycast = TPPosHaut.position + new Vector3(direction.x, 0.5f, direction.y);
                     distance = 5;
+
+                    if(hautNeedCollider)
+                        needLayer = true;
                 }
 
+                
                 Ray ray = new Ray(posRaycast, Vector3.down);
                 RaycastHit raycastHit;
-                
-                //Debug.DrawRay(posRaycast, Vector3.down, Color.blue, 5);
 
-                if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
+                if (needLayer)
                 {
-                    if (raycastHit.collider.gameObject != gameObject)
+                    if (Physics.Raycast(ray, out raycastHit, distance, layerColliderEchelle))
                     {
-                        pointsGround.Add(raycastHit.point);
+                        if (raycastHit.collider.gameObject != gameObject)
+                        {
+                            pointsGround.Add(raycastHit.point);
+                        }
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
+                    {
+                        if (raycastHit.collider.gameObject != gameObject)
+                        {
+                            pointsGround.Add(raycastHit.point);
+                        }
                     }
                 }
             }

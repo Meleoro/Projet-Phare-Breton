@@ -6146,17 +6146,27 @@ MonoBehaviour:
   isMagneted: 0
   currentMagnet: {fileID: 0}
   magnetedPos: {fileID: 0}
+  mustVerify: 0
   isLinked: 0
   linkedObject: []
   cable: {fileID: 0}
   isStart: 0
+  resistanceCable: {x: 0, y: 0, z: 0}
+  hauteurFigee: 0
+  hauteurRespawn: 20
   isMoved: 0
   currentHauteur: 0
+  staseVFX: {fileID: 0}
   isInStase: 0
   rb: {fileID: 0}
   TPPosBas: {fileID: 588477659110954445}
   center: {fileID: 5558081069223304709}
   TPPosHaut: {fileID: 1472470775998890916}
+  hautNeedCollider: 0
+  basNeedCollider: 0
+  layerColliderEchelle:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &4043761935921136249
 GameObject:
   m_ObjectHideFlags: 0
