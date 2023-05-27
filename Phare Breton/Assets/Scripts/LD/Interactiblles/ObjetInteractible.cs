@@ -100,7 +100,7 @@ public class ObjetInteractible : MonoBehaviour
     {
         if (!hauteurFigee)
         {
-            Ray ray = new Ray(transform.position, Vector3.down);
+            /*Ray ray = new Ray(transform.position, Vector3.down);
             RaycastHit raycastHit;
 
             if (Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + transform.localScale.y * 0.5f))
@@ -112,9 +112,18 @@ public class ObjetInteractible : MonoBehaviour
                             currentHauteur += Time.deltaTime * 2;
                 }
             
+            }*/
+
+            if (DoRaycast(transform.position,
+                    ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
+                    transform.localScale.y * 0.5f))
+            {
+                currentHauteur += Time.deltaTime * 2;
             }
 
-            else if (!Physics.Raycast(ray, out raycastHit, ReferenceManager.Instance.characterReference.movementScript.hauteurObject + 0.2f))
+            else if (!DoRaycast(transform.position,
+                         ReferenceManager.Instance.characterReference.movementScript.hauteurObject +
+                         transform.localScale.y * 0.5f + 0.2f))
             {
                 currentHauteur -= Time.deltaTime * 2;
             }
@@ -125,6 +134,26 @@ public class ObjetInteractible : MonoBehaviour
             if(currentHauteur < wantedHauteur)
                 currentHauteur += Time.deltaTime * 2;
         }
+    }
+    
+    public bool DoRaycast(Vector3 startPos, float lenght)
+    {
+        Ray ray = new Ray(startPos, Vector3.down);
+        RaycastHit raycastHit;
+
+        if(lenght <= 0)
+            return false;
+        
+        if (Physics.Raycast(ray, out raycastHit, lenght))
+        {
+            if (raycastHit.collider.isTrigger || raycastHit.collider.CompareTag("Player"))
+                return DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
+            
+            if(raycastHit.collider.gameObject != gameObject)
+                return true;
+        }
+        
+        return false;
     }
 
 
