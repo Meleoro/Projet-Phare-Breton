@@ -9,6 +9,7 @@ public class CharacterObjects : MonoBehaviour
 {
     [Header("References")] 
     [SerializeField] private Image fond;
+    [SerializeField] private GameObject UI;
     private CharaManager mainScript;
 
     [Header("ControlObject")] 
@@ -25,6 +26,7 @@ public class CharacterObjects : MonoBehaviour
     {
         mainScript = GetComponent<CharaManager>();
 
+        UI.SetActive(true);
         fond.DOFade(0, 0);
     }
 
