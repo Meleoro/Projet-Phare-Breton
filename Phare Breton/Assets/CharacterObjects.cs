@@ -1,18 +1,115 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class CharacterObjects : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("References")] 
+    [SerializeField] private Image fond;
+    private CharaManager mainScript;
+
+    [Header("ControlObject")] 
+    public float accelerationRotation;
+    public float vitesseRotation;
+    private GameObject controlledObject;
+    private Vector3 posObject;
+    private float multiplier;
+    private Vector2 stockageDirection;
+    private bool canMove;
+    
+    
+    private void Start()
     {
-        
+        mainScript = GetComponent<CharaManager>();
+
+        fond.DOFade(0, 0);
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void PickUpObject(GameObject currentObject)
     {
+        mainScript.isPickingObjectUp = true;
+        posObject = ReferenceManager.Instance.cameraReference.transform.position +
+                    ReferenceManager.Instance.cameraReference.transform.forward * 1.5f;
+
+        controlledObject = currentObject;
+
+        StartCoroutine(StartPickUp());
+    }
+
+    public IEnumerator StartPickUp()
+    {
+        fond.DOFade(0.7f, 0.8f);
+        controlledObject.transform.position = posObject;
+
+        controlledObject.transform.DOScale(Vector3.zero, 0);
+        controlledObject.transform.DOScale(Vector3.one, 0.8f);
         
+        yield return new WaitForSeconds(0.8f);
+        
+        canMove = true;
+    }
+    
+    public IEnumerator EndPickUp()
+    {
+        canMove = false;
+
+        controlledObject.transform.DOScale(Vector3.one * 1.1f, 0.1f).SetEase(Ease.OutCubic);
+        
+        yield return new WaitForSeconds(0.1f);
+        
+        fond.DOFade(0f, 1f);
+        
+        controlledObject.transform.DOScale(Vector3.zero, 0.6f).SetEase(Ease.InCubic);
+     
+        yield return new WaitForSeconds(0.9f);
+
+        Destroy(controlledObject);
+        mainScript.isPickingObjectUp = false;
+    }
+    
+
+
+    public void ControlObject(Vector2 direction, bool quitInput)
+    {
+        if (canMove)
+        {
+            if (quitInput)
+                StartCoroutine(EndPickUp());
+        
+            Vector2 finalDirection = Vector2.zero;
+        
+            if (direction.magnitude > 0.1f)
+            {
+                if (multiplier < 1)
+                {
+                    multiplier += Time.deltaTime * accelerationRotation;
+                }
+
+                stockageDirection = direction;
+                finalDirection = direction * (multiplier * vitesseRotation);
+            }
+
+            else
+            {
+                if (multiplier > 0)
+                {
+                    multiplier -= Time.deltaTime * accelerationRotation;
+                }
+            
+                finalDirection = stockageDirection * (multiplier * vitesseRotation);
+            }
+        
+            controlledObject.transform.Rotate(new Vector3(0, finalDirection.x, finalDirection.y));
+        }
+
+        else
+        {
+            controlledObject.transform.Rotate(new Vector3(0, 0, 0));
+        }
     }
 }

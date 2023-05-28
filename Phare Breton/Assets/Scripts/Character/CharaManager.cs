@@ -14,15 +14,16 @@ public class CharaManager : MonoBehaviour
     public CharacterMovement movementScript;
     public CharacterFlute fluteScript;
     public CharacterNotes notesScript;
+    public CharacterObjects scriptObjets;
 
     [Header("Références")]
-    [HideInInspector] public AudioSource playerAudioSource;
     public Animator anim;
     [SerializeField] private GameObject UIInteraction;
     [SerializeField] private Image UIImageX;
     [SerializeField] private Image UIImageY;
     [SerializeField] private MeshRenderer fluteMesh;
     [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public AudioSource playerAudioSource;
 
     [Header("Inputs")]
     [HideInInspector] public Vector2 direction;
@@ -58,6 +59,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> nearBoxesDown = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearGenerator = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearAmpoule = new List<GameObject>();
+    [HideInInspector] public List<GameObject> nearObjetsRecuperables = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
 
@@ -72,6 +74,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 movedObjectPosition;
     [HideInInspector] public bool isInLightSource;
+    [HideInInspector] public bool isPickingObjectUp;
 
 
     void Start()
@@ -96,7 +99,7 @@ public class CharaManager : MonoBehaviour
             SceneManager.LoadScene(menuScene);
         }
         
-        if (!noControl)
+        if (!noControl && !isPickingObjectUp)
         {
             fluteMesh.enabled = false;
 
@@ -106,33 +109,6 @@ public class CharaManager : MonoBehaviour
             }
 
 
-            // Partie déplacement player / objets
-            /*if (!noMovement && !isMovingObjects)
-            {
-                movementScript.MoveCharacter(direction);
-                
-                if(direction != Vector2.zero) 
-                    movementScript.RotateCharacter(direction, false);
-
-                if (direction == Vector2.zero)
-                    movementScript.RotateCharacterCamera();
-
-
-                if (direction.magnitude > 0.5f)
-                    isWalking = true;
-
-                else
-                    isWalking = false;
-            }
-
-            else if (isMovingObjects)
-            {
-                movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
-
-                isWalking = false;
-            }*/
-
-            
             // Partie flute
             if (R2)
             {
@@ -149,7 +125,7 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic)
+                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0)
                 {
                     UIInteraction.SetActive(VerificationInteractionUI());
                 }
@@ -160,6 +136,13 @@ public class CharaManager : MonoBehaviour
 
                 if (interaction)
                 {
+                    if (nearObjetsRecuperables.Count != 0)
+                    {
+                        scriptObjets.PickUpObject(nearObjetsRecuperables[0]);
+                        
+                        interaction = false;
+                    }
+                    
                     if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                     {
                         nearObjects.Clear();
@@ -177,6 +160,7 @@ public class CharaManager : MonoBehaviour
                     
                     if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                     {
+
                         movementScript.ClimbObject(nearBoxes);
 
                         interaction = false;
@@ -221,6 +205,9 @@ public class CharaManager : MonoBehaviour
         }
         else
         {
+            if(isPickingObjectUp)
+                scriptObjets.ControlObject(direction, stase);
+            
             isWalking = false;
         }
 
@@ -232,7 +219,7 @@ public class CharaManager : MonoBehaviour
     {
         IsMovingObjects();
 
-        if (!noControl)
+        if (!noControl && !isPickingObjectUp)
         {
             // Partie déplacement player / objets
             if (!noMovement && !isMovingObjects)
@@ -285,6 +272,9 @@ public class CharaManager : MonoBehaviour
                 return true;
 
             if (canPlayMusic)
+                return true;
+
+            if (nearObjetsRecuperables.Count != 0)
                 return true;
         
             for (int i = 0; i < nearBoxesDown.Count; i++)

@@ -8,6 +8,7 @@ public class ZonePoseCables : MonoBehaviour
     public LayerMask ignoreLayer;
 
     private List<ObjetInteractible> objectsAtRange = new List<ObjetInteractible>();
+    private List<GameObject> objetsRecuperablesAtRange = new List<GameObject>();
 
 
     private void Update()
@@ -78,6 +79,8 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearAmpoule.Clear();
         ReferenceManager.Instance.characterReference.nearGenerator.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
+
+        ReferenceManager.Instance.characterReference.nearObjetsRecuperables = objetsRecuperablesAtRange;
         
         for (int i = 0; i < objectsAtRange.Count; i++)
         {
@@ -175,6 +178,11 @@ public class ZonePoseCables : MonoBehaviour
             
             objectsAtRange.Add(_object);
         }
+        
+        else if (other.CompareTag("ObjetRecuperables"))
+        {
+            objetsRecuperablesAtRange.Add(other.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -184,6 +192,11 @@ public class ZonePoseCables : MonoBehaviour
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
             objectsAtRange.Remove(_object);
+        }
+        
+        else if (other.CompareTag("ObjetRecuperables"))
+        {
+            objetsRecuperablesAtRange.Remove(other.gameObject);
         }
     }
     
