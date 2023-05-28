@@ -81,7 +81,7 @@ public class TriggerGrue : MonoBehaviour
         animGrue.SetTrigger("startVol");
 
         launchFly = true;
-        currentY = transform.position.y;
+        currentY = grueObject.transform.position.y;
 
 
         yield return new WaitForSeconds(0.9f);
