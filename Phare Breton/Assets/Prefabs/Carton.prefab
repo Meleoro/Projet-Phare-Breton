@@ -38,7 +38,7 @@ Transform:
   - {fileID: 4432037110099629952}
   - {fileID: 4386397468980863157}
   m_Father: {fileID: 0}
-  m_RootOrder: 59
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5165892494062510040
 MeshFilter:
@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6959f454e162034409146cc5ab8c0b93, type: 2}
+  - {fileID: 2100000, guid: 865f30dfcec81264081a615498a1c5ac, type: 2}
   - {fileID: 2100000, guid: 06d64279cebe1104aaa15e0f75fffeec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -110,8 +110,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.7972813, z: 0.842692}
-  m_Center: {x: 0, y: -0.009306272, z: 0.0022888184}
+  m_Size: {x: 0.84639096, y: 0.8429697, z: 0.8478036}
+  m_Center: {x: -0.0057558715, y: 0.00018363197, z: -0.008869581}
 --- !u!114 &5679958475229067708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +136,8 @@ MonoBehaviour:
   cable: {fileID: 0}
   isStart: 0
   resistanceCable: {x: 0, y: 0, z: 0}
+  hauteurFigee: 0
+  hauteurRespawn: 20
   isMoved: 0
   currentHauteur: 0
   staseVFX: {fileID: 6888648161829566992}
