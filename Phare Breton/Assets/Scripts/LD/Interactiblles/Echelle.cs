@@ -11,6 +11,7 @@ public class Echelle : ObjetInteractible
     [SerializeField] private bool hautNeedCollider;
     [SerializeField] private bool basNeedCollider;
     [SerializeField] private LayerMask layerColliderEchelle;
+    private RaycastHit raycastHit;
     
     private List<Vector3> pointsGround = new List<Vector3>();
 
@@ -128,7 +129,6 @@ public class Echelle : ObjetInteractible
                 }
 
                 Ray ray = new Ray(posRaycast, Vector3.down);
-                RaycastHit raycastHit;
 
                 if (needLayer)
                 {
@@ -179,31 +179,70 @@ public class Echelle : ObjetInteractible
                     if(hautNeedCollider)
                         needLayer = true;
                 }
-
                 
-                Ray ray = new Ray(posRaycast, Vector3.down);
-                RaycastHit raycastHit;
 
-                if (needLayer)
+                if (CreateRaycast(posRaycast, distance, needLayer))
                 {
-                    if (Physics.Raycast(ray, out raycastHit, distance, layerColliderEchelle))
+                    if (raycastHit.collider.gameObject != gameObject)
                     {
-                        if (raycastHit.collider.gameObject != gameObject)
-                        {
-                            pointsGround.Add(raycastHit.point);
-                        }
+                        pointsGround.Add(raycastHit.point); 
+                        
                     }
                 }
+               
+            }
+        }
+    }
+
+
+    public bool CreateRaycast(Vector3 startPos, float lenght, bool needLayer)
+    {
+        Ray ray = new Ray(startPos, Vector3.down);
+
+        if (lenght < 0)
+        {
+            return false;
+        }
+
+        if (needLayer)
+        {
+            if (Physics.Raycast(ray, out raycastHit, lenght, layerColliderEchelle))
+            {
+                if (raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
+                {
+                    return true;
+                }
+
                 else
                 {
-                    if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
-                    {
-                        if (raycastHit.collider.gameObject != gameObject)
-                        {
-                            pointsGround.Add(raycastHit.point);
-                        }
-                    }
+                    return DoRaycast(raycastHit.point - Vector3.down * 0.01f, lenght - raycastHit.distance);
                 }
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+
+        else
+        {
+            if (Physics.Raycast(ray, out raycastHit, lenght, LayerMask.NameToLayer("Player")))
+            {
+                if (raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
+                {
+                    return true;
+                }
+
+                else
+                {
+                    return DoRaycast(raycastHit.point, lenght - raycastHit.distance);
+                }
+            }
+
+            else
+            {
+                return false;
             }
         }
     }
