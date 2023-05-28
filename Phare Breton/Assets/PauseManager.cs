@@ -20,10 +20,13 @@ public class PauseManager : MonoBehaviour
     private float saveX;
     private float screenSize;
 
+    public bool noControl;
+
     [Header("Références")] 
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
+    [SerializeField] private OptionsManager optionsScript;
 
     [Header("Inputs")] 
     private bool pause;
@@ -47,34 +50,37 @@ public class PauseManager : MonoBehaviour
     {
         screenSize = ReferenceManager.Instance.cameraReference._camera.pixelWidth;
 
-        if (pauseOpen)
-        {
-            if ((up || down) && !isMoving)
-            {
-                ChangeSelected();
-
-                up = false;
-                down = false;
-            }
-
-            if (interaction && !isMoving)
-            {
-                UseButton();
-            }
-        }
-        
-        if (pause)
+        if (!noControl)
         {
             if (pauseOpen)
             {
-                QuitPause();
-            }
-            else
-            {
-                OpenPause();
-            }
+                if ((up || down) && !isMoving)
+                {
+                    ChangeSelected();
 
-            pause = false;
+                    up = false;
+                    down = false;
+                }
+
+                if (interaction && !isMoving)
+                {
+                    UseButton();
+                }
+            }
+        
+            if (pause)
+            {
+                if (pauseOpen)
+                {
+                    QuitPause();
+                }
+                else
+                {
+                    OpenPause();
+                }
+
+                pause = false;
+            }
         }
     }
 
@@ -124,7 +130,7 @@ public class PauseManager : MonoBehaviour
         
         else if (currentButton == 2)
         {
-            
+            StartCoroutine(optionsScript.OpenOptions(1, 1));
         }
 
         else
