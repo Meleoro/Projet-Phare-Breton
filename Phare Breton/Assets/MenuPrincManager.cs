@@ -18,6 +18,7 @@ public class MenuPrincManager : MonoBehaviour
     public float multiplier3;
     private float screenWidth;
     private float screenHeight;
+    public bool noControl;
 
 
     [Header("Shake")]
@@ -37,6 +38,7 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> textsButtons = new List<TextMeshProUGUI>();
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
+    [SerializeField] private OptionsManager optionsManager;
 
 
     [Header("Inputs")] 
@@ -44,6 +46,7 @@ public class MenuPrincManager : MonoBehaviour
     private bool interaction;
     private bool up;
     private bool down;
+    private bool escape;
 
 
     private void Start()
@@ -66,19 +69,21 @@ public class MenuPrincManager : MonoBehaviour
 
         MoveBande();
 
-        if ((up || down) && !isMoving)
+        if (!noControl)
         {
-            ChangeSelected();
+            if ((up || down) && !isMoving)
+            {
+                ChangeSelected();
 
-            up = false;
-            down = false;
-        }
+                up = false;
+                down = false;
+            }
 
-        if (interaction && !isMoving)
-        {
-            UseButton();
+            if (interaction && !isMoving)
+            {
+                UseButton();
+            }
         }
-        
     }
 
 
@@ -145,7 +150,7 @@ public class MenuPrincManager : MonoBehaviour
         
         else if (currentButton == 2)
         {
-            
+            StartCoroutine(optionsManager.OpenOptions(1, 0.5f));
         }
 
         else
@@ -266,5 +271,14 @@ public class MenuPrincManager : MonoBehaviour
 
         if (context.canceled)
             down = false;
+    }
+    
+    public void OnEscape(InputAction.CallbackContext context)
+    {
+        if (context.started)
+            escape = true;
+
+        if (context.canceled)
+            escape = false;
     }
 }
