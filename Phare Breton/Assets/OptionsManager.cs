@@ -15,6 +15,7 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
     [SerializeField] private List<GameObject> sliders = new List<GameObject>();
     [SerializeField] private MenuPrincManager menuPrincipalScript;
+    [SerializeField] private PauseManager pauseScript;
     
     [Header("Inputs")] 
     private bool pause;
@@ -25,6 +26,7 @@ public class OptionsManager : MonoBehaviour
 
     [Header("Autres")] 
     public int index = 0;
+    public bool isOnMenuPrincipal;
     private bool canUse;
 
     private void Start()
@@ -145,7 +147,11 @@ public class OptionsManager : MonoBehaviour
 
         optionsObject.SetActive(true);
 
-        menuPrincipalScript.noControl = true;
+        if(isOnMenuPrincipal)
+            menuPrincipalScript.noControl = true;
+        
+        else
+            pauseScript.noControl = true;
         
         GoUp(duration, 1);
 
@@ -157,6 +163,8 @@ public class OptionsManager : MonoBehaviour
     
     public IEnumerator QuitOptions(float duration, float value)
     {
+        optionsObject.SetActive(true); 
+        
         canUse = false;
         
         optionsMainText.DOFade(value, duration);
@@ -180,7 +188,11 @@ public class OptionsManager : MonoBehaviour
         
         optionsObject.SetActive(false);
 
-        menuPrincipalScript.noControl = false;
+        if (isOnMenuPrincipal)
+            menuPrincipalScript.noControl = false;
+
+        else
+            pauseScript.noControl = false;
     }
     
     

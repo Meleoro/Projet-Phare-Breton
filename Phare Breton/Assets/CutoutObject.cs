@@ -7,6 +7,11 @@ public class CutoutObject : MonoBehaviour
     [SerializeField] private Transform targetObject;
     [SerializeField] private LayerMask wallMask;
     private Camera mainCamera;
+
+    [Header("ShaderTransparence")] 
+    public float cutoutSize = 0.1f;
+
+    public float fallOffSize = 0.05f;
     
     void Start()
     {
@@ -28,8 +33,8 @@ public class CutoutObject : MonoBehaviour
             for (int j = 0; j < materials.Length; j++)
             {
                 materials[j].SetVector("_CutoutPos", cutoutPos);
-                materials[j].SetFloat("_CutoutSize", 0.1f);
-                materials[j].SetFloat("_FalloffSize", 0.05f);
+                materials[j].SetFloat("_CutoutSize", cutoutSize);
+                materials[j].SetFloat("_FalloffSize", fallOffSize);
             }
         }
     }
