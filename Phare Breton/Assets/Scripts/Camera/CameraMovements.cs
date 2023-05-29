@@ -63,11 +63,6 @@ public class CameraMovements : MonoBehaviour
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name == sceneStartName)
-        {
-            StartCoroutine(IntroCinematique());
-        }
-
         _camera = GetComponent<Camera>();
         cameraRotationRefScript = GetComponentInChildren<CameraRotationRef>();
         scriptFondu = GetComponent<Fondu>();
@@ -86,6 +81,11 @@ public class CameraMovements : MonoBehaviour
         }
         
         ActualiseRotationCamRef();
+
+        if (SceneManager.GetActiveScene().name == sceneStartName)
+        {
+            StartCoroutine(IntroCinematique());
+        }
     }
 
 
@@ -129,20 +129,26 @@ public class CameraMovements : MonoBehaviour
 
     public IEnumerator IntroCinematique()
     {
+        yield return new WaitForSeconds(0.02f);
+
         isStatic = true;
-        ReferenceManager.Instance.characterReference.noControl = true;
+        ReferenceManager.Instance.characterReference.StartCinematique();
 
         Vector3 savePos = transform.position;
         Vector3 saveRot = transform.rotation.eulerAngles;
 
         transform.rotation = posStart.rotation;
-        transform.DORotate(saveRot, duration);
-
         transform.DOMove(posStart.position, 0);
+
+        yield return new WaitForSeconds(duration * 0.2f);
+
+        transform.DORotate(saveRot, duration);
         transform.DOMove(savePos, duration);
 
 
-        yield return new WaitForSeconds(duration);
+        yield return new WaitForSeconds(duration * 0.8f);
+
+        ReferenceManager.Instance.characterReference.EndCinematique();
 
         isStatic = false;
 
