@@ -25,8 +25,6 @@ public class CutoutObject : MonoBehaviour
         Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
         //cutoutPos.y /= (Screen.width / Screen.height);
 
-        Debug.Log(cutoutPos);
-
         Vector3 offset = targetObject.position - transform.position;
         RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
 
