@@ -30,6 +30,8 @@ public class Fondu : MonoBehaviour
     public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera, GameObject activatedL, GameObject desactivatedL)
     {
         SaveDoorCrossed();
+
+        GetComponent<CutoutObject>().ResetAlphas();
         
         isInTransition = true;
 
