@@ -23,7 +23,9 @@ public class CutoutObject : MonoBehaviour
     void Update()
     {
         Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
-        cutoutPos.y /= (Screen.width / Screen.height);
+        //cutoutPos.y /= (Screen.width / Screen.height);
+
+        Debug.Log(cutoutPos);
 
         Vector3 offset = targetObject.position - transform.position;
         RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
@@ -36,11 +38,14 @@ public class CutoutObject : MonoBehaviour
             {
                 if(!globalMaterials.Contains(materials[j]))
                     globalMaterials.Add(materials[j]);
-
-                materials[j].SetVector("_CutoutPos", cutoutPos);
-                materials[j].SetFloat("_CutoutSize", cutoutSize);
-                materials[j].SetFloat("_FalloffSize", fallOffSize);
             }
+        }
+
+        for(int i = 0; i < globalMaterials.Count; i++)
+        {
+            globalMaterials[i].SetVector("_CutoutPos", cutoutPos);
+            globalMaterials[i].SetFloat("_CutoutSize", cutoutSize);
+            globalMaterials[i].SetFloat("_FalloffSize", fallOffSize);
         }
     }
 
