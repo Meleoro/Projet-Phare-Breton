@@ -9,9 +9,9 @@ public class CutoutObject : MonoBehaviour
     private Camera mainCamera;
 
     [Header("ShaderTransparence")] 
-    public float cutoutSize = 1f;
+    public float cutoutSize = 0.1f;
 
-    public float fallOffSize = 1f;
+    public float fallOffSize = 0.05f;
     
     void Start()
     {
