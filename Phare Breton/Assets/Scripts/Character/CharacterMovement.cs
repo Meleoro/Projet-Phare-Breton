@@ -162,7 +162,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects)
+    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects, BoxCollider echelleCollider)
     {
         if (nearObjects.Count > 1 && VerifyFall(stockageDirection, true))
         {
@@ -183,6 +183,9 @@ public class CharacterMovement : MonoBehaviour
 
         else
         {
+            echelleCollider.enabled = false;
+            manager.rb.isKinematic = true;
+
             manager.anim.SetBool("isGoingUp", goUp);
 
 
@@ -206,17 +209,27 @@ public class CharacterMovement : MonoBehaviour
 
             if (goUp)
             {
-                transform.DOMoveY(finalDestination.y, hauteur * 0.4f).SetEase(Ease.Linear);
+                float duration1 = hauteur * 0.3f;
+                float duration3 = 0.35f;
 
-                yield return new WaitForSeconds(hauteur * 0.4f - 0.7f);
+                transform.DOMoveY(finalDestination.y - 1, duration1).SetEase(Ease.Linear);
+
+                yield return new WaitForSeconds(duration1 - 0.36f);
 
                 manager.anim.SetTrigger("endLadder");
 
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(0.36f);
 
-                transform.DOMove(finalDestination, 0.6f + 0.4f).SetEase(Ease.OutQuad);
+                transform.DOMoveY(finalDestination.y - 1f, 0.1f).SetEase(Ease.Linear);
 
-                yield return new WaitForSeconds(0.6f + 0.4f);
+                yield return new WaitForSeconds(0.1f);
+
+                transform.DOMoveY(finalDestination.y, duration3 + 0.3f).SetEase(Ease.Linear);
+
+                transform.DOMoveX(finalDestination.x, duration3).SetEase(Ease.Linear);
+                transform.DOMoveZ(finalDestination.z, duration3).SetEase(Ease.Linear);
+
+                yield return new WaitForSeconds(duration3 + 0.3f);
             }
 
             else
@@ -234,6 +247,8 @@ public class CharacterMovement : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             }
 
+            manager.rb.isKinematic = false;
+            echelleCollider.enabled = true;
             manager.noControl = false;
         }
     }
