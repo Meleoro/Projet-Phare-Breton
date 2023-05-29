@@ -9,10 +9,9 @@ public class CutoutObject : MonoBehaviour
     private Camera mainCamera;
 
     [Header("ShaderTransparence")] 
-    public float cutoutSize = 1f;
-    public float fallOffSize = 1f;
-    public Material[] materials;
+    public float cutoutSize = 0.1f;
 
+    public float fallOffSize = 0.05f;
     
     void Start()
     {
@@ -29,14 +28,7 @@ public class CutoutObject : MonoBehaviour
 
         for (int i = 0; i < hitObjects.Length; i++)
         {
-            for(int j = 0; j < materials.Length; j++) 
-            {
-                materials[j].SetVector("_CutoutPos", Vector2.zero);
-                materials[j].SetFloat("_CutoutSize", 0);
-                materials[j].SetFloat("_FalloffSize", 0);
-            }
-
-            materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
+            Material[] materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
 
             for (int j = 0; j < materials.Length; j++)
             {
