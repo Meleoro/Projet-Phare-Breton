@@ -255,6 +255,19 @@ public class CharaManager : MonoBehaviour
     }
 
 
+    public void StartCinematique()
+    {
+        noControl = true;
+
+        anim.SetTrigger("wakeUp");
+    }
+
+    public void EndCinematique()
+    {
+        noControl = false;
+    }
+
+
     public bool VerificationInteractionUI()
     {
         if (!hasRope)

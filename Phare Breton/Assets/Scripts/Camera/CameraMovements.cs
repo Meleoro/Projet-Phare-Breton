@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
 
 public class CameraMovements : MonoBehaviour
 {
@@ -36,7 +38,13 @@ public class CameraMovements : MonoBehaviour
     private Vector3 savePosRythme;
     private Quaternion saveRotRythme;
     [HideInInspector] public bool goToSave;
-    
+
+
+    [Header("CinematiqueIntro")]
+    public string sceneStartName;
+    public Transform posStart;
+    public float duration;
+
     
     [Header("Autres")]
     private Vector3 savePosition;
@@ -73,6 +81,11 @@ public class CameraMovements : MonoBehaviour
         }
         
         ActualiseRotationCamRef();
+
+        if (SceneManager.GetActiveScene().name == sceneStartName)
+        {
+            StartCoroutine(IntroCinematique());
+        }
     }
 
 
@@ -111,6 +124,34 @@ public class CameraMovements : MonoBehaviour
         }
         
         UpdateAlpha();
+    }
+
+
+    public IEnumerator IntroCinematique()
+    {
+        yield return new WaitForSeconds(0.02f);
+
+        isStatic = true;
+        ReferenceManager.Instance.characterReference.StartCinematique();
+
+        Vector3 savePos = transform.position;
+        Vector3 saveRot = transform.rotation.eulerAngles;
+
+        transform.rotation = posStart.rotation;
+        transform.DOMove(posStart.position, 0);
+
+        yield return new WaitForSeconds(duration * 0.2f);
+
+        transform.DORotate(saveRot, duration);
+        transform.DOMove(savePos, duration);
+
+
+        yield return new WaitForSeconds(duration * 0.8f);
+
+        ReferenceManager.Instance.characterReference.EndCinematique();
+
+        isStatic = false;
+
     }
 
 
