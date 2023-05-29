@@ -5,12 +5,15 @@ using UnityEngine;
 public class Echelle : ObjetInteractible
 {
     [Header("Ladder")]
-    [HideInInspector] public Transform TPPosBas;
-    [HideInInspector] public Transform center;
-    [HideInInspector] public Transform TPPosHaut;
+    [SerializeField]
+    private BoxCollider _collider;
     [SerializeField] private bool hautNeedCollider;
     [SerializeField] private bool basNeedCollider;
     [SerializeField] private LayerMask layerColliderEchelle;
+    [HideInInspector] public Transform TPPosBas;
+    [HideInInspector] public Transform center;
+    [HideInInspector] public Transform TPPosHaut;
+
     private RaycastHit raycastHit;
     
     private List<Vector3> pointsGround = new List<Vector3>();
@@ -254,8 +257,19 @@ public class Echelle : ObjetInteractible
 
         bool goUp = center.position.y > chara.position.y;
 
-        StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(FindTPPos(chara, false) + new Vector3(0, 0.25f, 0),
-            FindTPPos(chara, true), goUp, ReferenceManager.Instance.characterReference.nearObjects));
+        Vector3 finalDestination = FindTPPos(chara, false) + new Vector3(0, 0.2f, 0);
+        Vector3 startPos = FindTPPos(chara, true);
+
+        Vector3 direction = finalDestination - startPos;
+        Vector2 newDirection = new Vector2(direction.x, direction.z).normalized * 0.45f;
+
+        finalDestination = new Vector3(center.position.x + newDirection.x, finalDestination.y, center.position.z + newDirection.y);
+        startPos = new Vector3(center.position.x - newDirection.x, startPos.y, center.position.z - newDirection.y);
+
+        Debug.DrawLine(startPos, finalDestination, Color.red, 1);
+
+        StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(finalDestination,
+            startPos, goUp, ReferenceManager.Instance.characterReference.nearObjects, _collider));
     }
     
     
