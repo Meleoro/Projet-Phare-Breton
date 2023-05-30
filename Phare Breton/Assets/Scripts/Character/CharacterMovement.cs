@@ -183,7 +183,7 @@ public class CharacterMovement : MonoBehaviour
 
         else
         {
-            echelleCollider.enabled = false;
+            //echelleCollider.enabled = false;
             manager.rb.isKinematic = true;
 
             manager.anim.SetBool("isGoingUp", goUp);
@@ -248,7 +248,7 @@ public class CharacterMovement : MonoBehaviour
             }
 
             manager.rb.isKinematic = false;
-            echelleCollider.enabled = true;
+            //echelleCollider.enabled = true;
             manager.noControl = false;
         }
     }
