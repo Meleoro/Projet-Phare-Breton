@@ -81,7 +81,7 @@ public class TriggerGrue : MonoBehaviour
         animGrue.SetTrigger("startVol");
 
         launchFly = true;
-        currentY = grueObject.transform.position.y;
+        currentY = positionsGrue[index].position.y;
 
 
         yield return new WaitForSeconds(0.9f);
@@ -97,7 +97,7 @@ public class TriggerGrue : MonoBehaviour
         currentGrue.transform.DOMoveX(midPos.x, speed);
         currentGrue.transform.DOMoveZ(midPos.z, speed);
 
-        currentGrue.transform.DOMoveY(currentY + 13, speed);
+        currentGrue.transform.DOMoveY(currentY + 10, speed);
 
 
         yield return new WaitForSeconds(speed);
