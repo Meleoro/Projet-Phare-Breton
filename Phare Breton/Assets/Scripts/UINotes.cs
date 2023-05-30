@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering;
 
 
 public class UINotes : MonoBehaviour
@@ -16,6 +17,7 @@ public class UINotes : MonoBehaviour
     public Image note3;
     public Image fond;
     public RectTransform UIObject;
+    public Volume damageVolume;
 
     [Header("Values")]
     public float noFade;
@@ -24,6 +26,7 @@ public class UINotes : MonoBehaviour
     public float yesScale;
     public float modificateurX;
     public float modificateurShake;
+    private float damageValue;
 
     [Header("Other")] 
     public List<bool> activatedNotes = new List<bool>();
@@ -39,6 +42,8 @@ public class UINotes : MonoBehaviour
     private void Start()
     {
         StartCoroutine(PutEverythingGray(true));
+
+        damageValue = 0;
     }
 
     private void Update()
@@ -129,7 +134,12 @@ public class UINotes : MonoBehaviour
     {
         float duration1 = 0.3f;
 
-        if(index == 1)
+        DOTween.To(() => damageValue, x => damageValue = x, 1, 0.05f).OnUpdate(() =>
+        {
+            damageVolume.weight = damageValue;
+        });
+
+        if (index == 1)
         {
             note1.DOColor(Color.red, duration1);
             note1.rectTransform.DOShakePosition(duration1, screenWidth * modificateurShake);
@@ -145,7 +155,12 @@ public class UINotes : MonoBehaviour
             note3.rectTransform.DOShakePosition(duration1, screenWidth * modificateurShake);
         }
 
-        yield return new WaitForSeconds(duration1);
+        yield return new WaitForSeconds(0.05f);
+
+        DOTween.To(() => damageValue, x => damageValue = x, 0, 0.2f).OnUpdate(() =>
+        {
+            damageVolume.weight = damageValue;
+        });
     }
 
     public IEnumerator PutEverythingWhite()
