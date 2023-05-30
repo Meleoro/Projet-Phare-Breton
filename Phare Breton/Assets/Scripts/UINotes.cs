@@ -130,7 +130,7 @@ public class UINotes : MonoBehaviour
         GoLeft(1);
     }
 
-    public IEnumerator LoseNote(int index)
+    public IEnumerator LoseNote(int index, bool endGame)
     {
         float duration1 = 0.3f;
 
@@ -138,6 +138,8 @@ public class UINotes : MonoBehaviour
         {
             damageVolume.weight = damageValue;
         });
+
+        ReferenceManager.Instance.cameraReference.DoCameraShake(0.1f, 0.1f);
 
         if (index == 1)
         {
@@ -161,10 +163,20 @@ public class UINotes : MonoBehaviour
         {
             damageVolume.weight = damageValue;
         });
+
+        yield return new WaitForSeconds(duration1);
+
+
+        if (endGame)
+        {
+            StartCoroutine(PutEverythingWhite());
+        }
     }
 
     public IEnumerator PutEverythingWhite()
     {
+        yield return new WaitForSeconds(0.1f);
+
         float duration1 = 0.05f;
         float duration2 = 0.3f;
         float duration3 = 1;
@@ -182,6 +194,8 @@ public class UINotes : MonoBehaviour
         note1.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
         note2.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
         note3.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
+
+        yield return new WaitForSeconds(duration2);
 
         GoRight(duration3);
     }

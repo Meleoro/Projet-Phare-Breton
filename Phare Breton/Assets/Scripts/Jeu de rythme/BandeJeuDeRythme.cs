@@ -212,13 +212,11 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         if(currentHealth > 0)
         {
-            StartCoroutine(UINotes.Instance.LoseNote(currentHealth + 1));
+            StartCoroutine(UINotes.Instance.LoseNote(currentHealth + 1, false));
         }
 
         else
         {
-            StartCoroutine(UINotes.Instance.PutEverythingWhite());
-
             timer = 0f;
             erasedNotes = 0;
 

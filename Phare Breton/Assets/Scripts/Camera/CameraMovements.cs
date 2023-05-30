@@ -273,7 +273,7 @@ public class CameraMovements : MonoBehaviour
     {
         isShaking = true;
         
-        transform.DOShakePosition(duration, intensity).OnComplete((() => isShaking = false));
+        GetComponentInParent<Transform>().DOShakePosition(duration, intensity).OnComplete((() => isShaking = false));
     }
 
 
