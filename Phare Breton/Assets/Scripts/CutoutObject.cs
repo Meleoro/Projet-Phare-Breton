@@ -30,6 +30,8 @@ public class CutoutObject : MonoBehaviour
 
         Vector3 offset = targetObject.position - transform.position;
         
+        ResetAlphas();
+        
         /*RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
         hitObjectsArrays.Add(hitObjects);
         
