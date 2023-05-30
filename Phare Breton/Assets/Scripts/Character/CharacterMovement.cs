@@ -10,6 +10,7 @@ public class CharacterMovement : MonoBehaviour
     [Header("References")] [SerializeField]
     public Transform mesh;
     private CharaManager manager;
+    public ParticleSystem VFXPas;
 
     [Header("Movements")]
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;

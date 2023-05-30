@@ -7,8 +7,10 @@ public class ZonePoseCables : MonoBehaviour
 {
     public LayerMask ignoreLayer;
 
-    private List<ObjetInteractible> objectsAtRange = new List<ObjetInteractible>();
+    public List<ObjetInteractible> objectsAtRange = new List<ObjetInteractible>();
     private List<GameObject> objetsRecuperablesAtRange = new List<GameObject>();
+
+    public List<GameObject> cableObjects = new List<GameObject>();
 
 
     private void Update()
@@ -30,12 +32,12 @@ public class ZonePoseCables : MonoBehaviour
         int currentIndex = -1;
         float currentDistance = 100;
         
-        for (int i = 0; i < ReferenceManager.Instance.characterReference.nearObjects.Count; i++)
+        for (int i = 0; i < cableObjects.Count; i++)
         {
             float distance = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position,
-                ReferenceManager.Instance.characterReference.nearObjects[i].transform.position);
+                cableObjects[i].transform.position);
             
-            if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Boite currentBoite))
+            if (cableObjects[i].TryGetComponent(out Boite currentBoite))
             {
                 if (distance < currentDistance)
                 {
@@ -44,7 +46,7 @@ public class ZonePoseCables : MonoBehaviour
                 }
             }
             
-            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out Ampoule currentAmpoule))
+            else if (cableObjects[i].TryGetComponent(out Ampoule currentAmpoule))
             {
                 if (distance < currentDistance)
                 {
@@ -53,7 +55,7 @@ public class ZonePoseCables : MonoBehaviour
                 }
             }
             
-            else if (ReferenceManager.Instance.characterReference.nearObjects[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
+            else if (cableObjects[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
             {
                 if (distance < currentDistance)
                 {
@@ -65,7 +67,7 @@ public class ZonePoseCables : MonoBehaviour
 
         if (currentIndex >= 0)
         {
-            ReferenceManager.Instance.characterReference.cableObject = ReferenceManager.Instance.characterReference.nearObjects[currentIndex];
+            ReferenceManager.Instance.characterReference.cableObject = cableObjects[currentIndex];
         }
     }
 
@@ -78,7 +80,10 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearBoxesDown.Clear();
         ReferenceManager.Instance.characterReference.nearAmpoule.Clear();
         ReferenceManager.Instance.characterReference.nearGenerator.Clear();
+        ReferenceManager.Instance.characterReference.cableObjects.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
+        
+        cableObjects.Clear();
 
         ReferenceManager.Instance.characterReference.nearObjetsRecuperables = objetsRecuperablesAtRange;
         
@@ -97,9 +102,11 @@ public class ZonePoseCables : MonoBehaviour
             // Boite
             else if (objectsAtRange[i].TryGetComponent(out Boite currentBoite))
             {
+                cableObjects.Add(objectsAtRange[i].gameObject);
+                
                 if (RaycastOnBox(objectsAtRange[i].transform.position, 1.5f))
                 {
-                    if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
+                    if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y + objectsAtRange[i].transform.localScale.y * 0.5f)
                     {
                         if (ReferenceManager.Instance.characterReference.transform.position.y - (objectsAtRange[i].transform.position.y -
                                                     objectsAtRange[i].transform.localScale.y * 0.5f) - 0.5f > 0)
@@ -130,6 +137,8 @@ public class ZonePoseCables : MonoBehaviour
             // Ampoule
             else if (objectsAtRange[i].TryGetComponent(out Ampoule currentAmpoule))
             {
+                cableObjects.Add(objectsAtRange[i].gameObject);
+                
                 ReferenceManager.Instance.characterReference.nearAmpoule.Add(objectsAtRange[i].gameObject);
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
@@ -137,10 +146,14 @@ public class ZonePoseCables : MonoBehaviour
             // Generateur
             else if (objectsAtRange[i].TryGetComponent(out PanneauElectrique currentPanneauElectrique))
             {
+                cableObjects.Add(objectsAtRange[i].gameObject);
+                
                 ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
         }
+
+        ReferenceManager.Instance.characterReference.cableObjects = cableObjects;
     }
 
 
@@ -190,9 +203,7 @@ public class ZonePoseCables : MonoBehaviour
         if (other.CompareTag("Interactible") && !other.isTrigger && !other.TryGetComponent<Note>(out Note currentNote))
         {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
-            
-            Debug.Log(other.gameObject.name);
-            
+
             objectsAtRange.Remove(_object);
         }
         
