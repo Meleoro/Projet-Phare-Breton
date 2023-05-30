@@ -35,7 +35,7 @@ public class CutoutObject : MonoBehaviour
         RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
         hitObjectsArrays.Add(hitObjects);
         
-        hitObjects = Physics.RaycastAll(transform.position + Vector3.right * sphereSize, offset, offset.magnitude, wallMask);
+        /*hitObjects = Physics.RaycastAll(transform.position + Vector3.right * sphereSize, offset, offset.magnitude, wallMask);
         hitObjectsArrays.Add(hitObjects);
         
         hitObjects = Physics.RaycastAll(transform.position + Vector3.left * sphereSize, offset, offset.magnitude, wallMask);
@@ -57,9 +57,9 @@ public class CutoutObject : MonoBehaviour
         hitObjectsArrays.Add(hitObjects);
         
         hitObjects = Physics.RaycastAll(transform.position +  new Vector3(-0.7f, 0, -0.7f) * sphereSize, offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
+        hitObjectsArrays.Add(hitObjects);*/
         
-        if (debug)
+        /*if (debug)
         {
             Debug.DrawLine(transform.position, transform.position + offset);
             
@@ -72,7 +72,7 @@ public class CutoutObject : MonoBehaviour
             Debug.DrawLine(transform.position + new Vector3(0.7f, 0, -0.7f) * sphereSize, transform.position + new Vector3(0.7f, 0, -0.7f) * sphereSize + offset);
             Debug.DrawLine(transform.position + new Vector3(-0.7f, 0, 0.7f) * sphereSize, transform.position + new Vector3(-0.7f, 0, 0.7f) * sphereSize + offset);
             Debug.DrawLine(transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize, transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize + offset);
-        }
+        }*/
         
         for (int k = 0; k < hitObjectsArrays.Count; k++)
         {
