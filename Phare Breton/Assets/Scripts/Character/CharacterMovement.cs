@@ -19,6 +19,7 @@ public class CharacterMovement : MonoBehaviour
     [HideInInspector] public bool doOnce;
     [HideInInspector] public Vector3 resistanceCable;
     private Vector3 currentRotation;
+    [HideInInspector] public bool VFXPasActif;
 
     [Header("MovementsObjets")]
     public float hauteurObject = 0.5f;
@@ -59,6 +60,14 @@ public class CharacterMovement : MonoBehaviour
         {
             stockageDirection = direction;
         }
+
+        /*if (VFXPasActif)
+        {
+            if(!VFXPas.isPlaying)
+                VFXPas.Play();
+            var main = VFXPas.main;
+            //main.Start = mesh.rotation;
+        }*/
         
         // Gravité
         manager.rb.AddForce(fallDir * Time.deltaTime, ForceMode.Force);
