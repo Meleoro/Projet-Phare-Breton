@@ -80,6 +80,7 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearBoxesDown.Clear();
         ReferenceManager.Instance.characterReference.nearAmpoule.Clear();
         ReferenceManager.Instance.characterReference.nearGenerator.Clear();
+        ReferenceManager.Instance.characterReference.cableObjects.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
         
         cableObjects.Clear();
@@ -151,6 +152,8 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
         }
+
+        ReferenceManager.Instance.characterReference.cableObjects = cableObjects;
     }
 
 

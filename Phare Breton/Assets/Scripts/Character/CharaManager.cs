@@ -60,6 +60,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> nearGenerator = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearAmpoule = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearObjetsRecuperables = new List<GameObject>();
+    [HideInInspector] public List<GameObject> cableObjects = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
 
