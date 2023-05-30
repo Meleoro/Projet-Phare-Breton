@@ -88,10 +88,18 @@ public class MusicNode : MonoBehaviour
         if (timer <= 0) 
         {
             currentIndex += 1;
-            float ratio = ratios[currentIndex] * timeToReach;
-            
-            rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
-            timer = ratio;
+
+            if(currentIndex < ratios.Count)
+            {
+                float ratio = ratios[currentIndex] * timeToReach;
+
+                rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
+                timer = ratio;
+            }
+            else
+            {
+                EraseNode();
+            }
         }
     }
 

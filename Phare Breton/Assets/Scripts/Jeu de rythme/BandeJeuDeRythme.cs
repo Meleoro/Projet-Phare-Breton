@@ -52,6 +52,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     [HideInInspector] public bool isFinishing;
     public int erasedNotes;
     private bool usingBarre;
+    private int currentHealth;
 
 
     private void Awake()
@@ -81,21 +82,22 @@ public class BandeJeuDeRythme : MonoBehaviour
                 {
                     bool isRight = VerifyNote();
 
+                    currentNode.EraseNode();
+
+                    nodesCreated.Remove(currentNode);
+
+                    Destroy(currentNode);
+                    Destroy(currentNode.gameObject);
+
+                    erasedNotes += 1;
+
                     if (isRight)
                     {
-                        currentNode.EraseNode();
-
-                        nodesCreated.Remove(currentNode);
-                        
-                        Destroy(currentNode);
-                        Destroy(currentNode.gameObject);
-
-                        erasedNotes += 1;
-
                         StartCoroutine(FeelDestroyNode());
                     }
                     else
                     {
+
                         RestartGame();
                     }
                 }
@@ -115,8 +117,11 @@ public class BandeJeuDeRythme : MonoBehaviour
     {
         timer = 0;
         erasedNotes = 0;
+        currentHealth = 3;
             
         ReferenceManager.Instance.cameraReference.durationRythme = duration;
+
+        UINotes.Instance.StartGame();
 
         StartCoroutine(StartGameFeel(index));
     }
@@ -203,31 +208,43 @@ public class BandeJeuDeRythme : MonoBehaviour
 
     public void RestartGame()
     {
-        timer = 0f;
-        erasedNotes = 0;
+        currentHealth -= 1;
 
-        stop = true;
-        
-        StartCoroutine(LoseEffects());
-
-        for(int i = 0; i < nodes.Count; i++)
+        if(currentHealth > 0)
         {
-            nodes[i].isSpawned = false;
+            StartCoroutine(UINotes.Instance.LoseNote(currentHealth + 1));
         }
 
-        for (int i = nodesCreated.Count - 1; i >= 0; i--)
+        else
         {
-            Destroy(nodesCreated[i].gameObject);
+            StartCoroutine(UINotes.Instance.PutEverythingWhite());
+
+            timer = 0f;
+            erasedNotes = 0;
+
+            stop = true;
+
+            StartCoroutine(LoseEffects());
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].isSpawned = false;
+            }
+
+            for (int i = nodesCreated.Count - 1; i >= 0; i--)
+            {
+                Destroy(nodesCreated[i].gameObject);
+            }
+
+            nodesCreated.Clear();
+
+            isOnX = false;
+            isOnY = false;
+            isOnZ = false;
+            currentNode = null;
+
+            //ReferenceManager.Instance.cameraReference.RestartMoveCameraRythme();
         }
-        
-        nodesCreated.Clear();
-
-        isOnX = false;
-        isOnY = false;
-        isOnZ = false;
-        currentNode = null;
-
-        //ReferenceManager.Instance.cameraReference.RestartMoveCameraRythme();
     }
 
 

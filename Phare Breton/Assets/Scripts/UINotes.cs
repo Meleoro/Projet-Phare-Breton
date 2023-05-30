@@ -8,6 +8,8 @@ using DG.Tweening;
 
 public class UINotes : MonoBehaviour
 {
+    public static UINotes Instance;
+
     [Header("Références")] 
     public Image note1;
     public Image note2;
@@ -26,7 +28,13 @@ public class UINotes : MonoBehaviour
     [Header("Other")] 
     public List<bool> activatedNotes = new List<bool>();
     private float screenWidth;
-    
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
 
     private void Start()
     {
@@ -51,42 +59,6 @@ public class UINotes : MonoBehaviour
         UIObject.DOMoveX(UIObject.position.x + screenWidth * modificateurX, duration);
         
         fond.DOFade(0f, duration * 0.5f);
-    }
-    
-    
-
-    public IEnumerator NoNotes()
-    {
-        float duration1 = 1f;
-        float duration2 = 0.5f;
-        
-        GoLeft(duration1);
-        yield return new WaitForSeconds(duration1 + 0.5f);
-
-        for (int i = 0; i < activatedNotes.Count; i++)
-        {
-            if (!activatedNotes[i])
-            {
-                if (i == 0)
-                {
-                    note1.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
-                }
-
-                else if (i == 1)
-                {
-                    note2.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
-                }
-
-                else
-                {
-                    note3.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
-                }
-            }
-        }
-        
-        yield return new WaitForSeconds(duration2 + 0.5f);
-        
-        GoRight(duration1);
     }
     
     
@@ -145,8 +117,94 @@ public class UINotes : MonoBehaviour
         
         GoRight(duration3);
     }
-    
-    
+
+
+    //PARTIE JDR
+    public void StartGame()
+    {
+        GoLeft(1);
+    }
+
+    public IEnumerator LoseNote(int index)
+    {
+        float duration1 = 0.3f;
+
+        if(index == 1)
+        {
+            note1.DOColor(Color.red, duration1);
+            note1.rectTransform.DOShakePosition(duration1, screenWidth * modificateurShake);
+        }
+        else if(index == 2)
+        {
+            note2.DOColor(Color.red, duration1);
+            note2.rectTransform.DOShakePosition(duration1, screenWidth * modificateurShake);
+        }
+        else
+        {
+            note3.DOColor(Color.red, duration1);
+            note3.rectTransform.DOShakePosition(duration1, screenWidth * modificateurShake);
+        }
+
+        yield return new WaitForSeconds(duration1);
+    }
+
+    public IEnumerator PutEverythingWhite()
+    {
+        float duration1 = 0.05f;
+        float duration2 = 0.3f;
+        float duration3 = 1;
+
+        note1.DOColor(Color.white, duration2);
+        note2.DOColor(Color.white, duration2);
+        note3.DOColor(Color.white, duration2);
+
+        note1.rectTransform.DOScale(Vector3.one * (yesScale + 0.1f), duration1);
+        note2.rectTransform.DOScale(Vector3.one * (yesScale + 0.1f), duration1);
+        note3.rectTransform.DOScale(Vector3.one * (yesScale + 0.1f), duration1);
+
+        yield return new WaitForSeconds(0.1f);
+
+        note1.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
+        note2.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
+        note3.rectTransform.DOScale(Vector3.one * (yesScale), duration2);
+
+        GoRight(duration3);
+    }
+
+
+    public IEnumerator NoNotes()
+    {
+        float duration1 = 1f;
+        float duration2 = 0.5f;
+
+        GoLeft(duration1);
+        yield return new WaitForSeconds(duration1 + 0.5f);
+
+        for (int i = 0; i < activatedNotes.Count; i++)
+        {
+            if (!activatedNotes[i])
+            {
+                if (i == 0)
+                {
+                    note1.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
+                }
+
+                else if (i == 1)
+                {
+                    note2.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
+                }
+
+                else
+                {
+                    note3.rectTransform.DOShakePosition(duration2, screenWidth * modificateurShake);
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(duration2 + 0.5f);
+
+        GoRight(duration1);
+    }
 
     public IEnumerator PutEverythingGray(bool start)
     {
