@@ -287,11 +287,11 @@ public class CharacterFlute : MonoBehaviour
 
             if(currentCableCreator.rbOrigin == manager.rb)
             { 
-                currentCableCreator.ChangeFirstNode(manager.cableObject, manager.nearObjects[0].GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
+                currentCableCreator.ChangeFirstNode(manager.cableObject, manager.cableObject.GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
             }
             else
             { 
-                currentCableCreator.ChangeLastNode(manager.cableObject, manager.nearObjects[0].GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
+                currentCableCreator.ChangeLastNode(manager.cableObject, manager.cableObject.GetComponent<Rigidbody>(), manager.cableObject.GetComponentInChildren<SpringJoint>());
             }
 
             cables.RemoveAt(k);
@@ -303,6 +303,7 @@ public class CharacterFlute : MonoBehaviour
             if (ropedObject[k].linkedObject[0] == ropedObject[k].gameObject)
             {
                 ropedObject[k].isLinked = false;
+                ropedObject[k].linkedObject.Clear();
                 
                 Destroy(currentCableCreator.gameObject);
             }

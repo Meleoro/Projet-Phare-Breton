@@ -139,7 +139,7 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0)
+                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0 || cableObject != null)
                 {
                     UIInteraction.SetActive(VerificationInteractionUI());
                 }
@@ -174,7 +174,6 @@ public class CharaManager : MonoBehaviour
                     
                     if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                     {
-
                         movementScript.ClimbObject(nearBoxes);
 
                         interaction = false;
@@ -183,9 +182,8 @@ public class CharaManager : MonoBehaviour
                     else if (nearLadder != null)
                     {
                         interaction = false;
-
-                        if(nearLadder.VerifyUse(transform))
-                            nearLadder.TakeLadder(transform);
+                        
+                        nearLadder.TakeLadder(transform);
                     }
                 }
 
@@ -316,14 +314,25 @@ public class CharaManager : MonoBehaviour
             UIImageX.enabled = false;
             UIImageY.enabled = true;
 
-            if (nearBoxes.Count != 0)
+            if (nearLadder != null)
+            {
+                UIImageX.enabled = true;
+                UIImageY.enabled = false;
+
+                return true;
+            }
+
+            if (cableObject != null)
+                return true;
+
+            /*if (nearBoxes.Count != 0)
                 return true;
 
             if (nearAmpoule.Count != 0)
                 return true;
 
             if (nearGenerator.Count != 0)
-                return true;
+                return true;*/
         }
         
         return false;

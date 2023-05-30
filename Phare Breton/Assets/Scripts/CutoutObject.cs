@@ -28,46 +28,9 @@ public class CutoutObject : MonoBehaviour
         Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
         //cutoutPos.y /= (Screen.width / Screen.height);
 
-        Vector3 offset = targetObject.position - transform.position;
+        Vector3 offset = targetObject.position - transform.position + Vector3.up;
         
         ResetAlphas();
-        
-        /*RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(Vector3.right * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(Vector3.left * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(Vector3.up * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(Vector3.down * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(new Vector3(0.7f, 0.7f, 0) * sphereSize) , offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position + transform.TransformDirection(new Vector3(0.7f, -0.7f, 0) * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position +  transform.TransformDirection(new Vector3(-0.7f, 0.7f, 0) * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-        
-        hitObjects = Physics.RaycastAll(transform.position +  transform.TransformDirection(new Vector3(-0.7f, -0.7f, 0) * sphereSize), offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
-
-        if (debug)
-        {
-            Debug.DrawLine(transform.position, transform.position + offset);
-            
-            Debug.DrawLine(transform.position + transform.TransformDirection(Vector3.right * sphereSize), transform.position + transform.TransformDirection(Vector3.right * sphereSize) + offset);
-            Debug.DrawLine(transform.position + transform.TransformDirection(Vector3.left * sphereSize), transform.position + transform.TransformDirection(Vector3.left * sphereSize) + offset);
-            Debug.DrawLine(transform.position + transform.TransformDirection(Vector3.up * sphereSize), transform.position + transform.TransformDirection(Vector3.up * sphereSize) + offset);
-            Debug.DrawLine(transform.position + transform.TransformDirection(Vector3.down * sphereSize), transform.position + transform.TransformDirection(Vector3.down * sphereSize) + offset);
-        }*/
 
         RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
         hitObjectsArrays.Add(hitObjects);
