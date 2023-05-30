@@ -65,6 +65,7 @@ public class CharaManager : MonoBehaviour
 
     [Header("Autres")] 
     public string menuScene;
+    public bool raycastDetection;
     [HideInInspector] public bool noMovement;
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool hasRope;
@@ -90,7 +91,20 @@ public class CharaManager : MonoBehaviour
         direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 50);
 
         IsMovingObjects();
+
+
+        if (raycastDetection)
+        {
+            RaycastHit _raycastHit;
         
+            if (Physics.Raycast(transform.position, movementScript.mesh.forward, out _raycastHit,2))
+            {
+                Debug.Log(_raycastHit.collider.gameObject);
+            
+                Debug.DrawLine(_raycastHit.point, transform.position, Color.blue, 2);
+            }
+        }
+
 
         if (escape)
         {

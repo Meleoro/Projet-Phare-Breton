@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
     [Header("References")] [SerializeField]
-    private Transform mesh;
+    public Transform mesh;
     private CharaManager manager;
 
     [Header("Movements")]
