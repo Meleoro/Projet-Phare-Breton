@@ -75,7 +75,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<ObjetInteractible> scriptsMovedObjects = new List<ObjetInteractible>();
     [HideInInspector] public bool inJumpZone;
     [HideInInspector] public Vector3 movedObjectPosition;
-    [HideInInspector] public bool isInLightSource;
+    public bool isInLightSource;
     [HideInInspector] public bool isPickingObjectUp;
 
 
