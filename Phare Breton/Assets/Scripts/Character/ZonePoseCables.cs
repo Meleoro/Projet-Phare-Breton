@@ -106,7 +106,7 @@ public class ZonePoseCables : MonoBehaviour
                 
                 if (RaycastOnBox(objectsAtRange[i].transform.position, 1.5f))
                 {
-                    if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y)
+                    if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y + objectsAtRange[i].transform.localScale.y * 0.5f)
                     {
                         if (ReferenceManager.Instance.characterReference.transform.position.y - (objectsAtRange[i].transform.position.y -
                                                     objectsAtRange[i].transform.localScale.y * 0.5f) - 0.5f > 0)
