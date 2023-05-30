@@ -139,6 +139,8 @@ public class CharacterNotes : MonoBehaviour
 
         bandes.Clear();
         bandesObjects.Clear();
+
+        StartCoroutine(UINotes.Instance.LoseNote(1, true));
     }
 
 

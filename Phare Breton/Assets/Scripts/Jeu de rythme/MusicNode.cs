@@ -88,10 +88,18 @@ public class MusicNode : MonoBehaviour
         if (timer <= 0) 
         {
             currentIndex += 1;
-            float ratio = ratios[currentIndex] * timeToReach;
-            
-            rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
-            timer = ratio;
+
+            if(currentIndex < ratios.Count)
+            {
+                float ratio = ratios[currentIndex] * timeToReach;
+
+                rectTransform.DOMove(waypoints[currentIndex].position, ratio).SetEase(Ease.Linear);
+                timer = ratio;
+            }
+            else
+            {
+                EraseNode(false);
+            }
         }
     }
 
@@ -121,7 +129,7 @@ public class MusicNode : MonoBehaviour
     }
     
 
-    public void EraseNode()
+    public void EraseNode(bool playVFX)
     {
         if (!erased)
         {
@@ -129,7 +137,8 @@ public class MusicNode : MonoBehaviour
             GetComponentInChildren<TextMeshProUGUI>().enabled = false;
             erased = true;
 
-            currentBande.PlayVFXDestroy();
+            if(playVFX)
+                currentBande.PlayVFXDestroy();
         }
     }
 
