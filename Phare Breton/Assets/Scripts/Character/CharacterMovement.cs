@@ -603,7 +603,7 @@ public class CharacterMovement : MonoBehaviour
                 possibleFallPos.Add(raycastHit2.point + Vector3.up);
             }*/
 
-            if (DoRaycastFallPos(transform.position + direction2 * (1f + i * 0.2f), 5))
+            if (DoRaycastFallPos(transform.position + Vector3.up + direction2 * (1f + i * 0.2f), 5))
             {
                 possibleFallPos.Add(fallRaycastHit.point + Vector3.up);
             }
