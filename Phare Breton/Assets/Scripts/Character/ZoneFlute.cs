@@ -16,9 +16,13 @@ public class ZoneFlute : MonoBehaviour
             {
                 ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
 
-
                 scriptFlute.selectedObjects.Add(other.GetComponent<ObjetInteractible>());
                 _object.Select();
+
+                if (!other.TryGetComponent<Echelle>(out Echelle currentEchelle) && !other.TryGetComponent<Note>(out Note currentNote))
+                {
+                    scriptFlute.selectedObjectsCable.Add(other.GetComponent<ObjetInteractible>());
+                }
                 
             }
         }
@@ -34,6 +38,11 @@ public class ZoneFlute : MonoBehaviour
 
                 scriptFlute.selectedObjects.Remove(other.GetComponent<ObjetInteractible>());
                 _object.Deselect();
+                
+                if (!other.TryGetComponent<Echelle>(out Echelle currentEchelle) && !other.TryGetComponent<Note>(out Note currentNote))
+                {
+                    scriptFlute.selectedObjectsCable.Remove(other.GetComponent<ObjetInteractible>());
+                }
             }
         }
     }
