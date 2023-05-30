@@ -116,6 +116,37 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl && !isPickingObjectUp)
         {
+            IsMovingObjects();
+
+            if (!noControl && !isPickingObjectUp)
+            {
+                // Partie déplacement player / objets
+                if (!noMovement && !isMovingObjects)
+                {
+                    movementScript.MoveCharacter(direction);
+                
+                    if(direction != Vector2.zero) 
+                        movementScript.RotateCharacter(direction, false);
+
+                    if (direction == Vector2.zero)
+                        movementScript.RotateCharacterCamera();
+
+
+                    if (direction.magnitude > 0.5f)
+                        isWalking = true;
+
+                    else
+                        isWalking = false;
+                }
+
+                else if (isMovingObjects)
+                {
+                    movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
+
+                    isWalking = false;
+                }
+            }
+            
             fluteMesh.enabled = false;
 
             if (interaction && canPlayMusic)
@@ -222,6 +253,9 @@ public class CharaManager : MonoBehaviour
                 scriptObjets.ControlObject(direction, stase);
             
             isWalking = false;
+            
+            movementScript.MoveCharacter(Vector2.zero);
+            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
         }
 
         anim.SetBool("isWalking", isWalking);
@@ -230,7 +264,7 @@ public class CharaManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsMovingObjects();
+        /*IsMovingObjects();
 
         if (!noControl && !isPickingObjectUp)
         {
@@ -264,7 +298,7 @@ public class CharaManager : MonoBehaviour
         {
             movementScript.MoveCharacter(Vector2.zero);
             movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
-        }
+        }*/
     }
 
 
