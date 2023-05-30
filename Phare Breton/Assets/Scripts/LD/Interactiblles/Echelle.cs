@@ -131,26 +131,12 @@ public class Echelle : ObjetInteractible
                         needLayer = true;
                 }
 
-                Ray ray = new Ray(posRaycast, Vector3.down);
-
-                if (needLayer)
+                if (CreateRaycast(posRaycast, distance, needLayer))
                 {
-                    if (Physics.Raycast(ray, out raycastHit, distance, layerColliderEchelle))
+                    if (raycastHit.collider.gameObject != gameObject)
                     {
-                        if (raycastHit.collider.gameObject != gameObject)
-                        {
-                            pointsGround.Add(raycastHit.point);
-                        }
-                    }
-                }
-                else
-                {
-                    if (Physics.Raycast(ray, out raycastHit, distance, LayerMask.NameToLayer("Player")))
-                    {
-                        if (raycastHit.collider.gameObject != gameObject)
-                        {
-                            pointsGround.Add(raycastHit.point);
-                        }
+                        pointsGround.Add(raycastHit.point); 
+                        
                     }
                 }
             }
@@ -211,6 +197,8 @@ public class Echelle : ObjetInteractible
         {
             if (Physics.Raycast(ray, out raycastHit, lenght, layerColliderEchelle))
             {
+                //Debug.DrawLine(startPos, raycastHit.point);
+                
                 if (raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
                 {
                     return true;
@@ -218,7 +206,7 @@ public class Echelle : ObjetInteractible
 
                 else
                 {
-                    return DoRaycast(raycastHit.point - Vector3.down * 0.01f, lenght - raycastHit.distance);
+                    return DoRaycast(raycastHit.point - Vector3.down * 0.001f, lenght - raycastHit.distance);
                 }
             }
 
@@ -232,6 +220,8 @@ public class Echelle : ObjetInteractible
         {
             if (Physics.Raycast(ray, out raycastHit, lenght, LayerMask.NameToLayer("Player")))
             {
+                //Debug.DrawLine(startPos, raycastHit.point);
+
                 if (raycastHit.collider.gameObject != gameObject && !raycastHit.collider.isTrigger)
                 {
                     return true;
@@ -245,6 +235,8 @@ public class Echelle : ObjetInteractible
 
             else
             {
+                //Debug.DrawLine(startPos, startPos + Vector3.down * lenght);
+                
                 return false;
             }
         }
