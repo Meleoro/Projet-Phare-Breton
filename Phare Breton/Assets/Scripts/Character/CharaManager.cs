@@ -174,7 +174,6 @@ public class CharaManager : MonoBehaviour
                     
                     if(nearObjects.Count > 0 && !noMovement && !hasRope && nearLadder == null && !isMovingObjects)
                     {
-
                         movementScript.ClimbObject(nearBoxes);
 
                         interaction = false;
@@ -183,9 +182,8 @@ public class CharaManager : MonoBehaviour
                     else if (nearLadder != null)
                     {
                         interaction = false;
-
-                        if(nearLadder.VerifyUse(transform))
-                            nearLadder.TakeLadder(transform);
+                        
+                        nearLadder.TakeLadder(transform);
                     }
                 }
 
