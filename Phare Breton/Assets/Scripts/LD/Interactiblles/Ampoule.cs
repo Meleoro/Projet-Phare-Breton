@@ -16,6 +16,12 @@ public class Ampoule : ObjetInteractible
         {
             ActivateAmpoule();
         }
+
+        else
+        {
+            lightComponent.enabled = false;
+            lightArea.enabled = false;
+        }
     }
 
     // COMPORTEMENT DE L'OBJET SI IL EST UNE AMPOULE

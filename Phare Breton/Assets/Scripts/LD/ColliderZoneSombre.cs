@@ -29,7 +29,7 @@ public class ColliderZoneSombre : MonoBehaviour
             if (!ReferenceManager.Instance.characterReference.noControl &&
                 !ReferenceManager.Instance.characterReference.isInLightSource && !other.isTrigger)
             {
-                Vector3 posWanted = other.transform.position + other.transform.right;
+                Vector3 posWanted = other.transform.position + other.transform.forward;
 
                 StartCoroutine(RepousserChara(posWanted, other.transform));
             }
