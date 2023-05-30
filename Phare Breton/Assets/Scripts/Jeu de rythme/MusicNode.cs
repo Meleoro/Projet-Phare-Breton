@@ -98,7 +98,7 @@ public class MusicNode : MonoBehaviour
             }
             else
             {
-                EraseNode();
+                EraseNode(false);
             }
         }
     }
@@ -129,7 +129,7 @@ public class MusicNode : MonoBehaviour
     }
     
 
-    public void EraseNode()
+    public void EraseNode(bool playVFX)
     {
         if (!erased)
         {
@@ -137,7 +137,8 @@ public class MusicNode : MonoBehaviour
             GetComponentInChildren<TextMeshProUGUI>().enabled = false;
             erased = true;
 
-            currentBande.PlayVFXDestroy();
+            if(playVFX)
+                currentBande.PlayVFXDestroy();
         }
     }
 

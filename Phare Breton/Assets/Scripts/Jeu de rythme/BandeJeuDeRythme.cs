@@ -82,7 +82,7 @@ public class BandeJeuDeRythme : MonoBehaviour
                 {
                     bool isRight = VerifyNote();
 
-                    currentNode.EraseNode();
+                    currentNode.EraseNode(isRight);
 
                     nodesCreated.Remove(currentNode);
 
@@ -97,7 +97,6 @@ public class BandeJeuDeRythme : MonoBehaviour
                     }
                     else
                     {
-
                         RestartGame();
                     }
                 }
