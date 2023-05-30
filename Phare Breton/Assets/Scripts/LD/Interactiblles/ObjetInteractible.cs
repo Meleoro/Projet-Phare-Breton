@@ -46,18 +46,19 @@ public class ObjetInteractible : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         StartCoroutine(PutRigidbodyKinematic());
 
-        Boite currentBoite;
+        /*Boite currentBoite;
         if(TryGetComponent(out currentBoite))
         {
             DesactivateStase();
-        }
-
+        }*/
+        
         isMagneted = false;
         isLighted = false;
 
         originalPos = transform.position;
         
         VerifyLinkedObject();
+        StopVFX();
 
         wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
     }
@@ -253,7 +254,9 @@ public class ObjetInteractible : MonoBehaviour
 
 
     public virtual void VerifyLinkedObject() { }
-    
+
+    public virtual void StopVFX() { }
+
 
     public IEnumerator PutRigidbodyKinematic()
     {

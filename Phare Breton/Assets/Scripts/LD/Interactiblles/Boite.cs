@@ -9,8 +9,17 @@ public class Boite : ObjetInteractible
 
     public bool isElectrified;
     public ParticleSystem VFXelectricity;
-    
-    
+
+
+    public override void StopVFX()
+    {
+        DesactivateStase();
+
+        VFXDeplacement.Stop();
+        VFXelectricity.Stop();
+    }
+
+
     // VERIFIE SI UN PANNEAU EST RELIE
     public override void VerifyLinkedObject()
     {
