@@ -191,6 +191,8 @@ public class ZonePoseCables : MonoBehaviour
         {   
             ObjetInteractible _object = other.GetComponent<ObjetInteractible>();
             
+            Debug.Log(other.gameObject.name);
+            
             objectsAtRange.Remove(_object);
         }
         
