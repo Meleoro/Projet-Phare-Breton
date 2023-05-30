@@ -303,6 +303,7 @@ public class CharacterFlute : MonoBehaviour
             if (ropedObject[k].linkedObject[0] == ropedObject[k].gameObject)
             {
                 ropedObject[k].isLinked = false;
+                ropedObject[k].linkedObject.Clear();
                 
                 Destroy(currentCableCreator.gameObject);
             }
