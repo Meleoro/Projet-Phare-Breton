@@ -51,7 +51,7 @@ public class TriggerGrue : MonoBehaviour
 
             float distance = Vector3.Distance(ReferenceManager.Instance.characterReference.transform.position, currentGrue.transform.position);
 
-            if(distance < distanceTriggerGrue || positionsGrue[currentIndex].CompareTag("PosAuto"))
+            if(distance < distanceTriggerGrue || positionsGrue[currentIndex].CompareTag("MoveAuto"))
             {
                 StartCoroutine(MoveGrue(currentIndex));
             }
