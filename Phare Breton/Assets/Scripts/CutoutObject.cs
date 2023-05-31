@@ -42,24 +42,16 @@ public class CutoutObject : MonoBehaviour
     void Update()
     {
         Vector3 offset = targetObject.position - transform.position + Vector3.up;
-
-        index2 += 1;
-        if (index2 == 3)
-        {
-            index2 = 0;
-        }
         
-        if (index2 == 0)
-        {
-            Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
-            //cutoutPos.y /= (Screen.width / Screen.height);
+        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
+        //cutoutPos.y /= (Screen.width / Screen.height);
             
-            //ResetAlphas(0);
-            ResetAlphas(index);
+        ResetAlphas(0);
+        //ResetAlphas(index);
 
-            //RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
+            hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
 
-            /*for (int i = 0; i < hitObjects.Length; i++)
+            for (int i = 0; i < hitObjects.Length; i++)
             {
                 if (!allHitObjects.Contains(hitObjects[i].transform.gameObject))
                 {
@@ -72,10 +64,10 @@ public class CutoutObject : MonoBehaviour
                         globalMaterials[0].materials.Add(materials[j]);
                     }
                 }
-            }*/
+            }
 
 
-            switch (index)
+            /*switch (index)
             {
                 case 0 :
                     hitObjects = Physics.RaycastAll(transform.position + Vector3.right * sphereSize, offset, offset.magnitude, wallMask);
@@ -135,7 +127,7 @@ public class CutoutObject : MonoBehaviour
                         globalMaterials[index].materials.Add(materials[j]);
                     }
                 }
-            }
+            }*/
             
             
             /*for(int i = 0; i < globalMaterials[0].materials.Count; i++)
@@ -152,13 +144,7 @@ public class CutoutObject : MonoBehaviour
                 globalMaterials[index].materials[i].SetFloat("_FalloffSize", fallOffSize);
             }
             
-            index += 1;
-
-            if (index == 9)
-            {
-                index = 0;
-            }
-        }
+        
         
         
 
