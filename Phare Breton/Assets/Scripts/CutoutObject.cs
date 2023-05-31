@@ -53,17 +53,14 @@ public class CutoutObject : MonoBehaviour
 
             for (int i = 0; i < hitObjects.Length; i++)
             {
-                if (!allHitObjects.Contains(hitObjects[i].transform.gameObject))
-                {
-                    allHitObjects.Add(hitObjects[i].transform.gameObject);
-                    
+
                     materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
 
                     for (int j = 0; j < materials.Length; j++)
                     {
                         globalMaterials[0].materials.Add(materials[j]);
                     }
-                }
+                
             }
 
 
