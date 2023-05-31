@@ -165,16 +165,16 @@ public class CameraMovements : MonoBehaviour
 
             Vector2 save = currentWantedPosShake;
 
-            while (Vector2.Distance(save, currentWantedPosShake) < amplitudeShake * screenWidth * 0.01f)
+            while (Vector2.Distance(save, currentWantedPosShake) < amplitudeShake)
             {
-                currentWantedPosShake = new Vector2(Random.Range(-amplitudeShake * screenWidth * 0.01f, amplitudeShake * screenWidth * 0.01f), 
-                    Random.Range(-amplitudeShake * screenHeight * 0.01f, amplitudeShake * screenHeight * 0.01f));
+                currentWantedPosShake = new Vector2(Random.Range(-amplitudeShake, amplitudeShake), 
+                    Random.Range(-amplitudeShake, amplitudeShake));
             }
         }
         
-        wantedPosShake = Vector2.Lerp(wantedPosShake, currentWantedPosShake, Time.deltaTime * 1.5f);
-        posModificateur = transform.TransformDirection(Vector3.Lerp(posModificateur, new Vector3(wantedPosShake.x, wantedPosShake.y, 0), Time.deltaTime * 0.5f));
-        
+        wantedPosShake = Vector2.Lerp(wantedPosShake, currentWantedPosShake, Time.deltaTime * 0.5f / speedShake);
+        posModificateur = Vector3.Lerp(posModificateur, transform.TransformDirection(new Vector3(wantedPosShake.x, wantedPosShake.y, 0)), Time.deltaTime * 0.25f / speedShake);
+
         yield return new WaitForSeconds(Time.deltaTime);
 
         StartCoroutine(ShakeCoroutine());
