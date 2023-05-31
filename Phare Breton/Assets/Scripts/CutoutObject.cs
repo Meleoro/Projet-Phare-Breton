@@ -32,8 +32,19 @@ public class CutoutObject : MonoBehaviour
         
         ResetAlphas();
 
-        RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset, offset.magnitude, wallMask);
-        hitObjectsArrays.Add(hitObjects);
+        RaycastHit[] hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
+
+        for (int i = 0; i < hitObjects.Length; i++)
+        {
+            materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
+
+            for (int j = 0; j < materials.Length; j++)
+            {
+                globalMaterials.Add(materials[j]);
+            }
+        }
+        
+        //hitObjectsArrays.Add(hitObjects);
         
         /*hitObjects = Physics.RaycastAll(transform.position + Vector3.right * sphereSize, offset, offset.magnitude, wallMask);
         hitObjectsArrays.Add(hitObjects);
@@ -74,7 +85,7 @@ public class CutoutObject : MonoBehaviour
             Debug.DrawLine(transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize, transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize + offset);
         }*/
         
-        for (int k = 0; k < hitObjectsArrays.Count; k++)
+        /*for (int k = 0; k < hitObjectsArrays.Count; k++)
         {
             for (int i = 0; i < hitObjectsArrays[k].Length; i++)
             {
@@ -85,7 +96,7 @@ public class CutoutObject : MonoBehaviour
                     globalMaterials.Add(materials[j]);
                 }
             }
-        }
+        }*/
 
         for(int i = 0; i < globalMaterials.Count; i++)
         {
