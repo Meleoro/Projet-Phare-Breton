@@ -10,6 +10,7 @@ public class TriggerCamera : MonoBehaviour
     [SerializeField] private Transform cameraPos;
 
     public bool fromBottom;
+    public bool fromUp;
 
     [Header("MouvementCamera")]
     [SerializeField] private bool isStatic;
@@ -46,6 +47,35 @@ public class TriggerCamera : MonoBehaviour
             {
                 // Si le joueur arrive d'en bas
                 if (Vector3.Distance(posBas, other.transform.position) <
+                    Vector3.Distance(posUp, other.transform.position))
+                {
+                    ReferenceManager.Instance.cameraReference.isStatic = true;
+
+                    ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+                    ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+
+                    ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
+
+                    if (!isStatic)
+                    {
+                        ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
+                    }
+                    else
+                    {
+                        ReferenceManager.Instance.cameraReference.isStatic = true;
+                    }
+
+                    //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+
+                    CreateListDesactivatedObjects();
+                    ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
+                        distanceMinChara, distanceMaxChara);
+                }
+            }
+            else if (fromUp)
+            {
+                // Si le joueur arrive d'en bas
+                if (Vector3.Distance(posBas, other.transform.position) >
                     Vector3.Distance(posUp, other.transform.position))
                 {
                     ReferenceManager.Instance.cameraReference.isStatic = true;
