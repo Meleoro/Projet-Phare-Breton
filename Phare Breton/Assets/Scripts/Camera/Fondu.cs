@@ -14,6 +14,8 @@ public class Fondu : MonoBehaviour
 
     [Header("Parametres")]
     [SerializeField] private float dureeFondu;
+    [SerializeField] private float strengthMovement = 1;
+    [SerializeField] private float strengthRotation = 1;
 
     [Header("Autres")]
     [HideInInspector] public bool isInTransition;
@@ -38,9 +40,11 @@ public class Fondu : MonoBehaviour
         canva.SetActive(true);
         imageFondu.DOFade(1, dureeFondu);
 
+        MoveCameraTransition(dureeFondu, true);
+
         ReferenceManager.Instance.characterReference.noControl = true;
 
-        yield return new WaitForSeconds(dureeFondu);
+        yield return new WaitForSeconds(dureeFondu * 1.2f);
         
         ActualisePos(objectNewPos, cameraNewPos, movedObject);
         doorScript.EnterDoor(movedObject, doorNumber);
@@ -55,6 +59,8 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
 
         imageFondu.DOFade(0, dureeFondu);
+        
+        MoveCameraTransition(dureeFondu, false);
 
         yield return new WaitForSeconds(dureeFondu);
 
@@ -62,6 +68,29 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.characterReference.noControl = false;
 
         isInTransition = false;
+    }
+    
+    public void MoveCameraTransition(float duration, bool goIn)
+    {
+        Vector3 posModificator = transform.TransformDirection(new Vector3(0, 2f, -3f)) * strengthMovement;
+        Vector3 rotModificator = new Vector3(4, 0, 0) * strengthRotation;
+        
+        Vector3 newPos;
+        Vector3 newRot;
+        
+        if (goIn)
+        {
+            newPos = transform.position + posModificator;
+            newRot = transform.rotation.eulerAngles + rotModificator;
+        }
+        else
+        {
+            newPos = transform.position - posModificator;
+            newRot = transform.rotation.eulerAngles - rotModificator;
+        }
+        
+        transform.DOMove(newPos, duration).SetEase(Ease.OutQuad);
+        transform.DORotate(newRot, duration).SetEase(Ease.OutQuad);
     }
 
 
