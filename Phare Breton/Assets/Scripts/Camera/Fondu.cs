@@ -20,11 +20,26 @@ public class Fondu : MonoBehaviour
     [Header("Autres")]
     [HideInInspector] public bool isInTransition;
     [HideInInspector] public bool doorCrossed;
+    
+    [HideInInspector] public GameObject currentActivatedLight;
 
 
     private void Start()
     {
-        imageFondu.DOFade(0, 0);
+        StartCoroutine(StartScene());
+    }
+
+    public IEnumerator StartScene()
+    {
+        canva.SetActive(true);
+        imageFondu.DOFade(1, 0);
+
+        yield return new WaitForSeconds(0.1f);
+        
+        imageFondu.DOFade(0, dureeFondu * 2);
+
+        yield return new WaitForSeconds(dureeFondu * 2);
+        
         canva.SetActive(false);
     }
 
@@ -51,14 +66,23 @@ public class Fondu : MonoBehaviour
 
         if(activatedL != null)
             activatedL.SetActive(true);
+
+        currentActivatedLight = activatedL;
         
         if(desactivatedL != null)
             desactivatedL.SetActive(false);
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
-
+        
+        yield return new WaitForSeconds(0.01f);
+        
         imageFondu.DOFade(0, dureeFondu);
+        
+        Vector3 newPos = ReferenceManager.Instance.cameraReference.MoveCamera();
+
+        newPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+        ReferenceManager.Instance.cameraReference.transform.position = newPos;
         
         MoveCameraTransition(dureeFondu, false);
 
