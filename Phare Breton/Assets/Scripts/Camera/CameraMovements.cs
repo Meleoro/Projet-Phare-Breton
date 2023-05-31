@@ -350,10 +350,13 @@ public class CameraMovements : MonoBehaviour
     // QUAND ON ARRETE DE CONTROLER UN OBJET
     public void LoadCamPos()
     {
-        lightToActivate.SetActive(true);
-        scriptFondu.currentActivatedLight.SetActive(false);
+        if(lightToActivate != null)
+        {
+            scriptFondu.currentActivatedLight.SetActive(false);
+            lightToActivate.SetActive(true);
 
-        scriptFondu.currentActivatedLight = lightToActivate;
+            scriptFondu.currentActivatedLight = lightToActivate;
+        }
         
         transform.position = savePosition;
         transform.rotation = saveRotation;
