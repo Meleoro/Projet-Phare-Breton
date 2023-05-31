@@ -64,6 +64,8 @@ public class CameraMovements : MonoBehaviour
     private Quaternion saveRotation;
     private Transform saveMinXZ;
     private Transform saveMaxXZ;
+    private GameObject lightToActivate;
+    private GameObject lightToDesactivate;
     private Vector3 saveCameraRefPos;
 
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
@@ -334,6 +336,8 @@ public class CameraMovements : MonoBehaviour
     // QUAND ON COMMENCE A CONTROLER UN OBJET
     public void SaveCamPos()
     {
+        lightToActivate = scriptFondu.currentActivatedLight;
+
         savePosition = transform.position;
         saveRotation = transform.rotation;
 
@@ -346,6 +350,11 @@ public class CameraMovements : MonoBehaviour
     // QUAND ON ARRETE DE CONTROLER UN OBJET
     public void LoadCamPos()
     {
+        lightToActivate.SetActive(true);
+        scriptFondu.currentActivatedLight.SetActive(false);
+
+        scriptFondu.currentActivatedLight = lightToActivate;
+        
         transform.position = savePosition;
         transform.rotation = saveRotation;
 

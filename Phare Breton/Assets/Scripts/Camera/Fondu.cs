@@ -20,11 +20,26 @@ public class Fondu : MonoBehaviour
     [Header("Autres")]
     [HideInInspector] public bool isInTransition;
     [HideInInspector] public bool doorCrossed;
+    
+    [HideInInspector] public GameObject currentActivatedLight;
 
 
     private void Start()
     {
-        imageFondu.DOFade(0, 0);
+        StartCoroutine(StartScene());
+    }
+
+    public IEnumerator StartScene()
+    {
+        canva.SetActive(true);
+        imageFondu.DOFade(1, 0);
+
+        yield return new WaitForSeconds(0.1f);
+        
+        imageFondu.DOFade(0, dureeFondu * 2);
+
+        yield return new WaitForSeconds(dureeFondu * 2);
+        
         canva.SetActive(false);
     }
 
@@ -51,6 +66,8 @@ public class Fondu : MonoBehaviour
 
         if(activatedL != null)
             activatedL.SetActive(true);
+
+        currentActivatedLight = activatedL;
         
         if(desactivatedL != null)
             desactivatedL.SetActive(false);
