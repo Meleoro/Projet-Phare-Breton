@@ -82,8 +82,7 @@ public class CutoutObject : MonoBehaviour
 
                 for (int j = 0; j < materials.Length; j++)
                 {
-                    if(!globalMaterials.Contains(materials[j]))
-                        globalMaterials.Add(materials[j]);
+                    globalMaterials.Add(materials[j]);
                 }
             }
         }
