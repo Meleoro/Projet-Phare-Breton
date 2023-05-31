@@ -26,6 +26,7 @@ public class ObjetInteractible : MonoBehaviour
 
     [Header("MoveObject")] 
     public bool hauteurFigee;
+    public float hauteurFigeeValeur = 2;
     private float wantedHauteur;
     public float hauteurRespawn = 20;
     [HideInInspector] public bool isMoved;
@@ -60,7 +61,7 @@ public class ObjetInteractible : MonoBehaviour
         VerifyLinkedObject();
         StopVFX();
 
-        wantedHauteur = transform.position.y + ReferenceManager.Instance.characterReference.movementScript.hauteurObject;
+        wantedHauteur = transform.position.y + hauteurFigeeValeur;
     }
 
 
@@ -210,7 +211,7 @@ public class ObjetInteractible : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, difference, rb.velocity.z);
         }
 
-        if (Vector3.Distance(transform.position, magnetedPos.position) < 0.02f && !isMoved)
+        if (Vector3.Distance(transform.position, magnetedPos.position) < 0.03f && !isMoved)
         {
             isMagnetedBlock = true;
             rb.isKinematic = true;
