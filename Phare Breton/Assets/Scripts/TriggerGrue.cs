@@ -139,7 +139,7 @@ public class TriggerGrue : MonoBehaviour
     {
         ParticleSystem newParticle = Instantiate(plumeGrueVFX, currentGrue.transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(Random.Range(0.15f, 0.3f));
 
         occurence -= 1;
         

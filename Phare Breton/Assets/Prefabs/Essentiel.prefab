@@ -750,6 +750,9 @@ MonoBehaviour:
   sceneStartName: 
   posStart: {fileID: 0}
   duration: 0
+  amplitudeShake: 1
+  speedShake: 0.3
+  parentTranform: {fileID: 9177554077582268977}
 --- !u!114 &4501630789254565011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -765,6 +768,8 @@ MonoBehaviour:
   canva: {fileID: 246845634925632135}
   imageFondu: {fileID: 6220156003125322026}
   dureeFondu: 0.5
+  strengthMovement: 0.5
+  strengthRotation: 0.5
   isInTransition: 0
   doorCrossed: 0
 --- !u!114 &6994670509474859317
