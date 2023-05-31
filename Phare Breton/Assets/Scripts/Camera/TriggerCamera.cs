@@ -58,7 +58,7 @@ public class TriggerCamera : MonoBehaviour
                     ReferenceManager.Instance.cameraReference.isStatic = true;
                 }
 
-                ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+                //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
 
                 CreateListDesactivatedObjects();
                 ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
