@@ -48,6 +48,8 @@ public class CharacterObjects : MonoBehaviour
         fond.DOFade(0.7f, 0.8f);
         controlledObject.transform.position = posObject;
 
+        controlledObject.transform.parent = ReferenceManager.Instance.cameraReference.parentTranform;
+
         controlledObject.transform.DOScale(Vector3.zero, 0);
         controlledObject.transform.DOScale(Vector3.one, 0.8f);
         
@@ -82,7 +84,9 @@ public class CharacterObjects : MonoBehaviour
         {
             if (quitInput)
                 StartCoroutine(EndPickUp());
-        
+
+            direction = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(direction);
+
             Vector2 finalDirection = Vector2.zero;
         
             if (direction.magnitude > 0.1f)
@@ -105,8 +109,10 @@ public class CharacterObjects : MonoBehaviour
             
                 finalDirection = stockageDirection * (multiplier * vitesseRotation);
             }
+
+            Vector3 realFinalDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector2(finalDirection.y, finalDirection.x));
         
-            controlledObject.transform.rotation = Quaternion.LookRotation(new Vector3(finalDirection.x, finalDirection.y));
+            controlledObject.transform.Rotate(realFinalDirection, Space.World);
         }
 
         else
