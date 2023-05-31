@@ -44,6 +44,9 @@ public class CameraMovements : MonoBehaviour
     public string sceneStartName;
     public Transform posStart;
     public float duration;
+    
+    [Header("ShakeCamera")]
+    
 
     
     [Header("Autres")]

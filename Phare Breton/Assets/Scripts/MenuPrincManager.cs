@@ -26,12 +26,15 @@ public class MenuPrincManager : MonoBehaviour
     public float amplitudeRot;
     public float duration;
     private Vector3 wantedPos;
-    private Vector2 modificateur;
+    /*private Vector2 modificateur;
     private Vector2 modificateur2;
     private float modificateurRot;
-    private float modificateurRot2;
+    private float modificateurRot2;*/
     private Vector3 posScroll;
     private Vector3 posModificateur;
+    private float timerShake;
+    private Vector2 currentWantedPosShake;
+    private Vector2 wantedPosShake;
 
 
     [Header("Références")] 
@@ -55,8 +58,11 @@ public class MenuPrincManager : MonoBehaviour
         screenHeight = _camera.pixelHeight;
         
         OpenMenu();
-        StartCoroutine(FindNewShakePos());
-        StartCoroutine(FindNewShakePos2());
+
+        StartCoroutine(ShakeCoroutine());
+        
+        /*StartCoroutine(FindNewShakePos());
+        StartCoroutine(FindNewShakePos2());*/
         
         currentButton = 1;
     }
@@ -90,13 +96,33 @@ public class MenuPrincManager : MonoBehaviour
     public void MoveBande()
     {
         posScroll =  Vector3.Lerp(posScroll, wantedPos, Time.deltaTime * 1f);
-        posModificateur = Vector3.Lerp(posModificateur, new Vector3(modificateur.x + modificateur2.x, modificateur.y + modificateur2.y, 0), Time.deltaTime * 0.2f);
+        //posModificateur = Vector3.Lerp(posModificateur, new Vector3(modificateur.x + modificateur2.x, modificateur.y + modificateur2.y, 0), Time.deltaTime * 0.2f);
         
         menuObject.position = posScroll + posModificateur;
-        menuObject.rotation = Quaternion.Euler(0,0, Mathf.Lerp(menuObject.rotation.z, modificateurRot + modificateurRot2, Time.deltaTime * 0.5f));
+        //menuObject.rotation = Quaternion.Euler(0,0, Mathf.Lerp(menuObject.rotation.z, modificateurRot + modificateurRot2, Time.deltaTime * 0.5f));
     }
 
-    private IEnumerator FindNewShakePos()
+    private IEnumerator ShakeCoroutine()
+    {
+        timerShake += Time.deltaTime;
+
+        if (timerShake > duration)
+        {
+            timerShake = 0;
+            
+            currentWantedPosShake = new Vector2(Random.Range(-amplitude * screenWidth * multiplier3, amplitude * screenWidth * multiplier3), Random.Range(-amplitude * screenHeight * multiplier3, amplitude * screenHeight * multiplier3));
+        }
+        
+        wantedPosShake = Vector2.Lerp(wantedPosShake, currentWantedPosShake, Time.deltaTime);
+        posModificateur = Vector3.Lerp(posModificateur, new Vector3(wantedPosShake.x, wantedPosShake.y, 0), Time.deltaTime * 0.2f);
+        
+        yield return new WaitForSeconds(Time.deltaTime);
+
+        StartCoroutine(ShakeCoroutine());
+    }
+    
+    
+    /*private IEnumerator FindNewShakePos()
     {
         modificateur = new Vector2(Random.Range(-amplitude * screenWidth * multiplier3, amplitude * screenWidth * multiplier3), Random.Range(-amplitude * screenHeight * multiplier3, amplitude * screenHeight * multiplier3));
         modificateurRot = Random.Range(-amplitudeRot, amplitudeRot);
@@ -116,7 +142,7 @@ public class MenuPrincManager : MonoBehaviour
         yield return new WaitForSeconds(duration / 2);
 
         StartCoroutine(FindNewShakePos2());
-    }
+    }*/
 
     public void OpenMenu()
     {
