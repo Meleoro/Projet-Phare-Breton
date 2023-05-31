@@ -130,6 +130,22 @@ public class ZonePoseCables : MonoBehaviour
                             ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
                             ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
                         }
+                        else
+                        {
+                            RaycastHit _raycastHit;
+
+                            if (Physics.Raycast(transform.position,
+                                    ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(
+                                        new Vector3(direction.x, 0, direction.y)), out _raycastHit, 1.5f))
+                            {
+                                if (_raycastHit.transform.CompareTag("Door"))
+                                {
+                                    ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
+                                    ReferenceManager.Instance.characterReference.nearBoxesDown.Add(objectsAtRange[i].gameObject);
+                                    ReferenceManager.Instance.characterReference.nearBoxes.Add(objectsAtRange[i].gameObject);
+                                }
+                            }
+                        }
                     }
                 }
             }

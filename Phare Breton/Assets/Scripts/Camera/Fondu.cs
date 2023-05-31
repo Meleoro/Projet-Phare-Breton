@@ -33,7 +33,7 @@ public class Fondu : MonoBehaviour
     {
         SaveDoorCrossed();
 
-        GetComponent<CutoutObject>().ResetAlphas();
+        //GetComponent<CutoutObject>().ResetAlphas();
         
         isInTransition = true;
 
