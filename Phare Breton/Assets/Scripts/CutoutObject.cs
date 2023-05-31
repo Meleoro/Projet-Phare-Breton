@@ -38,6 +38,8 @@ public class CutoutObject : MonoBehaviour
             hitObjectsSides.Add(new RaycastHit[0]);
         }
     }
+
+
     
     void Update()
     {
@@ -49,7 +51,7 @@ public class CutoutObject : MonoBehaviour
         ResetAlphas(0);
         //ResetAlphas(index);
 
-            hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
+            hitObjects = Physics.CapsuleCastAll(transform.position, transform.position + offset.normalized, 15, offset.normalized, offset.magnitude, wallMask);
 
             for (int i = 0; i < hitObjects.Length; i++)
             {

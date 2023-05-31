@@ -173,6 +173,17 @@ public class ZonePoseCables : MonoBehaviour
     }
 
 
+    public void VerifyIfInOn(GameObject currentObject)
+    {
+        RaycastHit raycastHit;
+
+        if(Physics.Raycast(currentObject.transform.position, Vector3.up, out raycastHit, 2))
+        {
+
+        }
+    }
+
+
     public bool RaycastOnBox(Vector3 origin, float distance)
     {
         RaycastHit raycastHit;

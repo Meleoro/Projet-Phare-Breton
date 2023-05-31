@@ -63,6 +63,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> cableObjects = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
+    [HideInInspector] public bool isOnBox;
 
     [Header("Autres")] 
     public string menuScene;
