@@ -46,7 +46,7 @@ public class CharacterMovement : MonoBehaviour
     {
         manager = GetComponent<CharaManager>();
 
-        fallDir = Vector3.down * 250;
+        fallDir = Vector3.down * 350;
     }
 
 
@@ -70,10 +70,10 @@ public class CharacterMovement : MonoBehaviour
         }*/
         
         // Gravité
-        manager.rb.AddForce(fallDir * Time.deltaTime, ForceMode.Force);
+        manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
 
 
-        bool willFall = VerifyFall(direction, true);
+        bool willFall = VerifyFall(stockageDirection, true);
 
         if (!willFall)
         {
@@ -82,7 +82,7 @@ public class CharacterMovement : MonoBehaviour
             Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
             desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
-            float maxSpeedChange = maxAcceleration * Time.deltaTime;
+            float maxSpeedChange = maxAcceleration * Time.fixedDeltaTime;
             
             if (direction == Vector2.zero)
             {
@@ -95,7 +95,8 @@ public class CharacterMovement : MonoBehaviour
             velocity.z = Mathf.MoveTowards(velocity.z, desiredVelocity.z, maxSpeedChange);
             manager.rb.velocity = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(velocity);
         }
-        else if(direction.magnitude > 0.4f)
+
+        else
         {
             iteration = 0;
             
@@ -156,7 +157,7 @@ public class CharacterMovement : MonoBehaviour
                 Vector3 newResistance = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(resistanceCable);
                 desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeed;
         
-                float maxSpeedChange = maxAcceleration * Time.deltaTime;
+                float maxSpeedChange = maxAcceleration * Time.fixedDeltaTime;
 
                 // Acceleration du personnage
                 velocity = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(manager.rb.velocity);
@@ -298,7 +299,7 @@ public class CharacterMovement : MonoBehaviour
             if (isLadder)
                 newDirection = new Vector3(direction.x, 0, direction.y);
             
-            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.deltaTime * 17);
+            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.fixedDeltaTime * 17);
 
             mesh.rotation = Quaternion.LookRotation(currentRotation, Vector3.up) * Quaternion.Euler(0, 180, 0);
         }
@@ -322,7 +323,7 @@ public class CharacterMovement : MonoBehaviour
                     objects[k].transform.position = new Vector3(objects[k].transform.position.x, scripts[k].currentHauteur, objects[k].transform.position.z);
                 }*/
                 
-                objects[k].transform.position = new Vector3(objects[k].transform.position.x, Mathf.Lerp(objects[k].transform.position.y, scripts[k].currentHauteur, Time.deltaTime * 2), 
+                objects[k].transform.position = new Vector3(objects[k].transform.position.x, Mathf.Lerp(objects[k].transform.position.y, scripts[k].currentHauteur, Time.fixedDeltaTime * 2), 
                     objects[k].transform.position.z);
                 scripts[k].rb.velocity = new Vector3(scripts[k].rb.velocity.x, 0, scripts[k].rb.velocity.z);
             }
@@ -340,7 +341,7 @@ public class CharacterMovement : MonoBehaviour
                 desiredVelocity += new Vector3(newResistance.x, 0, newResistance.z) * maxSpeedObject;
             }
 
-            float maxSpeedChange = maxAccelerationObject * Time.deltaTime;
+            float maxSpeedChange = maxAccelerationObject * Time.fixedDeltaTime;
 
             // Acceleration de l'objet
             velocityObject = ReferenceManager.Instance.cameraRotationReference.transform.InverseTransformDirection(objects[k].velocity);

@@ -117,7 +117,7 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl && !isPickingObjectUp)
         {
-            IsMovingObjects();
+            /*IsMovingObjects();
 
             if (!noControl && !isPickingObjectUp)
             {
@@ -148,7 +148,7 @@ public class CharaManager : MonoBehaviour
                 }
             }
             
-            fluteMesh.enabled = false;
+            fluteMesh.enabled = false;*/
 
             if (interaction && canPlayMusic)
             {
@@ -255,8 +255,8 @@ public class CharaManager : MonoBehaviour
             
             isWalking = false;
             
-            movementScript.MoveCharacter(Vector2.zero);
-            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
+            /*movementScript.MoveCharacter(Vector2.zero);
+            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);*/
         }
 
         anim.SetBool("isWalking", isWalking);
@@ -265,7 +265,7 @@ public class CharaManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*IsMovingObjects();
+        IsMovingObjects();
 
         if (!noControl && !isPickingObjectUp)
         {
@@ -299,7 +299,7 @@ public class CharaManager : MonoBehaviour
         {
             movementScript.MoveCharacter(Vector2.zero);
             movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
-        }*/
+        }
     }
 
 
