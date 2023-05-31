@@ -106,7 +106,7 @@ public class CharacterObjects : MonoBehaviour
                 finalDirection = stockageDirection * (multiplier * vitesseRotation);
             }
         
-            controlledObject.transform.Rotate(new Vector3(0, finalDirection.x, finalDirection.y));
+            controlledObject.transform.rotation = Quaternion.LookRotation(new Vector3(finalDirection.x, finalDirection.y));
         }
 
         else
