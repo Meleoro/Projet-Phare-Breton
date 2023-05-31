@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 
 public class CameraMovements : MonoBehaviour
@@ -45,7 +46,19 @@ public class CameraMovements : MonoBehaviour
     public Transform posStart;
     public float duration;
 
-    
+    [Header("ShakeCamera")] 
+    public float amplitudeShake;
+    public float speedShake;
+    private float timerShake;
+    private Vector2 currentWantedPosShake;
+    private Vector2 wantedPosShake;
+    private Vector3 posModificateur;
+    private float screenWidth;
+    private float screenHeight;
+    public Transform parentTranform;
+    private Vector3 originalPos;
+
+
     [Header("Autres")]
     private Vector3 savePosition;
     private Quaternion saveRotation;
@@ -66,6 +79,13 @@ public class CameraMovements : MonoBehaviour
         _camera = GetComponent<Camera>();
         cameraRotationRefScript = GetComponentInChildren<CameraRotationRef>();
         scriptFondu = GetComponent<Fondu>();
+        
+        originalPos = parentTranform.position;
+        
+        screenWidth = _camera.pixelWidth;
+        screenHeight = _camera.pixelHeight;
+
+        StartCoroutine(ShakeCoroutine());
 
         if (startMove)
         {
@@ -91,6 +111,15 @@ public class CameraMovements : MonoBehaviour
 
     private void Update()
     {
+        screenWidth = _camera.pixelWidth;
+        screenHeight = _camera.pixelHeight;
+
+        if (!isShaking)
+        {
+            parentTranform.position =
+                Vector3.Lerp(parentTranform.position, originalPos + posModificateur, Time.deltaTime);
+        }
+
         if (!isStatic && !goToSave)
         {
             if (!moveCameraRythme)
@@ -124,6 +153,31 @@ public class CameraMovements : MonoBehaviour
         }
         
         UpdateAlpha();
+    }
+    
+    private IEnumerator ShakeCoroutine()
+    {
+        timerShake += Time.deltaTime;
+
+        if (timerShake > speedShake)
+        {
+            timerShake = 0;
+
+            Vector2 save = currentWantedPosShake;
+
+            while (Vector2.Distance(save, currentWantedPosShake) < amplitudeShake * screenWidth * 0.01f)
+            {
+                currentWantedPosShake = new Vector2(Random.Range(-amplitudeShake * screenWidth * 0.01f, amplitudeShake * screenWidth * 0.01f), 
+                    Random.Range(-amplitudeShake * screenHeight * 0.01f, amplitudeShake * screenHeight * 0.01f));
+            }
+        }
+        
+        wantedPosShake = Vector2.Lerp(wantedPosShake, currentWantedPosShake, Time.deltaTime * 1.5f);
+        posModificateur = transform.TransformDirection(Vector3.Lerp(posModificateur, new Vector3(wantedPosShake.x, wantedPosShake.y, 0), Time.deltaTime * 0.5f));
+        
+        yield return new WaitForSeconds(Time.deltaTime);
+
+        StartCoroutine(ShakeCoroutine());
     }
 
 
