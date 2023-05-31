@@ -122,6 +122,8 @@ public class ZonePoseCables : MonoBehaviour
                         Vector2 direction = ReferenceManager.Instance.characterReference.movementScript
                             .stockageDirection;
 
+                        VerifyIfInOn(objectsAtRange[i].gameObject);
+
                         if (!Physics.Raycast(transform.position,
                                 ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(
                                     new Vector3(direction.x, 0, direction.y)), 1.5f))
@@ -167,6 +169,11 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
+
+            else if(objectsAtRange[i].TryGetComponent(out Planche currentPlanche))
+            {
+                VerifyIfInOn(objectsAtRange[i].gameObject);
+            }
         }
 
         ReferenceManager.Instance.characterReference.cableObjects = cableObjects;
@@ -175,11 +182,14 @@ public class ZonePoseCables : MonoBehaviour
 
     public void VerifyIfInOn(GameObject currentObject)
     {
-        RaycastHit raycastHit;
+        RaycastHit[] hitObjects = Physics.CapsuleCastAll(transform.position, transform.position + Vector3.up * 2, 2, Vector3.up, 2);
 
-        if(Physics.Raycast(currentObject.transform.position, Vector3.up, out raycastHit, 2))
+        for(int i = 0; i < hitObjects.Length; i++)
         {
-
+            if (hitObjects[i].collider.CompareTag("Player"))
+            {
+                ReferenceManager.Instance.characterReference.objectOn = currentObject;
+            }
         }
     }
 

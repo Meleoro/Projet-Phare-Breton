@@ -63,7 +63,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> cableObjects = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
-    [HideInInspector] public bool isOnBox;
+    [HideInInspector] public GameObject objectOn;
 
     [Header("Autres")] 
     public string menuScene;
@@ -436,7 +436,7 @@ public class CharaManager : MonoBehaviour
         anim.SetTrigger("no");
         noControl = true;
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         noControl = false;
     }
