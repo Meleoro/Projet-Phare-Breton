@@ -9,6 +9,9 @@ public class TriggerCamera : MonoBehaviour
     [SerializeField] private BoxCollider _collider;
     [SerializeField] private Transform cameraPos;
 
+    public bool fromBottom;
+    public bool fromUp;
+
     [Header("MouvementCamera")]
     [SerializeField] private bool isStatic;
     [SerializeField] Transform minXZ;
@@ -37,32 +40,95 @@ public class TriggerCamera : MonoBehaviour
             // Points qui vont permettre de determiner de quel côté arrive le joueur
             Vector3 posAvant = transform.position + transform.forward;
             Vector3 posArriere = transform.position - transform.forward;
+            Vector3 posBas = transform.position + transform.up;
+            Vector3 posUp = transform.position - transform.up;
 
-            
-            if (Vector3.Distance(posArriere, other.transform.position) <
-                Vector3.Distance(posAvant, other.transform.position))
+            if (fromBottom)
             {
-                ReferenceManager.Instance.cameraReference.isStatic = true;
-
-                ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
-                ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
-
-                ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
-
-                if (!isStatic)
-                {
-                    ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
-                }
-                else
+                // Si le joueur arrive d'en bas
+                if (Vector3.Distance(posBas, other.transform.position) <
+                    Vector3.Distance(posUp, other.transform.position))
                 {
                     ReferenceManager.Instance.cameraReference.isStatic = true;
+
+                    ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+                    ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+
+                    ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
+
+                    if (!isStatic)
+                    {
+                        ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
+                    }
+                    else
+                    {
+                        ReferenceManager.Instance.cameraReference.isStatic = true;
+                    }
+
+                    //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+
+                    CreateListDesactivatedObjects();
+                    ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
+                        distanceMinChara, distanceMaxChara);
                 }
+            }
+            else if (fromUp)
+            {
+                // Si le joueur arrive d'en bas
+                if (Vector3.Distance(posBas, other.transform.position) >
+                    Vector3.Distance(posUp, other.transform.position))
+                {
+                    ReferenceManager.Instance.cameraReference.isStatic = true;
 
-                //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+                    ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+                    ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
 
-                CreateListDesactivatedObjects();
-                ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
-                    distanceMinChara, distanceMaxChara);
+                    ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
+
+                    if (!isStatic)
+                    {
+                        ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
+                    }
+                    else
+                    {
+                        ReferenceManager.Instance.cameraReference.isStatic = true;
+                    }
+
+                    //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+
+                    CreateListDesactivatedObjects();
+                    ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
+                        distanceMinChara, distanceMaxChara);
+                }
+            }
+            else
+            {
+                // Si le joueur arrive par derriere
+                if (Vector3.Distance(posArriere, other.transform.position) <
+                    Vector3.Distance(posAvant, other.transform.position))
+                {
+                    ReferenceManager.Instance.cameraReference.isStatic = true;
+
+                    ReferenceManager.Instance.cameraReference.transform.position = cameraPos.position;
+                    ReferenceManager.Instance.cameraReference.transform.rotation = cameraPos.rotation;
+
+                    ReferenceManager.Instance.cameraReference.cameraPosRef.position = cameraPos.position;
+
+                    if (!isStatic)
+                    {
+                        ReferenceManager.Instance.cameraReference.InitialiseNewZone(minXZ, maxXZ);
+                    }
+                    else
+                    {
+                        ReferenceManager.Instance.cameraReference.isStatic = true;
+                    }
+
+                    //ReferenceManager.Instance.cameraReference.GetComponent<CutoutObject>().ResetAlphas();
+
+                    CreateListDesactivatedObjects();
+                    ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
+                        distanceMinChara, distanceMaxChara);
+                }
             }
         }
     }
