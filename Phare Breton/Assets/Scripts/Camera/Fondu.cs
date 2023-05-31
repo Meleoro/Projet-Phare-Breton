@@ -74,8 +74,15 @@ public class Fondu : MonoBehaviour
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
-
+        
+        yield return new WaitForSeconds(0.01f);
+        
         imageFondu.DOFade(0, dureeFondu);
+        
+        Vector3 newPos = ReferenceManager.Instance.cameraReference.MoveCamera();
+
+        newPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+        ReferenceManager.Instance.cameraReference.transform.position = newPos;
         
         MoveCameraTransition(dureeFondu, false);
 
