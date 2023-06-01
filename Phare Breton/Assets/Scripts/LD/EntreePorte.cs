@@ -32,7 +32,7 @@ public class EntreePorte : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Interactible"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             if (!doOnce)
                 CreateListDesactivatedObjects();
@@ -43,6 +43,23 @@ public class EntreePorte : MonoBehaviour
                 ReferenceManager.Instance.cameraReference.isStatic = true;
 
                 GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera, activatedLights, desactivatedLights);
+            }
+        }
+
+        else if (collision.gameObject.CompareTag("Interactible"))
+        {
+            if (!collision.gameObject.GetComponent<ObjetInteractible>().cantGoThroughDoors)
+            {
+                if (!doOnce)
+                    CreateListDesactivatedObjects();
+            
+                if (!ReferenceManager.Instance.cameraReference.scriptFondu.isInTransition)
+                {
+                    // Changements camera
+                    ReferenceManager.Instance.cameraReference.isStatic = true;
+
+                    GetComponentInParent<Porte>().UseDoor(numeroEntree, collision.gameObject, staticCamera, activatedLights, desactivatedLights);
+                }
             }
         }
     }

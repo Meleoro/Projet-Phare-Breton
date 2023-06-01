@@ -133,10 +133,7 @@ public class Echelle : ObjetInteractible
 
                 if (CreateRaycast(posRaycast, distance, needLayer))
                 {
-                    if (raycastHit.collider.gameObject != gameObject)
-                    {
-                        pointsGround.Add(raycastHit.point);
-                    }
+                    pointsGround.Add(raycastHit.point);
                 }
             }
         }
@@ -231,7 +228,7 @@ public class Echelle : ObjetInteractible
 
             else
             {
-                //Debug.DrawLine(startPos, startPos + Vector3.down * lenght);
+                Debug.DrawLine(startPos, startPos + Vector3.down * lenght);
                 
                 return false;
             }
