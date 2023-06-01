@@ -172,6 +172,20 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public IEnumerator MoveCharacterDoor(Vector3 newPos, float duration)
+    {
+        manager.isCrossingDoor = true;
+
+        Vector3 direction = newPos - transform.position;
+        RotateCharacter(new Vector2(direction.x, direction.z), true, true);
+
+        transform.DOMove(newPos, duration);
+        
+        yield return new WaitForSeconds(duration);
+        
+        manager.isCrossingDoor = false;
+    }
+
 
     public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects, BoxCollider echelleCollider)
     {
@@ -273,10 +287,10 @@ public class CharacterMovement : MonoBehaviour
             timer -= Time.deltaTime;
 
             if(goUp)
-                RotateCharacter(new Vector2(direction.x, direction.z), true);
+                RotateCharacter(new Vector2(direction.x, direction.z), true, false);
 
             else
-                RotateCharacter(new Vector2(-direction.x, -direction.z), true);
+                RotateCharacter(new Vector2(-direction.x, -direction.z), true, false);
 
             yield return new WaitForSeconds(Time.deltaTime);
         }
@@ -290,7 +304,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
     // ORIENTE LE MESH DU PERSONNAGE
-    public void RotateCharacter(Vector2 direction, bool isLadder)
+    public void RotateCharacter(Vector2 direction, bool isLadder, bool instant)
     {
         if (direction != Vector2.zero && direction.magnitude > 0.03f)
         {
@@ -298,8 +312,12 @@ public class CharacterMovement : MonoBehaviour
 
             if (isLadder)
                 newDirection = new Vector3(direction.x, 0, direction.y);
-            
-            currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.fixedDeltaTime * 17);
+
+            if (!instant)
+                currentRotation = Vector3.Lerp(currentRotation, newDirection, Time.fixedDeltaTime * 17);
+
+            else
+                currentRotation = newDirection;
 
             mesh.rotation = Quaternion.LookRotation(currentRotation, Vector3.up) * Quaternion.Euler(0, 180, 0);
         }
