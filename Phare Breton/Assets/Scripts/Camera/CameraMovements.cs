@@ -55,6 +55,15 @@ public class CameraMovements : MonoBehaviour
     public float durationMiddle;
 
 
+    [Header("CinematiqueFin")]
+    public bool doEndCinematique;
+    public Transform posCameraEnd;
+    public Transform posCharaEnd1;
+    public Transform posCharaEnd2;
+    public float durationEnd;
+
+
+
     [Header("ShakeCamera")] 
     public float amplitudeShake;
     public float speedShake;
@@ -226,6 +235,36 @@ public class CameraMovements : MonoBehaviour
 
 
     public IEnumerator MiddleCinematique()
+    {
+        yield return new WaitForSeconds(0.02f);
+
+        bool staticStock = isStatic;
+
+        ReferenceManager.Instance.characterReference.transform.position = posCharaMiddle1.position;
+        StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(posCharaMiddle2.position, posCharaMiddle1.position, true));
+
+        isStatic = true;
+
+        Vector3 savePos = transform.position;
+        Vector3 saveRot = transform.rotation.eulerAngles;
+
+        transform.rotation = posCameraMiddle.rotation;
+        transform.DOMove(posCameraMiddle.position, 0);
+
+        yield return new WaitForSeconds(durationMiddle * 0.15f);
+
+        transform.DORotate(saveRot, durationMiddle);
+        transform.DOMove(savePos, durationMiddle).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(durationMiddle * 0.85f);
+
+        ReferenceManager.Instance.characterReference.EndCinematique();
+
+        isStatic = staticStock;
+    }
+
+
+    public IEnumerator EndCinematique()
     {
         yield return new WaitForSeconds(0.02f);
 
