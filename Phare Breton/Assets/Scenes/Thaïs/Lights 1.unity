@@ -502,7 +502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &337304091
 Transform:
   m_ObjectHideFlags: 0
@@ -511,7 +511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337304090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1554,7 +1554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1109296652
 Transform:
   m_ObjectHideFlags: 0
@@ -1893,6 +1893,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ANIM_LilBoyMarche
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2908d21f552c66f43b1c6c5e2ae93b24,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1399759036391993732, guid: 2908d21f552c66f43b1c6c5e2ae93b24,
         type: 3}
@@ -3632,6 +3637,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GrueIdle_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 98deeb37dbbc1ab4ba6676cfea69e694,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1499931546081483214, guid: 98deeb37dbbc1ab4ba6676cfea69e694,
         type: 3}
