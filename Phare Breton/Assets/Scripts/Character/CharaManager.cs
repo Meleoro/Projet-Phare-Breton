@@ -265,12 +265,12 @@ public class CharaManager : MonoBehaviour
 
         anim.SetBool("isWalking", isWalking);
         anim.SetBool("fluteActive", fluteActive);
+        
+        IsMovingObjects();
     }
 
     private void FixedUpdate()
     {
-        IsMovingObjects();
-
         if (!noControl && !isPickingObjectUp)
         {
             // Partie déplacement player / objets
