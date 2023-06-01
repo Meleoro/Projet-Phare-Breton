@@ -189,17 +189,17 @@ public class CharacterMovement : MonoBehaviour
 
     public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects, BoxCollider echelleCollider)
     {
-        if (nearObjects.Count > 1 && VerifyFall(stockageDirection, true))
+        if (manager.nearBoxesDown.Count > 1 && VerifyFall(stockageDirection, true))
         {
             List<GameObject> objectToClimb = new List<GameObject>();
 
-            for (int i = 0; i < nearObjects.Count; i++)
+            for (int i = 0; i < manager.nearBoxesDown.Count; i++)
             {
                 Boite currentBoite;
 
-                if (nearObjects[i].TryGetComponent(out currentBoite))
+                if (manager.nearBoxesDown[i].TryGetComponent(out currentBoite))
                 {
-                    objectToClimb.Add(nearObjects[i]);
+                    objectToClimb.Add(manager.nearBoxesDown[i]);
                 }
             }
 
