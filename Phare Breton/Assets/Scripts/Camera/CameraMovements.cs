@@ -300,7 +300,7 @@ public class CameraMovements : MonoBehaviour
         transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
         transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
 
-        //ReferenceManager.Instance.characterReference.anim.SetTrigger();
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");
     }
 
 
