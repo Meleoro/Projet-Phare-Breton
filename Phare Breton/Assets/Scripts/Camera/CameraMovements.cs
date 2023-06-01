@@ -187,6 +187,8 @@ public class CameraMovements : MonoBehaviour
     {
         yield return new WaitForSeconds(0.02f);
 
+        bool staticStock = isStatic; 
+        
         isStatic = true;
         ReferenceManager.Instance.characterReference.StartCinematique();
 
@@ -196,18 +198,17 @@ public class CameraMovements : MonoBehaviour
         transform.rotation = posStart.rotation;
         transform.DOMove(posStart.position, 0);
 
-        yield return new WaitForSeconds(duration * 0.2f);
+        yield return new WaitForSeconds(duration * 0.15f);
 
         transform.DORotate(saveRot, duration);
-        transform.DOMove(savePos, duration);
+        transform.DOMove(savePos, duration).SetEase(Ease.InOutSine);
 
 
-        yield return new WaitForSeconds(duration * 0.8f);
+        yield return new WaitForSeconds(duration * 0.85f);
 
         ReferenceManager.Instance.characterReference.EndCinematique();
 
-        isStatic = false;
-
+        isStatic = staticStock;
     }
 
 
@@ -350,10 +351,13 @@ public class CameraMovements : MonoBehaviour
     // QUAND ON ARRETE DE CONTROLER UN OBJET
     public void LoadCamPos()
     {
-        lightToActivate.SetActive(true);
-        scriptFondu.currentActivatedLight.SetActive(false);
+        if(lightToActivate != null && scriptFondu.currentActivatedLight != null)
+        {
+            scriptFondu.currentActivatedLight.SetActive(false);
+            lightToActivate.SetActive(true);
 
-        scriptFondu.currentActivatedLight = lightToActivate;
+            scriptFondu.currentActivatedLight = lightToActivate;
+        }
         
         transform.position = savePosition;
         transform.rotation = saveRotation;

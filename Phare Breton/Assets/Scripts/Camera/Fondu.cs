@@ -46,6 +46,8 @@ public class Fondu : MonoBehaviour
 
     public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera, GameObject activatedL, GameObject desactivatedL)
     {
+        float distanceCrossedChara = 0.15f;
+        
         SaveDoorCrossed();
 
         //GetComponent<CutoutObject>().ResetAlphas();
@@ -74,8 +76,23 @@ public class Fondu : MonoBehaviour
 
         ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
+        
+        yield return new WaitForSeconds(0.01f);
+        
+        ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
 
+        if (!ReferenceManager.Instance.characterReference.isMovingObjects)
+        {
+            StartCoroutine(
+                ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos, dureeFondu));
+        }
+        
         imageFondu.DOFade(0, dureeFondu);
+        
+        Vector3 newPos = ReferenceManager.Instance.cameraReference.MoveCamera();
+
+        newPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+        ReferenceManager.Instance.cameraReference.transform.position = newPos;
         
         MoveCameraTransition(dureeFondu, false);
 

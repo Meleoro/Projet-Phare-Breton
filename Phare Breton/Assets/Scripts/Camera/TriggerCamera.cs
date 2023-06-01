@@ -37,7 +37,9 @@ public class TriggerCamera : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("Interactible"))
         {
-            // Points qui vont permettre de determiner de quel côté arrive le joueur
+            if (!other.TryGetComponent(out Echelle currentEchelle))
+            {
+                // Points qui vont permettre de determiner de quel côté arrive le joueur
             Vector3 posAvant = transform.position + transform.forward;
             Vector3 posArriere = transform.position - transform.forward;
             Vector3 posBas = transform.position + transform.up;
@@ -129,6 +131,7 @@ public class TriggerCamera : MonoBehaviour
                     ReferenceManager.Instance.cameraReference.ActualiseDesactivatedObjects(desactivatedObjects, distanceMinCamera, distanceMaxCamera, 
                         distanceMinChara, distanceMaxChara);
                 }
+            }
             }
         }
     }

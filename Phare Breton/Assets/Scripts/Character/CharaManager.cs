@@ -63,6 +63,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> cableObjects = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
+    [HideInInspector] public GameObject objectOn;
 
     [Header("Autres")] 
     public string menuScene;
@@ -77,6 +78,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public Vector3 movedObjectPosition;
     public bool isInLightSource;
     [HideInInspector] public bool isPickingObjectUp;
+    [HideInInspector] public bool isCrossingDoor;
 
 
     void Start()
@@ -116,7 +118,7 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl && !isPickingObjectUp)
         {
-            IsMovingObjects();
+            /*IsMovingObjects();
 
             if (!noControl && !isPickingObjectUp)
             {
@@ -147,7 +149,7 @@ public class CharaManager : MonoBehaviour
                 }
             }
             
-            fluteMesh.enabled = false;
+            fluteMesh.enabled = false;*/
 
             if (interaction && canPlayMusic)
             {
@@ -251,11 +253,14 @@ public class CharaManager : MonoBehaviour
         {
             if(isPickingObjectUp)
                 scriptObjets.ControlObject(direction, stase);
-            
-            isWalking = false;
-            
-            movementScript.MoveCharacter(Vector2.zero);
-            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
+
+            if (!isCrossingDoor)
+                isWalking = false;
+            else
+                isWalking = true;
+
+            /*movementScript.MoveCharacter(Vector2.zero);
+            movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);*/
         }
 
         anim.SetBool("isWalking", isWalking);
@@ -264,7 +269,7 @@ public class CharaManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        /*IsMovingObjects();
+        IsMovingObjects();
 
         if (!noControl && !isPickingObjectUp)
         {
@@ -274,7 +279,7 @@ public class CharaManager : MonoBehaviour
                 movementScript.MoveCharacter(direction);
                 
                 if(direction != Vector2.zero) 
-                    movementScript.RotateCharacter(direction, false);
+                    movementScript.RotateCharacter(direction, false, false);
 
                 if (direction == Vector2.zero)
                     movementScript.RotateCharacterCamera();
@@ -298,7 +303,7 @@ public class CharaManager : MonoBehaviour
         {
             movementScript.MoveCharacter(Vector2.zero);
             movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);
-        }*/
+        }
     }
 
 
@@ -388,7 +393,7 @@ public class CharaManager : MonoBehaviour
                 fluteMesh.enabled = true;
 
                 movementScript.RotateCharacterCamera();
-                movementScript.RotateCharacter(direction, false);
+                movementScript.RotateCharacter(direction, false, false);
 
                 if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
                 {
@@ -435,7 +440,7 @@ public class CharaManager : MonoBehaviour
         anim.SetTrigger("no");
         noControl = true;
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         noControl = false;
     }
@@ -453,11 +458,9 @@ public class CharaManager : MonoBehaviour
         {
             movedObjectPosition = movedObjects[0].transform.position;
 
-            Debug.DrawRay(transform.position, Vector3.down);
-            
             if (!Physics.Raycast(transform.position, Vector3.down, 1))
             {
-                rb.AddForce(Vector3.down * Time.deltaTime * 250, ForceMode.Force);
+                rb.AddForce(Vector3.down * (Time.deltaTime * 250), ForceMode.Force);
                 
                 rb.isKinematic = false;
             }

@@ -15,7 +15,7 @@ public class CutoutObject : MonoBehaviour
     public bool debug;
     private Material[] materials;
     private List<RaycastHit[]> hitObjectsArrays = new List<RaycastHit[]>();
-    private List<GlobalMaterial> globalMaterials = new List<GlobalMaterial>();
+    public List<GlobalMaterial> globalMaterials = new List<GlobalMaterial>();
 
     private int index = 0;
     private int index2 = 0;
@@ -38,28 +38,31 @@ public class CutoutObject : MonoBehaviour
             hitObjectsSides.Add(new RaycastHit[0]);
         }
     }
+
+
     
     void Update()
     {
-        Vector3 offset = targetObject.position - transform.position + Vector3.up;
+        Vector3 offset = ReferenceManager.Instance.characterReference.movedObjectPosition - transform.position;
         
-        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
+        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(ReferenceManager.Instance.characterReference.movedObjectPosition);
         //cutoutPos.y /= (Screen.width / Screen.height);
             
         ResetAlphas(0);
-        //ResetAlphas(index);
 
-            hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
+        Vector3 pos1 = transform.position - new Vector3(offset.x, 0, offset.z).normalized * 7;
+        Vector3 pos2 = ReferenceManager.Instance.characterReference.movedObjectPosition - new Vector3(offset.x, 0, offset.z).normalized * 7;
+        
+        hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
 
             for (int i = 0; i < hitObjects.Length; i++)
             {
+                materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
 
-                    materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
-
-                    for (int j = 0; j < materials.Length; j++)
-                    {
-                        globalMaterials[0].materials.Add(materials[j]);
-                    }
+                for (int j = 0; j < materials.Length; j++)
+                {
+                    globalMaterials[0].materials.Add(materials[j]);
+                }
                 
             }
 
