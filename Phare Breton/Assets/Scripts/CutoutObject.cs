@@ -43,19 +43,17 @@ public class CutoutObject : MonoBehaviour
     
     void Update()
     {
-        Vector3 offset = targetObject.position - transform.position;
+        Vector3 offset = ReferenceManager.Instance.characterReference.movedObjectPosition - transform.position;
         
-        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
+        Vector2 cutoutPos = mainCamera.WorldToViewportPoint(ReferenceManager.Instance.characterReference.movedObjectPosition);
         //cutoutPos.y /= (Screen.width / Screen.height);
             
         ResetAlphas(0);
 
         Vector3 pos1 = transform.position - new Vector3(offset.x, 0, offset.z).normalized * 7;
-        Vector3 pos2 = targetObject.position - new Vector3(offset.x, 0, offset.z).normalized * 7;
-
-        Debug.DrawLine(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6);
-
-            hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
+        Vector3 pos2 = ReferenceManager.Instance.characterReference.movedObjectPosition - new Vector3(offset.x, 0, offset.z).normalized * 7;
+        
+        hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
 
             for (int i = 0; i < hitObjects.Length; i++)
             {

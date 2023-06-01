@@ -46,7 +46,7 @@ public class Fondu : MonoBehaviour
 
     public IEnumerator Transition(Vector3 objectNewPos, Transform cameraNewPos, GameObject movedObject, Porte doorScript, int doorNumber, bool staticCamera, GameObject activatedL, GameObject desactivatedL)
     {
-        float distanceCrossedChara = 0.5f;
+        float distanceCrossedChara = 0.15f;
         
         SaveDoorCrossed();
 
@@ -81,8 +81,11 @@ public class Fondu : MonoBehaviour
         
         ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
 
-        StartCoroutine(
-            ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos * distanceCrossedChara, dureeFondu));
+        if (!ReferenceManager.Instance.characterReference.isMovingObjects)
+        {
+            StartCoroutine(
+                ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos, dureeFondu));
+        }
         
         imageFondu.DOFade(0, dureeFondu);
         

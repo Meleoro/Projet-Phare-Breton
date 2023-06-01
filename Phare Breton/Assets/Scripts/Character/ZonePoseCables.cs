@@ -184,11 +184,11 @@ public class ZonePoseCables : MonoBehaviour
 
     public void VerifyIfInOn(GameObject currentObject)
     {
-        RaycastHit[] hitObjects = Physics.CapsuleCastAll(transform.position, transform.position + Vector3.up * 2, 2, Vector3.up, 2);
+        RaycastHit hitObject;
 
-        for(int i = 0; i < hitObjects.Length; i++)
+        if (Physics.Raycast(transform.position, Vector3.down, out hitObject, 2))
         {
-            if (hitObjects[i].collider.CompareTag("Player") && !hitObjects[i].collider.isTrigger)
+            if (hitObject.collider.CompareTag("Interactible") && !hitObject.collider.isTrigger)
             {
                 ReferenceManager.Instance.characterReference.objectOn = currentObject;
             }
