@@ -78,11 +78,11 @@ public class Fondu : MonoBehaviour
         ReferenceManager.Instance.cameraReference.EnterRoom(staticCamera);
         
         yield return new WaitForSeconds(0.01f);
-        
-        ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
 
-        if (!ReferenceManager.Instance.characterReference.isMovingObjects)
+        if (!ReferenceManager.Instance.characterReference.isMovingObjects && !doorScript.isFirstDoor)
         {
+            ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
+            
             StartCoroutine(
                 ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos, dureeFondu));
         }
