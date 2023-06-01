@@ -351,7 +351,7 @@ public class CameraMovements : MonoBehaviour
     // QUAND ON ARRETE DE CONTROLER UN OBJET
     public void LoadCamPos()
     {
-        if(lightToActivate != null)
+        if(lightToActivate != null && scriptFondu.currentActivatedLight != null)
         {
             scriptFondu.currentActivatedLight.SetActive(false);
             lightToActivate.SetActive(true);

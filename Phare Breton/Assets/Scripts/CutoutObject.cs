@@ -52,10 +52,8 @@ public class CutoutObject : MonoBehaviour
 
         Vector3 pos1 = transform.position - new Vector3(offset.x, 0, offset.z).normalized * 7;
         Vector3 pos2 = ReferenceManager.Instance.characterReference.movedObjectPosition - new Vector3(offset.x, 0, offset.z).normalized * 7;
-
-        Debug.DrawLine(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6);
-
-            hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
+        
+        hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
 
             for (int i = 0; i < hitObjects.Length; i++)
             {
