@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class CutoutObject : MonoBehaviour
     public float cutoutSize = 0.1f;
     public float fallOffSize = 0.05f;
     public float sphereSize = 5;
-    public bool debug;
     private Material[] materials;
     private List<RaycastHit[]> hitObjectsArrays = new List<RaycastHit[]>();
     public List<GlobalMaterial> globalMaterials = new List<GlobalMaterial>();
@@ -51,117 +51,29 @@ public class CutoutObject : MonoBehaviour
         ResetAlphas(0);
 
         Vector3 pos1 = transform.position - new Vector3(offset.x, 0, offset.z).normalized * 7;
-        Vector3 pos2 = ReferenceManager.Instance.characterReference.movedObjectPosition - new Vector3(offset.x, 0, offset.z).normalized * 7;
+        Vector3 pos2 = ReferenceManager.Instance.characterReference.movedObjectPosition - new Vector3(offset.x, 0, offset.z).normalized * 14;
+        
+        Debug.DrawLine(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6);
         
         hitObjects = Physics.CapsuleCastAll(pos1 + Vector3.up * 6, pos2 + Vector3.up * 6, 5, offset, 0, wallMask);
 
-            for (int i = 0; i < hitObjects.Length; i++)
-            {
-                materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
-
-                for (int j = 0; j < materials.Length; j++)
-                {
-                    globalMaterials[0].materials.Add(materials[j]);
-                }
-                
-            }
-
-
-            /*switch (index)
-            {
-                case 0 :
-                    hitObjects = Physics.RaycastAll(transform.position + Vector3.right * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[0] = hitObjects;
-                    break;
-                
-                case 1 :
-                    hitObjects = Physics.RaycastAll(transform.position + Vector3.left * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[1] = hitObjects;
-                    break;
-                
-                case 2 :
-                    hitObjects = Physics.RaycastAll(transform.position + Vector3.back * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[2] = hitObjects;
-                    break;
-                
-                case 3 :
-                    hitObjects = Physics.RaycastAll(transform.position + Vector3.forward * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[3] = hitObjects;
-                    break;
-                
-                case 4 :
-                    hitObjects = Physics.RaycastAll(transform.position + new Vector3(0.7f, 0, 0.7f) * sphereSize , offset, offset.magnitude, wallMask);
-                    hitObjectsSides[4] = hitObjects;
-                    break;
-                
-                case 5 :
-                    hitObjects = Physics.RaycastAll(transform.position + new Vector3(0.7f, 0, -0.7f) * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[5] = hitObjects;
-                    break;
-                
-                case 6 :
-                    hitObjects = Physics.RaycastAll(transform.position +  new Vector3(-0.7f, 0, 0.7f) * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[6] = hitObjects;
-                    break;
-                
-                case 7 :
-                    hitObjects = Physics.RaycastAll(transform.position +  new Vector3(-0.7f, 0, -0.7f) * sphereSize, offset, offset.magnitude, wallMask);
-                    hitObjectsSides[7] = hitObjects;
-                    break;
-                
-                case 8 :
-                    hitObjects = Physics.RaycastAll(transform.position, offset.normalized, offset.magnitude, wallMask);
-                    break;
-            }
-            
-            for (int i = 0; i < hitObjects.Length; i++)
-            {
-                if (!allHitObjects.Contains(hitObjects[i].transform.gameObject))
-                {
-                    allHitObjects.Add(hitObjects[i].transform.gameObject);
-                    
-                    materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
-
-                    for (int j = 0; j < materials.Length; j++)
-                    {
-                        globalMaterials[index].materials.Add(materials[j]);
-                    }
-                }
-            }*/
-            
-            
-            /*for(int i = 0; i < globalMaterials[0].materials.Count; i++)
-            {
-                globalMaterials[0].materials[i].SetVector("_CutoutPos", cutoutPos);
-                globalMaterials[0].materials[i].SetFloat("_CutoutSize", cutoutSize);
-                globalMaterials[0].materials[i].SetFloat("_FalloffSize", fallOffSize);
-            }*/
-            
-            for(int i = 0; i < globalMaterials[index].materials.Count; i++)
-            {
-                globalMaterials[index].materials[i].SetVector("_CutoutPos", cutoutPos);
-                globalMaterials[index].materials[i].SetFloat("_CutoutSize", cutoutSize);
-                globalMaterials[index].materials[i].SetFloat("_FalloffSize", fallOffSize);
-            }
-            
-        
-        
-        
-
-        if (debug)
+        for (int i = 0; i < hitObjects.Length; i++)
         {
-            Debug.DrawLine(transform.position, transform.position + offset);
-            
-            Debug.DrawLine(transform.position + Vector3.right * sphereSize, transform.position + Vector3.right * sphereSize + offset);
-            Debug.DrawLine(transform.position + Vector3.left * sphereSize, transform.position + Vector3.left * sphereSize + offset);
-            Debug.DrawLine(transform.position + Vector3.back * sphereSize, transform.position + Vector3.back * sphereSize + offset);
-            Debug.DrawLine(transform.position + Vector3.forward * sphereSize, transform.position + Vector3.forward * sphereSize + offset);
-            
-            Debug.DrawLine(transform.position + new Vector3(0.7f, 0, 0.7f) * sphereSize, transform.position + new Vector3(0.7f, 0, 0.7f) * sphereSize + offset);
-            Debug.DrawLine(transform.position + new Vector3(0.7f, 0, -0.7f) * sphereSize, transform.position + new Vector3(0.7f, 0, -0.7f) * sphereSize + offset);
-            Debug.DrawLine(transform.position + new Vector3(-0.7f, 0, 0.7f) * sphereSize, transform.position + new Vector3(-0.7f, 0, 0.7f) * sphereSize + offset);
-            Debug.DrawLine(transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize, transform.position + new Vector3(-0.7f, 0, -0.7f) * sphereSize + offset);
+            materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
+
+            for (int j = 0; j < materials.Length; j++)
+            {
+                globalMaterials[0].materials.Add(materials[j]);
+            }
         }
+        
+        for(int i = 0; i < globalMaterials[index].materials.Count; i++)
+        {
+            globalMaterials[index].materials[i].SetVector("_CutoutPos", cutoutPos);
+            globalMaterials[index].materials[i].SetFloat("_CutoutSize", cutoutSize);
+            globalMaterials[index].materials[i].SetFloat("_FalloffSize", fallOffSize);
+        }
+            
     }
 
 
@@ -182,6 +94,7 @@ public class CutoutObject : MonoBehaviour
 }
 
 
+[Serializable]
 public class GlobalMaterial
 {
     public List<Material> materials = new List<Material>();
