@@ -772,6 +772,7 @@ MonoBehaviour:
   strengthRotation: 0.5
   isInTransition: 0
   doorCrossed: 0
+  currentActivatedLight: {fileID: 0}
 --- !u!114 &6994670509474859317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3944,8 +3945,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fond: {fileID: 448331171823297025}
   UI: {fileID: 4611672226293919387}
-  accelerationRotation: 2
-  vitesseRotation: 4
+  accelerationRotation: 3
+  vitesseRotation: 0.8
 --- !u!82 &2154013127770234402
 AudioSource:
   m_ObjectHideFlags: 0

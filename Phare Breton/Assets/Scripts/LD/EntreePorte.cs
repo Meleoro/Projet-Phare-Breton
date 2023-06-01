@@ -9,6 +9,7 @@ public class EntreePorte : MonoBehaviour
     [Header("Général")]
     [Range(1, 2)] public int numeroEntree;
     public bool staticCamera;
+    public bool isFirstDoor;
 
     [Header("Lights")] 
     public GameObject activatedLights;

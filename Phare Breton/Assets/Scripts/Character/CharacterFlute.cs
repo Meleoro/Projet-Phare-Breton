@@ -377,20 +377,36 @@ public class CharacterFlute : MonoBehaviour
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
-                Boite currentBoite;
-                if(selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
+                if(!selectedObjects[k] == manager.objectOn)
                 {
-                    currentBoite.VFXDeplacement.Play(true);
-                }
-                
-                selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
-                
-                manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
-                manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+                    Boite currentBoite;
+                    if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
+                    {
+                        currentBoite.VFXDeplacement.Play(true);
+                    }
 
-                manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
-                
-                VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
+                    selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
+
+                    manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+                    manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+
+                    manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
+
+                    VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
+                }
+
+                else
+                {
+                    manager.isMovingObjects = false;
+                    manager.noMovement = false;
+
+                    manager.movedObjects.Clear();
+                    manager.scriptsMovedObjects.Clear();
+
+                    StartCoroutine(manager.SayNo());
+
+                    break;
+                }
             }
 
             for (int i = 0; i < manager.movedObjects.Count; i++)

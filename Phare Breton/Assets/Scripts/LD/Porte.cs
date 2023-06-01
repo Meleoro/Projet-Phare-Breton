@@ -15,6 +15,9 @@ public class Porte : MonoBehaviour
 
     [SerializeField] EntreePorte door1;
     [SerializeField] EntreePorte door2;
+    
+    [HideInInspector] public Vector3 directionAvancee;
+    [HideInInspector] public bool isFirstDoor;
 
     [Header("Limites Camera")]
     [SerializeField] Transform minXZDoor1;
@@ -127,14 +130,41 @@ public class Porte : MonoBehaviour
     
     public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera, GameObject activatedLight, GameObject desactivatedLight)
     {
+        if (door2.isFirstDoor)
+            isFirstDoor = true;
+        
+        else if (door1.isFirstDoor) 
+            isFirstDoor = true;
+
         if (doorNumber == 1)
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
+            Vector3 newPos = charaPos2.position;
+            
+            
+            RaycastHit _raycastHit;
+
+            if (Physics.Raycast(charaPos2.position, Vector3.down, out _raycastHit, 5))
+            {
+                newPos = _raycastHit.point + Vector3.up;
+            }
+            
+            directionAvancee = newPos - new Vector3(door2.transform.position.x, newPos.y, door2.transform.position.z);
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(newPos, cameraPos2, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
 
         else
         {
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
+            Vector3 newPos = charaPos1.position;
+
+            RaycastHit _raycastHit;
+
+            if (Physics.Raycast(charaPos1.position, Vector3.down, out _raycastHit, 5))
+            {
+                newPos = _raycastHit.point + Vector3.up;
+            }
+            
+            directionAvancee = newPos - new Vector3(door1.transform.position.x, newPos.y, door1.transform.position.z);
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(newPos, cameraPos1, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
     }
 

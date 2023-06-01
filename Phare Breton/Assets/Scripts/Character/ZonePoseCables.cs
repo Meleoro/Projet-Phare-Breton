@@ -82,7 +82,9 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearGenerator.Clear();
         ReferenceManager.Instance.characterReference.cableObjects.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
-        
+
+        ReferenceManager.Instance.characterReference.objectOn = null;
+
         cableObjects.Clear();
 
         ReferenceManager.Instance.characterReference.nearObjetsRecuperables = objetsRecuperablesAtRange;
@@ -121,6 +123,8 @@ public class ZonePoseCables : MonoBehaviour
                     {
                         Vector2 direction = ReferenceManager.Instance.characterReference.movementScript
                             .stockageDirection;
+
+                        VerifyIfInOn(objectsAtRange[i].gameObject);
 
                         if (!Physics.Raycast(transform.position,
                                 ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(
@@ -167,9 +171,28 @@ public class ZonePoseCables : MonoBehaviour
                 ReferenceManager.Instance.characterReference.nearGenerator.Add(objectsAtRange[i].gameObject);
                 ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
             }
+
+            else if(objectsAtRange[i].TryGetComponent(out Planche currentPlanche))
+            {
+                VerifyIfInOn(objectsAtRange[i].gameObject);
+            }
         }
 
         ReferenceManager.Instance.characterReference.cableObjects = cableObjects;
+    }
+
+
+    public void VerifyIfInOn(GameObject currentObject)
+    {
+        RaycastHit hitObject;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hitObject, 2))
+        {
+            if (hitObject.collider.CompareTag("Interactible") && !hitObject.collider.isTrigger)
+            {
+                ReferenceManager.Instance.characterReference.objectOn = currentObject;
+            }
+        }
     }
 
 
