@@ -278,7 +278,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    IEnumerator RotateCharaLadder(Vector3 direction, bool goUp)
+    public IEnumerator RotateCharaLadder(Vector3 direction, bool goUp)
     {
         float timer = 0.4f;
 
