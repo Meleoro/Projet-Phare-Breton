@@ -17,6 +17,7 @@ public class Porte : MonoBehaviour
     [SerializeField] EntreePorte door2;
     
     [HideInInspector] public Vector3 directionAvancee;
+    [HideInInspector] public bool isFirstDoor;
 
     [Header("Limites Camera")]
     [SerializeField] Transform minXZDoor1;
@@ -129,9 +130,16 @@ public class Porte : MonoBehaviour
     
     public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera, GameObject activatedLight, GameObject desactivatedLight)
     {
+        if (door2.isFirstDoor)
+            isFirstDoor = true;
+        
+        else if (door1.isFirstDoor) 
+            isFirstDoor = true;
+
         if (doorNumber == 1)
         {
             Vector3 newPos = charaPos2.position;
+            
             
             RaycastHit _raycastHit;
 
@@ -147,7 +155,7 @@ public class Porte : MonoBehaviour
         else
         {
             Vector3 newPos = charaPos1.position;
-            
+
             RaycastHit _raycastHit;
 
             if (Physics.Raycast(charaPos1.position, Vector3.down, out _raycastHit, 5))
