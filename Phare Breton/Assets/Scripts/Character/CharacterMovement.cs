@@ -70,7 +70,8 @@ public class CharacterMovement : MonoBehaviour
         }*/
         
         // Gravité
-        manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
+        if(!manager.isCrossingDoor)
+            manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
 
 
         bool willFall = VerifyFall(stockageDirection, true);
