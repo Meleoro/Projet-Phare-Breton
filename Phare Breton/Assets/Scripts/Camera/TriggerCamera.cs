@@ -11,6 +11,7 @@ public class TriggerCamera : MonoBehaviour
 
     public bool fromBottom;
     public bool fromUp;
+    public bool allowObjects;
 
     [Header("MouvementCamera")]
     [SerializeField] private bool isStatic;
@@ -35,7 +36,8 @@ public class TriggerCamera : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Interactible"))
+        
+        if (other.CompareTag("Player") || (allowObjects && other.CompareTag("Interactible")))
         {
             if (!other.TryGetComponent(out Echelle currentEchelle))
             {
