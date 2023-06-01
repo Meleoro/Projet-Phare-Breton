@@ -137,11 +137,11 @@ public class Porte : MonoBehaviour
 
             if (Physics.Raycast(charaPos2.position, Vector3.down, out _raycastHit, 5))
             {
-                newPos = _raycastHit.point + Vector3.up * 0.8f;
+                newPos = _raycastHit.point + Vector3.up;
             }
             
             directionAvancee = newPos - new Vector3(door2.transform.position.x, newPos.y, door2.transform.position.z);
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos2.position, cameraPos2, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(newPos, cameraPos2, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
 
         else
@@ -152,11 +152,11 @@ public class Porte : MonoBehaviour
 
             if (Physics.Raycast(charaPos1.position, Vector3.down, out _raycastHit, 5))
             {
-                newPos = _raycastHit.point + Vector3.up * 0.8f;
+                newPos = _raycastHit.point + Vector3.up;
             }
             
             directionAvancee = newPos - new Vector3(door1.transform.position.x, newPos.y, door1.transform.position.z);
-            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(charaPos1.position, cameraPos1, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
+            StartCoroutine(ReferenceManager.Instance.cameraReference.scriptFondu.Transition(newPos, cameraPos1, movedObject, this, doorNumber, staticCamera, activatedLight, desactivatedLight));
         }
     }
 

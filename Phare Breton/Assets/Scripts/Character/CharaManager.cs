@@ -78,6 +78,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public Vector3 movedObjectPosition;
     public bool isInLightSource;
     [HideInInspector] public bool isPickingObjectUp;
+    [HideInInspector] public bool isCrossingDoor;
 
 
     void Start()
@@ -252,9 +253,12 @@ public class CharaManager : MonoBehaviour
         {
             if(isPickingObjectUp)
                 scriptObjets.ControlObject(direction, stase);
-            
-            isWalking = false;
-            
+
+            if (!isCrossingDoor)
+                isWalking = false;
+            else
+                isWalking = true;
+
             /*movementScript.MoveCharacter(Vector2.zero);
             movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);*/
         }
@@ -275,7 +279,7 @@ public class CharaManager : MonoBehaviour
                 movementScript.MoveCharacter(direction);
                 
                 if(direction != Vector2.zero) 
-                    movementScript.RotateCharacter(direction, false);
+                    movementScript.RotateCharacter(direction, false, false);
 
                 if (direction == Vector2.zero)
                     movementScript.RotateCharacterCamera();
@@ -389,7 +393,7 @@ public class CharaManager : MonoBehaviour
                 fluteMesh.enabled = true;
 
                 movementScript.RotateCharacterCamera();
-                movementScript.RotateCharacter(direction, false);
+                movementScript.RotateCharacter(direction, false, false);
 
                 if (cable && fluteScript.selectedObjects.Count != 0 && canCable)
                 {
