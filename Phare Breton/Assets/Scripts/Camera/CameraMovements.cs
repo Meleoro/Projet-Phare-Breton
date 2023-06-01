@@ -287,12 +287,14 @@ public class CameraMovements : MonoBehaviour
 
         yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.DOMove(posCameraEnd1.position, durationEnd).SetEase(Ease.InOutSine);
-        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd).SetEase(Ease.InOutSine);
+        transform.DOMove(posCameraEnd1.position, durationEnd * 0.8f).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd * 0.8f).SetEase(Ease.InOutSine);
 
         yield return new WaitForSeconds(durationEnd * 0.85f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+        yield return new WaitForSeconds(0.4f);
 
 
         // PARTIE TENDAGE DE MAIN
