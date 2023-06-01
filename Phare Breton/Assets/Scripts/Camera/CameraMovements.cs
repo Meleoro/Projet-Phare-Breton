@@ -135,6 +135,10 @@ public class CameraMovements : MonoBehaviour
 
     private void Update()
     {
+        if (doEndCinematique)
+            StartCoroutine(EndCinematique());
+        
+
         screenWidth = _camera.pixelWidth;
         screenHeight = _camera.pixelHeight;
 
@@ -207,6 +211,8 @@ public class CameraMovements : MonoBehaviour
 
     public IEnumerator IntroCinematique()
     {
+        doEndCinematique = false;
+
         yield return new WaitForSeconds(0.02f);
 
         bool staticStock = isStatic; 
@@ -266,6 +272,8 @@ public class CameraMovements : MonoBehaviour
 
     public IEnumerator EndCinematique()
     {
+        doEndCinematique = false;
+
         yield return new WaitForSeconds(0.02f);
 
         ReferenceManager.Instance.characterReference.noControl = true;
@@ -273,12 +281,12 @@ public class CameraMovements : MonoBehaviour
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
 
-       isStatic = true;
+        isStatic = true;
 
         yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.DORotate(posCameraEnd.rotation.eulerAngles, durationEnd);
         transform.DOMove(posCameraEnd.position, durationEnd).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd.rotation.eulerAngles, durationEnd);
 
         yield return new WaitForSeconds(durationEnd * 0.85f);
 
