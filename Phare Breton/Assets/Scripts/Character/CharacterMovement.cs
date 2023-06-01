@@ -172,6 +172,17 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public IEnumerator MoveCharacterDoor(Vector3 newPos, float duration)
+    {
+        manager.anim.SetBool("isWalking", true);
+
+        transform.DOMove(newPos, duration);
+        
+        yield return new WaitForSeconds(duration);
+        
+        manager.anim.SetBool("isWalking", false);
+    }
+
 
     public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects, BoxCollider echelleCollider)
     {

@@ -188,7 +188,7 @@ public class ZonePoseCables : MonoBehaviour
 
         for(int i = 0; i < hitObjects.Length; i++)
         {
-            if (hitObjects[i].collider.CompareTag("Player"))
+            if (hitObjects[i].collider.CompareTag("Player") && !hitObjects[i].collider.isTrigger)
             {
                 ReferenceManager.Instance.characterReference.objectOn = currentObject;
             }
