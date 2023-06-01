@@ -46,7 +46,7 @@ public class CharacterMovement : MonoBehaviour
     {
         manager = GetComponent<CharaManager>();
 
-        fallDir = Vector3.down * 350;
+        fallDir = Vector3.down * 550;
     }
 
 
