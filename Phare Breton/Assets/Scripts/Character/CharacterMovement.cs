@@ -187,7 +187,7 @@ public class CharacterMovement : MonoBehaviour
     }
 
 
-    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp, List<GameObject> nearObjects, BoxCollider echelleCollider)
+    public IEnumerator ClimbLadder(Vector3 finalDestination, Vector3 origin, bool goUp)
     {
         if (manager.nearBoxesDown.Count > 1 && VerifyFall(stockageDirection, true))
         {
