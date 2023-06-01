@@ -809,7 +809,7 @@ MonoBehaviour:
   cutoutSize: 0.23
   fallOffSize: 0.1
   sphereSize: 4
-  debug: 0
+  globalMaterials: []
 --- !u!1 &1112494537799749404
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,13 +3627,18 @@ PrefabInstance:
       objectReference: {fileID: 6826124565130942673}
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
+      propertyPath: maxSpeed
+      value: 6.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
       propertyPath: hauteurObject
       value: 2.1
       objectReference: {fileID: 0}
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: maxSpeedObject
-      value: 6.7
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4042080586474578226, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
