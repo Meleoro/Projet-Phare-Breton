@@ -5,8 +5,8 @@ using UnityEngine;
 public class Note : ObjetInteractible
 {
     [Header("Note")]
-    [Min(1)] public int partitionNumber;   // Quelle partition
-    [Min(1)] public int posInPartitionNumber;   // Quelle place dans cette partition
+    [Range(1, 3)] public int partitionNumber;   // Quelle partition
+    [Range(1, 3)]  public int posInPartitionNumber;   // Quelle place dans cette partition
 
     public bool isInBiblio;
 
