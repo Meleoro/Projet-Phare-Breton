@@ -82,7 +82,9 @@ public class ZonePoseCables : MonoBehaviour
         ReferenceManager.Instance.characterReference.nearGenerator.Clear();
         ReferenceManager.Instance.characterReference.cableObjects.Clear();
         ReferenceManager.Instance.characterReference.nearLadder = null;
-        
+
+        ReferenceManager.Instance.characterReference.objectOn = null;
+
         cableObjects.Clear();
 
         ReferenceManager.Instance.characterReference.nearObjetsRecuperables = objetsRecuperablesAtRange;
