@@ -81,8 +81,11 @@ public class Fondu : MonoBehaviour
         
         ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
 
-        StartCoroutine(
-            ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos, dureeFondu));
+        if (!ReferenceManager.Instance.characterReference.isMovingObjects)
+        {
+            StartCoroutine(
+                ReferenceManager.Instance.characterReference.movementScript.MoveCharacterDoor(objectNewPos, dureeFondu));
+        }
         
         imageFondu.DOFade(0, dureeFondu);
         

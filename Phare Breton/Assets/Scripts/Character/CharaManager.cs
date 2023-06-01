@@ -458,11 +458,9 @@ public class CharaManager : MonoBehaviour
         {
             movedObjectPosition = movedObjects[0].transform.position;
 
-            Debug.DrawRay(transform.position, Vector3.down);
-            
             if (!Physics.Raycast(transform.position, Vector3.down, 1))
             {
-                rb.AddForce(Vector3.down * Time.deltaTime * 250, ForceMode.Force);
+                rb.AddForce(Vector3.down * (Time.deltaTime * 250), ForceMode.Force);
                 
                 rb.isKinematic = false;
             }
