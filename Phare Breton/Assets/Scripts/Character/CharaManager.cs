@@ -462,7 +462,7 @@ public class CharaManager : MonoBehaviour
             
             if (!Physics.Raycast(transform.position, Vector3.down, 1))
             {
-                rb.AddForce(Vector3.down * Time.deltaTime * 250, ForceMode.Force);
+                rb.AddForce(Vector3.down * (Time.deltaTime * 250), ForceMode.Force);
                 
                 rb.isKinematic = false;
             }
