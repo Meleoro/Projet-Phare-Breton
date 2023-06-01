@@ -43,7 +43,7 @@ public class CutoutObject : MonoBehaviour
     
     void Update()
     {
-        Vector3 offset = targetObject.position - transform.position;
+        Vector3 offset = ReferenceManager.Instance.characterReference.movedObjectPosition - transform.position;
         
         Vector2 cutoutPos = mainCamera.WorldToViewportPoint(targetObject.position);
         //cutoutPos.y /= (Screen.width / Screen.height);
