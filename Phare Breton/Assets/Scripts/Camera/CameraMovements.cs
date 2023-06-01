@@ -196,13 +196,13 @@ public class CameraMovements : MonoBehaviour
         transform.rotation = posStart.rotation;
         transform.DOMove(posStart.position, 0);
 
-        yield return new WaitForSeconds(duration * 0.2f);
+        yield return new WaitForSeconds(duration * 0.15f);
 
         transform.DORotate(saveRot, duration);
-        transform.DOMove(savePos, duration);
+        transform.DOMove(savePos, duration).SetEase(Ease.InOutSine);
 
 
-        yield return new WaitForSeconds(duration * 0.8f);
+        yield return new WaitForSeconds(duration * 0.85f);
 
         ReferenceManager.Instance.characterReference.EndCinematique();
 
