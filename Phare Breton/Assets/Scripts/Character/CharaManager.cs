@@ -49,8 +49,8 @@ public class CharaManager : MonoBehaviour
     public bool canStase;
 
     [Header("Animations")]
-    private bool isWalking;
-    private bool fluteActive;
+    [HideInInspector] public bool isWalking;
+    [HideInInspector] private bool fluteActive;
     
     [Header("Selection")]
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
@@ -285,7 +285,7 @@ public class CharaManager : MonoBehaviour
                     movementScript.RotateCharacterCamera();
 
 
-                if (direction.magnitude > 0.5f)
+                if (direction.magnitude > 0.2f)
                     isWalking = true;
 
                 else
