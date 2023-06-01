@@ -187,6 +187,8 @@ public class CameraMovements : MonoBehaviour
     {
         yield return new WaitForSeconds(0.02f);
 
+        bool staticStock = isStatic; 
+        
         isStatic = true;
         ReferenceManager.Instance.characterReference.StartCinematique();
 
@@ -206,8 +208,7 @@ public class CameraMovements : MonoBehaviour
 
         ReferenceManager.Instance.characterReference.EndCinematique();
 
-        isStatic = false;
-
+        isStatic = staticStock;
     }
 
 
