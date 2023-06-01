@@ -268,29 +268,21 @@ public class CameraMovements : MonoBehaviour
     {
         yield return new WaitForSeconds(0.02f);
 
-        bool staticStock = isStatic;
+        ReferenceManager.Instance.characterReference.noControl = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, durationEnd).SetEase(Ease.Linear);
 
-        ReferenceManager.Instance.characterReference.transform.position = posCharaMiddle1.position;
-        StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(posCharaMiddle2.position, posCharaMiddle1.position, true));
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
 
-        isStatic = true;
+       isStatic = true;
 
-        Vector3 savePos = transform.position;
-        Vector3 saveRot = transform.rotation.eulerAngles;
+        yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.rotation = posCameraMiddle.rotation;
-        transform.DOMove(posCameraMiddle.position, 0);
+        transform.DORotate(posCameraEnd.rotation.eulerAngles, durationEnd);
+        transform.DOMove(posCameraEnd.position, durationEnd).SetEase(Ease.InOutSine);
 
-        yield return new WaitForSeconds(durationMiddle * 0.15f);
+        yield return new WaitForSeconds(durationEnd * 0.85f);
 
-        transform.DORotate(saveRot, durationMiddle);
-        transform.DOMove(savePos, durationMiddle).SetEase(Ease.InOutSine);
-
-        yield return new WaitForSeconds(durationMiddle * 0.85f);
-
-        ReferenceManager.Instance.characterReference.EndCinematique();
-
-        isStatic = staticStock;
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
     }
 
 
