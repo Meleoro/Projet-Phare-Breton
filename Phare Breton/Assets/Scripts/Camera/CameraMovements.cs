@@ -57,10 +57,12 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CinematiqueFin")]
     public bool doEndCinematique;
-    public Transform posCameraEnd;
+    public Transform posCameraEnd1;
+    public Transform posCameraEnd2;
     public Transform posCharaEnd1;
     public Transform posCharaEnd2;
     public float durationEnd;
+    public float durationEnd2;
 
 
 
@@ -285,12 +287,20 @@ public class CameraMovements : MonoBehaviour
 
         yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.DOMove(posCameraEnd.position, durationEnd).SetEase(Ease.InOutSine);
-        transform.DORotate(posCameraEnd.rotation.eulerAngles, durationEnd);
+        transform.DOMove(posCameraEnd1.position, durationEnd).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd).SetEase(Ease.InOutSine);
 
         yield return new WaitForSeconds(durationEnd * 0.85f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+
+        // PARTIE TENDAGE DE MAIN
+
+        transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
+
+        //ReferenceManager.Instance.characterReference.anim.SetTrigger();
     }
 
 
