@@ -79,7 +79,7 @@ public class Fondu : MonoBehaviour
         
         yield return new WaitForSeconds(0.01f);
 
-        if (!ReferenceManager.Instance.characterReference.isMovingObjects && !doorScript.isFirstDoor)
+        if (!ReferenceManager.Instance.characterReference.isMovingObjects)
         {
             ActualisePos(objectNewPos - doorScript.directionAvancee * distanceCrossedChara, cameraNewPos, movedObject);
             
@@ -91,11 +91,15 @@ public class Fondu : MonoBehaviour
         
         Vector3 newPos = ReferenceManager.Instance.cameraReference.MoveCamera();
 
-        newPos = new Vector3(newPos.x, transform.position.y, newPos.z);
-        ReferenceManager.Instance.cameraReference.transform.position = newPos;
+        if (!staticCamera)
+        {
+            newPos = new Vector3(newPos.x, transform.position.y, newPos.z);
+            ReferenceManager.Instance.cameraReference.transform.position = newPos;
+        }
         
         MoveCameraTransition(dureeFondu, false);
-
+        
+        
         yield return new WaitForSeconds(dureeFondu);
 
         canva.SetActive(false);

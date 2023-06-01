@@ -10,6 +10,7 @@ public class ObjetInteractible : MonoBehaviour
     public bool isLighted;
     public bool isInDarkZone;
     public bool isClimbable;
+    public bool cantGoThroughDoors;
     [HideInInspector] public bool isMagneted;
     [HideInInspector] public GameObject currentMagnet;
     [HideInInspector] public Transform magnetedPos;
