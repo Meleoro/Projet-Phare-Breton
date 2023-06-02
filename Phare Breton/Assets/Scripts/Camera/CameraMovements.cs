@@ -59,6 +59,8 @@ public class CameraMovements : MonoBehaviour
     public Transform posCameraEnd3;
     public Transform posCameraEnd4;
     public Transform posCameraEnd5;
+    public Transform posCameraEnd6;
+    public Transform posCameraEnd7;
     public Transform posCharaEnd1;
     public Transform posCharaEnd2;
     public Transform posCharaEnd3;
@@ -67,6 +69,8 @@ public class CameraMovements : MonoBehaviour
     public float durationEnd2;
     public float durationEnd3;
     public float durationEnd4;
+    public float durationEnd5;
+    public float durationEnd6;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -317,11 +321,11 @@ public class CameraMovements : MonoBehaviour
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
         ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd3.position, durationEnd3 * 0.5f).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(durationEnd3);
+        yield return new WaitForSeconds(durationEnd3 * 0.5f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(durationEnd3 * 0.5f);
 
 
         // PLAN 4
@@ -336,8 +340,27 @@ public class CameraMovements : MonoBehaviour
 
         yield return new WaitForSeconds(durationEnd4);
 
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
 
         // PLAN 5
+        //Il me manque l'animation donc je skip
+
+
+        //PLAN 6
+        transform.DOMove(posCameraEnd6.position, 0);
+        transform.DORotate(posCameraEnd6.rotation.eulerAngles, 0);
+
+        yield return new WaitForSeconds(durationEnd5);
+
+
+        //PLAN 7
+        transform.DOMove(posCameraEnd6.position, durationEnd6);
+        transform.DORotate(transform.rotation.eulerAngles + new Vector3(0, 360, 0), durationEnd6);
+
+        yield return new WaitForSeconds(durationEnd6);
+
+
 
 
 
