@@ -54,6 +54,7 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CinematiqueFin")]
     public bool doEndCinematique;
+    public Transform pivotPlan6;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
     public Transform posCameraEnd3;
@@ -355,10 +356,17 @@ public class CameraMovements : MonoBehaviour
 
 
         //PLAN 7
-        transform.DOMove(posCameraEnd6.position, durationEnd6);
-        transform.DORotate(transform.rotation.eulerAngles + new Vector3(0, 360, 0), durationEnd6);
+        transform.parent = pivotPlan6;
 
-        yield return new WaitForSeconds(durationEnd6);
+        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd6 * 0.5f);
+
+        ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
+
+        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-10, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd6 * 0.5f);
 
 
 
