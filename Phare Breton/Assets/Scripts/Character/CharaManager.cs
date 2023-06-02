@@ -147,9 +147,9 @@ public class CharaManager : MonoBehaviour
 
                     isWalking = false;
                 }
-            }
+            }*/
             
-            fluteMesh.enabled = false;*/
+            fluteMesh.enabled = false;
 
             if (interaction && canPlayMusic)
             {
