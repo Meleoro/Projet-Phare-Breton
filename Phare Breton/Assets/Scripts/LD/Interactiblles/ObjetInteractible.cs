@@ -47,12 +47,6 @@ public class ObjetInteractible : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        /*Boite currentBoite;
-        if(TryGetComponent(out currentBoite))
-        {
-            DesactivateStase();
-        }*/
-        
         isMagneted = false;
         isLighted = false;
 
@@ -100,6 +94,12 @@ public class ObjetInteractible : MonoBehaviour
     {
         staseVFX.Stop();
         isInStase = false;
+
+        rb.isKinematic = false;
+        
+        staseVFX.Stop();
+        staseVFX.Stop();
+        staseVFX.Stop();
     }
 
 
@@ -269,10 +269,10 @@ public class ObjetInteractible : MonoBehaviour
         if (rb.velocity.magnitude < 0.15f)
             rb.isKinematic = true;
 
-        /*if(isInStase)
+        if(isInStase)
             rb.isKinematic = true;
 
-        if(!rb.isKinematic)
+        /*if(!rb.isKinematic)
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         
         yield return new WaitForSeconds(3);
