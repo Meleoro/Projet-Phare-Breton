@@ -56,8 +56,13 @@ public class CameraMovements : MonoBehaviour
     public bool doEndCinematique;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
+    public Transform posCameraEnd3;
+    public Transform posCameraEnd4;
+    public Transform posCameraEnd5;
     public Transform posCharaEnd1;
     public Transform posCharaEnd2;
+    public Transform posCharaEnd3;
+    public Transform posCharaEnd4;
     public float durationEnd1;
     public float durationEnd2;
     public float durationEnd3;
@@ -296,7 +301,7 @@ public class CameraMovements : MonoBehaviour
         yield return new WaitForSeconds(durationEnd2 * 0.2f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
-        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.InOutSine);
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.Linear);
 
         yield return new WaitForSeconds(durationEnd2 * 0.8f);
 
@@ -306,8 +311,28 @@ public class CameraMovements : MonoBehaviour
 
 
         // PLAN 3
+        transform.DOMove(posCameraEnd3.position, 0);
+        transform.DORotate(posCameraEnd3.rotation.eulerAngles, 0);
+
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd3.position, durationEnd3 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd3);
 
 
+        // PLAN 4
+        transform.DOMove(posCameraEnd4.position, 0);
+        transform.DORotate(posCameraEnd4.rotation.eulerAngles, 0);
+
+        transform.DOMove(posCameraEnd5.position, durationEnd4);
+        transform.DORotate(posCameraEnd5.rotation.eulerAngles, durationEnd4);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd4.position, durationEnd4).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd4);
+
+
+        // PLAN 5
 
 
 
