@@ -314,9 +314,14 @@ public class CameraMovements : MonoBehaviour
         transform.DOMove(posCameraEnd3.position, 0);
         transform.DORotate(posCameraEnd3.rotation.eulerAngles, 0);
 
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
         ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd3.position, durationEnd3 * 0.5f).SetEase(Ease.Linear);
 
         yield return new WaitForSeconds(durationEnd3);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+        yield return new WaitForSeconds(0.2f);
 
 
         // PLAN 4
