@@ -213,7 +213,6 @@ public class CharacterMovement : MonoBehaviour
         {
             //echelleCollider.enabled = false;
             manager.rb.isKinematic = true;
-            colliderChara.enabled = false;
 
             manager.anim.SetBool("isGoingUp", goUp);
 
@@ -252,6 +251,8 @@ public class CharacterMovement : MonoBehaviour
                 transform.DOMoveY(finalDestination.y - 1f, 0.1f).SetEase(Ease.Linear);
 
                 yield return new WaitForSeconds(0.1f);
+                
+                colliderChara.enabled = false;
 
                 transform.DOMoveY(finalDestination.y, duration3 + 0.3f).SetEase(Ease.Linear);
 
