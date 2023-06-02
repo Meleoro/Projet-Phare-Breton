@@ -199,9 +199,9 @@ public class CharacterFlute : MonoBehaviour
                     currentCable.InitialiseStartEnd(selectedObjectsCable[0].gameObject, gameObject);
                     
                     // On crée le câble physiquement
-                    currentCableCreator.CreateNodes(selectedObjectsCable[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponent<SpringJoint>(),
-                        selectedObjectsCable[0], null, selectedObjectsCable[0].GetComponent<Rigidbody>(),
-                        gameObject.GetComponent<Rigidbody>());
+                    currentCableCreator.CreateNodes(selectedObjectsCable[0].GetComponentInChildren<SpringJoint>(), cablePoint.GetComponentInChildren<SpringJoint>(),
+                        selectedObjectsCable[0], null, selectedObjectsCable[0].GetComponentInChildren<Rigidbody>(),
+                        gameObject.GetComponentInChildren<Rigidbody>()); 
 
                     // On récupère les informations sur le câble et les objets liés à lui
                     cables.Add(newRope);
@@ -404,6 +404,9 @@ public class CharacterFlute : MonoBehaviour
             {
                 if(!selectedObjects[k] == manager.objectOn)
                 {
+                    manager.movementScript.colliderChara.enabled = false;
+                    manager.rb.isKinematic = true;
+                    
                     Boite currentBoite;
                     if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
                     {
@@ -448,6 +451,9 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.isMovingObjects = false;
         manager.noMovement = false;
+        
+        manager.movementScript.colliderChara.enabled = true;
+        manager.rb.isKinematic = false;
 
         for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
         {

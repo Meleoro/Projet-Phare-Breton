@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 6352702661042521783}
   - component: {fileID: 1307070620112789831}
   - component: {fileID: 9203554971627105844}
-  - component: {fileID: 6711964871505574923}
   m_Layer: 0
   m_Name: "G\xE9n\xE9rateur"
   m_TagString: Interactible
@@ -122,7 +121,7 @@ Transform:
   - {fileID: 4391017847489621393}
   - {fileID: 2130467702824285587}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &401882579610021373
 MeshFilter:
@@ -211,6 +210,7 @@ MonoBehaviour:
   isLighted: 1
   isInDarkZone: 0
   isClimbable: 0
+  cantGoThroughDoors: 0
   isMagneted: 0
   currentMagnet: {fileID: 0}
   magnetedPos: {fileID: 0}
@@ -220,6 +220,9 @@ MonoBehaviour:
   cable: {fileID: 0}
   isStart: 0
   resistanceCable: {x: 0, y: 0, z: 0}
+  hauteurFigee: 0
+  hauteurFigeeValeur: 2
+  hauteurRespawn: 20
   isMoved: 0
   currentHauteur: 0
   staseVFX: {fileID: 0}
@@ -254,30 +257,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!145 &6711964871505574923
-SpringJoint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6314667218006813099}
-  m_ConnectedBody: {fileID: 0}
-  m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 0
-  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  serializedVersion: 2
-  m_Spring: 0
-  m_Damper: 0.2
-  m_MinDistance: 0
-  m_MaxDistance: 0
-  m_Tolerance: 0.025
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_EnableCollision: 0
-  m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
 --- !u!1001 &4010719256282439265
 PrefabInstance:
   m_ObjectHideFlags: 0

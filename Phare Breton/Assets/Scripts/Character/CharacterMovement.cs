@@ -11,7 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public Transform mesh;
     private CharaManager manager;
     public ParticleSystem VFXPas;
-    private CapsuleCollider colliderChara;
+    [HideInInspector] public CapsuleCollider colliderChara;
 
     [Header("Movements")]
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
