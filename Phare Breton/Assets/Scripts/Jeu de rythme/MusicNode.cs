@@ -134,7 +134,6 @@ public class MusicNode : MonoBehaviour
         if (!erased)
         {
             image.enabled = false;
-            GetComponentInChildren<TextMeshProUGUI>().enabled = false;
             erased = true;
 
             if(playVFX)
@@ -145,7 +144,6 @@ public class MusicNode : MonoBehaviour
     public void ReappearNode()
     {
         image.enabled = true;
-        GetComponentInChildren<TextMeshProUGUI>().enabled = true;
         erased = false;
     }
 
