@@ -56,10 +56,17 @@ public class CameraMovements : MonoBehaviour
     public bool doEndCinematique;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
+    public Transform posCameraEnd3;
+    public Transform posCameraEnd4;
+    public Transform posCameraEnd5;
     public Transform posCharaEnd1;
     public Transform posCharaEnd2;
-    public float durationEnd;
+    public Transform posCharaEnd3;
+    public Transform posCharaEnd4;
+    public float durationEnd1;
     public float durationEnd2;
+    public float durationEnd3;
+    public float durationEnd4;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -271,26 +278,62 @@ public class CameraMovements : MonoBehaviour
     {
         doEndCinematique = false;
 
-        yield return new WaitForSeconds(0.02f);
-
-        ReferenceManager.Instance.characterReference.noControl = true;
-        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, durationEnd).SetEase(Ease.Linear);
-
-        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        isStatic = true;
         ReferenceManager.Instance.characterReference.rb.isKinematic = true;
 
-        isStatic = true;
+        yield return new WaitForSeconds(0.02f);
 
-        yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.DOMove(posCameraEnd1.position, durationEnd * 0.8f).SetEase(Ease.InOutSine);
-        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd * 0.8f).SetEase(Ease.InOutSine);
+        // PLAN 1
+        ReferenceManager.Instance.characterReference.noControl = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, 0);
 
-        yield return new WaitForSeconds(durationEnd * 0.85f);
+        transform.DOMove(posCameraEnd1.position, 0);
+        transform.DORotate(posCameraEnd1.rotation.eulerAngles, 0);
+
+        yield return new WaitForSeconds(durationEnd1);
+
+
+        // PLAN 2
+        transform.DOMove(posCameraEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2 * 0.8f).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(durationEnd2 * 0.2f);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd2 * 0.8f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
+
+
+        // PLAN 3
+        transform.DOMove(posCameraEnd3.position, 0);
+        transform.DORotate(posCameraEnd3.rotation.eulerAngles, 0);
+
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd3.position, durationEnd3 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd3);
+
+
+        // PLAN 4
+        transform.DOMove(posCameraEnd4.position, 0);
+        transform.DORotate(posCameraEnd4.rotation.eulerAngles, 0);
+
+        transform.DOMove(posCameraEnd5.position, durationEnd4);
+        transform.DORotate(posCameraEnd5.rotation.eulerAngles, durationEnd4);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd4.position, durationEnd4).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd4);
+
+
+        // PLAN 5
+
 
 
         // PARTIE TENDAGE DE MAIN
