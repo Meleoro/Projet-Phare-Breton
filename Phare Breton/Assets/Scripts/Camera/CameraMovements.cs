@@ -371,6 +371,8 @@ public class CameraMovements : MonoBehaviour
 
         yield return new WaitForSeconds(durationEnd6 * 0.5f);
 
+        transform.parent = parentTranform;
+
 
         // PLAN 8
         animGrue.SetTrigger("startVol");
@@ -388,15 +390,15 @@ public class CameraMovements : MonoBehaviour
 
 
         // PLAN 9
+        transform.DOMove(posCameraEnd7.position, durationEnd8);
+        transform.DORotate(posCameraEnd7.rotation.eulerAngles, durationEnd8);
 
 
 
-        // PARTIE TENDAGE DE MAIN
-
-        transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
+        /*transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
         transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
 
-        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");*/
     }
 
 
