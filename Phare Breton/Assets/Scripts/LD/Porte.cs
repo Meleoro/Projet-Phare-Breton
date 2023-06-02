@@ -82,7 +82,7 @@ public class Porte : MonoBehaviour
                             CableThroughDoor(currentObject.cable.gameObject, movedObject, door1.gameObject, door2.gameObject);
                         
                         else
-                            DestroyCableThroughDoor(door1, movedObject);
+                            DestroyCableThroughDoor(door1, door2, movedObject);
                     }
 
                     else
@@ -91,7 +91,7 @@ public class Porte : MonoBehaviour
                             CableThroughDoor(currentObject.cable.gameObject, movedObject, door2.gameObject, door1.gameObject);
                         
                         else
-                            DestroyCableThroughDoor(door2, movedObject);
+                            DestroyCableThroughDoor(door2, door1, movedObject);
                     }
                 }
             }
@@ -110,7 +110,7 @@ public class Porte : MonoBehaviour
                                 CableThroughDoor(currentObject.cables[k], movedObject, door1.gameObject, door2.gameObject);
                             
                             else
-                                DestroyCableThroughDoor(door1, movedObject);
+                                DestroyCableThroughDoor(door1, door2, movedObject);
                         }
                         
                         else
@@ -119,7 +119,7 @@ public class Porte : MonoBehaviour
                                 CableThroughDoor(currentObject.cables[k], movedObject, door2.gameObject, door1.gameObject);
                             
                             else
-                                DestroyCableThroughDoor(door2, movedObject);
+                                DestroyCableThroughDoor(door2, door1,movedObject);
                         }
                     }
                 }
@@ -238,7 +238,7 @@ public class Porte : MonoBehaviour
     }
 
     
-    public void DestroyCableThroughDoor(EntreePorte doorCrossed, GameObject currentObject)
+    public void DestroyCableThroughDoor(EntreePorte doorCrossed, EntreePorte otherDoor, GameObject currentObject)
     {
         // On détruit la partie du câble qui sert à rien
         Destroy(doorCrossed.cableThisSide.gameObject);
@@ -258,8 +258,15 @@ public class Porte : MonoBehaviour
             doorCrossed.cableOtherSide.isLinked = false;
         }
 
+        otherDoor.hasCableThrough = false;
+        otherDoor.cableOtherSide = null;
+        otherDoor.cableThisSide = null;
+        
         doorCrossed.hasCableThrough = false;
-
+        doorCrossed.cableOtherSide = null;
+        doorCrossed.cableThisSide = null;
+        
+        
 
         /*// Si retour arriere
         if (doorCrossed.hasCableThrough)
