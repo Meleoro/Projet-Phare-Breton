@@ -111,7 +111,7 @@ public class ZonePoseCables : MonoBehaviour
                     if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y + objectsAtRange[i].transform.localScale.y * 0.5f)
                     {
                         if (ReferenceManager.Instance.characterReference.transform.position.y - (objectsAtRange[i].transform.position.y -
-                                                    objectsAtRange[i].transform.localScale.y * 0.5f) - 0.5f > 0)
+                                                    objectsAtRange[i].transform.localScale.y * 0.5f)> 0)
                         {
                             ReferenceManager.Instance.characterReference.nearObjects.Add(objectsAtRange[i].gameObject);
                             ReferenceManager.Instance.characterReference.nearBoxesUp.Add(objectsAtRange[i].gameObject);
