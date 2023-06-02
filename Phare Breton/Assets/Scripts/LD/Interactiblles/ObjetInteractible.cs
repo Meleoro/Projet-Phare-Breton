@@ -61,11 +61,6 @@ public class ObjetInteractible : MonoBehaviour
 
     private void Update()
     {
-        if (isMagneted)
-        {
-            MagnetEffect();
-        }
-
         if (originalPos.y - hauteurRespawn > transform.position.y)
         {
             transform.position = originalPos;
@@ -79,6 +74,14 @@ public class ObjetInteractible : MonoBehaviour
         {
             if(!rb.isKinematic)
                 PutRigidbodyKinematic();
+        }
+    }
+
+    public void FixedUpdate()
+    {
+        if (isMagneted)
+        {
+            MagnetEffect();
         }
     }
 
@@ -203,7 +206,7 @@ public class ObjetInteractible : MonoBehaviour
         if (!isMagnetedBlock)
         {
             float magnetStrength = Vector3.Distance(magnetedPos.position, transform.position) * 1.3f;
-            magnetStrength = (Time.deltaTime / magnetStrength) * 2.5f;
+            magnetStrength = (Time.fixedDeltaTime / magnetStrength) * 2.5f;
         
             transform.rotation = magnetedPos.rotation;
             transform.position = new Vector3(Mathf.Lerp(transform.position.x, magnetedPos.position.x, magnetStrength), 
