@@ -46,7 +46,6 @@ public class ObjetInteractible : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(PutRigidbodyKinematic());
 
         /*Boite currentBoite;
         if(TryGetComponent(out currentBoite))
@@ -81,6 +80,11 @@ public class ObjetInteractible : MonoBehaviour
         if (isMoved && !isMagneted)
         {
             ActualiseHauteur();
+        }
+        else
+        {
+            if(!rb.isKinematic)
+                PutRigidbodyKinematic();
         }
     }
 
@@ -260,9 +264,12 @@ public class ObjetInteractible : MonoBehaviour
     public virtual void StopVFX() { }
 
 
-    public IEnumerator PutRigidbodyKinematic()
+    public void PutRigidbodyKinematic()
     {
-        if(isInStase)
+        if (rb.velocity.magnitude < 0.15f)
+            rb.isKinematic = true;
+
+        /*if(isInStase)
             rb.isKinematic = true;
 
         if(!rb.isKinematic)
@@ -271,6 +278,6 @@ public class ObjetInteractible : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         if(!isMoved)
-            rb.isKinematic = true;
+            rb.isKinematic = true;*/
     }
 }
