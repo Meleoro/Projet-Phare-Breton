@@ -6,33 +6,47 @@ using DG.Tweening;
 
 public class ColliderZoneSombre : MonoBehaviour
 {
+    public GameObject VFX;
+    
     private bool stop;
+    private bool isLighted;
+
+    
+    
+    private void DesactivateZoneSombre()
+    {
+        isLighted = true;
+    }
+    
     
     private IEnumerator RepousserChara(Vector3 posWanted, Transform chara)
     {
-        ReferenceManager.Instance.characterReference.noControl = true;
+        if (!isLighted)
+        {
+            ReferenceManager.Instance.characterReference.noControl = true;
         
-        //chara.DOShakePosition(0.4f, 0.4f);
+            //chara.DOShakePosition(0.4f, 0.4f);
 
-        CharaManager scriptChara = ReferenceManager.Instance.characterReference;
+            CharaManager scriptChara = ReferenceManager.Instance.characterReference;
 
-        StartCoroutine(scriptChara.SayNo());
+            StartCoroutine(scriptChara.SayNo());
 
-        yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1f);
 
-        //StartCoroutine(RotateChara(posWanted - chara.position));
+            //StartCoroutine(RotateChara(posWanted - chara.position));
 
-        yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.4f);
         
-        chara.DOMove(posWanted, 0.8f);
-        scriptChara.isCrossingDoor = true;
-        scriptChara.isWalking = true;
+            chara.DOMove(posWanted, 0.8f);
+            scriptChara.isCrossingDoor = true;
+            scriptChara.isWalking = true;
 
-        yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1);
 
-        scriptChara.isCrossingDoor = false;
-        ReferenceManager.Instance.characterReference.noControl = false;
-        stop = false;
+            scriptChara.isCrossingDoor = false;
+            ReferenceManager.Instance.characterReference.noControl = false;
+            stop = false;
+        }
     }
 
    /* private IEnumerator RotateChara(Vector3 wantedDirection)
@@ -59,22 +73,33 @@ public class ColliderZoneSombre : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!isLighted)
         {
-            if (!ReferenceManager.Instance.characterReference.noControl &&
-                !ReferenceManager.Instance.characterReference.isInLightSource && !other.isTrigger && !stop)
+            if (other.CompareTag("Player"))
             {
-                stop = true;
+                if (!ReferenceManager.Instance.characterReference.noControl &&
+                    !ReferenceManager.Instance.characterReference.isInLightSource && !other.isTrigger && !stop)
+                {
+                    stop = true;
                 
-                Vector3 posWanted = other.transform.position + ReferenceManager.Instance.characterReference.movementScript.mesh.transform.forward;
+                    Vector3 posWanted = other.transform.position + ReferenceManager.Instance.characterReference.movementScript.mesh.transform.forward;
 
-                StartCoroutine(RepousserChara(posWanted, other.transform));
+                    StartCoroutine(RepousserChara(posWanted, other.transform));
+                }
+            }
+
+            else if (other.CompareTag("Interactible") && !other.isTrigger)
+            {
+                other.GetComponent<ObjetInteractible>().isInDarkZone = true;
             }
         }
 
-        else if (other.CompareTag("Interactible") && !other.isTrigger)
+        else
         {
-            other.GetComponent<ObjetInteractible>().isInDarkZone = true;
+            if (other.CompareTag("Interactible") && !other.isTrigger)
+            {
+                other.GetComponent<ObjetInteractible>().isInDarkZone = false;
+            }
         }
     }
 
