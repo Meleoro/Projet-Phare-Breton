@@ -11,7 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public Transform mesh;
     private CharaManager manager;
     public ParticleSystem VFXPas;
-    private CapsuleCollider colliderChara;
+    [HideInInspector] public CapsuleCollider colliderChara;
 
     [Header("Movements")]
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
@@ -76,7 +76,7 @@ public class CharacterMovement : MonoBehaviour
             manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
 
 
-        bool willFall = VerifyFall(stockageDirection, true);
+        bool willFall = VerifyFall(direction.normalized, true);
 
         if (!willFall)
         {
@@ -103,8 +103,8 @@ public class CharacterMovement : MonoBehaviour
         {
             iteration = 0;
             
-            newDirection1 = direction;
-            newDirection2 = direction;
+            newDirection1 = direction.normalized;
+            newDirection2 = direction.normalized;
             directionFound1 = false;
             directionFound2 = false;
             
@@ -476,10 +476,12 @@ public class CharacterMovement : MonoBehaviour
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
         Vector3 point1 = DoRaycast(transform.position, 10);
-        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.2f), 10);
-        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.4f), 10);
-        Vector3 point4 = DoRaycast(transform.position + (newDirection.normalized * 0.6f), 10);
-        Vector3 point5 = DoRaycast(transform.position + (newDirection.normalized * 0.8f), 10);
+        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.1f), 10);
+        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.2f), 10);
+        Vector3 point4 = DoRaycast(transform.position + (newDirection.normalized * 0.3f), 10);
+        Vector3 point5 = DoRaycast(transform.position + (newDirection.normalized * 0.4f), 10);
+        Vector3 point6 = DoRaycast(transform.position + (newDirection.normalized * 0.5f), 10);
+        Vector3 point7 = DoRaycast(transform.position + (newDirection.normalized * 0.6f), 10);
         Debug.DrawLine(point3, point2);
         Debug.DrawLine(point1, point2);
         Debug.DrawLine(point3, point4);
@@ -531,13 +533,15 @@ public class CharacterMovement : MonoBehaviour
         float difference2 = Mathf.Abs(point2.y - point3.y);
         float difference3 = Mathf.Abs(point3.y - point4.y);
         float difference4 = Mathf.Abs(point4.y - point5.y);
+        float difference5 = Mathf.Abs(point5.y - point6.y);
+        float difference6 = Mathf.Abs(point6.y - point7.y);
 
-        float difference5 = point1.y - point3.y;
-        float difference6 = difference2 - difference1 - difference3 - difference4;
+        float difference7 = point1.y - point7.y;
+        float difference8 = difference2 - difference1 - difference3 - difference4;
         
 
-        if (Mathf.Abs(difference6) < 0.8f && Mathf.Abs(difference5) < hauteurStop && difference1 < hauteurStop && difference4 < hauteurStop && difference3 < hauteurStop 
-            && difference2 < hauteurStop)
+        if (Mathf.Abs(difference8) < 0.8f && Mathf.Abs(difference7) < hauteurStop && difference1 < hauteurStop && difference4 < hauteurStop && difference3 < hauteurStop 
+            && difference2 < hauteurStop && difference5 < hauteurStop && difference6 < hauteurStop)
         {
             return false;
         }

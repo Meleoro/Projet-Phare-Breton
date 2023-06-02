@@ -404,6 +404,9 @@ public class CharacterFlute : MonoBehaviour
             {
                 if(!selectedObjects[k] == manager.objectOn)
                 {
+                    manager.movementScript.colliderChara.enabled = false;
+                    manager.rb.isKinematic = true;
+                    
                     Boite currentBoite;
                     if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
                     {
@@ -448,6 +451,9 @@ public class CharacterFlute : MonoBehaviour
     {
         manager.isMovingObjects = false;
         manager.noMovement = false;
+        
+        manager.movementScript.colliderChara.enabled = true;
+        manager.rb.isKinematic = false;
 
         for (int i = 0; i < manager.scriptsMovedObjects.Count; i++)
         {
