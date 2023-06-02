@@ -101,7 +101,7 @@ public class CameraMovements : MonoBehaviour
         _camera = GetComponent<Camera>();
         cameraRotationRefScript = GetComponentInChildren<CameraRotationRef>();
         scriptFondu = GetComponent<Fondu>();
-        
+
         originalPos = parentTranform.position;
         
         screenWidth = _camera.pixelWidth;

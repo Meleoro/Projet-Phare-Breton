@@ -11,6 +11,7 @@ public class CharacterMovement : MonoBehaviour
     public Transform mesh;
     private CharaManager manager;
     public ParticleSystem VFXPas;
+    private CapsuleCollider colliderChara;
 
     [Header("Movements")]
     [SerializeField, Range(0f, 100f)] float maxSpeed = 10f;
@@ -45,6 +46,7 @@ public class CharacterMovement : MonoBehaviour
     private void Awake()
     {
         manager = GetComponent<CharaManager>();
+        colliderChara = GetComponent<CapsuleCollider>();
 
         fallDir = Vector3.down * 550;
     }
@@ -211,6 +213,7 @@ public class CharacterMovement : MonoBehaviour
         {
             //echelleCollider.enabled = false;
             manager.rb.isKinematic = true;
+            colliderChara.enabled = false;
 
             manager.anim.SetBool("isGoingUp", goUp);
 
@@ -276,6 +279,7 @@ public class CharacterMovement : MonoBehaviour
             manager.rb.isKinematic = false;
             //echelleCollider.enabled = true;
             manager.noControl = false;
+            colliderChara.enabled = true;
         }
     }
 
