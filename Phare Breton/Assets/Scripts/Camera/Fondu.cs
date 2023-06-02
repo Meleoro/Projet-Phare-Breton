@@ -178,6 +178,8 @@ public class Fondu : MonoBehaviour
 
         else
         {
+            Debug.Log(12);
+            
             ReferenceManager.Instance.cameraReference.LoadCamPos();
             ReferenceManager.Instance.cameraReference.ActualiseRotationCamRef();
         }

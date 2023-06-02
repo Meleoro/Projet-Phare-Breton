@@ -39,21 +39,18 @@ public class CameraMovements : MonoBehaviour
     private Vector3 savePosRythme;
     private Quaternion saveRotRythme;
     [HideInInspector] public bool goToSave;
-
-
+    
     [Header("CinematiqueIntro")]
     public string sceneStartName;
     public Transform posStart;
     public float duration;
-
-
+    
     [Header("CinematiqueMiddle")]
     public bool doMiddleCinematique;
     public Transform posCameraMiddle;
     public Transform posCharaMiddle1;
     public Transform posCharaMiddle2;
     public float durationMiddle;
-
 
     [Header("CinematiqueFin")]
     public bool doEndCinematique;
@@ -63,8 +60,6 @@ public class CameraMovements : MonoBehaviour
     public Transform posCharaEnd2;
     public float durationEnd;
     public float durationEnd2;
-
-
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -78,7 +73,6 @@ public class CameraMovements : MonoBehaviour
     public Transform parentTranform;
     private Vector3 originalPos;
 
-
     [Header("Autres")]
     private Vector3 savePosition;
     private Quaternion saveRotation;
@@ -87,6 +81,7 @@ public class CameraMovements : MonoBehaviour
     private GameObject lightToActivate;
     private GameObject lightToDesactivate;
     private Vector3 saveCameraRefPos;
+    private bool saveStatic;
 
     private List<TransparencyObject> desactivatedObjects = new List<TransparencyObject>();
     private float currentMinAlphaCamera;
@@ -441,6 +436,8 @@ public class CameraMovements : MonoBehaviour
         saveMaxXZ = maxXZ;
 
         saveCameraRefPos = cameraPosRef.position;
+
+        saveStatic = isStatic;
     }
 
     // QUAND ON ARRETE DE CONTROLER UN OBJET
@@ -458,12 +455,17 @@ public class CameraMovements : MonoBehaviour
         transform.rotation = saveRotation;
 
         cameraPosRef.position = saveCameraRefPos;
-
+        
         if (saveMinXZ != null)
             InitialiseNewZone(saveMinXZ, saveMaxXZ);
 
         else
             isStatic = true;
+        
+        isStatic = saveStatic;
+
+        
+        lightToActivate = null;
     }
 
 
