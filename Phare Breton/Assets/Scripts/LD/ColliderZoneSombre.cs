@@ -3,19 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DG.Tweening;
 
 public class ColliderZoneSombre : MonoBehaviour
 {
     public GameObject VFX;
     
     private bool stop;
-    private bool isLighted;
+    public bool isLighted;
+
+    private float alpha;
 
     
     
-    private void DesactivateZoneSombre()
+    public void DesactivateZoneSombre()
     {
-        isLighted = true;
+        if (!isLighted)
+        {
+            isLighted = true;
+
+            if (TryGetComponent(out MeshRenderer currentMesh))
+            {
+                alpha = 0.85f;
+                
+                DOTween.To(() => alpha, x => alpha = x, 0, 1).OnUpdate(() =>
+                {
+                    Debug.Log(alpha);
+                    
+                    currentMesh.material.SetFloat("_Alpha", alpha);
+                });
+            }
+        }
     }
     
     
