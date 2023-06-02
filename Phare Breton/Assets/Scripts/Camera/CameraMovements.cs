@@ -282,6 +282,7 @@ public class CameraMovements : MonoBehaviour
         ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, durationEnd).SetEase(Ease.Linear);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.rb.isKinematic = true;
 
         isStatic = true;
 

@@ -451,23 +451,18 @@ public class CharaManager : MonoBehaviour
         if(!isMovingObjects)
         {
             movedObjectPosition = transform.position;
-            rb.isKinematic = false;
+
+            if(!noControl)
+                rb.isKinematic = false;
         }
 
         else
         {
             movedObjectPosition = movedObjects[0].transform.position;
 
-            if (!Physics.Raycast(transform.position, Vector3.down, 1))
-            {
-                rb.AddForce(Vector3.down * (Time.deltaTime * 250), ForceMode.Force);
-                
-                rb.isKinematic = false;
-            }
-            else
-            {
+            if(!noControl)
                 rb.isKinematic = true;
-            }
+            
         }
     }
 
