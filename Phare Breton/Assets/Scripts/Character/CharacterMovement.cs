@@ -143,7 +143,7 @@ public class CharacterMovement : MonoBehaviour
 
                 if (directionFound1)
                 {
-                    newDirection1 = TryNewDirection(newDirection1, true, 30);
+                    newDirection1 = TryNewDirection(newDirection1, true, 32);
                     newDirection1 *= direction.magnitude;
 
                     desiredVelocity = new Vector3(newDirection1.x, 0f, newDirection1.y) * (maxSpeed * ratio);
@@ -151,7 +151,7 @@ public class CharacterMovement : MonoBehaviour
 
                 else
                 {
-                    newDirection2 = TryNewDirection(newDirection2, false, 30);
+                    newDirection2 = TryNewDirection(newDirection2, false, 32);
                     newDirection2 *= direction.magnitude;
                     
                     desiredVelocity = new Vector3(newDirection2.x, 0f, newDirection2.y) * (maxSpeed * ratio); 
@@ -470,72 +470,73 @@ public class CharacterMovement : MonoBehaviour
 
     public bool VerifyFall(Vector2 direction, bool enFace)
     {
+        float hauteurStop = 1.5f;
+        
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
         Vector3 point1 = DoRaycast(transform.position, 10);
-        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.35f), 10);
-        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.7f), 10);
+        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.2f), 10);
+        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.4f), 10);
+        Vector3 point4 = DoRaycast(transform.position + (newDirection.normalized * 0.6f), 10);
+        Vector3 point5 = DoRaycast(transform.position + (newDirection.normalized * 0.8f), 10);
         Debug.DrawLine(point3, point2);
         Debug.DrawLine(point1, point2);
+        Debug.DrawLine(point3, point4);
+        Debug.DrawLine(point4, point5);
 
 
         if (enFace && Mathf.Abs(point1.y - transform.position.y) > 2)
         {
             float decalage = 0.35f;
             
-            Vector3 point21 = DoRaycast(transform.position - mesh.transform.right * decalage, 10);
-            Vector3 point22 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
-            Vector3 point23 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
-            Debug.DrawLine(point23, point22);
-            Debug.DrawLine(point21, point22);
+            Vector3 pointR1 = DoRaycast(transform.position + mesh.transform.right * decalage, 10);
+            Vector3 pointR2 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
+            Vector3 pointR3 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
+            Debug.DrawLine(pointR3, pointR2);
+            Debug.DrawLine(pointR1, pointR2);
         
-            Vector3 point31 = DoRaycast(transform.position + mesh.transform.right * decalage, 10);
-            Vector3 point32 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
-            Vector3 point33 = DoRaycast(transform.position + mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
-            Debug.DrawLine(point33, point32);
-            Debug.DrawLine(point31, point32);
+            Vector3 pointL1 = DoRaycast(transform.position - mesh.transform.right * decalage, 10);
+            Vector3 pointL2 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.35f), 10);
+            Vector3 pointL3 = DoRaycast(transform.position - mesh.transform.right * decalage + (newDirection.normalized * 0.7f), 10);
+            Debug.DrawLine(pointL3, pointL2);
+            Debug.DrawLine(pointL1, pointL2);
+
+            float differenceR1 = Mathf.Abs(pointR1.y - pointR2.y);
+            float differenceR2 = Mathf.Abs(pointR2.y - pointR3.y);
+
+            float differenceR3 = pointR1.y - pointR3.y;
+            float differenceR4 = differenceR2 - differenceR1;
             
-            float difference21 = 0;
-            float difference22 = 0;
-        
-            difference21 = Mathf.Abs(point21.y - point22.y);
-            difference22 = Mathf.Abs(point22.y - point33.y);
-
-            float difference23 = point21.y - point33.y;
-            float difference24 = difference22 - difference21;
             
-            float difference31 = 0;
-            float difference32 = 0;
         
-            difference31 = Mathf.Abs(point31.y - point32.y);
-            difference32 = Mathf.Abs(point32.y - point33.y);
+            float differenceL1 = Mathf.Abs(pointL1.y - pointL2.y);
+            float differenceL2 = Mathf.Abs(pointL2.y - pointL3.y);
 
-            float difference33 = point1.y - point33.y;
-            float difference34 = difference32 - difference31;
+            float differenceL3 = pointL1.y - pointL3.y;
+            float differenceL4 = differenceL2 - differenceL1;
 
 
-            if (Mathf.Abs(difference24) > 0.8f || Mathf.Abs(difference23) > 2.5f || difference21 > 2.5f)
+            if (Mathf.Abs(differenceR4) > 0.8f || Mathf.Abs(differenceR3) > hauteurStop || differenceR1 > hauteurStop)
             {
                 return true;
             }
-            if (Mathf.Abs(difference34) > 0.8f || Mathf.Abs(difference33) > 2.5f || difference31 > 2.5f)
+            if (Mathf.Abs(differenceL4) > 0.8f || Mathf.Abs(differenceL3) > hauteurStop || differenceL1 > hauteurStop)
             {
                 return true;
             }
         }
-
-
-        float difference1 = 0;
-        float difference2 = 0;
         
-        difference1 = Mathf.Abs(point1.y - point2.y);
-        difference2 = Mathf.Abs(point2.y - point3.y);
+        float difference1 = Mathf.Abs(point1.y - point2.y);
+        float difference2 = Mathf.Abs(point2.y - point3.y);
+        float difference3 = Mathf.Abs(point3.y - point4.y);
+        float difference4 = Mathf.Abs(point4.y - point5.y);
 
-        float difference3 = point1.y - point3.y;
-        float difference4 = difference2 - difference1;
+        float difference5 = point1.y - point3.y;
+        float difference6 = difference2 - difference1 - difference3 - difference4;
+        
 
-
-        if (Mathf.Abs(difference4) < 0.8f && Mathf.Abs(difference3) < 2.5f && difference1 < 2.5f)
+        if (Mathf.Abs(difference6) < 0.8f && Mathf.Abs(difference5) < hauteurStop && difference1 < hauteurStop && difference4 < hauteurStop && difference3 < hauteurStop 
+            && difference2 < hauteurStop)
         {
             return false;
         }
