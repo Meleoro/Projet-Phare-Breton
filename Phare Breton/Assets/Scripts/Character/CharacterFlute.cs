@@ -215,30 +215,34 @@ public class CharacterFlute : MonoBehaviour
             {
                 for (int k = selectedObjectsCable.Count - 1; k > 0; k--)
                 {
-                    for (int j = k - 1; j >= 0; j--)
+
+                    if (!VerifyIfLinked(selectedObjectsCable[k]))
                     {
-                        // Références
-                        GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
-                        Cable currentCable = newRope.GetComponent<Cable>();
-                        CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
+                        for (int j = k - 1; j >= 0; j--)
+                        {
+                            // Références
+                            GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
+                            Cable currentCable = newRope.GetComponent<Cable>();
+                            CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
 
-                        // On place le début et la fin du câble
-                        currentCable.InitialiseStartEnd(selectedObjectsCable[k].gameObject, selectedObjectsCable[j].gameObject);
+                            // On place le début et la fin du câble
+                            currentCable.InitialiseStartEnd(selectedObjectsCable[k].gameObject, selectedObjectsCable[j].gameObject);
 
-                        // On crée le câble physiquement
-                        currentCableCreator.CreateNodes(selectedObjectsCable[k].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[j].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[k], selectedObjectsCable[j],
-                            selectedObjectsCable[k].GetComponent<Rigidbody>(), selectedObjectsCable[j].GetComponent<Rigidbody>());
+                            // On crée le câble physiquement
+                            currentCableCreator.CreateNodes(selectedObjectsCable[k].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[j].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[k], selectedObjectsCable[j],
+                                selectedObjectsCable[k].GetComponent<Rigidbody>(), selectedObjectsCable[j].GetComponent<Rigidbody>());
                         
-                        // On informe les scripts des objets qu'ils sont liés
-                        selectedObjectsCable[k].linkedObject.Add(selectedObjectsCable[j].gameObject);
-                        selectedObjectsCable[k].cable = currentCableCreator;
+                            // On informe les scripts des objets qu'ils sont liés
+                            selectedObjectsCable[k].linkedObject.Add(selectedObjectsCable[j].gameObject);
+                            selectedObjectsCable[k].cable = currentCableCreator;
                         
-                        selectedObjectsCable[j].linkedObject.Add(selectedObjectsCable[k].gameObject);
-                        selectedObjectsCable[j].cable = currentCableCreator;
+                            selectedObjectsCable[j].linkedObject.Add(selectedObjectsCable[k].gameObject);
+                            selectedObjectsCable[j].cable = currentCableCreator;
 
-                        // On vérifie si ces objets intéragissent entre eux
-                        selectedObjectsCable[k].VerifyLinkedObject();
-                        selectedObjectsCable[j].VerifyLinkedObject();
+                            // On vérifie si ces objets intéragissent entre eux
+                            selectedObjectsCable[k].VerifyLinkedObject();
+                            selectedObjectsCable[j].VerifyLinkedObject();
+                        }
                     }
                 }
             }
@@ -249,7 +253,7 @@ public class CharacterFlute : MonoBehaviour
     {
         if (currentObject.isLinked)
         {
-            for (int i = 0; i < currentObject.linkedObject.Count; i++)
+            /*for (int i = 0; i < currentObject.linkedObject.Count; i++)
             {
                 ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
                 CableCreator currentCable = currentLinkedObject.cable;
@@ -279,6 +283,27 @@ public class CharacterFlute : MonoBehaviour
 
             currentObject.linkedObject.Clear();
             
+            currentObject.VerifyLinkedObject();*/
+
+            for (int i = 0; i < currentObject.linkedObject.Count; i++)
+            {
+                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
+                CableCreator currentCable = currentLinkedObject.cable;
+
+                Destroy(currentCable.gameObject);
+
+
+                currentLinkedObject.linkedObject.Clear();
+                currentLinkedObject.isLinked = false;
+
+                currentLinkedObject.VerifyLinkedObject();
+            }
+
+            ropedObject.Add(selectedObjectsCable[0]);
+
+            currentObject.linkedObject.Clear();
+            currentObject.isLinked = false;
+
             currentObject.VerifyLinkedObject();
 
             return true;

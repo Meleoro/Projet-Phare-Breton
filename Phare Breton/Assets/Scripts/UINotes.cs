@@ -260,6 +260,10 @@ public class UINotes : MonoBehaviour
         note2.rectTransform.DOScale(Vector3.one * (yesScale + 0.1f), duration1);
         note3.rectTransform.DOScale(Vector3.one * (yesScale + 0.1f), duration1);
 
+        note1.DOColor(Color.white, duration1);
+        note2.DOColor(Color.white, duration1);
+        note3.DOColor(Color.white, duration1);
+
         yield return new WaitForSeconds(duration1);
 
         note1.DOFade(noFade, duration2);

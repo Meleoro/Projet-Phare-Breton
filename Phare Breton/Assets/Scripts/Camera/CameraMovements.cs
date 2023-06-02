@@ -46,6 +46,26 @@ public class CameraMovements : MonoBehaviour
     public Transform posStart;
     public float duration;
 
+
+    [Header("CinematiqueMiddle")]
+    public bool doMiddleCinematique;
+    public Transform posCameraMiddle;
+    public Transform posCharaMiddle1;
+    public Transform posCharaMiddle2;
+    public float durationMiddle;
+
+
+    [Header("CinematiqueFin")]
+    public bool doEndCinematique;
+    public Transform posCameraEnd1;
+    public Transform posCameraEnd2;
+    public Transform posCharaEnd1;
+    public Transform posCharaEnd2;
+    public float durationEnd;
+    public float durationEnd2;
+
+
+
     [Header("ShakeCamera")] 
     public float amplitudeShake;
     public float speedShake;
@@ -81,7 +101,7 @@ public class CameraMovements : MonoBehaviour
         _camera = GetComponent<Camera>();
         cameraRotationRefScript = GetComponentInChildren<CameraRotationRef>();
         scriptFondu = GetComponent<Fondu>();
-        
+
         originalPos = parentTranform.position;
         
         screenWidth = _camera.pixelWidth;
@@ -108,11 +128,19 @@ public class CameraMovements : MonoBehaviour
         {
             StartCoroutine(IntroCinematique());
         }
+        else if (doMiddleCinematique) 
+        {
+            StartCoroutine(MiddleCinematique());
+        }
     }
 
 
     private void Update()
     {
+        if (doEndCinematique)
+            StartCoroutine(EndCinematique());
+        
+
         screenWidth = _camera.pixelWidth;
         screenHeight = _camera.pixelHeight;
 
@@ -185,6 +213,8 @@ public class CameraMovements : MonoBehaviour
 
     public IEnumerator IntroCinematique()
     {
+        doEndCinematique = false;
+
         yield return new WaitForSeconds(0.02f);
 
         bool staticStock = isStatic; 
@@ -209,6 +239,71 @@ public class CameraMovements : MonoBehaviour
         ReferenceManager.Instance.characterReference.EndCinematique();
 
         isStatic = staticStock;
+    }
+
+
+    public IEnumerator MiddleCinematique()
+    {
+        yield return new WaitForSeconds(0.02f);
+
+        bool staticStock = isStatic;
+
+        ReferenceManager.Instance.characterReference.transform.position = posCharaMiddle1.position;
+        StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(posCharaMiddle2.position, posCharaMiddle1.position, true));
+
+        isStatic = true;
+
+        Vector3 savePos = transform.position;
+        Vector3 saveRot = transform.rotation.eulerAngles;
+
+        transform.rotation = posCameraMiddle.rotation;
+        transform.DOMove(posCameraMiddle.position, 0);
+
+        yield return new WaitForSeconds(durationMiddle * 0.15f);
+
+        transform.DORotate(saveRot, durationMiddle);
+        transform.DOMove(savePos, durationMiddle).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(durationMiddle * 0.85f);
+
+        ReferenceManager.Instance.characterReference.EndCinematique();
+
+        isStatic = staticStock;
+    }
+
+
+    public IEnumerator EndCinematique()
+    {
+        doEndCinematique = false;
+
+        yield return new WaitForSeconds(0.02f);
+
+        ReferenceManager.Instance.characterReference.noControl = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, durationEnd).SetEase(Ease.Linear);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.rb.isKinematic = true;
+
+        isStatic = true;
+
+        yield return new WaitForSeconds(durationEnd * 0.15f);
+
+        transform.DOMove(posCameraEnd1.position, durationEnd * 0.8f).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd * 0.8f).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(durationEnd * 0.85f);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+        yield return new WaitForSeconds(0.4f);
+
+
+        // PARTIE TENDAGE DE MAIN
+
+        transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
+
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");
     }
 
 

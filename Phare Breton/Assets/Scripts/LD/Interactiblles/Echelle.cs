@@ -254,7 +254,7 @@ public class Echelle : ObjetInteractible
         Debug.DrawLine(startPos, finalDestination, Color.red, 1);
 
         StartCoroutine(ReferenceManager.Instance.characterReference.movementScript.ClimbLadder(finalDestination,
-            startPos, goUp, ReferenceManager.Instance.characterReference.nearObjects, _collider));
+            startPos, goUp));
     }
     
     
