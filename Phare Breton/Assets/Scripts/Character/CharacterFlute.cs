@@ -459,7 +459,7 @@ public class CharacterFlute : MonoBehaviour
         {
             manager.scriptsMovedObjects[i].rb.isKinematic = false;
                 
-            StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
+            //StartCoroutine(manager.scriptsMovedObjects[i].PutRigidbodyKinematic());
             
             Boite currentBoite;
             if(manager.scriptsMovedObjects[i].TryGetComponent<Boite>(out currentBoite))
