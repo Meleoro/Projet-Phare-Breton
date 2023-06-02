@@ -72,8 +72,12 @@ public class Ampoule : ObjetInteractible
         {
             ReferenceManager.Instance.characterReference.isInLightSource = true;
         }*/
-        
-        
+
+        if (other.CompareTag("ZoneSombre"))
+        {
+            if(ampouleActive)
+                other.GetComponent<ColliderZoneSombre>().DesactivateZoneSombre();
+        }
     }
 
     private void OnTriggerExit(Collider other)
