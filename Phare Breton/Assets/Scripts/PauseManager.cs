@@ -132,6 +132,11 @@ public class PauseManager : MonoBehaviour
         {
             StartCoroutine(optionsScript.OpenOptions(1, 1));
         }
+        
+        else if (currentButton == 3)
+        {
+            
+        }
 
         else
         {
