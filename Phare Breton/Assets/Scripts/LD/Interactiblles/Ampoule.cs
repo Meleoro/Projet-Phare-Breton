@@ -63,7 +63,7 @@ public class Ampoule : ObjetInteractible
     
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Interactible") && !other.isTrigger)
+        /*if (other.CompareTag("Interactible") && !other.isTrigger)
         {
             other.GetComponent<ObjetInteractible>().isLighted = true;
         }
@@ -71,7 +71,9 @@ public class Ampoule : ObjetInteractible
         if (other.CompareTag("Player") && !other.isTrigger)
         {
             ReferenceManager.Instance.characterReference.isInLightSource = true;
-        }
+        }*/
+        
+        
     }
 
     private void OnTriggerExit(Collider other)

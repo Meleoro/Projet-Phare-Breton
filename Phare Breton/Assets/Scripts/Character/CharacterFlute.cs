@@ -466,6 +466,9 @@ public class CharacterFlute : MonoBehaviour
             {
                 currentBoite.VFXDeplacement.Stop(true);
             }
+
+            if (manager.scriptsMovedObjects[i].rb.velocity.magnitude < 0.15f)
+                manager.scriptsMovedObjects[i].rb.velocity = Vector3.down * 0.2f;
             
             manager.scriptsMovedObjects[i].isMoved = false;
         }
