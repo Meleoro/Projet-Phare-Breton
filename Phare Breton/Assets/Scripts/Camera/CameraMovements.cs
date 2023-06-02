@@ -55,6 +55,7 @@ public class CameraMovements : MonoBehaviour
     [Header("CinematiqueFin")]
     public bool doEndCinematique;
     public Transform pivotPlan6;
+    public Animator animGrue;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
     public Transform posCameraEnd3;
@@ -72,6 +73,8 @@ public class CameraMovements : MonoBehaviour
     public float durationEnd4;
     public float durationEnd5;
     public float durationEnd6;
+    public float durationEnd7;
+    public float durationEnd8;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -348,14 +351,14 @@ public class CameraMovements : MonoBehaviour
         //Il me manque l'animation donc je skip
 
 
-        //PLAN 6
+        // PLAN 6
         transform.DOMove(posCameraEnd6.position, 0);
         transform.DORotate(posCameraEnd6.rotation.eulerAngles, 0);
 
         yield return new WaitForSeconds(durationEnd5);
 
 
-        //PLAN 7
+        // PLAN 7
         transform.parent = pivotPlan6;
 
         pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
@@ -369,6 +372,22 @@ public class CameraMovements : MonoBehaviour
         yield return new WaitForSeconds(durationEnd6 * 0.5f);
 
 
+        // PLAN 8
+        animGrue.SetTrigger("startVol");
+
+        yield return new WaitForSeconds(0.9f);
+
+        Vector3 wantedPos = animGrue.transform.position + animGrue.transform.forward * 2 + animGrue.transform.up * 20;
+
+        animGrue.transform.DOMoveX(wantedPos.x, durationEnd7).SetEase(Ease.Linear);
+        animGrue.transform.DOMoveZ(wantedPos.z, durationEnd7).SetEase(Ease.Linear);
+
+        animGrue.transform.DOMoveY(wantedPos.y, durationEnd7);
+
+        yield return new WaitForSeconds(durationEnd7);
+
+
+        // PLAN 9
 
 
 
