@@ -92,14 +92,11 @@ public class ObjetInteractible : MonoBehaviour
 
     public void DesactivateStase()
     {
-        staseVFX.Stop();
+        staseVFX.Stop(true);
+        staseVFX.Clear(true);
         isInStase = false;
 
         rb.isKinematic = false;
-        
-        staseVFX.Stop();
-        staseVFX.Stop();
-        staseVFX.Stop();
     }
 
 
