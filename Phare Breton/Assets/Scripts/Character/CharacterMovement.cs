@@ -76,7 +76,7 @@ public class CharacterMovement : MonoBehaviour
             manager.rb.AddForce(fallDir * Time.fixedDeltaTime, ForceMode.Force);
 
 
-        bool willFall = VerifyFall(stockageDirection, true);
+        bool willFall = VerifyFall(direction.normalized, true);
 
         if (!willFall)
         {
@@ -103,8 +103,8 @@ public class CharacterMovement : MonoBehaviour
         {
             iteration = 0;
             
-            newDirection1 = direction;
-            newDirection2 = direction;
+            newDirection1 = direction.normalized;
+            newDirection2 = direction.normalized;
             directionFound1 = false;
             directionFound2 = false;
             
@@ -476,10 +476,10 @@ public class CharacterMovement : MonoBehaviour
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
         Vector3 point1 = DoRaycast(transform.position, 10);
-        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.2f), 10);
-        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.4f), 10);
-        Vector3 point4 = DoRaycast(transform.position + (newDirection.normalized * 0.6f), 10);
-        Vector3 point5 = DoRaycast(transform.position + (newDirection.normalized * 0.8f), 10);
+        Vector3 point2 = DoRaycast(transform.position + (newDirection.normalized * 0.15f), 10);
+        Vector3 point3 = DoRaycast(transform.position + (newDirection.normalized * 0.3f), 10);
+        Vector3 point4 = DoRaycast(transform.position + (newDirection.normalized * 0.45f), 10);
+        Vector3 point5 = DoRaycast(transform.position + (newDirection.normalized * 0.6f), 10);
         Debug.DrawLine(point3, point2);
         Debug.DrawLine(point1, point2);
         Debug.DrawLine(point3, point4);
