@@ -262,6 +262,14 @@ public class CharaManager : MonoBehaviour
             {
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
 
+                if (canStase && stase)
+                {
+                    //fluteScript.selectedObjects = movedObjects;
+                    fluteScript.Stase();
+                    
+                    fluteScript.StopMoveObject();
+                }
+
                 isWalking = false;
             }
         }
