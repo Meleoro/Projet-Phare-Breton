@@ -44,7 +44,12 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
     [SerializeField] private OptionsManager optionsManager;
+
+
+    [Header("Fonds")]
     [SerializeField] private List<Image> fonds = new List<Image>();
+    private int currentFond;
+    private float fondTimer;
 
 
     [Header("Inputs")] 
@@ -66,6 +71,14 @@ public class MenuPrincManager : MonoBehaviour
         OpenMenu();
 
         StartCoroutine(ShakeCoroutine());
+
+
+        for(int i = 0; i < fonds.Count; i++)
+        {
+            fonds[i].DOFade(0, 0);
+        }
+
+        StartCoroutine(FondCoroutine());
         
         /*StartCoroutine(FindNewShakePos());
         StartCoroutine(FindNewShakePos2());*/
@@ -107,6 +120,36 @@ public class MenuPrincManager : MonoBehaviour
         menuObject.position = posScroll + posModificateur;
         fond.position = originalPosFond + posModificateur * 2;
         //menuObject.rotation = Quaternion.Euler(0,0, Mathf.Lerp(menuObject.rotation.z, modificateurRot + modificateurRot2, Time.deltaTime * 0.5f));
+    }
+
+    private IEnumerator FondCoroutine()
+    {
+        fondTimer -= Time.deltaTime;
+
+        if(fondTimer <= 0)
+        {
+            fondTimer = 6;
+
+            fonds[currentFond].DOFade(0, 1);
+
+            int newIndex = currentFond;
+
+            while(newIndex == currentFond)
+            {
+                newIndex = Random.Range(0, 7);
+            }
+
+            currentFond = newIndex;
+
+            fonds[currentFond].DOFade(1, 1);
+
+            fond = fonds[currentFond].rectTransform;
+        }
+
+
+        yield return new WaitForEndOfFrame();
+
+        StartCoroutine(FondCoroutine());
     }
 
     private IEnumerator ShakeCoroutine()
