@@ -91,6 +91,7 @@ public class CharaManager : MonoBehaviour
         playerAudioSource = GetComponent<AudioSource>();
 
         hasRope = false;
+        UIActive = false;
     }
     
     void Update()
@@ -208,7 +209,26 @@ public class CharaManager : MonoBehaviour
                 fluteScript.StopMoveObject();
             }
 
-            
+            if (isMovingObjects)
+            {
+                if (canStase && stase)
+                {
+                    List<ObjetInteractible> objectsToStase = new List<ObjetInteractible>();
+                    for (int i = 0; i < movedObjects.Count; i++)
+                    {
+                        objectsToStase.Add(movedObjects[i].GetComponent<ObjetInteractible>());
+                    }
+                    
+                    fluteScript.selectedObjects = objectsToStase;
+                    fluteScript.Stase();
+                    
+                    fluteScript.selectedObjects.Clear();
+                    
+                    fluteScript.StopMoveObject();
+                }
+            }
+
+
             // Pour les effets des contrôles se fasssent qu'une fois
             interaction = false;
             cable = false;
@@ -262,14 +282,6 @@ public class CharaManager : MonoBehaviour
             {
                 movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
 
-                if (canStase && stase)
-                {
-                    //fluteScript.selectedObjects = movedObjects;
-                    fluteScript.Stase();
-                    
-                    fluteScript.StopMoveObject();
-                }
-
                 isWalking = false;
             }
         }
@@ -297,7 +309,6 @@ public class CharaManager : MonoBehaviour
     public void DisplayUI()
     {
         bool afficher = false;
-        
 
         if (nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0 || cableObject != null)
         {
