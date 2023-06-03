@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class CharaManager : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class CharaManager : MonoBehaviour
     [SerializeField] private GameObject UIInteraction;
     [SerializeField] private Image UIImageX;
     [SerializeField] private Image UIImageY;
+    public TextMeshProUGUI textInteraction;
     [SerializeField] private MeshRenderer fluteMesh;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public AudioSource playerAudioSource;
@@ -51,7 +54,7 @@ public class CharaManager : MonoBehaviour
     [Header("Animations")]
     [HideInInspector] public bool isWalking;
     [HideInInspector] private bool fluteActive;
-    
+
     [Header("Selection")]
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
     [HideInInspector] public List<GameObject> nearBoxes = new List<GameObject>();
@@ -79,6 +82,7 @@ public class CharaManager : MonoBehaviour
     public bool isInLightSource;
     [HideInInspector] public bool isPickingObjectUp;
     [HideInInspector] public bool isCrossingDoor;
+    private bool UIActive;
 
 
     void Start()
@@ -118,37 +122,6 @@ public class CharaManager : MonoBehaviour
         
         if (!noControl && !isPickingObjectUp)
         {
-            /*IsMovingObjects();
-
-            if (!noControl && !isPickingObjectUp)
-            {
-                // Partie déplacement player / objets
-                if (!noMovement && !isMovingObjects)
-                {
-                    movementScript.MoveCharacter(direction);
-                
-                    if(direction != Vector2.zero) 
-                        movementScript.RotateCharacter(direction, false);
-
-                    if (direction == Vector2.zero)
-                        movementScript.RotateCharacterCamera();
-
-
-                    if (direction.magnitude > 0.5f)
-                        isWalking = true;
-
-                    else
-                        isWalking = false;
-                }
-
-                else if (isMovingObjects)
-                {
-                    movementScript.MoveObjects(movedObjects, scriptsMovedObjects, direction);
-
-                    isWalking = false;
-                }
-            }*/
-            
             fluteMesh.enabled = false;
 
             if (interaction && canPlayMusic)
@@ -173,15 +146,8 @@ public class CharaManager : MonoBehaviour
             // Interaction
             if (!fluteActive)
             {
-                if(nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0 || cableObject != null)
-                {
-                    UIInteraction.SetActive(VerificationInteractionUI());
-                }
-                else
-                {
-                    UIInteraction.SetActive(false);
-                }
-
+                DisplayUI();
+                
                 if (interaction)
                 {
                     if (nearObjetsRecuperables.Count != 0)
@@ -328,6 +294,54 @@ public class CharaManager : MonoBehaviour
     }
 
 
+    public void DisplayUI()
+    {
+        bool afficher = false;
+        
+
+        if (nearObjects.Count != 0 || nearNoteNumber != 0 || canPlayMusic || nearObjetsRecuperables.Count != 0 || cableObject != null)
+        {
+            afficher = true;
+
+            //UIInteraction.SetActive(VerificationInteractionUI());
+        }
+        /*else
+        {
+            UIInteraction.SetActive(false);
+        }*/
+
+        float speed = 0.2f;
+
+        if (afficher)
+        {
+            UIInteraction.SetActive(VerificationInteractionUI());
+
+            if (!UIActive)
+            {
+                UIActive = true;
+
+                UIImageX.DOFade(1, speed).OnComplete(() => UIInteraction.SetActive(true));
+                UIImageY.DOFade(1, speed);
+
+                textInteraction.DOFade(1, speed);
+            }
+        }
+
+        else
+        {
+            if (UIActive)
+            {
+                UIActive = false;
+
+                UIImageX.DOFade(0, speed).OnComplete(() => UIInteraction.SetActive(false));
+                UIImageY.DOFade(0, speed);
+
+                textInteraction.DOFade(0, speed);
+            }
+        }
+    }
+
+
     public bool VerificationInteractionUI()
     {
         if (!hasRope)
@@ -372,15 +386,6 @@ public class CharaManager : MonoBehaviour
 
             if (cableObject != null)
                 return true;
-
-            /*if (nearBoxes.Count != 0)
-                return true;
-
-            if (nearAmpoule.Count != 0)
-                return true;
-
-            if (nearGenerator.Count != 0)
-                return true;*/
         }
         
         return false;

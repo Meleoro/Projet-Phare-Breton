@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Planche : ObjetInteractible
 {
+    public ParticleSystem VFXDeplacement;
+
     private void FixedUpdate()
     {
         if(isMoved)

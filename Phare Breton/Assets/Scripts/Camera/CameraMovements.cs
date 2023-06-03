@@ -54,12 +54,27 @@ public class CameraMovements : MonoBehaviour
 
     [Header("CinematiqueFin")]
     public bool doEndCinematique;
+    public Transform pivotPlan6;
+    public Animator animGrue;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
+    public Transform posCameraEnd3;
+    public Transform posCameraEnd4;
+    public Transform posCameraEnd5;
+    public Transform posCameraEnd6;
+    public Transform posCameraEnd7;
     public Transform posCharaEnd1;
     public Transform posCharaEnd2;
-    public float durationEnd;
+    public Transform posCharaEnd3;
+    public Transform posCharaEnd4;
+    public float durationEnd1;
     public float durationEnd2;
+    public float durationEnd3;
+    public float durationEnd4;
+    public float durationEnd5;
+    public float durationEnd6;
+    public float durationEnd7;
+    public float durationEnd8;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -271,34 +286,119 @@ public class CameraMovements : MonoBehaviour
     {
         doEndCinematique = false;
 
-        yield return new WaitForSeconds(0.02f);
-
-        ReferenceManager.Instance.characterReference.noControl = true;
-        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, durationEnd).SetEase(Ease.Linear);
-
-        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        isStatic = true;
         ReferenceManager.Instance.characterReference.rb.isKinematic = true;
 
-        isStatic = true;
+        yield return new WaitForSeconds(0.02f);
 
-        yield return new WaitForSeconds(durationEnd * 0.15f);
 
-        transform.DOMove(posCameraEnd1.position, durationEnd * 0.8f).SetEase(Ease.InOutSine);
-        transform.DORotate(posCameraEnd1.rotation.eulerAngles, durationEnd * 0.8f).SetEase(Ease.InOutSine);
+        // PLAN 1
+        ReferenceManager.Instance.characterReference.noControl = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, 0);
 
-        yield return new WaitForSeconds(durationEnd * 0.85f);
+        transform.DOMove(posCameraEnd1.position, 0);
+        transform.DORotate(posCameraEnd1.rotation.eulerAngles, 0);
+
+        yield return new WaitForSeconds(durationEnd1);
+
+
+        // PLAN 2
+        transform.DOMove(posCameraEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.InOutSine);
+        transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2 * 0.8f).SetEase(Ease.InOutSine);
+
+        yield return new WaitForSeconds(durationEnd2 * 0.2f);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd2 * 0.8f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
 
 
-        // PARTIE TENDAGE DE MAIN
+        // PLAN 3
+        transform.DOMove(posCameraEnd3.position, 0);
+        transform.DORotate(posCameraEnd3.rotation.eulerAngles, 0);
 
-        transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd3.position, durationEnd3 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd3 * 0.5f);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+        yield return new WaitForSeconds(durationEnd3 * 0.5f);
+
+
+        // PLAN 4
+        transform.DOMove(posCameraEnd4.position, 0);
+        transform.DORotate(posCameraEnd4.rotation.eulerAngles, 0);
+
+        transform.DOMove(posCameraEnd5.position, durationEnd4);
+        transform.DORotate(posCameraEnd5.rotation.eulerAngles, durationEnd4);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = true;
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd4.position, durationEnd4).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd4);
+
+        ReferenceManager.Instance.characterReference.isCrossingDoor = false;
+
+
+        // PLAN 5
+        //Il me manque l'animation donc je skip
+
+
+        // PLAN 6
+        transform.DOMove(posCameraEnd6.position, 0);
+        transform.DORotate(posCameraEnd6.rotation.eulerAngles, 0);
+
+        yield return new WaitForSeconds(durationEnd5);
+
+
+        // PLAN 7
+        transform.parent = pivotPlan6;
+
+        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd6 * 0.5f);
+
+        ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
+
+        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-10, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd6 * 0.5f);
+
+        transform.parent = parentTranform;
+
+
+        // PLAN 8
+        animGrue.SetTrigger("startVol");
+
+        yield return new WaitForSeconds(0.9f);
+
+        Vector3 wantedPos = animGrue.transform.position + animGrue.transform.forward * 2 + animGrue.transform.up * 20;
+
+        animGrue.transform.DOMoveX(wantedPos.x, durationEnd7).SetEase(Ease.Linear);
+        animGrue.transform.DOMoveZ(wantedPos.z, durationEnd7).SetEase(Ease.Linear);
+
+        animGrue.transform.DOMoveY(wantedPos.y, durationEnd7);
+
+        yield return new WaitForSeconds(durationEnd7);
+
+
+        // PLAN 9
+        transform.DOMove(posCameraEnd7.position, durationEnd8);
+        transform.DORotate(posCameraEnd7.rotation.eulerAngles, durationEnd8);
+
+
+
+        /*transform.DOMove(posCameraEnd2.position, durationEnd2).SetEase(Ease.InOutSine);
         transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
 
-        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");*/
     }
 
 

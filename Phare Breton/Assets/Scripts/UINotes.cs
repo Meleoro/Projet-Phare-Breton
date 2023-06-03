@@ -248,7 +248,6 @@ public class UINotes : MonoBehaviour
         
         if (!start)
         {
-            GoLeft(duration3);
             yield return new WaitForSeconds(duration3 + 0.5f);
         }
         

@@ -270,7 +270,7 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             if (!nodes[i].isSpawned)
             {
-                if (timer > nodes[i].spawnTiming)
+                if (timer > nodes[i].spawnTiming + 0.05f)
                 {
                     MusicNode newNode = null;
                     
