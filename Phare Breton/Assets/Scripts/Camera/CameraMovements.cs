@@ -388,7 +388,7 @@ public class CameraMovements : MonoBehaviour
 
         yield return new WaitForSeconds(0.9f);
 
-        Vector3 wantedPos = animGrue.transform.position + animGrue.transform.forward * 2 + animGrue.transform.up * 20;
+        Vector3 wantedPos = animGrue.transform.position + animGrue.transform.forward * 2 + animGrue.transform.up * 40;
 
         animGrue.transform.DOMoveX(wantedPos.x, durationEnd7).SetEase(Ease.Linear);
         animGrue.transform.DOMoveZ(wantedPos.z, durationEnd7).SetEase(Ease.Linear);
