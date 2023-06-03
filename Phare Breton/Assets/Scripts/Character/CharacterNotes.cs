@@ -122,7 +122,7 @@ public class CharacterNotes : MonoBehaviour
 
             if (mainSript.tagToActivate != null)
             {
-                mainSript.tagToActivate.GetComponent<MeshRenderer>().material.DOFade(1, 1);
+                mainSript.tagToActivate.GetComponent<MeshRenderer>().material.DOFade(1, 5);
                 mainSript.tagToActivate = null;
             }
         }
