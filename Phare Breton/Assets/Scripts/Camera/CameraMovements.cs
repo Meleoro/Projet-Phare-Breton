@@ -288,13 +288,13 @@ public class CameraMovements : MonoBehaviour
         doEndCinematique = false;
 
         isStatic = true;
+        ReferenceManager.Instance.characterReference.noControl = true;
         ReferenceManager.Instance.characterReference.rb.isKinematic = true;
 
         yield return new WaitForSeconds(0.02f);
 
 
         // PLAN 1
-        ReferenceManager.Instance.characterReference.noControl = true;
         ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd1.position, 0);
 
         transform.DOMove(posCameraEnd1.position, 0);
@@ -373,7 +373,9 @@ public class CameraMovements : MonoBehaviour
 
         StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(30, -90, 0)));
 
-        yield return new WaitForSeconds(durationEnd6 * 0.7f);
+        pivotPlan6.DOMove(pivotPlan6.transform.position + new Vector3(0, 0, 2), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(durationEnd6 * 0.6f);
 
         transform.parent = parentTranform;
 
