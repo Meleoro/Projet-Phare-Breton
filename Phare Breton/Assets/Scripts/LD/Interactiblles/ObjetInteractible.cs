@@ -26,6 +26,7 @@ public class ObjetInteractible : MonoBehaviour
     [HideInInspector] public Vector3 resistanceCable;
 
     [Header("MoveObject")] 
+    public bool cantBeMoved;
     public bool hauteurFigee;
     public float hauteurFigeeValeur = 2;
     private float wantedHauteur;
