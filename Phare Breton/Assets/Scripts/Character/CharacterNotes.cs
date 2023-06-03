@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CharacterNotes : MonoBehaviour
@@ -101,14 +102,12 @@ public class CharacterNotes : MonoBehaviour
         {
             AudioManager.instance.FadeOutAudioSource(0.2f, 0.5f, 0,
                 ReferenceManager.Instance.characterReference.playerAudioSource);
-            
-            mainSript.noControl = false;
-            
+
             ReferenceManager.Instance.cameraReference.StopMoveCameraRythme();
             DoVFXReussite();
             StartCoroutine(UIScript.PutEverythingGray(false));
     
-            UnlockPower();
+            StartCoroutine(UnlockPower());
 
             wonMelodies[currentMelody - 1] = true;
             mainSript.canPlayMusic = false;
@@ -120,8 +119,15 @@ public class CharacterNotes : MonoBehaviour
 
             bandes.Clear();
             bandesObjects.Clear();
+
+            if (mainSript.tagToActivate != null)
+            {
+                mainSript.tagToActivate.GetComponent<MeshRenderer>().material.DOFade(1, 5);
+                mainSript.tagToActivate = null;
+            }
         }
     }
+    
 
     public void StopPlay()
     {
@@ -144,7 +150,7 @@ public class CharacterNotes : MonoBehaviour
     }
 
 
-    public void UnlockPower()
+    public IEnumerator UnlockPower()
     {
         if(currentMelody == 1)
         {
@@ -158,6 +164,10 @@ public class CharacterNotes : MonoBehaviour
         {
             mainSript.canStase = true;
         }
+
+        yield return new WaitForSeconds(6);
+
+        mainSript.noControl = false;
     }
 
 
