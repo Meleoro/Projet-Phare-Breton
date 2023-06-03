@@ -127,6 +127,7 @@ MonoBehaviour:
   isLighted: 1
   isInDarkZone: 0
   isClimbable: 0
+  cantGoThroughDoors: 0
   isMagneted: 0
   currentMagnet: {fileID: 0}
   magnetedPos: {fileID: 0}
@@ -136,7 +137,9 @@ MonoBehaviour:
   cable: {fileID: 0}
   isStart: 0
   resistanceCable: {x: 0, y: 0, z: 0}
+  cantBeMoved: 1
   hauteurFigee: 0
+  hauteurFigeeValeur: 2
   hauteurRespawn: 20
   isMoved: 0
   currentHauteur: 0

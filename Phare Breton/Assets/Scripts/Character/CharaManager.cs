@@ -91,6 +91,7 @@ public class CharaManager : MonoBehaviour
         playerAudioSource = GetComponent<AudioSource>();
 
         hasRope = false;
+        UIActive = false;
     }
     
     void Update()

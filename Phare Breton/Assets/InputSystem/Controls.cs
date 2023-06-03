@@ -98,6 +98,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ValidationMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca560727-0854-4627-ade0-1ce39f878132"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -320,6 +329,28 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e70db6f-57fe-467e-8d98-2e3a319bdcc8"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ValidationMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23ce475c-0496-41f1-80e9-b70ff1d74047"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ValidationMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -336,6 +367,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Character_Up = m_Character.FindAction("Up", throwIfNotFound: true);
         m_Character_Down = m_Character.FindAction("Down", throwIfNotFound: true);
         m_Character_Pause = m_Character.FindAction("Pause", throwIfNotFound: true);
+        m_Character_ValidationMenu = m_Character.FindAction("ValidationMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +437,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Up;
     private readonly InputAction m_Character_Down;
     private readonly InputAction m_Character_Pause;
+    private readonly InputAction m_Character_ValidationMenu;
     public struct CharacterActions
     {
         private @Controls m_Wrapper;
@@ -417,6 +450,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Up => m_Wrapper.m_Character_Up;
         public InputAction @Down => m_Wrapper.m_Character_Down;
         public InputAction @Pause => m_Wrapper.m_Character_Pause;
+        public InputAction @ValidationMenu => m_Wrapper.m_Character_ValidationMenu;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -450,6 +484,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @ValidationMenu.started += instance.OnValidationMenu;
+            @ValidationMenu.performed += instance.OnValidationMenu;
+            @ValidationMenu.canceled += instance.OnValidationMenu;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -478,6 +515,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @ValidationMenu.started -= instance.OnValidationMenu;
+            @ValidationMenu.performed -= instance.OnValidationMenu;
+            @ValidationMenu.canceled -= instance.OnValidationMenu;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -505,5 +545,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnUp(InputAction.CallbackContext context);
         void OnDown(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnValidationMenu(InputAction.CallbackContext context);
     }
 }

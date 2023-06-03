@@ -253,38 +253,6 @@ public class CharacterFlute : MonoBehaviour
     {
         if (currentObject.isLinked)
         {
-            /*for (int i = 0; i < currentObject.linkedObject.Count; i++)
-            {
-                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
-                CableCreator currentCable = currentLinkedObject.cable;
-
-
-                if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().isStart)
-                {
-                    currentCable.ChangeFirstNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
-                }
-                else
-                {
-                    currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
-                }
-                currentCable.isLinked = false;
-
-
-                currentLinkedObject.linkedObject.Clear();
-                currentLinkedObject.isLinked = false;
-                
-                currentLinkedObject.VerifyLinkedObject();
-
-                cables.Add(currentCable.gameObject);
-            }
-
-            ropedObject.Add(selectedObjectsCable[0]);
-            manager.hasRope = true;
-
-            currentObject.linkedObject.Clear();
-            
-            currentObject.VerifyLinkedObject();*/
-
             for (int i = 0; i < currentObject.linkedObject.Count; i++)
             {
                 ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
@@ -299,7 +267,7 @@ public class CharacterFlute : MonoBehaviour
                 currentLinkedObject.VerifyLinkedObject();
             }
 
-            ropedObject.Add(selectedObjectsCable[0]);
+            //ropedObject.Add(selectedObjectsCable[0]);
 
             currentObject.linkedObject.Clear();
             currentObject.isLinked = false;
@@ -382,74 +350,89 @@ public class CharacterFlute : MonoBehaviour
 
         if (recursiveCall)
         {
-            Boite currentBoite;
-            if(movedObject.TryGetComponent<Boite>(out currentBoite))
+            if (!movedObject.GetComponent<ObjetInteractible>().cantBeMoved)
             {
-                currentBoite.VFXDeplacement.Play(true);
+                Boite currentBoite;
+                if(movedObject.TryGetComponent<Boite>(out currentBoite))
+                {
+                    currentBoite.VFXDeplacement.Play(true);
+                }
+
+                else if(movedObject.TryGetComponent<Planche>(out Planche currentPlanche))
+                {
+                    currentPlanche.VFXDeplacement.Play(true);
+                }
+
+                movedObject.GetComponent<ObjetInteractible>().isMoved = true;
+                
+                manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
+                manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
+
+                manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = movedObject.transform.position.y;
+                
+                manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
             }
-
-            else if(movedObject.TryGetComponent<Planche>(out Planche currentPlanche))
-            {
-                currentPlanche.VFXDeplacement.Play(true);
-            }
-
-            movedObject.GetComponent<ObjetInteractible>().isMoved = true;
-            
-            manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
-            manager.scriptsMovedObjects.Add(movedObject.GetComponent<ObjetInteractible>());
-
-            manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = movedObject.transform.position.y;
-            
-            manager.movedObjects[manager.movedObjects.Count - 1].isKinematic = false;
         }
         
         else
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
-                if(!selectedObjects[k] == manager.objectOn)
+                if (!selectedObjects[k].cantBeMoved)
                 {
-                    manager.movementScript.colliderChara.enabled = false;
-                    manager.rb.isKinematic = true;
-                    
-                    Boite currentBoite;
-                    if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
+                    if(selectedObjects[k] != manager.objectOn)
                     {
-                        currentBoite.VFXDeplacement.Play(true);
+                        manager.movementScript.colliderChara.enabled = false;
+                        manager.rb.isKinematic = true;
+                        
+                        Boite currentBoite;
+                        if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
+                        {
+                            currentBoite.VFXDeplacement.Play(true);
+                        }
+
+                        else if (selectedObjects[k].TryGetComponent<Planche>(out Planche currentPlanche))
+                        {
+                            currentPlanche.VFXDeplacement.Play(true);
+                        }
+
+                        selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
+
+                        manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
+                        manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
+
+                        manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
+
+                        VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
                     }
 
-                    else if (selectedObjects[k].TryGetComponent<Planche>(out Planche currentPlanche))
+                    else
                     {
-                        currentPlanche.VFXDeplacement.Play(true);
+                        manager.isMovingObjects = false;
+                        manager.noMovement = false;
+
+                        manager.movedObjects.Clear();
+                        manager.scriptsMovedObjects.Clear();
+
+                        StartCoroutine(manager.SayNo());
+
+                        break;
                     }
-
-                    selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
-
-                    manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
-                    manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
-
-                    manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
-
-                    VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
-                }
-
-                else
-                {
-                    manager.isMovingObjects = false;
-                    manager.noMovement = false;
-
-                    manager.movedObjects.Clear();
-                    manager.scriptsMovedObjects.Clear();
-
-                    StartCoroutine(manager.SayNo());
-
-                    break;
                 }
             }
 
-            for (int i = 0; i < manager.movedObjects.Count; i++)
+            if (manager.movedObjects.Count != 0)
             {
-                manager.movedObjects[i].isKinematic = false;
+                for (int i = 0; i < manager.movedObjects.Count; i++)
+                {
+                    manager.movedObjects[i].isKinematic = false;
+                }
+            }
+            
+            else
+            {
+                manager.isMovingObjects = false;
+                manager.noMovement = false;
             }
         }
 
@@ -500,22 +483,25 @@ public class CharacterFlute : MonoBehaviour
     {
         for (int i = 0; i < selectedObjects.Count; i++)
         {
-            if (!selectedObjects[i].isInStase)
+            if (!selectedObjects[i].cantBeMoved)
             {
-                selectedObjects[i].ActivateStase();
-                selectedObjects[i].rb.isKinematic = true;
-
-                Boite currentBoite;
-                if (selectedObjects[i].TryGetComponent<Boite>(out currentBoite))
+                if (!selectedObjects[i].isInStase)
                 {
-                    currentBoite.VFXDeplacement.Stop(true);
-                }
-            }
+                    selectedObjects[i].ActivateStase();
+                    selectedObjects[i].rb.isKinematic = true;
 
-            else
-            {
-                selectedObjects[i].DesactivateStase();
-                selectedObjects[i].rb.isKinematic = false;
+                    Boite currentBoite;
+                    if (selectedObjects[i].TryGetComponent<Boite>(out currentBoite))
+                    {
+                        currentBoite.VFXDeplacement.Stop(true);
+                    }
+                }
+
+                else
+                {
+                    selectedObjects[i].DesactivateStase();
+                    selectedObjects[i].rb.isKinematic = false;
+                }
             }
         }
 
