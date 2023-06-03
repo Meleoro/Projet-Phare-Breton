@@ -3709,6 +3709,11 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4950549717037135537, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5527187700211497055, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: m_Name
@@ -3722,7 +3727,7 @@ PrefabInstance:
     - target: {fileID: 6503702165506159941, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7140802484854216782, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
@@ -3948,6 +3953,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2154013127770234402}
+    - targetCorrespondingSourceObject: {fileID: 1580841887084569927, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 397618175745987498}
   m_SourcePrefab: {fileID: 100100000, guid: d45a5586b24669a4bab29e12b01b5703, type: 3}
 --- !u!4 &316531863094180622 stripped
 Transform:
@@ -3955,6 +3964,35 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 25381099719715521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1561179706248040326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1580841887084569927, guid: d45a5586b24669a4bab29e12b01b5703,
+    type: 3}
+  m_PrefabInstance: {fileID: 25381099719715521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &397618175745987498
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561179706248040326}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Height: 4.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1594060493157237609 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1604713492887267752, guid: d45a5586b24669a4bab29e12b01b5703,
