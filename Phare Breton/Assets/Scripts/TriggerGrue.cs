@@ -156,15 +156,17 @@ public class TriggerGrue : MonoBehaviour
 
         Vector3 wantedRotation = new Vector3(direction.x, 0, direction.y);
 
+        currentGrue.transform.DORotate(wantedRotation, 0.4f);
+        
         while (timer > 0)
         {
             timer -= Time.deltaTime;
 
             yield return new WaitForSeconds(Time.deltaTime);
 
-            currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime * 10);
+            /*currentRotation = Vector3.Lerp(currentRotation, wantedRotation, Time.deltaTime * 10);
 
-            currentGrue.transform.rotation = Quaternion.LookRotation(currentRotation, Vector3.up);
+            currentGrue.transform.rotation = Quaternion.LookRotation(currentRotation, Vector3.up);*/
         }
     }
 
