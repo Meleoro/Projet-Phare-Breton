@@ -11,11 +11,14 @@ public class Planche : ObjetInteractible
     {
         if(isMoved)
             RotatePlanche();
+        
+        if(isMagneted)
+            MagnetEffect();
     }
 
     public void RotatePlanche()
     {
-        Quaternion newRot = Quaternion.Lerp(transform.rotation, new Quaternion(0, transform.rotation.y, 0, transform.rotation.w), Time.deltaTime * 3);
+        Quaternion newRot = Quaternion.Lerp(transform.rotation, new Quaternion(0, transform.rotation.y, 0, transform.rotation.w), Time.fixedDeltaTime * 3);
         
         transform.rotation = newRot;
     }
