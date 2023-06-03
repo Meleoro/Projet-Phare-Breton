@@ -253,38 +253,6 @@ public class CharacterFlute : MonoBehaviour
     {
         if (currentObject.isLinked)
         {
-            /*for (int i = 0; i < currentObject.linkedObject.Count; i++)
-            {
-                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
-                CableCreator currentCable = currentLinkedObject.cable;
-
-
-                if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().isStart)
-                {
-                    currentCable.ChangeFirstNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
-                }
-                else
-                {
-                    currentCable.ChangeLastNode(gameObject, gameObject.GetComponent<Rigidbody>(), cablePoint.GetComponent<SpringJoint>());
-                }
-                currentCable.isLinked = false;
-
-
-                currentLinkedObject.linkedObject.Clear();
-                currentLinkedObject.isLinked = false;
-                
-                currentLinkedObject.VerifyLinkedObject();
-
-                cables.Add(currentCable.gameObject);
-            }
-
-            ropedObject.Add(selectedObjectsCable[0]);
-            manager.hasRope = true;
-
-            currentObject.linkedObject.Clear();
-            
-            currentObject.VerifyLinkedObject();*/
-
             for (int i = 0; i < currentObject.linkedObject.Count; i++)
             {
                 ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
@@ -299,7 +267,7 @@ public class CharacterFlute : MonoBehaviour
                 currentLinkedObject.VerifyLinkedObject();
             }
 
-            ropedObject.Add(selectedObjectsCable[0]);
+            //ropedObject.Add(selectedObjectsCable[0]);
 
             currentObject.linkedObject.Clear();
             currentObject.isLinked = false;
