@@ -56,6 +56,7 @@ public class CameraMovements : MonoBehaviour
     public bool doEndCinematique;
     public Transform pivotPlan6;
     public Animator animGrue;
+    public AnimationCurve cameraSpeedRotate;
     public Transform posCameraEnd1;
     public Transform posCameraEnd2;
     public Transform posCameraEnd3;
@@ -309,17 +310,17 @@ public class CameraMovements : MonoBehaviour
         yield return new WaitForSeconds(durationEnd2 * 0.2f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
-        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.8f).SetEase(Ease.Linear);
+        ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd2.position, durationEnd2 * 0.6f).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(durationEnd2 * 0.8f);
+        yield return new WaitForSeconds(durationEnd2 * 0.6f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(durationEnd2 * 0.4f);
 
 
         // PLAN 3
-        transform.DOMove(posCameraEnd3.position, 0);
+        /*transform.DOMove(posCameraEnd3.position, 0);
         transform.DORotate(posCameraEnd3.rotation.eulerAngles, 0);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
@@ -329,7 +330,7 @@ public class CameraMovements : MonoBehaviour
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(durationEnd3 * 0.5f);
+        yield return new WaitForSeconds(durationEnd3 * 0.5f);*/
 
 
         // PLAN 4
@@ -361,20 +362,28 @@ public class CameraMovements : MonoBehaviour
         // PLAN 7
         transform.parent = pivotPlan6;
 
-        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+        //pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+
+
+        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(-42, -179, 0)));
 
         yield return new WaitForSeconds(durationEnd6 * 0.5f);
 
         ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
 
-        pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-10, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
+        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(30, -90, 0)));
 
-        yield return new WaitForSeconds(durationEnd6 * 0.5f);
+        yield return new WaitForSeconds(durationEnd6 * 0.7f);
 
         transform.parent = parentTranform;
 
 
         // PLAN 8
+        transform.DOMove(posCameraEnd6.position, 0);
+        transform.DORotate(posCameraEnd6.rotation.eulerAngles, 0);
+
+        yield return new WaitForSeconds(durationEnd7 * 0.2f);
+
         animGrue.SetTrigger("startVol");
 
         yield return new WaitForSeconds(0.9f);
@@ -399,6 +408,35 @@ public class CameraMovements : MonoBehaviour
         transform.DORotate(posCameraEnd2.rotation.eulerAngles, durationEnd2).SetEase(Ease.InOutSine);
 
         ReferenceManager.Instance.characterReference.anim.SetTrigger("end");*/
+    }
+
+
+    public IEnumerator RotateCamera(float totalDuration, Vector3 rotStart, Vector3 rotWanted)
+    {
+        float currentDuration = totalDuration;
+
+        while(currentDuration > 0)
+        {
+            float ratio = 1 - (currentDuration / totalDuration);
+
+            pivotPlan6.rotation = Quaternion.Lerp(Quaternion.Euler(rotStart), Quaternion.Euler(rotWanted), cameraSpeedRotate.Evaluate(ratio));
+
+            yield return new WaitForEndOfFrame();
+
+            currentDuration -= Time.deltaTime;
+        }
+
+        /*ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
+
+        while (currentDuration < 1)
+        {
+            currentDuration += Time.deltaTime;
+            float ratio = (currentDuration / totalDuration);
+
+            pivotPlan6.rotation = Quaternion.Lerp(Quaternion.Euler(rotWanted), Quaternion.Euler(rotWanted2), cameraSpeedRotate.Evaluate(ratio));
+
+            yield return new WaitForSeconds(Time.deltaTime);
+        }*/
     }
 
 
