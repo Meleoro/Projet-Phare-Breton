@@ -388,6 +388,11 @@ public class CharacterFlute : MonoBehaviour
                 currentBoite.VFXDeplacement.Play(true);
             }
 
+            else if(movedObject.TryGetComponent<Planche>(out Planche currentPlanche))
+            {
+                currentPlanche.VFXDeplacement.Play(true);
+            }
+
             movedObject.GetComponent<ObjetInteractible>().isMoved = true;
             
             manager.movedObjects.Add(movedObject.GetComponent<Rigidbody>());
@@ -411,6 +416,11 @@ public class CharacterFlute : MonoBehaviour
                     if (selectedObjects[k].TryGetComponent<Boite>(out currentBoite))
                     {
                         currentBoite.VFXDeplacement.Play(true);
+                    }
+
+                    else if (selectedObjects[k].TryGetComponent<Planche>(out Planche currentPlanche))
+                    {
+                        currentPlanche.VFXDeplacement.Play(true);
                     }
 
                     selectedObjects[k].GetComponent<ObjetInteractible>().isMoved = true;
@@ -465,6 +475,11 @@ public class CharacterFlute : MonoBehaviour
             if(manager.scriptsMovedObjects[i].TryGetComponent<Boite>(out currentBoite))
             {
                 currentBoite.VFXDeplacement.Stop(true);
+            }
+
+            else if (manager.scriptsMovedObjects[i].TryGetComponent<Planche>(out Planche currentPlanche))
+            {
+                currentPlanche.VFXDeplacement.Stop(true);
             }
 
             if (manager.scriptsMovedObjects[i].rb.velocity.magnitude < 0.15f)
