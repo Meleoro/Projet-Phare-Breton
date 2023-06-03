@@ -110,7 +110,7 @@ public class MusicNode : MonoBehaviour
         float totalDistance = 0;
         List<float> distances = new List<float>();
 
-        ratios.Add(0.1f);
+        ratios.Add(0.005f);
         
         for (int i = 1; i < waypoints.Count; i++)
         {
@@ -186,6 +186,8 @@ public class MusicNode : MonoBehaviour
             // Si le joueur n'a pas appuye 
             if (!erased)
             {
+                currentBande.erasedNotes += 1;
+
                 currentBande.RestartGame();
             }
         }
