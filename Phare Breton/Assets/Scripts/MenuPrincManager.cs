@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class MenuPrincManager : MonoBehaviour
 {
     [SerializeField] private RectTransform menuObject;
+    [SerializeField] private RectTransform fond;
     [SerializeField] private Camera _camera;
     private int currentButton = 1;
     private bool isMoving;
@@ -35,6 +36,7 @@ public class MenuPrincManager : MonoBehaviour
     private float timerShake;
     private Vector2 currentWantedPosShake;
     private Vector2 wantedPosShake;
+    private Vector3 originalPosFond;
 
 
     [Header("Références")] 
@@ -42,6 +44,7 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
     [SerializeField] private OptionsManager optionsManager;
+    [SerializeField] private List<Image> fonds = new List<Image>();
 
 
     [Header("Inputs")] 
@@ -56,7 +59,10 @@ public class MenuPrincManager : MonoBehaviour
     {
         screenWidth = _camera.pixelWidth;
         screenHeight = _camera.pixelHeight;
-        
+
+        originalPosFond = fond.transform.position;
+
+
         OpenMenu();
 
         StartCoroutine(ShakeCoroutine());
@@ -99,6 +105,7 @@ public class MenuPrincManager : MonoBehaviour
         //posModificateur = Vector3.Lerp(posModificateur, new Vector3(modificateur.x + modificateur2.x, modificateur.y + modificateur2.y, 0), Time.deltaTime * 0.2f);
         
         menuObject.position = posScroll + posModificateur;
+        fond.position = originalPosFond + posModificateur * 2;
         //menuObject.rotation = Quaternion.Euler(0,0, Mathf.Lerp(menuObject.rotation.z, modificateurRot + modificateurRot2, Time.deltaTime * 0.5f));
     }
 
