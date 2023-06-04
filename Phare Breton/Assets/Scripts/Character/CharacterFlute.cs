@@ -220,6 +220,7 @@ public class CharacterFlute : MonoBehaviour
                     if (!VerifyIfLinked(selectedObjectsCable[k]))
                     {
                         AudioManager.instance.PlaySoundOneShot(11, 0, 0, manager.playerAudioSource);
+                        AudioManager.instance.PlaySoundOneShot(16, 0, 0, manager.playerAudioSource);
 
                         for (int j = k - 1; j >= 0; j--)
                         {
@@ -387,6 +388,9 @@ public class CharacterFlute : MonoBehaviour
                 {
                     if(selectedObjects[k] != manager.objectOn)
                     {
+                        AudioManager.instance.PlaySoundContinuous(10, 0, 0, manager.playerAudioSource);
+                        //AudioManager.instance.PlaySoundContinuous(15, 0, 0, manager.playerAudioSource);
+
                         manager.movementScript.colliderChara.enabled = false;
                         manager.rb.isKinematic = true;
                         
@@ -495,6 +499,7 @@ public class CharacterFlute : MonoBehaviour
                 if (!selectedObjects[i].isInStase)
                 {
                     AudioManager.instance.PlaySoundOneShot(13, 0, 0, manager.playerAudioSource);
+                    AudioManager.instance.PlaySoundOneShot(17, 0, 0, manager.playerAudioSource);
 
                     selectedObjects[i].ActivateStase();
                     selectedObjects[i].rb.isKinematic = true;

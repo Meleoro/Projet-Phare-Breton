@@ -403,8 +403,6 @@ public class CharacterMovement : MonoBehaviour
     // BOUGE LES OBJETS CONTROLES PAS LE JOUEUR
     public void MoveObjects(List<Rigidbody> objects, List<ObjetInteractible> scripts, Vector2 direction)
     {
-        AudioManager.instance.PlaySoundContinuous(10, 0, 0, manager.playerAudioSource);
-
         for (int k = 0; k < objects.Count; k++)
         {
             if (!scripts[k].isMagneted)
