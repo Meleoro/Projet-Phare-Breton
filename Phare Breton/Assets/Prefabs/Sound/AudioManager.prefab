@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3729431133380567856
 MonoBehaviour:
@@ -48,23 +48,92 @@ MonoBehaviour:
   - name: PlayerSounds
     listSoundIdentities:
     - name: SndWalk-01
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: d259dd4eb88089047981de4971885171, type: 3}
       volume: 1
     - name: SndWalk-02
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 696ea7bc20051ee4eb8003b74688c17c, type: 3}
       volume: 1
     - name: SndWalk-03
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 7f86d0523a511ad428cb5e1f7f681555, type: 3}
       volume: 1
     - name: SndWalkRubble-01
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: f4c6506480bedaf4da5a56f9912a42fa, type: 3}
       volume: 1
     - name: SndWalkRubble-02
+      audioClip: {fileID: 8300000, guid: e068f012c1cacd145918aa568f6a4c63, type: 3}
+      volume: 1
+    - name: SndWalkReverb-01
+      audioClip: {fileID: 8300000, guid: c24f4ddf7e7b5f8449a90e0901f573d4, type: 3}
+      volume: 1
+    - name: SndWalkReverb-02
+      audioClip: {fileID: 8300000, guid: 78c50aa9bc7bc524cb8e515c0c958fce, type: 3}
+      volume: 1
+    - name: SndWalkReverb-03
+      audioClip: {fileID: 8300000, guid: c0cfbb1860fc59645913cfe5652a117e, type: 3}
+      volume: 1
+    - name: SndWalkWater-01
+      audioClip: {fileID: 8300000, guid: d15f5850e774e31428ede4e74e602deb, type: 3}
+      volume: 1
+    - name: SndWalkWater-02
+      audioClip: {fileID: 8300000, guid: a8533231a3bd3e74ebc73fa385547caa, type: 3}
+      volume: 1
+    - name: SndMove-00
+      audioClip: {fileID: 8300000, guid: 7fc7edf882b50e2498c62d65c6bc3de8, type: 3}
+      volume: 1
+    - name: SndLink-01
+      audioClip: {fileID: 8300000, guid: babd592007df7ea4790092e59574cf91, type: 3}
+      volume: 1
+    - name: SndLink-02
+      audioClip: {fileID: 8300000, guid: 27881b571f16cf5489a9df38fce306c5, type: 3}
+      volume: 1
+    - name: SndStase-01
+      audioClip: {fileID: 8300000, guid: 47744e5c058c7cc45974f62423febe60, type: 3}
+      volume: 1
+    - name: SndStase-02
+      audioClip: {fileID: 8300000, guid: c6973d242373247468cd303051fa4126, type: 3}
+      volume: 1
+    - name: SndFlute-01
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndFlute-02
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndFlute-03
       audioClip: {fileID: 0}
       volume: 1
   - name: Interactibles
-    listSoundIdentities: []
-  - name: RythmGame
+    listSoundIdentities:
+    - name: RythmFeedBack-01
+      audioClip: {fileID: 8300000, guid: d42e4f333e1a1274ba9ffc6d0363fd02, type: 3}
+      volume: 1
+    - name: RythmFeedBack-02
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SoundLadder-00
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SoundFallLadder-00
+      audioClip: {fileID: 8300000, guid: 98eabb8a254c61648b0f3ccda24e1556, type: 3}
+      volume: 1
+    - name: SoundFallBox-00
+      audioClip: {fileID: 8300000, guid: 2e0f154e32953e94d85f2ad052908104, type: 3}
+      volume: 1
+    - name: SoundFallPlank-00
+      audioClip: {fileID: 8300000, guid: 031b1aec2ca37e54fada108ad63f934a, type: 3}
+      volume: 1
+    - name: SoundDoor-00
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SoundLamp-01
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SoundLamp-02
+      audioClip: {fileID: 0}
+      volume: 1
+    - name: SndNote-00
+      audioClip: {fileID: 8300000, guid: 59139e29c8e2280428597ac301aed116, type: 3}
+      volume: 1
+  - name: Musics
     listSoundIdentities:
     - name: MusicRythmGame-01
       audioClip: {fileID: 8300000, guid: 238a7fdc43824fa4cba8139324547f20, type: 3}
@@ -74,6 +143,39 @@ MonoBehaviour:
       volume: 1
     - name: MusicRythmGame-03
       audioClip: {fileID: 8300000, guid: eb974e518f46f6c4caf4c9cb910609da, type: 3}
+      volume: 1
+    - name: MusicMainTheme-01
+      audioClip: {fileID: 8300000, guid: c969311ebcb958540843cf4c55572082, type: 3}
+      volume: 1
+  - name: Grue
+    listSoundIdentities:
+    - name: SoundGrueFlight-00
+      audioClip: {fileID: 8300000, guid: ba0c3e177e8b3164ba7b5d508236079d, type: 3}
+      volume: 1
+    - name: SoundGrueInterjection-00
+      audioClip: {fileID: 8300000, guid: cbacd3d262baedb4593178d2baba6a35, type: 3}
+      volume: 1
+  - name: Ambiance
+    listSoundIdentities:
+    - name: AtmspOutside-02
+      audioClip: {fileID: 8300000, guid: 8e7179a9e3b1e0f438f43cf6645ee9bc, type: 3}
+      volume: 1
+    - name: AtmspOutside-03
+      audioClip: {fileID: 8300000, guid: c59b48d442f6d474ba5baa978185f249, type: 3}
+      volume: 1
+    - name: AtmspInside-02
+      audioClip: {fileID: 8300000, guid: b7785e162c8f6f2439e29a2f26bd0d24, type: 3}
+      volume: 1
+    - name: SoundStartCrash-00
+      audioClip: {fileID: 0}
+      volume: 1
+  - name: UI
+    listSoundIdentities:
+    - name: SoundButton-00
+      audioClip: {fileID: 8300000, guid: 91ae82abb22b4224d80f3a6cb5020ccc, type: 3}
+      volume: 1
+    - name: SoundButton-01
+      audioClip: {fileID: 8300000, guid: b5b71e8105f031a408f8916b10a7e73a, type: 3}
       volume: 1
   audioSources: []
   masterVolume: 1

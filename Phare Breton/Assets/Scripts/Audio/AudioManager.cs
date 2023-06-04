@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        
+        PlaySoundOneShot(0, 5, 0,AudioSourceSurLeJoueur);
         /*if (mainMenu)
         {
             PlaySoundContinuous(3,7,0,MainMenuAudioSource.instance.audioSource);
@@ -38,7 +38,7 @@ public class AudioManager : MonoBehaviour
             audioSources[2] = PlayerController.instance.secondaryAudioSource;
             PlaySoundContinuous(0,6,2);
         }*/
-        
+
     }
 
     public void PlaySoundContinuous(int soundId, int categoryId = 0, int audioSourceId = 0, AudioSource audioSource = null)
