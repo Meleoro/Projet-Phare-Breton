@@ -44,6 +44,7 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
     [SerializeField] private OptionsManager optionsManager;
+    [SerializeField] private Image fondu;
 
 
     [Header("Fonds")]
@@ -64,6 +65,8 @@ public class MenuPrincManager : MonoBehaviour
     {
         screenWidth = _camera.pixelWidth;
         screenHeight = _camera.pixelHeight;
+
+        fondu.DOFade(0, 1.5f);
 
         originalPosFond = fond.transform.position;
 
@@ -221,7 +224,7 @@ public class MenuPrincManager : MonoBehaviour
     {
         if (currentButton == 1)
         {
-            SceneManager.LoadScene("LevelDesign - BlockMesh");
+            StartCoroutine(CourtineStart());
         }
         
         else if (currentButton == 2)
@@ -234,9 +237,20 @@ public class MenuPrincManager : MonoBehaviour
             Application.Quit();
         }
     }
+
+
+    public IEnumerator CourtineStart()
+    {
+        fondu.DOFade(1, 0.8f);
+
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadScene("LevelDesign - BlockMesh");
+    }
     
 
-    
+
+
     public void ChangeSelected()
     {
         if (up && currentButton > 1)
