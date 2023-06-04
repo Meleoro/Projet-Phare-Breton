@@ -120,10 +120,14 @@ public class CharacterNotes : MonoBehaviour
             bandes.Clear();
             bandesObjects.Clear();
 
-            if (mainSript.tagToActivate != null)
+            if (mainSript.tagToActivate.Count != 0)
             {
-                mainSript.tagToActivate.GetComponent<MeshRenderer>().material.DOFade(1, 5);
-                mainSript.tagToActivate = null;
+                for(int i = 0; i < mainSript.tagToActivate.Count; i++)
+                {
+                    mainSript.tagToActivate[i].GetComponent<MeshRenderer>().material.DOFade(1, 5);
+                }
+
+                mainSript.tagToActivate.Clear();
             }
         }
     }

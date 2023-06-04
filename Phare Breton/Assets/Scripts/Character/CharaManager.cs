@@ -48,7 +48,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool canPlayMusic;
     [HideInInspector] public int currentMelodyIndex;
     [HideInInspector] public bool isInBiblio;
-    [HideInInspector] public GameObject tagToActivate;
+    [HideInInspector] public List<GameObject> tagToActivate = new List<GameObject>();
 
     [Header("Powers")]
     public bool canMoveObjects;

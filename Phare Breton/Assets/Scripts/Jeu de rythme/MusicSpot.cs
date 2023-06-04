@@ -9,7 +9,7 @@ public class MusicSpot : MonoBehaviour
     [SerializeField] private Transform cameraPos;
     [SerializeField] private Transform cameraPos2;
 
-    public GameObject tag;
+    public List<GameObject> tags = new List<GameObject>();
     
     
 
@@ -25,7 +25,7 @@ public class MusicSpot : MonoBehaviour
                 ReferenceManager.Instance.cameraReference.posCameraRythme = cameraPos;
                 ReferenceManager.Instance.cameraReference.posCameraRythme2 = cameraPos2;
 
-                ReferenceManager.Instance.characterReference.tagToActivate = tag;
+                ReferenceManager.Instance.characterReference.tagToActivate = tags;
             }
         }
     }
@@ -40,7 +40,7 @@ public class MusicSpot : MonoBehaviour
             ReferenceManager.Instance.cameraReference.posCameraRythme = null;
             ReferenceManager.Instance.cameraReference.posCameraRythme2 = null;
             
-            ReferenceManager.Instance.characterReference.tagToActivate = null;
+            ReferenceManager.Instance.characterReference.tagToActivate.Clear();
         }
     }
 }
