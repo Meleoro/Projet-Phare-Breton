@@ -545,7 +545,7 @@ public class CameraMovements : MonoBehaviour
     // PERMET DE REORIENTER L'OBJET QUI NOUS SERT DE REFERENCE POUR L'ORIENTATION DES CONTROLES
     public void ActualiseRotationCamRef()
     {
-        cameraRotationRefScript.currentRotation = new Vector3(0, transform.eulerAngles.y, 0);
+        cameraRotationRefScript.wantedRotation = new Vector3(0, transform.eulerAngles.y, 0);
     }
 
 
