@@ -53,6 +53,7 @@ public class CameraMovements : MonoBehaviour
     public float durationMiddle;
 
     [Header("CinematiqueFin")]
+    public UIFin UIScript;
     public bool doEndCinematique;
     public Transform pivotPlan6;
     public Animator animGrue;
@@ -405,6 +406,10 @@ public class CameraMovements : MonoBehaviour
         // PLAN 9
         transform.DOMove(posCameraEnd7.position, durationEnd8);
         transform.DORotate(posCameraEnd7.rotation.eulerAngles, durationEnd8);
+
+        yield return new WaitForSeconds(durationEnd8);
+
+        StartCoroutine(UIScript.Credits());
 
 
 
