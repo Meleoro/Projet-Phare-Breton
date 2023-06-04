@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class MusicSpot : MonoBehaviour
 {
@@ -10,8 +11,17 @@ public class MusicSpot : MonoBehaviour
     [SerializeField] private Transform cameraPos2;
 
     public List<GameObject> tags = new List<GameObject>();
-    
-    
+
+
+    private void Start()
+    {
+        for (int i = 0; i < tags.Count; i++)
+        {
+            tags[i].GetComponent<MeshRenderer>().material.DOFade(0, 0);
+        }
+    }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
