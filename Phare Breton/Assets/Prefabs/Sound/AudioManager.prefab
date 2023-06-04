@@ -48,14 +48,14 @@ MonoBehaviour:
   - name: PlayerSounds
     listSoundIdentities:
     - name: SndWalk-01
-      audioClip: {fileID: 8300000, guid: d259dd4eb88089047981de4971885171, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: 7740eff8c350e8c43a0aae2eb7b191b9, type: 3}
+      volume: 0.5
     - name: SndWalk-02
       audioClip: {fileID: 8300000, guid: 696ea7bc20051ee4eb8003b74688c17c, type: 3}
-      volume: 1
+      volume: 0.5
     - name: SndWalk-03
-      audioClip: {fileID: 8300000, guid: 7f86d0523a511ad428cb5e1f7f681555, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: ca508574ab8055a478cea4052b3ffef5, type: 3}
+      volume: 0.5
     - name: SndWalkRubble-01
       audioClip: {fileID: 8300000, guid: f4c6506480bedaf4da5a56f9912a42fa, type: 3}
       volume: 1
@@ -63,14 +63,14 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: e068f012c1cacd145918aa568f6a4c63, type: 3}
       volume: 1
     - name: SndWalkReverb-01
-      audioClip: {fileID: 8300000, guid: c24f4ddf7e7b5f8449a90e0901f573d4, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: a9ecfb7745c829848ba0c23545f6e1ad, type: 3}
+      volume: 0.5
     - name: SndWalkReverb-02
-      audioClip: {fileID: 8300000, guid: 78c50aa9bc7bc524cb8e515c0c958fce, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: 7e90649da090030408c34660f5b6d7e5, type: 3}
+      volume: 0.5
     - name: SndWalkReverb-03
-      audioClip: {fileID: 8300000, guid: c0cfbb1860fc59645913cfe5652a117e, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: f3497c1c9424cbe4fafcdc1f64b15f62, type: 3}
+      volume: 0.5
     - name: SndWalkWater-01
       audioClip: {fileID: 8300000, guid: d15f5850e774e31428ede4e74e602deb, type: 3}
       volume: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: a8533231a3bd3e74ebc73fa385547caa, type: 3}
       volume: 1
     - name: SndMove-00
-      audioClip: {fileID: 8300000, guid: 7fc7edf882b50e2498c62d65c6bc3de8, type: 3}
+      audioClip: {fileID: 8300000, guid: 25b4235fbcf7dda449f9de9ccd09117b, type: 3}
       volume: 1
     - name: SndLink-01
       audioClip: {fileID: 8300000, guid: babd592007df7ea4790092e59574cf91, type: 3}
@@ -110,8 +110,8 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: a103483149e53a3439cbc71b4353acd3, type: 3}
       volume: 0.6
     - name: SoundLadder-00
-      audioClip: {fileID: 8300000, guid: 0b4b4969d071a81498bffc891932b293, type: 3}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: 8c1e7a5d7f618b541abdc26f0c5fa59f, type: 3}
+      volume: 0.5
     - name: SoundFallLadder-00
       audioClip: {fileID: 8300000, guid: 98eabb8a254c61648b0f3ccda24e1556, type: 3}
       volume: 1
@@ -151,10 +151,10 @@ MonoBehaviour:
     listSoundIdentities:
     - name: SoundGrueFlight-00
       audioClip: {fileID: 8300000, guid: ba0c3e177e8b3164ba7b5d508236079d, type: 3}
-      volume: 0.6
+      volume: 0
     - name: SoundGrueInterjection-00
       audioClip: {fileID: 8300000, guid: cbacd3d262baedb4593178d2baba6a35, type: 3}
-      volume: 0.6
+      volume: 0
   - name: Ambiance
     listSoundIdentities:
     - name: AtmspOutside-02
@@ -167,7 +167,7 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: b7785e162c8f6f2439e29a2f26bd0d24, type: 3}
       volume: 1
     - name: SoundStartCrash-00
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 1d6ddef0e3e462944af5a7e862759790, type: 3}
       volume: 1
   - name: UI
     listSoundIdentities:
@@ -183,6 +183,6 @@ MonoBehaviour:
   masterVolume: 1
   musicVolume: 1
   sfxVolume: 1
-  soundEffectAndMusicSplit: 0
+  soundEffectAndMusicSplit: 1
   musicCategoryID: 2
   mainMenu: 0

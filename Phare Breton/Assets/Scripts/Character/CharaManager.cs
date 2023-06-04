@@ -103,6 +103,9 @@ public class CharaManager : MonoBehaviour
 
     private void StartAudio()
     {
+        AudioManager.instance.audioSources.Clear();
+        AudioManager.instance.audioSources.Add(playerAudioSource);
+
         AudioManager.instance.musicAudioSources.Clear();
         AudioManager.instance.musicAudioSources.Add(musicAudioSource);
 

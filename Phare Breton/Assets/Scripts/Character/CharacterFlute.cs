@@ -215,9 +215,19 @@ public class CharacterFlute : MonoBehaviour
 
             else
             {
-                for (int k = selectedObjectsCable.Count - 1; k > 0; k--)
+                float compteur = selectedObjectsCable.Count;
+
+                for (int k = 0; k < selectedObjectsCable.Count; k++)
                 {
-                    if (!VerifyIfLinked(selectedObjectsCable[k]))
+                    if (VerifyIfLinked(selectedObjectsCable[k]))
+                    {
+                        compteur -= 1;
+                    }
+                }
+
+                if(compteur > 1)
+                {
+                    for (int k = selectedObjectsCable.Count - 1; k > 0; k--)
                     {
                         AudioManager.instance.PlaySoundOneShot(11, 0, 0, manager.playerAudioSource);
                         AudioManager.instance.PlaySoundOneShot(16, 0, 0, manager.playerAudioSource);
@@ -235,11 +245,11 @@ public class CharacterFlute : MonoBehaviour
                             // On crée le câble physiquement
                             currentCableCreator.CreateNodes(selectedObjectsCable[k].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[j].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[k], selectedObjectsCable[j],
                                 selectedObjectsCable[k].GetComponent<Rigidbody>(), selectedObjectsCable[j].GetComponent<Rigidbody>());
-                        
+
                             // On informe les scripts des objets qu'ils sont liés
                             selectedObjectsCable[k].linkedObject.Add(selectedObjectsCable[j].gameObject);
                             selectedObjectsCable[k].cable = currentCableCreator;
-                        
+
                             selectedObjectsCable[j].linkedObject.Add(selectedObjectsCable[k].gameObject);
                             selectedObjectsCable[j].cable = currentCableCreator;
 
@@ -247,15 +257,117 @@ public class CharacterFlute : MonoBehaviour
                             selectedObjectsCable[k].VerifyLinkedObject();
                             selectedObjectsCable[j].VerifyLinkedObject();
                         }
+
+                        /*if (!VerifyIfLinked(selectedObjectsCable[k]))
+                        {
+                            AudioManager.instance.PlaySoundOneShot(11, 0, 0, manager.playerAudioSource);
+                            AudioManager.instance.PlaySoundOneShot(16, 0, 0, manager.playerAudioSource);
+
+                            for (int j = k - 1; j >= 0; j--)
+                            {
+                                // Références
+                                GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
+                                Cable currentCable = newRope.GetComponent<Cable>();
+                                CableCreator currentCableCreator = newRope.GetComponent<CableCreator>();
+
+                                // On place le début et la fin du câble
+                                currentCable.InitialiseStartEnd(selectedObjectsCable[k].gameObject, selectedObjectsCable[j].gameObject);
+
+                                // On crée le câble physiquement
+                                currentCableCreator.CreateNodes(selectedObjectsCable[k].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[j].GetComponentInChildren<SpringJoint>(), selectedObjectsCable[k], selectedObjectsCable[j],
+                                    selectedObjectsCable[k].GetComponent<Rigidbody>(), selectedObjectsCable[j].GetComponent<Rigidbody>());
+
+                                // On informe les scripts des objets qu'ils sont liés
+                                selectedObjectsCable[k].linkedObject.Add(selectedObjectsCable[j].gameObject);
+                                selectedObjectsCable[k].cable = currentCableCreator;
+
+                                selectedObjectsCable[j].linkedObject.Add(selectedObjectsCable[k].gameObject);
+                                selectedObjectsCable[j].cable = currentCableCreator;
+
+                                // On vérifie si ces objets intéragissent entre eux
+                                selectedObjectsCable[k].VerifyLinkedObject();
+                                selectedObjectsCable[j].VerifyLinkedObject();
+                            }
+                        }*/
                     }
                 }
+                
             }
         }
     }
 
     public bool VerifyIfLinked(ObjetInteractible currentObject)
     {
-        if (currentObject.isLinked)
+        if (!currentObject.isLinked)
+        {
+            return false;
+        }
+
+        float compteur = currentObject.linkedObject.Count;
+
+        for (int i = 0; i < selectedObjectsCable.Count; i++)
+        {
+            if (currentObject.linkedObject.Contains(selectedObjectsCable[i].gameObject))
+            {
+                int index = 0;
+                bool destroyOwnCable = false;
+
+                for(int k = 0; k < currentObject.linkedObject.Count; k++)
+                {
+                    if (currentObject.linkedObject[k] == selectedObjectsCable[i].gameObject)
+                    {
+                        if(currentObject.linkedObject[k].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
+                        {
+                            destroyOwnCable = true;
+                        }
+                        else
+                        {
+                            destroyOwnCable = false;
+                        }
+
+                        index = k;
+                    }
+                }
+
+                ObjetInteractible currentLinkedObject = currentObject.linkedObject[index].GetComponent<ObjetInteractible>();
+                    
+                    
+                CableCreator currentCable = currentLinkedObject.cable;
+
+                if (destroyOwnCable)
+                    currentCable = currentObject.cable;
+
+                Destroy(currentCable.gameObject);
+
+
+                currentLinkedObject.linkedObject.Clear();
+                currentLinkedObject.isLinked = false;
+
+                currentLinkedObject.VerifyLinkedObject();
+
+                compteur -= 1;
+            }
+            
+        }
+
+
+        if(compteur > 0)
+        {
+
+            return false;
+        }
+
+        else
+        {
+            currentObject.linkedObject.Clear();
+            currentObject.isLinked = false;
+
+            currentObject.VerifyLinkedObject();
+
+            return true;
+        }
+
+        /*if (currentObject.isLinked)
         {
             for (int i = 0; i < currentObject.linkedObject.Count; i++)
             {
@@ -283,7 +395,7 @@ public class CharacterFlute : MonoBehaviour
         else
         {
             return false;
-        }
+        }*/
     }
 
 
@@ -386,7 +498,7 @@ public class CharacterFlute : MonoBehaviour
             {
                 if (!selectedObjects[k].cantBeMoved)
                 {
-                    if(selectedObjects[k] != manager.objectOn)
+                    if(selectedObjects[k].gameObject != manager.objectOn)
                     {
                         AudioManager.instance.PlaySoundContinuous(10, 0, 0, manager.playerAudioSource);
                         //AudioManager.instance.PlaySoundContinuous(15, 0, 0, manager.playerAudioSource);
