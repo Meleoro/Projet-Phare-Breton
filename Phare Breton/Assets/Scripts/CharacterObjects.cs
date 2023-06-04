@@ -36,7 +36,7 @@ public class CharacterObjects : MonoBehaviour
     {
         mainScript.isPickingObjectUp = true;
         posObject = ReferenceManager.Instance.cameraReference.transform.position +
-                    ReferenceManager.Instance.cameraReference.transform.forward * 1.5f;
+                    ReferenceManager.Instance.cameraReference.transform.forward * currentObject.GetComponent<ObjetRecuperable>().distanceObjet;
 
         controlledObject = currentObject;
 

@@ -11,7 +11,7 @@ public class CameraRotationRef : MonoBehaviour
     {
         transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, currentRotation.z);
 
-        AdapteRoation();
+        //AdapteRoation();
     }
 
 
