@@ -3360,6 +3360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea6fc4282652b34496edd41019847bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wantedRotation: {x: 0, y: 0, z: 0}
   currentRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &8452932474400661172
 GameObject:
@@ -3868,6 +3869,21 @@ PrefabInstance:
       propertyPath: collectedNotes.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8354452777228727355, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[0].currentCollectedNotes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354452777228727355, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[1].currentCollectedNotes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8354452777228727355, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      propertyPath: collectedNotes.Array.data[2].currentCollectedNotes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       propertyPath: anim
@@ -3974,6 +3990,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2154013127770234402}
+    - targetCorrespondingSourceObject: {fileID: 5527187700211497055, guid: d45a5586b24669a4bab29e12b01b5703,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4875257638959061974}
     - targetCorrespondingSourceObject: {fileID: 1580841887084569927, guid: d45a5586b24669a4bab29e12b01b5703,
         type: 3}
       insertIndex: -1
@@ -4156,6 +4176,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &4875257638959061974
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543552995709342366}
+  m_Enabled: 1
 --- !u!114 &8793358076578007543 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8814216740821263158, guid: d45a5586b24669a4bab29e12b01b5703,

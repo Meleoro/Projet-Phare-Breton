@@ -27,6 +27,7 @@ public class ObjetInteractible : MonoBehaviour
 
     [Header("MoveObject")] 
     public bool cantBeMoved;
+    public bool cantMagnet;
     public bool hauteurFigee;
     public float hauteurFigeeValeur = 2;
     private float wantedHauteur;
@@ -41,6 +42,9 @@ public class ObjetInteractible : MonoBehaviour
                                                                                 
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
+
+    [Header("Sound")] 
+    protected bool didSound;
 
 
 
@@ -70,6 +74,7 @@ public class ObjetInteractible : MonoBehaviour
         if (isMoved && !isMagneted)
         {
             ActualiseHauteur();
+            didSound = false;
         }
         else
         {
