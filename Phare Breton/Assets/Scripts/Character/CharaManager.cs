@@ -27,6 +27,7 @@ public class CharaManager : MonoBehaviour
     [SerializeField] private MeshRenderer fluteMesh;
     [HideInInspector] public Rigidbody rb;
     [HideInInspector] public AudioSource playerAudioSource;
+    public ParticleSystem waterParticles;
 
     [Header("Inputs")]
     [HideInInspector] public Vector2 direction;
@@ -84,6 +85,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool isPickingObjectUp;
     [HideInInspector] public bool isCrossingDoor;
     private bool UIActive;
+    [HideInInspector] public bool end;
 
 
     void Start()
@@ -242,9 +244,23 @@ public class CharaManager : MonoBehaviour
                 scriptObjets.ControlObject(direction, stase);
 
             if (!isCrossingDoor)
+            {
+                if (isWalking && end)
+                {
+                    waterParticles.Stop();
+                }
+
                 isWalking = false;
+            }
             else
+            {
+                if (!isWalking && end)
+                {
+                    waterParticles.Play();
+                }
+
                 isWalking = true;
+            }
 
             /*movementScript.MoveCharacter(Vector2.zero);
             movementScript.MoveObjects(movedObjects, scriptsMovedObjects, Vector2.zero);*/

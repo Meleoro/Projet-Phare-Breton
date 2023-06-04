@@ -334,6 +334,8 @@ public class CameraMovements : MonoBehaviour
 
 
         // PLAN 4
+        ReferenceManager.Instance.characterReference.end = true;
+
         transform.DOMove(posCameraEnd4.position, 0);
         transform.DORotate(posCameraEnd4.rotation.eulerAngles, 0);
 
