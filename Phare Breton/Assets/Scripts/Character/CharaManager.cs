@@ -259,6 +259,12 @@ public class CharaManager : MonoBehaviour
                     waterParticles.Play();
                 }
 
+                if (end)
+                {
+                    movementScript.isOnWater = true;
+                    movementScript.PlaySoundPas();
+                }
+
                 isWalking = true;
             }
 
