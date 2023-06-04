@@ -131,7 +131,7 @@ public class OptionsManager : MonoBehaviour
         
         optionsMainText.DOFade(1, duration);
 
-        fond.DOFade(0.8f, duration);
+        fond.DOFade(1f, duration);
 
 
         for (int i = 0; i < texts.Count; i++)
