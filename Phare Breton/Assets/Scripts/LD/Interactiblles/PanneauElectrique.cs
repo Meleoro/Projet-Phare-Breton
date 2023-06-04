@@ -24,6 +24,12 @@ public class PanneauElectrique : ObjetInteractible
             {
                 isUsed = true;
             }
+
+            Ampoule currentAmpoule;
+            if (linkedObject[k].TryGetComponent(out currentAmpoule))
+            {
+                isUsed = true;
+            }
         }
 
 

@@ -9,6 +9,8 @@ public class Ampoule : ObjetInteractible
     [SerializeField] private Light lightComponent;
     [SerializeField] private SphereCollider lightArea;
 
+    public ParticleSystem VFXElectricite;
+
     private bool doOnce = false;
 
 
@@ -26,6 +28,8 @@ public class Ampoule : ObjetInteractible
 
             if (doOnce)
             {
+                VFXElectricite.Stop();
+
                 doOnce = false;
                 AudioManager.instance.PlaySoundOneShot(8, 1, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
             }
@@ -40,6 +44,8 @@ public class Ampoule : ObjetInteractible
 
         if (!doOnce)
         {
+            VFXElectricite.Play();
+
             doOnce = true;
             AudioManager.instance.PlaySoundOneShot(7, 1, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
         }

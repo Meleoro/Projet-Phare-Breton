@@ -28,8 +28,6 @@ public class ColliderZoneSombre : MonoBehaviour
                 
                 DOTween.To(() => alpha, x => alpha = x, 0, 1).OnUpdate(() =>
                 {
-                    Debug.Log(alpha);
-                    
                     currentMesh.material.SetFloat("_Alpha", alpha);
                 });
             }
