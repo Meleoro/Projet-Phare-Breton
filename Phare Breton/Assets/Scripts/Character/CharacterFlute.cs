@@ -316,8 +316,6 @@ public class CharacterFlute : MonoBehaviour
                 {
                     if (currentObject.linkedObject[k] == selectedObjectsCable[i].gameObject)
                     {
-                        Debug.Log(12);
-
                         if(currentObject.linkedObject[k].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
                         {
                             destroyOwnCable = true;
