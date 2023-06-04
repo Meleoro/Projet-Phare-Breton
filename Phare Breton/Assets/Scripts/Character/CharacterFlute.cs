@@ -290,7 +290,9 @@ public class CharacterFlute : MonoBehaviour
     public void PlaceLien()
     {
         SpringJoint objectSpring = manager.cableObject.GetComponentInChildren<SpringJoint>();
-            
+
+        AudioManager.instance.PlaySoundOneShot(12, 0, 0, manager.playerAudioSource);
+
         for (int k = cables.Count - 1; k >= 0; k--)
         {
             CableCreator currentCableCreator = cables[k].GetComponent<CableCreator>();
