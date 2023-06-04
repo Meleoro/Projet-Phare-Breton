@@ -93,24 +93,24 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: c6973d242373247468cd303051fa4126, type: 3}
       volume: 1
     - name: SndFlute-01
-      audioClip: {fileID: 0}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: 32907d2e2457adb47ae4b50ed72b7e24, type: 3}
+      volume: 0.6
     - name: SndFlute-02
-      audioClip: {fileID: 0}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: b6daf6fe514bbf14a8e7c81e00c8f6f7, type: 3}
+      volume: 0.6
     - name: SndFlute-03
-      audioClip: {fileID: 0}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: dd90c55b014468c45accd93b8354c19c, type: 3}
+      volume: 0.6
   - name: Interactibles
     listSoundIdentities:
     - name: RythmFeedBack-01
       audioClip: {fileID: 8300000, guid: d42e4f333e1a1274ba9ffc6d0363fd02, type: 3}
       volume: 1
     - name: RythmFeedBack-02
-      audioClip: {fileID: 0}
-      volume: 1
+      audioClip: {fileID: 8300000, guid: a103483149e53a3439cbc71b4353acd3, type: 3}
+      volume: 0.6
     - name: SoundLadder-00
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 0b4b4969d071a81498bffc891932b293, type: 3}
       volume: 1
     - name: SoundFallLadder-00
       audioClip: {fileID: 8300000, guid: 98eabb8a254c61648b0f3ccda24e1556, type: 3}
@@ -125,10 +125,10 @@ MonoBehaviour:
       audioClip: {fileID: 0}
       volume: 1
     - name: SoundLamp-01
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: e5a27785650ba404bad57b71526db604, type: 3}
       volume: 1
     - name: SoundLamp-02
-      audioClip: {fileID: 0}
+      audioClip: {fileID: 8300000, guid: 7eb2bfe9c95e15e45adab7670c730a27, type: 3}
       volume: 1
     - name: SndNote-00
       audioClip: {fileID: 8300000, guid: 59139e29c8e2280428597ac301aed116, type: 3}
@@ -151,10 +151,10 @@ MonoBehaviour:
     listSoundIdentities:
     - name: SoundGrueFlight-00
       audioClip: {fileID: 8300000, guid: ba0c3e177e8b3164ba7b5d508236079d, type: 3}
-      volume: 1
+      volume: 0.6
     - name: SoundGrueInterjection-00
       audioClip: {fileID: 8300000, guid: cbacd3d262baedb4593178d2baba6a35, type: 3}
-      volume: 1
+      volume: 0.6
   - name: Ambiance
     listSoundIdentities:
     - name: AtmspOutside-02
@@ -178,5 +178,11 @@ MonoBehaviour:
       audioClip: {fileID: 8300000, guid: b5b71e8105f031a408f8916b10a7e73a, type: 3}
       volume: 1
   audioSources: []
+  musicAudioSources: []
+  sfxAudioSources: []
   masterVolume: 1
+  musicVolume: 1
+  sfxVolume: 1
+  soundEffectAndMusicSplit: 0
+  musicCategoryID: 2
   mainMenu: 0
