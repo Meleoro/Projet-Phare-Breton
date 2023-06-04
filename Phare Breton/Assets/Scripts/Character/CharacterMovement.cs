@@ -42,6 +42,13 @@ public class CharacterMovement : MonoBehaviour
     public bool willFall;
     private RaycastHit fallRaycastHit;
 
+    [Header("Son")]
+    public float vitessePas;
+    private float timerPas;
+    public bool isOnGravier;
+    public bool isOnWater;
+    public bool hasEcho;
+
 
     private void Awake()
     {
@@ -61,6 +68,8 @@ public class CharacterMovement : MonoBehaviour
         if (direction != Vector2.zero && direction.magnitude > 0.9f)
         {
             stockageDirection = direction;
+
+            PlaySoundPas();
         }
 
         /*if (VFXPasActif)
@@ -171,6 +180,67 @@ public class CharacterMovement : MonoBehaviour
             else
             {
                 manager.rb.velocity = Vector3.zero;
+            }
+        }
+    }
+
+
+    public void PlaySoundPas()
+    {
+        timerPas -= Time.deltaTime;
+        
+        if(timerPas < 0)
+        {
+            timerPas = vitessePas;
+
+            if (!isOnGravier && !isOnWater && !hasEcho)
+            {
+                int index = UnityEngine.Random.Range(0, 3);
+
+                if(index == 0)
+                    AudioManager.instance.PlaySoundOneShot(0, 0, 0, manager.playerAudioSource);
+
+                else if(index == 1)
+                    AudioManager.instance.PlaySoundOneShot(1, 0, 0, manager.playerAudioSource);
+
+                else
+                    AudioManager.instance.PlaySoundOneShot(2, 0, 0, manager.playerAudioSource);
+            }
+
+            else if (hasEcho)
+            {
+                int index = UnityEngine.Random.Range(0, 3);
+
+                if (index == 0)
+                    AudioManager.instance.PlaySoundOneShot(5, 0, 0, manager.playerAudioSource);
+
+                else if (index == 1)
+                    AudioManager.instance.PlaySoundOneShot(6, 0, 0, manager.playerAudioSource);
+
+                else
+                    AudioManager.instance.PlaySoundOneShot(7, 0, 0, manager.playerAudioSource);
+            }
+
+            else if (isOnGravier)
+            {
+                int index = UnityEngine.Random.Range(0, 2);
+
+                if (index == 0)
+                    AudioManager.instance.PlaySoundOneShot(3, 0, 0, manager.playerAudioSource);
+
+                else 
+                    AudioManager.instance.PlaySoundOneShot(4, 0, 0, manager.playerAudioSource);
+            }
+
+            else if (isOnWater)
+            {
+                int index = UnityEngine.Random.Range(0, 2);
+
+                if (index == 0)
+                    AudioManager.instance.PlaySoundOneShot(8, 0, 0, manager.playerAudioSource);
+
+                else
+                    AudioManager.instance.PlaySoundOneShot(9, 0, 0, manager.playerAudioSource);
             }
         }
     }
