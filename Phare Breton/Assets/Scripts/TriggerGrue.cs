@@ -156,7 +156,9 @@ public class TriggerGrue : MonoBehaviour
 
         Vector3 wantedRotation = new Vector3(direction.x, 0, direction.y);
 
-        currentGrue.transform.DORotate(wantedRotation, 0.4f);
+        Quaternion wantedRotFinale = Quaternion.LookRotation(wantedRotation, Vector3.up);
+
+        currentGrue.transform.DORotate(wantedRotFinale.eulerAngles, 0.4f);
         
         while (timer > 0)
         {
