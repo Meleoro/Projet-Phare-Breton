@@ -755,6 +755,7 @@ MonoBehaviour:
   posCharaMiddle1: {fileID: 0}
   posCharaMiddle2: {fileID: 0}
   durationMiddle: 0
+  UIScript: {fileID: 0}
   doEndCinematique: 0
   pivotPlan6: {fileID: 0}
   animGrue: {fileID: 0}
@@ -4175,6 +4176,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: FX_Ripple
       objectReference: {fileID: 0}
+    - target: {fileID: 5896453166848299910, guid: f8c1be8ff9334c3458e712daaee395ca,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6766630558905926246, guid: f8c1be8ff9334c3458e712daaee395ca,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8133130518448535238, guid: f8c1be8ff9334c3458e712daaee395ca,
         type: 3}
       propertyPath: m_RootOrder
@@ -4228,6 +4239,11 @@ PrefabInstance:
     - target: {fileID: 8133130518448535238, guid: f8c1be8ff9334c3458e712daaee395ca,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9152731364842571587, guid: f8c1be8ff9334c3458e712daaee395ca,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
