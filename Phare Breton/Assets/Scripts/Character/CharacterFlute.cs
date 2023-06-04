@@ -190,6 +190,8 @@ public class CharacterFlute : MonoBehaviour
             {
                 if (!VerifyIfLinked(selectedObjectsCable[0]))
                 {
+                    AudioManager.instance.PlaySoundOneShot(11, 0, 0, manager.playerAudioSource);
+
                     // Références
                     GameObject newRope = Instantiate(ropeObject, transform.position, Quaternion.identity);
                     Cable currentCable = newRope.GetComponent<Cable>();
@@ -215,9 +217,10 @@ public class CharacterFlute : MonoBehaviour
             {
                 for (int k = selectedObjectsCable.Count - 1; k > 0; k--)
                 {
-
                     if (!VerifyIfLinked(selectedObjectsCable[k]))
                     {
+                        AudioManager.instance.PlaySoundOneShot(11, 0, 0, manager.playerAudioSource);
+
                         for (int j = k - 1; j >= 0; j--)
                         {
                             // Références
