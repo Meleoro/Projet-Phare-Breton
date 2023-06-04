@@ -24,7 +24,7 @@ public class CharacterNotes : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        //Initialize();
 
         mainSript = GetComponent<CharaManager>();
     }
