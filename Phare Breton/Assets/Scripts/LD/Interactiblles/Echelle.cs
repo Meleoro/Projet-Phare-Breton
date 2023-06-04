@@ -43,7 +43,12 @@ public class Echelle : ObjetInteractible
     {
         if(!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved)
         {
-            AudioManager.instance.PlaySoundOneShot(3, 1, 0, GetComponent<AudioSource>());
+            if (!didSound)
+            {
+                didSound = true;
+                
+                AudioManager.instance.PlaySoundOneShot(3, 1, 0, GetComponent<AudioSource>());
+            }
         }
     }
 

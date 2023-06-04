@@ -43,6 +43,9 @@ public class ObjetInteractible : MonoBehaviour
     [Header("Références")]
     [HideInInspector] public Rigidbody rb;
 
+    [Header("Sound")] 
+    protected bool didSound;
+
 
 
     private void Start()
@@ -71,6 +74,7 @@ public class ObjetInteractible : MonoBehaviour
         if (isMoved && !isMagneted)
         {
             ActualiseHauteur();
+            didSound = false;
         }
         else
         {
