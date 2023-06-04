@@ -45,6 +45,7 @@ public class MenuPrincManager : MonoBehaviour
     [SerializeField] private List<Image> bandesImages = new List<Image>();
     [SerializeField] private OptionsManager optionsManager;
     [SerializeField] private Image fondu;
+    public AudioSource currentAudioSource;
 
 
     [Header("Fonds")]
@@ -87,6 +88,8 @@ public class MenuPrincManager : MonoBehaviour
         StartCoroutine(FindNewShakePos2());*/
         
         currentButton = 1;
+        
+        AudioManager.instance.PlaySoundOneShot(3, 2, 0,currentAudioSource);
     }
 
 
@@ -222,6 +225,8 @@ public class MenuPrincManager : MonoBehaviour
 
     public void UseButton()
     {
+        AudioManager.instance.PlaySoundOneShot(0, 5, 0, currentAudioSource);
+        
         if (currentButton == 1)
         {
             StartCoroutine(CourtineStart());
@@ -255,6 +260,8 @@ public class MenuPrincManager : MonoBehaviour
     {
         if (up && currentButton > 1)
         {
+            AudioManager.instance.PlaySoundOneShot(1, 5, 0, currentAudioSource);
+            
             currentButton -= 1;
             
             GoUp();
@@ -262,6 +269,8 @@ public class MenuPrincManager : MonoBehaviour
         
         else if (down && currentButton < textsButtons.Count)
         {
+            AudioManager.instance.PlaySoundOneShot(1, 5, 0, currentAudioSource);
+            
             currentButton += 1;
             
             GoDown();

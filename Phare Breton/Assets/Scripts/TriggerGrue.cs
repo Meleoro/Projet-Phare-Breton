@@ -28,6 +28,7 @@ public class TriggerGrue : MonoBehaviour
     private bool launchFly;
     private float currentY;
     private int currentIndex;
+    private AudioSource currentGrueAudioSource;
 
 
 
@@ -67,6 +68,8 @@ public class TriggerGrue : MonoBehaviour
             currentGrue = Instantiate(grueObject, positionsGrue[0].position, Quaternion.identity, transform);
 
             animGrue = currentGrue.GetComponentInChildren<Animator>();
+
+            currentGrueAudioSource = currentGrue.GetComponent<AudioSource>();
         }
     }
 
@@ -85,6 +88,8 @@ public class TriggerGrue : MonoBehaviour
 
 
         yield return new WaitForSeconds(0.9f);
+        
+        AudioManager.instance.PlaySoundOneShot(0, 3, 0,currentGrueAudioSource);
         
         StartCoroutine(VFXSpawn(4));
 
@@ -122,6 +127,8 @@ public class TriggerGrue : MonoBehaviour
 
 
             yield return new WaitForSeconds(speed - 1);
+            
+            AudioManager.instance.PlaySoundOneShot(1, 3, 0,currentGrueAudioSource);
 
 
             animGrue.SetTrigger("endVol");

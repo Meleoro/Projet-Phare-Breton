@@ -123,6 +123,8 @@ public class PauseManager : MonoBehaviour
 
     public void UseButton()
     {
+        AudioManager.instance.PlaySoundOneShot(0, 5, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+        
         if (currentButton == 1)
         {
             QuitPause();
@@ -150,6 +152,8 @@ public class PauseManager : MonoBehaviour
     {
         if (up && currentButton > 1)
         {
+            AudioManager.instance.PlaySoundOneShot(1, 5, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+            
             currentButton -= 1;
             
             GoUp();
@@ -157,6 +161,8 @@ public class PauseManager : MonoBehaviour
         
         else if (down && currentButton < textsButtons.Count)
         {
+            AudioManager.instance.PlaySoundOneShot(1, 5, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+            
             currentButton += 1;
             
             GoDown();
