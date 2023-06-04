@@ -20,6 +20,16 @@ public class Boite : ObjetInteractible
     }
 
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved)
+        {
+            AudioManager.instance.PlaySoundOneShot(4, 1, 0, GetComponent<AudioSource>());
+        }
+    }
+
+
+
     // VERIFIE SI UN PANNEAU EST RELIE
     public override void VerifyLinkedObject()
     {

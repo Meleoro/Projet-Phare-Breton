@@ -14,9 +14,12 @@ public class Echelle : ObjetInteractible
     [HideInInspector] public Transform center;
     [HideInInspector] public Transform TPPosHaut;
 
+    private AudioSource echelleAudioSource;
+
     private RaycastHit raycastHit;
     
     private List<Vector3> pointsGround = new List<Vector3>();
+
 
 
     public bool VerifyUse(Transform posChara)
@@ -34,8 +37,17 @@ public class Echelle : ObjetInteractible
             return true;
         }
     }
-    
-    
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved)
+        {
+            AudioManager.instance.PlaySoundOneShot(3, 1, 0, GetComponent<AudioSource>());
+        }
+    }
+
+
     public Vector3 FindTPPos(Transform posChara, bool inverse)
     {
         pointsGround.Clear();

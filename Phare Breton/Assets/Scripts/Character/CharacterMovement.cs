@@ -479,6 +479,8 @@ public class CharacterMovement : MonoBehaviour
             }
             else if (!(currentClimbedObject.transform.position.y + 0.5f < transform.position.y))
             {
+                AudioManager.instance.PlaySoundOneShot(2, 1, 0, manager.playerAudioSource);
+
                 StartCoroutine(ClimbObject(currentClimbedObject.transform.position + Vector3.up * 2, transform.position, true));
 
                 manager.anim.SetTrigger("startBigClimb");

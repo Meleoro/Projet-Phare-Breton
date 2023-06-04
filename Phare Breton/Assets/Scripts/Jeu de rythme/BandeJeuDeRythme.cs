@@ -93,6 +93,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
                     if (isRight)
                     {
+                        AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+
                         StartCoroutine(FeelDestroyNode());
                     }
                     else
@@ -211,6 +213,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         if(currentHealth > 0)
         {
+            AudioManager.instance.PlaySoundOneShot(1, 1, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+
             StartCoroutine(UINotes.Instance.LoseNote(currentHealth + 1, false));
         }
 

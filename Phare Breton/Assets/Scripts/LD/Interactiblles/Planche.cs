@@ -16,6 +16,14 @@ public class Planche : ObjetInteractible
             MagnetEffect();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved)
+        {
+            AudioManager.instance.PlaySoundOneShot(5, 1, 0, GetComponent<AudioSource>());
+        }
+    }
+
     public void RotatePlanche()
     {
         Quaternion newRot = Quaternion.Lerp(transform.rotation, new Quaternion(0, transform.rotation.y, 0, transform.rotation.w), Time.fixedDeltaTime * 3);
