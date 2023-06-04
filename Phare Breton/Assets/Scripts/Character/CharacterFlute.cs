@@ -410,7 +410,7 @@ public class CharacterFlute : MonoBehaviour
                         manager.movedObjects.Add(selectedObjects[k].GetComponent<Rigidbody>());
                         manager.scriptsMovedObjects.Add(selectedObjects[k].GetComponent<ObjetInteractible>());
 
-                        manager.scriptsMovedObjects[k].currentHauteur = selectedObjects[k].transform.position.y;
+                        manager.scriptsMovedObjects[manager.scriptsMovedObjects.Count - 1].currentHauteur = selectedObjects[k].transform.position.y;
 
                         VerifyLinkedObject(selectedObjects[k].GetComponent<ObjetInteractible>());
                     }
