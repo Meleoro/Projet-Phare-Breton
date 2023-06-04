@@ -115,7 +115,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!145 &5461739042381355251
 SpringJoint:
   m_ObjectHideFlags: 0
@@ -187,6 +187,7 @@ MonoBehaviour:
   isStart: 0
   resistanceCable: {x: 0, y: 0, z: 0}
   cantBeMoved: 0
+  cantMagnet: 0
   hauteurFigee: 1
   hauteurFigeeValeur: 1
   hauteurRespawn: 20
