@@ -9,7 +9,13 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public List<SoundCategory> soundList;
     public List<AudioSource> audioSources;
+    public List<AudioSource> musicAudioSources;
+    public List<AudioSource> sfxAudioSources;
     [Range(0,1)]public float masterVolume;
+    [Range(0,1)]public float musicVolume;
+    [Range(0,1)]public float sfxVolume;
+    public bool soundEffectAndMusicSplit;
+    [SerializeField] private int musicCategoryID;
     [SerializeField] private bool mainMenu;
 
     private void Awake()
@@ -45,7 +51,14 @@ public class AudioManager : MonoBehaviour
     {
         AudioSource currentAudioSource = audioSource != null ? audioSource : audioSources[audioSourceId];
         currentAudioSource.clip = soundList[categoryId].listSoundIdentities[soundId].audioClip;
-        currentAudioSource.volume = soundList[categoryId].listSoundIdentities[soundId].volume*masterVolume;
+        if(soundEffectAndMusicSplit && categoryId == musicCategoryID)
+        {
+            currentAudioSource.volume = soundList[categoryId].listSoundIdentities[soundId].volume*masterVolume*musicVolume;
+        }
+        else
+        {
+            currentAudioSource.volume = soundList[categoryId].listSoundIdentities[soundId].volume*masterVolume*sfxVolume;
+        }
 
         currentAudioSource.Play();
     }
@@ -88,6 +101,44 @@ public class AudioManager : MonoBehaviour
             }
         }
         masterVolume = newMasterVolume;
+    }
+    
+    public void SetMusicVolume(float newMusicVolume)
+    {
+        if (musicVolume == 0)
+        {
+            foreach (var t in musicAudioSources)
+            {
+                t.volume = newMusicVolume;
+            }
+        }
+        else
+        {
+            foreach (var t in musicAudioSources)
+            {
+                t.volume *= newMusicVolume / musicVolume;
+            }
+        }
+        musicVolume = newMusicVolume;
+    }
+    
+    public void SetSfxVolume(float newSfxVolume)
+    {
+        if (musicVolume == 0)
+        {
+            foreach (var t in sfxAudioSources)
+            {
+                t.volume = newSfxVolume;
+            }
+        }
+        else
+        {
+            foreach (var t in sfxAudioSources)
+            {
+                t.volume *= newSfxVolume / sfxVolume;
+            }
+        }
+        sfxVolume = newSfxVolume;
     }
 }
 
