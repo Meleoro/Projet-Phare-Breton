@@ -74,7 +74,7 @@ public class PauseManager : MonoBehaviour
                 {
                     QuitPause();
                 }
-                else
+                else if (!ReferenceManager.Instance.cameraReference.moveCameraRythme)
                 {
                     OpenPause();
                 }

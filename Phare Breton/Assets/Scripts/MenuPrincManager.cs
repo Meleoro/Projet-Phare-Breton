@@ -88,6 +88,8 @@ public class MenuPrincManager : MonoBehaviour
         StartCoroutine(FindNewShakePos2());*/
         
         currentButton = 1;
+        
+        AudioManager.instance.PlaySoundOneShot(3, 2, 0,currentAudioSource);
     }
 
 

@@ -71,6 +71,10 @@ public class CharacterMovement : MonoBehaviour
 
             PlaySoundPas();
         }
+        else
+        {
+            timerPas = 0;
+        }
 
         /*if (VFXPasActif)
         {
@@ -189,7 +193,7 @@ public class CharacterMovement : MonoBehaviour
     {
         timerPas -= Time.deltaTime;
         
-        if(timerPas < 0)
+        if(timerPas <= 0)
         {
             timerPas = vitessePas;
 
