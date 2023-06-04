@@ -33,6 +33,8 @@ public class OptionsManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(QuitOptions(0, 0));
+
+        ActualiseSliders();
     }
 
     private void Update()
@@ -164,7 +166,29 @@ public class OptionsManager : MonoBehaviour
         canUse = true;
     }
 
-    
+    public void ActualiseSliders()
+    {
+        sliders[0].GetComponent<Slider>().value = AudioManager.instance.masterVolume;
+        sliders[1].GetComponent<Slider>().value = AudioManager.instance.musicVolume;
+        sliders[2].GetComponent<Slider>().value = AudioManager.instance.sfxVolume;
+    }
+
+    public void ActualiseValue1()
+    {
+        AudioManager.instance.masterVolume = sliders[0].GetComponent<Slider>().value;
+    }
+
+    public void ActualiseValue2()
+    {
+        AudioManager.instance.musicVolume = sliders[1].GetComponent<Slider>().value;
+    }
+
+    public void ActualiseValue3()
+    {
+        AudioManager.instance.sfxVolume = sliders[2].GetComponent<Slider>().value;
+    }
+
+
     public IEnumerator QuitOptions(float duration, float value)
     {
         optionsObject.SetActive(true); 

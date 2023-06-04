@@ -386,7 +386,7 @@ public class CharacterFlute : MonoBehaviour
             {
                 if (!selectedObjects[k].cantBeMoved)
                 {
-                    if(selectedObjects[k] != manager.objectOn)
+                    if(selectedObjects[k].gameObject != manager.objectOn)
                     {
                         AudioManager.instance.PlaySoundContinuous(10, 0, 0, manager.playerAudioSource);
                         //AudioManager.instance.PlaySoundContinuous(15, 0, 0, manager.playerAudioSource);

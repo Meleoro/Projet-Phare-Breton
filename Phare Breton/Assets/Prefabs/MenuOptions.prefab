@@ -408,8 +408,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Master Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84c20005455c9e7448bee331a069b4d2, type: 2}
-  m_sharedMaterial: {fileID: 4057256250325734138, guid: 84c20005455c9e7448bee331a069b4d2,
+  m_fontAsset: {fileID: 11400000, guid: 4d12c3e903712374a96911be88683b43, type: 2}
+  m_sharedMaterial: {fileID: -2723038965520280477, guid: 4d12c3e903712374a96911be88683b43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -642,7 +642,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3267928791152492395}
+        m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
+        m_MethodName: ActualiseValue2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2248163389945905053
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,8 +967,11 @@ MonoBehaviour:
   - {fileID: 4609244928817815469}
   - {fileID: 1644807498814877587}
   - {fileID: 7057128442970967378}
+  fond: {fileID: 0}
   menuPrincipalScript: {fileID: 0}
+  pauseScript: {fileID: 0}
   index: 0
+  isOnMenuPrincipal: 0
 --- !u!1 &3192897976023682062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,10 +1228,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Options
+  m_text: OPTIONS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84c20005455c9e7448bee331a069b4d2, type: 2}
-  m_sharedMaterial: {fileID: 4057256250325734138, guid: 84c20005455c9e7448bee331a069b4d2,
+  m_fontAsset: {fileID: 11400000, guid: 4d12c3e903712374a96911be88683b43, type: 2}
+  m_sharedMaterial: {fileID: -2723038965520280477, guid: 4d12c3e903712374a96911be88683b43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1249,7 +1264,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1351,8 +1366,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Sound Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84c20005455c9e7448bee331a069b4d2, type: 2}
-  m_sharedMaterial: {fileID: 4057256250325734138, guid: 84c20005455c9e7448bee331a069b4d2,
+  m_fontAsset: {fileID: 11400000, guid: 4d12c3e903712374a96911be88683b43, type: 2}
+  m_sharedMaterial: {fileID: -2723038965520280477, guid: 4d12c3e903712374a96911be88683b43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1509,7 +1524,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3267928791152492395}
+        m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
+        m_MethodName: ActualiseValue1
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4801954941299673293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1819,7 +1846,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3267928791152492395}
+        m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
+        m_MethodName: ActualiseValue3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7592655589325398745
 GameObject:
   m_ObjectHideFlags: 0
@@ -2077,8 +2116,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Musique Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84c20005455c9e7448bee331a069b4d2, type: 2}
-  m_sharedMaterial: {fileID: 4057256250325734138, guid: 84c20005455c9e7448bee331a069b4d2,
+  m_fontAsset: {fileID: 11400000, guid: 4d12c3e903712374a96911be88683b43, type: 2}
+  m_sharedMaterial: {fileID: -2723038965520280477, guid: 4d12c3e903712374a96911be88683b43,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

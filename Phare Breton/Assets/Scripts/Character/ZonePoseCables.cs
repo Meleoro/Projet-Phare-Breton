@@ -12,6 +12,10 @@ public class ZonePoseCables : MonoBehaviour
 
     public List<GameObject> cableObjects = new List<GameObject>();
 
+    public RaycastHit hitObject;
+
+    public LayerMask hitObjectLayer;
+
 
     private void Update()
     {
@@ -184,14 +188,39 @@ public class ZonePoseCables : MonoBehaviour
 
     public void VerifyIfInOn(GameObject currentObject)
     {
-        RaycastHit hitObject;
-
-        if (Physics.Raycast(transform.position, Vector3.down, out hitObject, 2))
+        if (Physics.Raycast(transform.position, Vector3.down, out hitObject, 2.5f, ignoreLayer))
         {
-            if (hitObject.collider.CompareTag("Interactible") && !hitObject.collider.isTrigger)
+            if(!hitObject.collider.isTrigger && hitObject.collider.CompareTag("Interactible"))
             {
+                Debug.Log(hitObject.collider.name);
                 ReferenceManager.Instance.characterReference.objectOn = currentObject;
             }
+        }
+    }
+
+
+    public bool DoRaycast(Vector3 origin, float length)
+    {
+        if (length < 0)
+            return false;
+
+        else if (Physics.Raycast(origin, Vector3.down, out hitObject, length))
+        {
+            Debug.Log(hitObject.collider.name);
+
+            if (hitObject.collider.CompareTag("Interactible") && !hitObject.collider.isTrigger)
+            {
+                return true;
+            }
+            else
+            {
+                return DoRaycast(hitObject.point - Vector3.down * 0.01f, length - hitObject.distance);
+            }
+        }
+
+        else
+        {
+            return false;
         }
     }
 
