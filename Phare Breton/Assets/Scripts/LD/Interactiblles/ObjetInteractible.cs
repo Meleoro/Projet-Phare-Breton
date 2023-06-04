@@ -27,6 +27,7 @@ public class ObjetInteractible : MonoBehaviour
 
     [Header("MoveObject")] 
     public bool cantBeMoved;
+    public bool cantMagnet;
     public bool hauteurFigee;
     public float hauteurFigeeValeur = 2;
     private float wantedHauteur;

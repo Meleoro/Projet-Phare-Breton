@@ -18,7 +18,7 @@ public class SpotDeplacement : MonoBehaviour
         {
             ObjetInteractible currentObject = other.GetComponent<ObjetInteractible>();
             
-            if (objectHasToBeRoped)
+            if (objectHasToBeRoped && !currentObject.cantMagnet)
             {
                 if(currentObject.isLinked && !currentObject.isMagneted)
                 {
@@ -26,7 +26,7 @@ public class SpotDeplacement : MonoBehaviour
                     isUsed = true;
                 }
             }
-            else if(!currentObject.isMagneted)
+            else if(!currentObject.isMagneted && !currentObject.cantMagnet)
             {
                 currentObject.ActivateMagnet(transform);
                 isUsed = true;
@@ -38,8 +38,11 @@ public class SpotDeplacement : MonoBehaviour
     {
         if (other.CompareTag("Interactible") && !other.isTrigger)
         {
-            if (other.GetComponent<ObjetInteractible>().currentMagnet == gameObject && isUsed)
+            ObjetInteractible currentObject = other.GetComponent<ObjetInteractible>();
+            
+            if (currentObject.currentMagnet == gameObject && isUsed)
             {
+                
                 isUsed = false;
 
                 other.GetComponent<ObjetInteractible>().DesactivateMagnet(transform);
