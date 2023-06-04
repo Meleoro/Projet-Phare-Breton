@@ -165,12 +165,12 @@ public class BandeJeuDeRythme : MonoBehaviour
         
         usingBarre = true;
         barreAvancement.DOScale(barreAvancement.localScale * 1.2f, duration * 0.7f);
-        barreAvancement.DOMoveY(barreAvancement.position.y + 20, duration * 0.7f);
+        barreAvancement.DOMoveY(barreAvancement.position.y + 16, duration * 0.7f);
 
         yield return new WaitForSeconds(duration * 0.7f);
 
         barreAvancement.DOScale(originalScale, duration);
-        barreAvancement.DOMoveY(barreAvancement.position.y - 20, duration * 0.7f);
+        barreAvancement.DOMoveY(barreAvancement.position.y - 16, duration * 0.7f);
 
         yield return new WaitForSeconds(duration * 0.2f);
         
