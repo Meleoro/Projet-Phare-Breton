@@ -494,6 +494,8 @@ public class CharacterFlute : MonoBehaviour
             {
                 if (!selectedObjects[i].isInStase)
                 {
+                    AudioManager.instance.PlaySoundOneShot(13, 0, 0, manager.playerAudioSource);
+
                     selectedObjects[i].ActivateStase();
                     selectedObjects[i].rb.isKinematic = true;
 
@@ -506,6 +508,8 @@ public class CharacterFlute : MonoBehaviour
 
                 else
                 {
+                    AudioManager.instance.PlaySoundOneShot(14, 0, 0, manager.playerAudioSource);
+
                     selectedObjects[i].DesactivateStase();
                     selectedObjects[i].rb.isKinematic = false;
                 }
