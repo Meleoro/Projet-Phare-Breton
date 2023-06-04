@@ -34,7 +34,7 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public Transform posCameraRythme;
     [HideInInspector] public Transform posCameraRythme2;
     [HideInInspector] public float durationRythme;
-    private bool moveCameraRythme;
+    [HideInInspector] public bool moveCameraRythme;
     private float timerMoveRythme;
     private Vector3 savePosRythme;
     private Quaternion saveRotRythme;
