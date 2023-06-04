@@ -26,7 +26,9 @@ public class CharaManager : MonoBehaviour
     public TextMeshProUGUI textInteraction;
     [SerializeField] private MeshRenderer fluteMesh;
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public AudioSource playerAudioSource;
+    public AudioSource playerAudioSource;
+    public AudioSource ambianceAudioSource;
+    public AudioSource musicAudioSource;
     public ParticleSystem waterParticles;
 
     [Header("Inputs")]
