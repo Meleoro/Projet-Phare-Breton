@@ -164,7 +164,9 @@ public class CharaManager : MonoBehaviour
                     if (nearNotePartitionNumber != 0 && nearNoteNumber != 0)
                     {
                         nearObjects.Clear();
-                    
+
+                        AudioManager.instance.PlaySoundOneShot(9, 1, 0, playerAudioSource);
+
                         notesScript.AddNote(nearNotePartitionNumber, nearNoteNumber);
 
                         if(isInBiblio)

@@ -130,6 +130,8 @@ public class Porte : MonoBehaviour
     
     public void UseDoor(int doorNumber, GameObject movedObject, bool staticCamera, GameObject activatedLight, GameObject desactivatedLight)
     {
+        AudioManager.instance.PlaySoundOneShot(6, 1, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+
         if (doorNumber == 1)
         {
             Vector3 newPos = charaPos2.position;
