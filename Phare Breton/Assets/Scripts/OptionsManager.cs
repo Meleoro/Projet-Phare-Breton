@@ -14,6 +14,7 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI optionsMainText;
     [SerializeField] private List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
     [SerializeField] private List<GameObject> sliders = new List<GameObject>();
+    [SerializeField] private Image fond;
     [SerializeField] private MenuPrincManager menuPrincipalScript;
     [SerializeField] private PauseManager pauseScript;
     
@@ -128,8 +129,11 @@ public class OptionsManager : MonoBehaviour
     {
         index = 0;
         
-        optionsMainText.DOFade(value, duration);
-        
+        optionsMainText.DOFade(1, duration);
+
+        fond.DOFade(0.8f, duration);
+
+
         for (int i = 0; i < texts.Count; i++)
         {
             texts[i].DOFade(value, duration);
@@ -168,6 +172,8 @@ public class OptionsManager : MonoBehaviour
         canUse = false;
         
         optionsMainText.DOFade(value, duration);
+
+        fond.DOFade(0, duration);
         
         for (int i = 0; i < texts.Count; i++)
         {
