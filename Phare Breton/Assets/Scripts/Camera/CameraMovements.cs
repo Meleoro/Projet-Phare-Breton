@@ -41,7 +41,7 @@ public class CameraMovements : MonoBehaviour
     [HideInInspector] public bool goToSave;
     
     [Header("CinematiqueIntro")]
-    public string sceneStartName;
+    public bool doStartCinematique;
     public Transform posStart;
     public float duration;
     
@@ -136,7 +136,7 @@ public class CameraMovements : MonoBehaviour
         
         ActualiseRotationCamRef();
 
-        if (SceneManager.GetActiveScene().name == sceneStartName)
+        if (doStartCinematique)
         {
             StartCoroutine(IntroCinematique());
         }
@@ -144,6 +144,8 @@ public class CameraMovements : MonoBehaviour
         {
             StartCoroutine(MiddleCinematique());
         }
+
+        StartCoroutine(GererAmbiance());
     }
 
 
@@ -195,6 +197,29 @@ public class CameraMovements : MonoBehaviour
         }
         
         UpdateAlpha();
+    }
+    
+    
+    private IEnumerator GererAmbiance()
+    {
+        if (doStartCinematique)
+        {
+            AudioManager.instance.PlaySoundOneShot(3, 4, 0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            
+            yield return new WaitForSeconds(2);
+            
+            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 2,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+        
+        else if (doMiddleCinematique)
+        {
+            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+        
+        else 
+        {
+            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
     }
     
     private IEnumerator ShakeCoroutine()
