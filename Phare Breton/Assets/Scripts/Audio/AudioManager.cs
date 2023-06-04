@@ -46,7 +46,9 @@ public class AudioManager : MonoBehaviour
         AudioSource currentAudioSource = audioSource != null ? audioSource : audioSources[audioSourceId];
         currentAudioSource.clip = soundList[categoryId].listSoundIdentities[soundId].audioClip;
         currentAudioSource.volume = soundList[categoryId].listSoundIdentities[soundId].volume*masterVolume;
-        currentAudioSource.Play();
+
+        if(!currentAudioSource.isPlaying)
+            currentAudioSource.Play();
     }
 
     public void PlaySoundOneShot(int soundId, int categoryId = 0, int audioSourceId = 0, AudioSource audioSource = null)

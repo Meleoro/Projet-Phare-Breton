@@ -442,6 +442,8 @@ public class CharacterFlute : MonoBehaviour
     // QUAND LE JOUEUR ARRETE DE DEPLACER DES OBJETS
     public void StopMoveObject()
     {
+        manager.playerAudioSource.Stop();
+
         manager.isMovingObjects = false;
         manager.noMovement = false;
         
