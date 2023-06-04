@@ -97,7 +97,19 @@ public class CharaManager : MonoBehaviour
 
         hasRope = false;
         UIActive = false;
+
+        StartAudio();
     }
+
+    private void StartAudio()
+    {
+        AudioManager.instance.musicAudioSources.Clear();
+        AudioManager.instance.musicAudioSources.Add(musicAudioSource);
+
+        AudioManager.instance.sfxAudioSources.Clear();
+        AudioManager.instance.sfxAudioSources.Add(ambianceAudioSource);
+    }
+
     
     void Update()
     {

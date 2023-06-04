@@ -90,6 +90,14 @@ public class MenuPrincManager : MonoBehaviour
         currentButton = 1;
         
         AudioManager.instance.PlaySoundOneShot(3, 2, 0,currentAudioSource);
+
+        SetupAudio();
+    }
+
+    private void SetupAudio()
+    {
+        AudioManager.instance.musicAudioSources.Clear();
+        AudioManager.instance.musicAudioSources.Add(currentAudioSource);
     }
 
 
