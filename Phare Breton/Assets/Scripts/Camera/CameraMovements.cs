@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -86,6 +87,7 @@ public class CameraMovements : MonoBehaviour
     public float durationEnd6;
     public float durationEnd7;
     public float durationEnd8;
+    public TextMeshProUGUI thankyoutext;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;

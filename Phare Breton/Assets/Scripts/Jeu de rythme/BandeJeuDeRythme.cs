@@ -226,7 +226,7 @@ public class BandeJeuDeRythme : MonoBehaviour
         else
         {
             AudioManager.instance.FadeOutAudioSource(0.2f, 0.5f, 0,
-                ReferenceManager.Instance.characterReference.playerAudioSource);
+                ReferenceManager.Instance.characterReference.musicAudioSource);
             
             timer = 0f;
             erasedNotes = 0;
