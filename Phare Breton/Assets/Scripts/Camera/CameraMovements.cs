@@ -55,6 +55,10 @@ public class CameraMovements : MonoBehaviour
     [Header("Scene2Middle")] 
     public Transform charaPosMiddleScene2;
     public Transform cameraPosMiddleScnee2;
+    
+    [Header("Scene3Middle")] 
+    public Transform charaPosMiddleScene3;
+    public Transform cameraPosMiddleScnee3;
 
     [Header("CinematiqueFin")]
     public UIFin UIScript;
@@ -154,6 +158,19 @@ public class CameraMovements : MonoBehaviour
             
             transform.position = cameraPosMiddleScnee2.transform.position;
             transform.rotation = cameraPosMiddleScnee2.transform.rotation;
+
+            SaveManager.Instance.goMiddle = false;
+        }
+        
+        else if (SaveManager.Instance.goMiddle)
+        {
+            ReferenceManager.Instance.characterReference.transform.position = charaPosMiddleScene3.transform.position;
+            ReferenceManager.Instance.characterReference.canStase = true;
+            
+            transform.position = cameraPosMiddleScnee3.transform.position;
+            transform.rotation = cameraPosMiddleScnee3.transform.rotation;
+            
+            SaveManager.Instance.goMiddle = false;
         }
         
         ActualiseRotationCamRef();
