@@ -52,6 +52,10 @@ public class CameraMovements : MonoBehaviour
     public Transform posCharaMiddle2;
     public float durationMiddle;
 
+    [Header("Scene2Middle")] 
+    public Transform charaPosMiddleScene2;
+    public Transform cameraPosMiddleScnee2;
+
     [Header("CinematiqueFin")]
     public UIFin UIScript;
     public bool doEndCinematique;
@@ -134,16 +138,25 @@ public class CameraMovements : MonoBehaviour
             isStatic = true;
         }
         
-        ActualiseRotationCamRef();
-
         if (doStartCinematique)
         {
             StartCoroutine(IntroCinematique());
         }
-        else if (doMiddleCinematique) 
+        else if (doMiddleCinematique && !SaveManager.Instance.goMiddle) 
         {
             StartCoroutine(MiddleCinematique());
         }
+        
+        else if (doMiddleCinematique && SaveManager.Instance.goMiddle)
+        {
+            ReferenceManager.Instance.characterReference.transform.position = charaPosMiddleScene2.transform.position;
+            ReferenceManager.Instance.characterReference.canCable = true;
+            
+            transform.position = cameraPosMiddleScnee2.transform.position;
+            transform.rotation = cameraPosMiddleScnee2.transform.rotation;
+        }
+        
+        ActualiseRotationCamRef();
 
         StartCoroutine(GererAmbiance());
     }

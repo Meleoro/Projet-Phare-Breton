@@ -41,6 +41,8 @@ public class SaveManager : MonoBehaviour
     {
         goMiddle = true;
         
+        Debug.Log(12);
+        
         SceneManager.LoadScene(scene2Name);
     }
 
