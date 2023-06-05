@@ -54,6 +54,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     private bool usingBarre;
     private int currentHealth;
     public int melodyIndex;
+    public float delaybande1;
 
 
     private void Awake()
@@ -79,6 +80,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
             if (pressX || pressY || pressZ)
             {
+                AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+                
                 if (currentNode != null)
                 {
                     bool isRight = VerifyNote();
@@ -94,8 +97,6 @@ public class BandeJeuDeRythme : MonoBehaviour
 
                     if (isRight)
                     {
-                        AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
-
                         StartCoroutine(FeelDestroyNode());
                     }
                     else
@@ -154,7 +155,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         yield return new WaitForSeconds(1.6f);
 
-        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.musicAudioSource);
         
         gameStarted = true;
     }
@@ -279,7 +280,7 @@ public class BandeJeuDeRythme : MonoBehaviour
             {
                 if (melodyIndex == 1)
                 {
-                    if (timer > nodes[i].spawnTiming + 0.5f)
+                    if (timer > nodes[i].spawnTiming + delaybande1)
                     {
                         MusicNode newNode = null;
                     
