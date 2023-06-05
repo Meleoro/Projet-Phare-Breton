@@ -539,7 +539,7 @@ public class CharacterFlute : MonoBehaviour
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
-                if(selectedObjects[k].gameObject != manager.objectOn)
+                if(selectedObjects[k].gameObject == manager.objectOn)
                 {
                     manager.isMovingObjects = false;
                     manager.noMovement = false;
