@@ -91,11 +91,11 @@ public class BandeJeuDeRythme : MonoBehaviour
                     Destroy(currentNode.gameObject);
 
                     erasedNotes += 1;
+                    
+                    AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
 
                     if (isRight)
                     {
-                        AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
-
                         StartCoroutine(FeelDestroyNode());
                     }
                     else
@@ -154,7 +154,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         yield return new WaitForSeconds(1.6f);
 
-        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.musicAudioSource);
         
         gameStarted = true;
     }
