@@ -15,6 +15,7 @@ public class CheatsManager : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
     [SerializeField] private MenuPrincManager menuPrincipalScript;
     [SerializeField] private PauseManager pauseScript;
+    public Image fond;
     
     [Header("Inputs")] 
     private bool pause;
@@ -143,11 +144,18 @@ public class CheatsManager : MonoBehaviour
         cheatObject.SetActive(true);
 
         index = 0;
-        
+
+
+        fond.DOFade(0, 0);
+        fond.DOFade(1, 0);
+
+
         cheatMainText.DOFade(1, duration);
         
         for (int i = 0; i < texts.Count; i++)
         {
+            texts[i].DOFade(0, 0);
+            
             texts[i].DOFade(value, duration);
         }
 
@@ -170,6 +178,8 @@ public class CheatsManager : MonoBehaviour
         cheatObject.SetActive(true); 
         
         canUse = false;
+        
+        fond.DOFade(0, duration);
 
         cheatMainText.DOFade(value, duration);
         
