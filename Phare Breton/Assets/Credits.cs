@@ -7,7 +7,7 @@ using UnityEngine;
 public class Credits : MonoBehaviour
 {
     public List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
-    private int currentIndex;
+    public int currentIndex;
 
     public bool stop;
     
@@ -37,7 +37,7 @@ public class Credits : MonoBehaviour
                     currentIndex = 1;
                 }
             
-                else if (currentIndex < texts.Count - 1)
+                else if (currentIndex < texts.Count)
                 {
                     texts[currentIndex - 1].DOFade(0, 1);
                     texts[currentIndex].DOFade(1, 1);
