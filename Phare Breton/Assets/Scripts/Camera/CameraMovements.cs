@@ -254,9 +254,10 @@ public class CameraMovements : MonoBehaviour
             AudioManager.instance.PlaySoundContinuous(0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
         
-        else 
+        else if(SaveManager.Instance.goMiddle)
         {
             //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            isinside = true;
             
             AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
