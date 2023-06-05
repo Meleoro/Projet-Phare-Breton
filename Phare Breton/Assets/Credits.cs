@@ -38,7 +38,7 @@ public class Credits : MonoBehaviour
             
                 else if (currentIndex < texts.Count - 1)
                 {
-                    texts[currentIndex - 1].DOFade(1, 1);
+                    texts[currentIndex - 1].DOFade(0, 1);
                     texts[currentIndex].DOFade(1, 1);
 
                     currentIndex += 1;
