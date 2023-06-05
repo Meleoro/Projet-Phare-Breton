@@ -174,6 +174,8 @@ public class Fondu : MonoBehaviour
 
             doorCrossed = false;
             isInTransition = false;
+            
+            ReferenceManager.Instance.cameraReference.Alternate();
         }
 
         else
