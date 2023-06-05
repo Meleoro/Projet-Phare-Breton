@@ -264,9 +264,7 @@ public class BandeJeuDeRythme : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         stop = true;
-        
-        AudioManager.instance.PlaySoundOneShot(10, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
-        
+
         ReferenceManager.Instance.characterReference.notesScript.NextBande();
     }
 
