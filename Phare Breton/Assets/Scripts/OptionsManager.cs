@@ -186,24 +186,30 @@ public class OptionsManager : MonoBehaviour
 
     public void ActualiseSliders()
     {
-        sliders[0].GetComponent<Slider>().value = AudioManager.instance.masterVolume;
-        sliders[1].GetComponent<Slider>().value = AudioManager.instance.musicVolume;
-        sliders[2].GetComponent<Slider>().value = AudioManager.instance.sfxVolume;
+        sliders[0].GetComponent<Slider>().value = SaveManager.Instance.volumeMaster;
+        sliders[1].GetComponent<Slider>().value = SaveManager.Instance.volumeMusic;
+        sliders[2].GetComponent<Slider>().value = SaveManager.Instance.volumeSound;
     }
 
     public void ActualiseValue1()
     {
-        AudioManager.instance.masterVolume = sliders[0].GetComponent<Slider>().value;
+        SaveManager.Instance.volumeMaster = sliders[0].GetComponent<Slider>().value;
+        
+        SaveManager.Instance.SetupVolume();
     }
 
     public void ActualiseValue2()
     {
-        AudioManager.instance.musicVolume = sliders[1].GetComponent<Slider>().value;
+        SaveManager.Instance.volumeMusic = sliders[1].GetComponent<Slider>().value;
+        
+        SaveManager.Instance.SetupVolume();
     }
 
     public void ActualiseValue3()
     {
-        AudioManager.instance.sfxVolume = sliders[2].GetComponent<Slider>().value;
+        SaveManager.Instance.volumeSound = sliders[2].GetComponent<Slider>().value;
+        
+        SaveManager.Instance.SetupVolume();
     }
 
 

@@ -13,6 +13,10 @@ public class SaveManager : MonoBehaviour
     public string scene1Name;
     public string scene2Name;
     public string scene3Name;
+
+    public float volumeMaster = 1;
+    public float volumeMusic = 1;
+    public float volumeSound = 1;
     
 
     private void Awake()
@@ -24,6 +28,14 @@ public class SaveManager : MonoBehaviour
             Destroy(gameObject);
         
         DontDestroyOnLoad(transform.gameObject);
+    }
+
+
+    public void SetupVolume()
+    {
+        AudioManager.instance.SetMasterVolume(volumeMaster);
+        AudioManager.instance.SetMusicVolume(volumeMusic); 
+        AudioManager.instance.SetSfxVolume(volumeSound);
     }
 
 
