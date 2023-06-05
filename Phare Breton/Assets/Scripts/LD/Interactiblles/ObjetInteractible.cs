@@ -177,6 +177,9 @@ public class ObjetInteractible : MonoBehaviour
         magnetedPos = magnetPos;
         isMagneted = true;
 
+        if (isLinked)
+            cable.isInMagnet = true;
+
         currentMagnet = magnetedPos.gameObject;
 
         if (isLinked)
@@ -196,6 +199,9 @@ public class ObjetInteractible : MonoBehaviour
     {
         magnetedPos = magnetPos;
         isMagneted = false;
+
+        if (isLinked)
+            cable.isInMagnet = false;
 
         currentMagnet = null;
 

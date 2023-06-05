@@ -28,6 +28,7 @@ public class CableCreator : MonoBehaviour
     public Rigidbody rbEnd;
     public bool lockStart;
     public bool lockEnd;
+    public bool isInMagnet;
     
     [Header("Autres")]
     [SerializeField] private GameObject node;
@@ -280,7 +281,10 @@ public class CableCreator : MonoBehaviour
         
         // Actualisation de la couleur
         _lineRenderer.material.SetFloat("_GradientSpeed", (currentLength / maxLength));
-        
+
+        if(isInMagnet)
+            _lineRenderer.material.SetFloat("_GradientSpeed", (1));
+
         VerifyLength();
     }
 
