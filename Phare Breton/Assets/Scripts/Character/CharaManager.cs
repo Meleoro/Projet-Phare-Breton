@@ -105,11 +105,14 @@ public class CharaManager : MonoBehaviour
     {
         AudioManager.instance.audioSources.Clear();
         AudioManager.instance.audioSources.Add(playerAudioSource);
+        AudioManager.instance.audioSources.Add(musicAudioSource);
+        AudioManager.instance.audioSources.Add(ambianceAudioSource);
 
         AudioManager.instance.musicAudioSources.Clear();
         AudioManager.instance.musicAudioSources.Add(musicAudioSource);
 
         AudioManager.instance.sfxAudioSources.Clear();
+        AudioManager.instance.sfxAudioSources.Add(playerAudioSource);
         AudioManager.instance.sfxAudioSources.Add(ambianceAudioSource);
     }
 

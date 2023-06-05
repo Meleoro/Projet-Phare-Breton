@@ -96,6 +96,9 @@ public class MenuPrincManager : MonoBehaviour
 
     private void SetupAudio()
     {
+        AudioManager.instance.audioSources.Clear();
+        AudioManager.instance.audioSources.Add(currentAudioSource);
+        
         AudioManager.instance.musicAudioSources.Clear();
         AudioManager.instance.musicAudioSources.Add(currentAudioSource);
     }
