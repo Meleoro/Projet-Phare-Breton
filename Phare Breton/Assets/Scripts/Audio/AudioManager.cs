@@ -118,7 +118,7 @@ public class AudioManager : MonoBehaviour
         {
             foreach (var t in musicAudioSources)
             {
-                t.volume *= newMusicVolume / musicVolume;
+                t.volume *= masterVolume * newMusicVolume / musicVolume;
             }
         }
         musicVolume = newMusicVolume;
@@ -137,7 +137,7 @@ public class AudioManager : MonoBehaviour
         {
             foreach (var t in sfxAudioSources)
             {
-                t.volume *= newSfxVolume / sfxVolume;
+                t.volume *= masterVolume * newSfxVolume / sfxVolume;
             }
         }
         sfxVolume = newSfxVolume;
