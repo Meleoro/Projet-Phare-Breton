@@ -41,7 +41,7 @@ public class Echelle : ObjetInteractible
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved)
+        if(!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved && !cantPlaySound)
         {
             if (!didSound)
             {

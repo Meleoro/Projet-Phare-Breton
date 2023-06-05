@@ -29,7 +29,8 @@ public class OptionsManager : MonoBehaviour
     public int index = 0;
     public bool isOnMenuPrincipal;
     private bool canUse;
-
+    private bool stopControl;
+    
     private void Start()
     {
         StartCoroutine(QuitOptions(0, 0));
@@ -43,10 +44,15 @@ public class OptionsManager : MonoBehaviour
         {
             if (down || up)
             {
-                ChangeSelected();
+                if (!stopControl)
+                {
+                    ChangeSelected();
 
-                down = false;
-                up = false;
+                    down = false;
+                    up = false;
+
+                    StartCoroutine(StopControl());
+                }
             }
 
             if (escape)
@@ -54,6 +60,16 @@ public class OptionsManager : MonoBehaviour
                 StartCoroutine(QuitOptions(1, 0));
             }
         }
+    }
+    
+    
+    IEnumerator StopControl()
+    {
+        stopControl = true;
+        
+        yield return new WaitForSeconds(0.3f);
+        
+        stopControl = false;
     }
 
 
@@ -133,11 +149,13 @@ public class OptionsManager : MonoBehaviour
         
         optionsMainText.DOFade(1, duration);
 
+        fond.DOFade(0, 0);
         fond.DOFade(1f, duration);
 
 
         for (int i = 0; i < texts.Count; i++)
         {
+            texts[i].DOFade(0, 0);
             texts[i].DOFade(value, duration);
         }
         

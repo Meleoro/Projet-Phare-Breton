@@ -15,6 +15,7 @@ public class CheatsManager : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
     [SerializeField] private MenuPrincManager menuPrincipalScript;
     [SerializeField] private PauseManager pauseScript;
+    public Image fond;
     
     [Header("Inputs")] 
     private bool pause;
@@ -27,6 +28,7 @@ public class CheatsManager : MonoBehaviour
     public int index = 0;
     public bool isOnMenuPrincipal;
     private bool canUse;
+    private bool stopControl;
 
     private void Start()
     {
@@ -39,10 +41,15 @@ public class CheatsManager : MonoBehaviour
         {
             if (down || up)
             {
-                ChangeSelected();
+                if (!stopControl)
+                {
+                    ChangeSelected();
 
-                down = false;
-                up = false;
+                    down = false;
+                    up = false;
+
+                    StartCoroutine(StopControl());
+                }
             }
 
             if (interaction)
@@ -57,6 +64,15 @@ public class CheatsManager : MonoBehaviour
                 StartCoroutine(QuitCheats(1, 0));
             }
         }
+    }
+
+    IEnumerator StopControl()
+    {
+        stopControl = true;
+        
+        yield return new WaitForSeconds(0.3f);
+        
+        stopControl = false;
     }
 
     public void Use()
@@ -88,12 +104,14 @@ public class CheatsManager : MonoBehaviour
         
         else if (index == 5)
         {
-            
+            ReferenceManager.Instance.characterReference.notesScript.GiveAllNotes();
         }
         
         else if (index == 6)
         {
-            
+            ReferenceManager.Instance.characterReference.canCable = true;
+            ReferenceManager.Instance.characterReference.canStase = true;
+            ReferenceManager.Instance.characterReference.canMoveObjects = true;
         }
     }
 
@@ -143,11 +161,18 @@ public class CheatsManager : MonoBehaviour
         cheatObject.SetActive(true);
 
         index = 0;
-        
+
+
+        fond.DOFade(0, 0);
+        fond.DOFade(1, 0);
+
+
         cheatMainText.DOFade(1, duration);
         
         for (int i = 0; i < texts.Count; i++)
         {
+            texts[i].DOFade(0, 0);
+            
             texts[i].DOFade(value, duration);
         }
 
@@ -170,6 +195,8 @@ public class CheatsManager : MonoBehaviour
         cheatObject.SetActive(true); 
         
         canUse = false;
+        
+        fond.DOFade(0, duration);
 
         cheatMainText.DOFade(value, duration);
         

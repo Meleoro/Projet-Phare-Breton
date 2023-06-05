@@ -110,7 +110,7 @@ public class ZonePoseCables : MonoBehaviour
             {
                 cableObjects.Add(objectsAtRange[i].gameObject);
                 
-                if (RaycastOnBox(objectsAtRange[i].transform.position, 1.5f))
+                if (RaycastOnBox(objectsAtRange[i].transform.position, 2f))
                 {
                     if (ReferenceManager.Instance.characterReference.transform.position.y - 0.5f < objectsAtRange[i].transform.position.y + objectsAtRange[i].transform.localScale.y * 0.5f)
                     {
@@ -192,7 +192,6 @@ public class ZonePoseCables : MonoBehaviour
         {
             if(!hitObject.collider.isTrigger && hitObject.collider.CompareTag("Interactible"))
             {
-                Debug.Log(hitObject.collider.name);
                 ReferenceManager.Instance.characterReference.objectOn = currentObject;
             }
         }
@@ -214,6 +213,8 @@ public class ZonePoseCables : MonoBehaviour
             }
             else
             {
+                Debug.Log(hitObject.collider.name);
+                
                 return DoRaycast(hitObject.point - Vector3.down * 0.01f, length - hitObject.distance);
             }
         }
