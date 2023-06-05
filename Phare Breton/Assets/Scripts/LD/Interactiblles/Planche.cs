@@ -18,7 +18,7 @@ public class Planche : ObjetInteractible
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved && !isMagneted)
+        if (!rb.isKinematic && !collision.gameObject.CompareTag("Player") && !collision.collider.isTrigger && !isMoved && !isMagneted && !cantPlaySound)
         {
             if (!didSound)
             {

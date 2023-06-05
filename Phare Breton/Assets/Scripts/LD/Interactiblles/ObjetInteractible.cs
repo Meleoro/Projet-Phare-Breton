@@ -45,11 +45,23 @@ public class ObjetInteractible : MonoBehaviour
 
     [Header("Sound")] 
     protected bool didSound;
+    public bool cantPlaySound;
+
+
+    IEnumerator StartNoSound()
+    {
+        cantPlaySound = true;        
+        yield return new WaitForSeconds(2);
+        
+        cantPlaySound = false;   
+    }
 
 
 
     private void Start()
     {
+        StartCoroutine(StartNoSound());
+        
         rb = GetComponent<Rigidbody>();
 
         isMagneted = false;
