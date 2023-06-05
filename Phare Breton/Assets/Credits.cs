@@ -9,10 +9,11 @@ public class Credits : MonoBehaviour
     public List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
     private int currentIndex;
 
-    private bool stop;
+    public bool stop;
     
     void Start()
     {
+        stop = true;
         currentIndex = 0;
         
         for (int i = 0; i < texts.Count; i++)
