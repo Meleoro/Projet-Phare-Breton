@@ -55,6 +55,7 @@ public class BandeJeuDeRythme : MonoBehaviour
     private int currentHealth;
     public int melodyIndex;
     public float delaybande1;
+    private bool doOnce;
 
 
     private void Awake()
@@ -80,8 +81,6 @@ public class BandeJeuDeRythme : MonoBehaviour
 
             if (pressX || pressY || pressZ)
             {
-                AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
-                
                 if (currentNode != null)
                 {
                     bool isRight = VerifyNote();
@@ -107,6 +106,8 @@ public class BandeJeuDeRythme : MonoBehaviour
                 
                 if (!usingBarre)
                 {
+                    AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+                    
                     StartCoroutine(FeelBarre());
                 }
             }
