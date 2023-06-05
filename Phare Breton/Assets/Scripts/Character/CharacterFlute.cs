@@ -303,6 +303,49 @@ public class CharacterFlute : MonoBehaviour
             return false;
         }
 
+        if(selectedObjectsCable.Count == 1)
+        {
+            for(int i = 0; i < currentObject.linkedObject.Count; i++)
+            {
+                bool destroyOwnCable = false;
+
+                if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
+                {
+                    destroyOwnCable = true;
+                }
+                else
+                {
+                    destroyOwnCable = false;
+                }
+
+                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
+
+                CableCreator currentCable = currentLinkedObject.cable;
+
+                if (destroyOwnCable)
+                    currentCable = currentObject.cable;
+
+
+                Destroy(currentCable.gameObject);
+
+
+                currentLinkedObject.linkedObject.Clear();
+                currentLinkedObject.isLinked = false;
+
+                currentLinkedObject.VerifyLinkedObject();
+            }
+
+
+            currentObject.linkedObject.Clear();
+            currentObject.isLinked = false;
+
+            currentObject.VerifyLinkedObject();
+
+            return true;
+        }
+
+
+
         float compteur = currentObject.linkedObject.Count;
 
         for (int i = 0; i < selectedObjectsCable.Count; i++)
