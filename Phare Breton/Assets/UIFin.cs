@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class UIFin : MonoBehaviour
     public RectTransform pos2;
 
     public List<TextMeshProUGUI> names = new List<TextMeshProUGUI>();
+
+    public TextMeshProUGUI testThank;
 
 
 
@@ -35,16 +38,20 @@ public class UIFin : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        titre.rectTransform.DOMoveY(pos2.position.y, 1.5f);
-        triangle.rectTransform.DOMoveY(pos2.position.y, 1.5f);
+        testThank.DOFade(1, 1.3f);
+
+        /*titre.rectTransform.DOMoveY(pos2.position.y, 1.5f);
+        triangle.rectTransform.DOMoveY(pos2.position.y, 1.5f);*/
 
         yield return new WaitForSeconds(1.3f);
 
-        for (int i = 0; i < names.Count; i++)
+        /*for (int i = 0; i < names.Count; i++)
         {
             names[i].DOFade(1, 2);
-        }
+        }*/
         
         yield return new WaitForSeconds(10);
+        
+        //ReferenceManager.Instance.cameraReference.scriptFondu.
     }
 }
