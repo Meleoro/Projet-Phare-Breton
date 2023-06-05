@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 
@@ -87,7 +88,9 @@ public class CameraMovements : MonoBehaviour
     public float durationEnd6;
     public float durationEnd7;
     public float durationEnd8;
-    public TextMeshProUGUI thankyoutext;
+    public ParticleSystem VFXFin;
+    public Image fondu;
+    public GameObject fonduObject;
 
     [Header("ShakeCamera")] 
     public float amplitudeShake;
@@ -254,12 +257,17 @@ public class CameraMovements : MonoBehaviour
             AudioManager.instance.PlaySoundContinuous(0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
         
-        else 
+        else if(SaveManager.Instance.goMiddle)
         {
             //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
-            
+
             AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
+        else
+        {
+            isinside = true;
+        }
+    
     }
 
     public void Alternate()
@@ -467,7 +475,9 @@ public class CameraMovements : MonoBehaviour
 
         StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(-45, -179, 0), false));
 
-        yield return new WaitForSeconds(durationEnd6 * 0.51f);
+        yield return new WaitForSeconds(durationEnd6 * 0.501f);
+        
+        VFXFin.Play();
 
         ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
 
