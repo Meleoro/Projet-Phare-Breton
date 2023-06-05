@@ -121,7 +121,7 @@ public class CharaManager : MonoBehaviour
         IsMovingObjects();
 
 
-        if (raycastDetection)
+        /*if (raycastDetection)
         {
             RaycastHit _raycastHit;
         
@@ -131,7 +131,7 @@ public class CharaManager : MonoBehaviour
             
                 Debug.DrawLine(_raycastHit.point, transform.position, Color.blue, 2);
             }
-        }
+        }*/
 
 
         if (escape)

@@ -548,7 +548,7 @@ public class CharacterMovement : MonoBehaviour
     public bool VerifyFall(Vector2 direction, bool enFace)
     {
         float hauteurStop = 1.5f;
-        
+
         Vector3 newDirection = ReferenceManager.Instance.cameraRotationReference.transform.TransformDirection(new Vector3(direction.x, 0, direction.y));
         
         Vector3 point1 = DoRaycast(transform.position, 10);
@@ -644,7 +644,12 @@ public class CharacterMovement : MonoBehaviour
                 return DoRaycast(raycastHit.point + Vector3.down * 0.01f, lenght - raycastHit.distance);
             
             if(raycastHit.collider.gameObject != gameObject)
+            {
+                if(manager.raycastDetection)
+                    Debug.Log(raycastHit.collider.gameObject);
+
                 return raycastHit.point;
+            }
         }
         
         return new Vector3(startPos.x, -5000, startPos.z);
