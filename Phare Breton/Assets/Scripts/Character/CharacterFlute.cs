@@ -539,6 +539,21 @@ public class CharacterFlute : MonoBehaviour
         {
             for (int k = 0; k < selectedObjects.Count; k++)
             {
+                if(selectedObjects[k].gameObject != manager.objectOn)
+                {
+                    manager.isMovingObjects = false;
+                    manager.noMovement = false;
+
+                    manager.movedObjects.Clear();
+                    manager.scriptsMovedObjects.Clear();
+                    
+                    StartCoroutine(manager.SayNo());
+                    break;
+                }
+            }
+                
+            for (int k = 0; k < selectedObjects.Count; k++)
+            { 
                 if (!selectedObjects[k].cantBeMoved)
                 {
                     if(selectedObjects[k].gameObject != manager.objectOn)
