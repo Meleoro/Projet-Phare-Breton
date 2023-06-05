@@ -221,6 +221,8 @@ public class CharacterFlute : MonoBehaviour
                 {
                     if (VerifyIfLinked(selectedObjectsCable[k]))
                     {
+                        Debug.Log(selectedObjectsCable[k].name);
+                        
                         compteur -= 1;
                     }
                 }
@@ -305,11 +307,27 @@ public class CharacterFlute : MonoBehaviour
 
         if(selectedObjectsCable.Count == 1)
         {
-            for(int i = 0; i < currentObject.linkedObject.Count; i++)
+            List<GameObject> removedObjets = new List<GameObject>();
+
+            for (int i = 0; i < currentObject.linkedObject.Count; i++)
+            {
+                removedObjets.Add(currentObject.linkedObject[i]);
+            }
+
+            for(int i = 0; i < removedObjets.Count; i++)
             {
                 bool destroyOwnCable = false;
 
-                if (currentObject.linkedObject[i].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
+                if (removedObjets[i].GetComponent<ObjetInteractible>().cable == null)
+                {
+                    destroyOwnCable = true;
+                }
+                else if (currentObject.cable == null)
+                {
+                    destroyOwnCable = false;
+                }
+                        
+                else if(removedObjets[i].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
                 {
                     destroyOwnCable = true;
                 }
@@ -318,7 +336,7 @@ public class CharacterFlute : MonoBehaviour
                     destroyOwnCable = false;
                 }
 
-                ObjetInteractible currentLinkedObject = currentObject.linkedObject[i].GetComponent<ObjetInteractible>();
+                ObjetInteractible currentLinkedObject = removedObjets[i].GetComponent<ObjetInteractible>();
 
                 CableCreator currentCable = currentLinkedObject.cable;
 
@@ -327,26 +345,47 @@ public class CharacterFlute : MonoBehaviour
 
 
                 Destroy(currentCable.gameObject);
-
-
-                currentLinkedObject.linkedObject.Clear();
-                currentLinkedObject.isLinked = false;
+                
+                
+                currentLinkedObject.linkedObject.Remove(currentObject.gameObject);
+                if (currentLinkedObject.linkedObject.Count == 0)
+                {
+                    currentLinkedObject.isLinked = false;
+                    Destroy(currentLinkedObject.cable.gameObject);
+                }
 
                 currentLinkedObject.VerifyLinkedObject();
+
+                currentObject.linkedObject.Remove(currentLinkedObject.gameObject);
+                if (currentObject.linkedObject.Count == 0)
+                {
+                    currentObject.isLinked = false;
+                    Destroy(currentObject.cable.gameObject);
+                }
+
+                currentObject.VerifyLinkedObject();
             }
 
+            for (int i = 0; i < removedObjets.Count; i++)
+            {
+                
+            }
+            
+            
 
-            currentObject.linkedObject.Clear();
+
+            /*currentObject.linkedObject.Clear();
             currentObject.isLinked = false;
 
-            currentObject.VerifyLinkedObject();
+            currentObject.VerifyLinkedObject();*/
 
             return true;
         }
 
 
 
-        float compteur = currentObject.linkedObject.Count;
+        int original = currentObject.linkedObject.Count;
+        int compteur = currentObject.linkedObject.Count;
 
         for (int i = 0; i < selectedObjectsCable.Count; i++)
         {
@@ -359,7 +398,16 @@ public class CharacterFlute : MonoBehaviour
                 {
                     if (currentObject.linkedObject[k] == selectedObjectsCable[i].gameObject)
                     {
-                        if(currentObject.linkedObject[k].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
+                        if (currentObject.linkedObject[k].GetComponent<ObjetInteractible>().cable == null)
+                        {
+                            destroyOwnCable = true;
+                        }
+                        else if (currentObject.cable == null)
+                        {
+                            destroyOwnCable = false;
+                        }
+                        
+                        else if(currentObject.linkedObject[k].GetComponent<ObjetInteractible>().cable.gameObject != currentObject.cable.gameObject)
                         {
                             destroyOwnCable = true;
                         }
@@ -383,30 +431,31 @@ public class CharacterFlute : MonoBehaviour
                 Destroy(currentCable.gameObject);
 
 
-                currentLinkedObject.linkedObject.Clear();
-                currentLinkedObject.isLinked = false;
+                currentLinkedObject.linkedObject.Remove(currentObject.gameObject);
+                if(currentLinkedObject.linkedObject.Count == 0)
+                    currentLinkedObject.isLinked = false;
 
                 currentLinkedObject.VerifyLinkedObject();
 
                 compteur -= 1;
+                
+                currentObject.linkedObject.Remove(currentLinkedObject.gameObject);
+                if(currentObject.linkedObject.Count == 0)
+                    currentObject.isLinked = false;
+                
+                currentObject.VerifyLinkedObject();
             }
             
         }
 
 
-        if(compteur > 0)
+        if(compteur == original)
         {
-
             return false;
         }
 
         else
         {
-            currentObject.linkedObject.Clear();
-            currentObject.isLinked = false;
-
-            currentObject.VerifyLinkedObject();
-
             return true;
         }
 
