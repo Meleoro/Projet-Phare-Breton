@@ -55,6 +55,8 @@ public class PauseManager : MonoBehaviour
         {
             if (pauseOpen)
             {
+                ReferenceManager.Instance.characterReference.noControl = true;
+                
                 if ((up || down) && !isMoving)
                 {
                     ChangeSelected();
