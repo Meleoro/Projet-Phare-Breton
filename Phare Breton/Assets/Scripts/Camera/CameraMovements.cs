@@ -257,10 +257,14 @@ public class CameraMovements : MonoBehaviour
         else if(SaveManager.Instance.goMiddle)
         {
             //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
-            isinside = true;
-            
+
             AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
+        else
+        {
+            isinside = true;
+        }
+    
     }
 
     public void Alternate()
