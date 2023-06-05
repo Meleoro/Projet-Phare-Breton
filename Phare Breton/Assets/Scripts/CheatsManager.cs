@@ -10,10 +10,9 @@ using DG.Tweening;
 public class CheatsManager : MonoBehaviour
 {
     [Header("Références")] 
-    [SerializeField] private GameObject optionsObject;
-    [SerializeField] private TextMeshProUGUI optionsMainText;
+    [SerializeField] private GameObject cheatObject;
+    [SerializeField] private TextMeshProUGUI cheatMainText;
     [SerializeField] private List<TextMeshProUGUI> texts = new List<TextMeshProUGUI>();
-    [SerializeField] private List<GameObject> sliders = new List<GameObject>();
     [SerializeField] private MenuPrincManager menuPrincipalScript;
     [SerializeField] private PauseManager pauseScript;
     
@@ -31,7 +30,7 @@ public class CheatsManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(QuitOptions(0, 0));
+        StartCoroutine(QuitCheats(0, 0));
     }
 
     private void Update()
@@ -48,7 +47,7 @@ public class CheatsManager : MonoBehaviour
 
             if (escape)
             {
-                StartCoroutine(QuitOptions(1, 0));
+                StartCoroutine(QuitCheats(1, 0));
             }
         }
     }
@@ -79,73 +78,33 @@ public class CheatsManager : MonoBehaviour
     
     public void GoUp(float duration, float value)
     {
-        texts[index + 1].DOFade(0.5f, duration);
+        texts[index + 1].DOFade(0.4f, duration);
         
         texts[index].DOFade(value, duration);
-        
-        
-        Image[] sliderImages = sliders[index + 1].GetComponentsInChildren<Image>();
-
-        for (int k = 0; k < sliderImages.Length; k++)
-        {
-            sliderImages[k].DOFade(0.5f, duration);
-        }
-        
-        sliderImages = sliders[index].GetComponentsInChildren<Image>();
-
-        for (int k = 0; k < sliderImages.Length; k++)
-        {
-            sliderImages[k].DOFade(value, duration);
-        }
     }
 
     
     public void GoDown(float duration, float value)
     {
-        texts[index - 1].DOFade(0.5f, duration);
+        texts[index - 1].DOFade(0.4f, duration);
         
         texts[index].DOFade(value, duration);
-        
-        
-        Image[] sliderImages = sliders[index - 1].GetComponentsInChildren<Image>();
-
-        for (int k = 0; k < sliderImages.Length; k++)
-        {
-            sliderImages[k].DOFade(0.5f, duration);
-        }
-        
-        sliderImages = sliders[index].GetComponentsInChildren<Image>();
-
-        for (int k = 0; k < sliderImages.Length; k++)
-        {
-            sliderImages[k].DOFade(value, duration);
-        }
     }
     
     
     
-    public IEnumerator OpenOptions(float duration, float value)
+    public IEnumerator OpenCheats(float duration, float value)
     {
+        cheatObject.SetActive(true);
+
         index = 0;
         
-        optionsMainText.DOFade(value, duration);
+        cheatMainText.DOFade(1, duration);
         
         for (int i = 0; i < texts.Count; i++)
         {
             texts[i].DOFade(value, duration);
         }
-        
-        for (int i = 0; i < sliders.Count; i++)
-        {
-            Image[] sliderImages = sliders[i].GetComponentsInChildren<Image>();
-
-            for (int k = 0; k < sliderImages.Length; k++)
-            {
-                sliderImages[k].DOFade(value, duration);
-            }
-        }
-
-        optionsObject.SetActive(true);
 
         if(isOnMenuPrincipal)
             menuPrincipalScript.noControl = true;
@@ -161,32 +120,22 @@ public class CheatsManager : MonoBehaviour
     }
 
     
-    public IEnumerator QuitOptions(float duration, float value)
+    public IEnumerator QuitCheats(float duration, float value)
     {
-        optionsObject.SetActive(true); 
+        cheatObject.SetActive(true); 
         
         canUse = false;
-        
-        optionsMainText.DOFade(value, duration);
+
+        cheatMainText.DOFade(value, duration);
         
         for (int i = 0; i < texts.Count; i++)
         {
             texts[i].DOFade(value, duration);
         }
-        
-        for (int i = 0; i < sliders.Count; i++)
-        {
-            Image[] sliderImages = sliders[i].GetComponentsInChildren<Image>();
-
-            for (int k = 0; k < sliderImages.Length; k++)
-            {
-                sliderImages[k].DOFade(value, duration);
-            }
-        }
 
         yield return new WaitForSeconds(duration);
-        
-        optionsObject.SetActive(false);
+
+        cheatObject.SetActive(false);
 
         if (isOnMenuPrincipal)
             menuPrincipalScript.noControl = false;

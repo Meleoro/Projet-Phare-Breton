@@ -27,6 +27,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private List<Image> notesImages = new List<Image>();
     [SerializeField] private List<Image> bandesImages = new List<Image>();
     [SerializeField] private OptionsManager optionsScript;
+    [SerializeField] private CheatsManager cheatScript;
 
     [Header("Inputs")] 
     private bool pause;
@@ -132,12 +133,12 @@ public class PauseManager : MonoBehaviour
         
         else if (currentButton == 2)
         {
-            StartCoroutine(optionsScript.OpenOptions(1, 1));
+            StartCoroutine(optionsScript.OpenOptions(0.7f, 0.4f));
         }
         
         else if (currentButton == 3)
         {
-            
+            StartCoroutine(cheatScript.OpenCheats(0.7f, 0.4f));
         }
 
         else
