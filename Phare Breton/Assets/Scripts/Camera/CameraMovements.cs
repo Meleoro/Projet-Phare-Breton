@@ -33,6 +33,7 @@ public class CameraMovements : MonoBehaviour
     [Header("PlayMusic")] 
     [HideInInspector] public Transform posCameraRythme;
     [HideInInspector] public Transform posCameraRythme2;
+    [HideInInspector] public Transform posCameraRythme3;
     [HideInInspector] public float durationRythme;
     [HideInInspector] public bool moveCameraRythme;
     private float timerMoveRythme;
@@ -55,6 +56,10 @@ public class CameraMovements : MonoBehaviour
     [Header("Scene2Middle")] 
     public Transform charaPosMiddleScene2;
     public Transform cameraPosMiddleScnee2;
+    
+    [Header("Scene3Middle")] 
+    public Transform charaPosMiddleScene3;
+    public Transform cameraPosMiddleScnee3;
 
     [Header("CinematiqueFin")]
     public UIFin UIScript;
@@ -154,6 +159,19 @@ public class CameraMovements : MonoBehaviour
             
             transform.position = cameraPosMiddleScnee2.transform.position;
             transform.rotation = cameraPosMiddleScnee2.transform.rotation;
+
+            SaveManager.Instance.goMiddle = false;
+        }
+        
+        else if (SaveManager.Instance.goMiddle)
+        {
+            ReferenceManager.Instance.characterReference.transform.position = charaPosMiddleScene3.transform.position;
+            ReferenceManager.Instance.characterReference.canStase = true;
+            
+            transform.position = cameraPosMiddleScnee3.transform.position;
+            transform.rotation = cameraPosMiddleScnee3.transform.rotation;
+            
+            SaveManager.Instance.goMiddle = false;
         }
         
         ActualiseRotationCamRef();
@@ -539,9 +557,15 @@ public class CameraMovements : MonoBehaviour
             {
                 float avancee = timerMoveRythme / durationRythme;
                 float depart = 2 / durationRythme;
-            
-                Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  avancee - depart);
-                Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, avancee - depart);
+
+                Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  (avancee - depart) * 2);
+                Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, (avancee - depart) * 2);
+                
+                if ((avancee - depart) * 2 > 1)
+                {
+                    wantedPos = Vector3.Lerp(posCameraRythme2.position, posCameraRythme3.position, (avancee - depart) * 2 - 1);
+                    wanterRot = Quaternion.Lerp(posCameraRythme2.rotation, posCameraRythme3.rotation, (avancee - depart) * 2 - 1);
+                }
 
                 transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(transform.rotation, wanterRot, Time.deltaTime);
