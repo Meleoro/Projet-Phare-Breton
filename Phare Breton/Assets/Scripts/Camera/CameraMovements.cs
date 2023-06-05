@@ -33,6 +33,7 @@ public class CameraMovements : MonoBehaviour
     [Header("PlayMusic")] 
     [HideInInspector] public Transform posCameraRythme;
     [HideInInspector] public Transform posCameraRythme2;
+    [HideInInspector] public Transform posCameraRythme3;
     [HideInInspector] public float durationRythme;
     [HideInInspector] public bool moveCameraRythme;
     private float timerMoveRythme;
@@ -378,7 +379,7 @@ public class CameraMovements : MonoBehaviour
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
-        yield return new WaitForSeconds(durationEnd2 * 0.4f);
+        yield return new WaitForSeconds(durationEnd2 * 0.4f + 0.01f);
 
 
         // PLAN 3
@@ -400,6 +401,8 @@ public class CameraMovements : MonoBehaviour
 
         transform.DOMove(posCameraEnd4.position, 0);
         transform.DORotate(posCameraEnd4.rotation.eulerAngles, 0);
+        
+        yield return new WaitForSeconds(0.01f);
 
         transform.DOMove(posCameraEnd5.position, durationEnd4);
         transform.DORotate(posCameraEnd5.rotation.eulerAngles, durationEnd4);
@@ -407,7 +410,7 @@ public class CameraMovements : MonoBehaviour
         ReferenceManager.Instance.characterReference.isCrossingDoor = true;
         ReferenceManager.Instance.characterReference.transform.DOMove(posCharaEnd4.position, durationEnd4).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(durationEnd4);
+        yield return new WaitForSeconds(durationEnd4 + 0.01f);
 
         ReferenceManager.Instance.characterReference.isCrossingDoor = false;
 
@@ -419,6 +422,9 @@ public class CameraMovements : MonoBehaviour
         // PLAN 6
         transform.DOMove(posCameraEnd6.position, 0);
         transform.DORotate(posCameraEnd6.rotation.eulerAngles, 0);
+        
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("end");
+        animGrue.SetTrigger("startEnd");
 
         yield return new WaitForSeconds(durationEnd5);
 
@@ -429,13 +435,13 @@ public class CameraMovements : MonoBehaviour
         //pivotPlan6.DORotate(pivotPlan6.rotation.eulerAngles + new Vector3(-40, 180, 0), durationEnd6 * 0.5f).SetEase(Ease.Linear);
 
 
-        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(-42, -179, 0)));
+        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(-45, -179, 0), false));
 
-        yield return new WaitForSeconds(durationEnd6 * 0.5f);
+        yield return new WaitForSeconds(durationEnd6 * 0.51f);
 
         ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
 
-        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(30, -90, 0)));
+        StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(30, -90, 0), true));
 
         pivotPlan6.DOMove(pivotPlan6.transform.position + new Vector3(0, 0, 2), durationEnd6 * 0.5f).SetEase(Ease.Linear);
 
@@ -481,19 +487,37 @@ public class CameraMovements : MonoBehaviour
     }
 
 
-    public IEnumerator RotateCamera(float totalDuration, Vector3 rotStart, Vector3 rotWanted)
+    public IEnumerator RotateCamera(float totalDuration, Vector3 rotStart, Vector3 rotWanted, bool inverse)
     {
-        float currentDuration = totalDuration;
-
-        while(currentDuration > 0)
+        if (!inverse)
         {
-            float ratio = 1 - (currentDuration / totalDuration);
+            float currentDuration = totalDuration;
 
-            pivotPlan6.rotation = Quaternion.Lerp(Quaternion.Euler(rotStart), Quaternion.Euler(rotWanted), cameraSpeedRotate.Evaluate(ratio));
+            while(currentDuration > 0)
+            {
+                float ratio = 1 - (currentDuration / totalDuration);
 
-            yield return new WaitForEndOfFrame();
+                pivotPlan6.rotation = Quaternion.Lerp(Quaternion.Euler(rotStart), Quaternion.Euler(rotWanted), cameraSpeedRotate.Evaluate(ratio));
 
-            currentDuration -= Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+
+                currentDuration -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            float currentDuration = 0;
+
+            while(currentDuration < totalDuration)
+            {
+                float ratio = currentDuration / totalDuration;
+
+                pivotPlan6.rotation = Quaternion.Lerp(Quaternion.Euler(rotStart), Quaternion.Euler(rotWanted), cameraSpeedRotate.Evaluate(ratio));
+
+                yield return new WaitForEndOfFrame();
+
+                currentDuration += Time.deltaTime;
+            }
         }
 
         /*ReferenceManager.Instance.characterReference.movementScript.mesh.gameObject.SetActive(false);
@@ -556,9 +580,15 @@ public class CameraMovements : MonoBehaviour
             {
                 float avancee = timerMoveRythme / durationRythme;
                 float depart = 2 / durationRythme;
-            
-                Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  avancee - depart);
-                Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, avancee - depart);
+
+                Vector3 wantedPos = Vector3.Lerp(posCameraRythme.position, posCameraRythme2.position,  (avancee - depart) * 2);
+                Quaternion wanterRot = Quaternion.Lerp(posCameraRythme.rotation, posCameraRythme2.rotation, (avancee - depart) * 2);
+                
+                if ((avancee - depart) * 2 > 1)
+                {
+                    wantedPos = Vector3.Lerp(posCameraRythme2.position, posCameraRythme3.position, (avancee - depart) * 2 - 1);
+                    wanterRot = Quaternion.Lerp(posCameraRythme2.rotation, posCameraRythme3.rotation, (avancee - depart) * 2 - 1);
+                }
 
                 transform.position = Vector3.Lerp(transform.position, wantedPos, Time.deltaTime);
                 transform.rotation = Quaternion.Lerp(transform.rotation, wanterRot, Time.deltaTime);

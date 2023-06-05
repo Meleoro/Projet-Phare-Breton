@@ -9,6 +9,7 @@ public class MusicSpot : MonoBehaviour
 
     [SerializeField] private Transform cameraPos;
     [SerializeField] private Transform cameraPos2;
+    [SerializeField] private Transform cameraPos3;
 
     public List<GameObject> tags = new List<GameObject>();
 
@@ -34,6 +35,7 @@ public class MusicSpot : MonoBehaviour
 
                 ReferenceManager.Instance.cameraReference.posCameraRythme = cameraPos;
                 ReferenceManager.Instance.cameraReference.posCameraRythme2 = cameraPos2;
+                ReferenceManager.Instance.cameraReference.posCameraRythme3 = cameraPos3;
 
                 ReferenceManager.Instance.characterReference.tagToActivate = tags;
             }

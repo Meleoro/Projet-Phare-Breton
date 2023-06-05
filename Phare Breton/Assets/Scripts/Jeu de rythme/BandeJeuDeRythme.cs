@@ -53,6 +53,8 @@ public class BandeJeuDeRythme : MonoBehaviour
     public int erasedNotes;
     private bool usingBarre;
     private int currentHealth;
+    public int melodyIndex;
+    public float delaybande1;
 
 
     private void Awake()
@@ -78,6 +80,8 @@ public class BandeJeuDeRythme : MonoBehaviour
 
             if (pressX || pressY || pressZ)
             {
+                AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+                
                 if (currentNode != null)
                 {
                     bool isRight = VerifyNote();
@@ -93,8 +97,6 @@ public class BandeJeuDeRythme : MonoBehaviour
 
                     if (isRight)
                     {
-                        AudioManager.instance.PlaySoundOneShot(1, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
-
                         StartCoroutine(FeelDestroyNode());
                     }
                     else
@@ -153,7 +155,7 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         yield return new WaitForSeconds(1.6f);
 
-        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
+        AudioManager.instance.PlaySoundContinuous(index, 2, 0, ReferenceManager.Instance.characterReference.musicAudioSource);
         
         gameStarted = true;
     }
@@ -276,38 +278,78 @@ public class BandeJeuDeRythme : MonoBehaviour
         {
             if (!nodes[i].isSpawned)
             {
-                if (timer > nodes[i].spawnTiming + 0.05f)
+                if (melodyIndex == 1)
                 {
-                    MusicNode newNode = null;
-                    
-                    switch (nodes[i].nodeType)
+                    if (timer > nodes[i].spawnTiming + delaybande1)
                     {
-                        case Node.InputNeeded.x :
-                            newNode = Instantiate(nodeObjectX, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
-                            break;
+                        MusicNode newNode = null;
+                    
+                        switch (nodes[i].nodeType)
+                        {
+                            case Node.InputNeeded.x :
+                                newNode = Instantiate(nodeObjectX, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
                         
-                        case Node.InputNeeded.y :
-                            newNode = Instantiate(nodeObjectY, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
-                            break;
+                            case Node.InputNeeded.y :
+                                newNode = Instantiate(nodeObjectY, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
                         
-                        case Node.InputNeeded.z :
-                            newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
-                            break;
-                    }
+                            case Node.InputNeeded.z :
+                                newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
+                        }
 
-                    switch (nodes[i].spawnPos)
-                    {
-                        case Node.SpawnPos.left :
-                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsLeft);
-                            break;
+                        switch (nodes[i].spawnPos)
+                        {
+                            case Node.SpawnPos.left :
+                                newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsLeft);
+                                break;
                         
-                        case Node.SpawnPos.right :
-                            newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsRight);
-                            break;
-                    }
+                            case Node.SpawnPos.right :
+                                newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsRight);
+                                break;
+                        }
                     
-                    nodes[i].isSpawned = true;
-                    nodesCreated.Add(newNode);
+                        nodes[i].isSpawned = true;
+                        nodesCreated.Add(newNode);
+                    }
+                }
+
+                else
+                {
+                    if (timer > nodes[i].spawnTiming + 0.05f)
+                    {
+                        MusicNode newNode = null;
+                    
+                        switch (nodes[i].nodeType)
+                        {
+                            case Node.InputNeeded.x :
+                                newNode = Instantiate(nodeObjectX, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
+                        
+                            case Node.InputNeeded.y :
+                                newNode = Instantiate(nodeObjectY, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
+                        
+                            case Node.InputNeeded.z :
+                                newNode = Instantiate(nodeObjectZ, transform.position, Quaternion.identity, transform).GetComponent<MusicNode>();
+                                break;
+                        }
+
+                        switch (nodes[i].spawnPos)
+                        {
+                            case Node.SpawnPos.left :
+                                newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsLeft);
+                                break;
+                        
+                            case Node.SpawnPos.right :
+                                newNode.InitialiseNode(nodes[i].nodeType, nodes[i].spawnPos, this, waypointsRight);
+                                break;
+                        }
+                    
+                        nodes[i].isSpawned = true;
+                        nodesCreated.Add(newNode);
+                    }
                 }
             }
         }
