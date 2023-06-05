@@ -51,7 +51,7 @@ public class UIFin : MonoBehaviour
             names[i].DOFade(1, 2);
         }*/
         
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(6);
 
         ReferenceManager.Instance.cameraReference.fonduObject.SetActive(true);
         ReferenceManager.Instance.cameraReference.fondu.DOFade(1, 1);

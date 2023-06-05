@@ -475,7 +475,7 @@ public class CameraMovements : MonoBehaviour
 
         StartCoroutine(RotateCamera(durationEnd6 * 0.5f, pivotPlan6.rotation.eulerAngles, pivotPlan6.rotation.eulerAngles + new Vector3(-45, -179, 0), false));
 
-        yield return new WaitForSeconds(durationEnd6 * 0.51f);
+        yield return new WaitForSeconds(durationEnd6 * 0.501f);
         
         VFXFin.Play();
 
