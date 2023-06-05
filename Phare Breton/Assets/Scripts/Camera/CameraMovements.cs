@@ -117,6 +117,7 @@ public class CameraMovements : MonoBehaviour
     private float currentMinAlphaChara;
     private float currentMaxAlphaChara;
     private bool isShaking;
+    private bool isinside;
 
 
     private void Start()
@@ -260,6 +261,31 @@ public class CameraMovements : MonoBehaviour
             AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
     }
+
+    public void Alternate()
+    {
+        isinside = !isinside;
+
+        if (isinside && doMiddleCinematique)
+        {
+            AudioManager.instance.FadeOutAudioSource(0.15f, 0.15f, 0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+        else if(!isinside && doMiddleCinematique)
+        {
+            AudioManager.instance.PlaySoundContinuous(0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+        
+        else if (isinside && !doStartCinematique)
+        {
+            AudioManager.instance.FadeOutAudioSource(0.15f, 0.15f, 0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+        else if (!isinside && !doStartCinematique)
+        {
+            AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+        }
+    }
+    
+    
     
     private IEnumerator ShakeCoroutine()
     {
@@ -355,6 +381,8 @@ public class CameraMovements : MonoBehaviour
         isStatic = true;
         ReferenceManager.Instance.characterReference.noControl = true;
         ReferenceManager.Instance.characterReference.rb.isKinematic = true;
+
+        AudioManager.instance.PlaySoundFadingIn(0.15f, 0.15f, 4, 2, 0, ReferenceManager.Instance.characterReference.musicAudioSource);
 
         yield return new WaitForSeconds(0.02f);
 
