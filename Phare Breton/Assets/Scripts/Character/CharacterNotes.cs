@@ -40,6 +40,17 @@ public class CharacterNotes : MonoBehaviour
         }
     }
 
+    public void GiveAllNotes()
+    {
+        for (int k = 0; k < 3; k++)
+        {
+            for (int j = 0; j < ReferenceManager.Instance.noteManagerReference.Melodies[k].nbrNotes; j++)
+            {
+                collectedNotes[k].currentCollectedNotes.Add(true);
+            }
+        }
+    }
+
     public void AddNote(int partition, int notePos)
     {
         collectedNotes[partition - 1].currentCollectedNotes[notePos - 1] = true;

@@ -89,12 +89,14 @@ public class CheatsManager : MonoBehaviour
         
         else if (index == 5)
         {
-            
+            ReferenceManager.Instance.characterReference.notesScript.GiveAllNotes();
         }
         
         else if (index == 6)
         {
-            
+            ReferenceManager.Instance.characterReference.canCable = true;
+            ReferenceManager.Instance.characterReference.canStase = true;
+            ReferenceManager.Instance.characterReference.canMoveObjects = true;
         }
     }
 
