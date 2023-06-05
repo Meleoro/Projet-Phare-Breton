@@ -208,17 +208,23 @@ public class CameraMovements : MonoBehaviour
             
             yield return new WaitForSeconds(2);
             
-            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 2,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 2,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            
+            AudioManager.instance.PlaySoundContinuous(2,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
         
         else if (doMiddleCinematique)
         {
-            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            
+            AudioManager.instance.PlaySoundContinuous(0,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
         
         else 
         {
-            AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            //AudioManager.instance.PlaySoundFadingIn(0, 1.5f, 1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
+            
+            AudioManager.instance.PlaySoundContinuous(1,4,0, ReferenceManager.Instance.characterReference.ambianceAudioSource);
         }
     }
     
