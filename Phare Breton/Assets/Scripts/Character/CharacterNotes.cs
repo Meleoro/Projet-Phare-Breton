@@ -133,14 +133,29 @@ public class CharacterNotes : MonoBehaviour
 
             if (mainSript.tagToActivate.Count != 0)
             {
-                for(int i = 0; i < mainSript.tagToActivate.Count; i++)
-                {
-                    mainSript.tagToActivate[i].GetComponent<MeshRenderer>().material.DOFade(1, 5);
-                }
-
+                StartCoroutine(ActualiseTags(4, 4));
                 mainSript.tagToActivate.Clear();
             }
         }
+    }
+
+
+    private IEnumerator ActualiseTags(float timer, float original)
+    {
+        if (timer < 0)
+        {
+            yield break;
+        }
+        
+        for(int i = 0; i < mainSript.tagToActivate.Count; i++)
+        {
+            mainSript.tagToActivate[i].GetComponent<MeshRenderer>().material.SetFloat("_alpha", Mathf.Lerp(1, 0, timer / original));
+        }
+        
+        yield return new WaitForEndOfFrame();
+
+        timer -= Time.deltaTime;
+        StartCoroutine(ActualiseTags(timer, original));
     }
     
 
