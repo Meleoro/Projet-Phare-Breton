@@ -6703,7 +6703,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3274826481607473877, guid: 4ce5e7a6defc164438a4bcb75f56c233,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4431764617688321811}
   m_SourcePrefab: {fileID: 100100000, guid: 4ce5e7a6defc164438a4bcb75f56c233, type: 3}
 --- !u!4 &814674110746829298 stripped
 Transform:
@@ -6711,6 +6715,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4122383546238441540}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1461172526745150097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3274826481607473877, guid: 4ce5e7a6defc164438a4bcb75f56c233,
+    type: 3}
+  m_PrefabInstance: {fileID: 4122383546238441540}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4431764617688321811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461172526745150097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6190097d3d185724e9883c34a013d7e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goMiddle: 0
+  scene1Name: LevelDesign - BlockMesh
+  scene2Name: LevelDesign - BlockMesh 2
+  scene3Name: LevelDesign - BlockMesh 3
 --- !u!1001 &5372888270071737802
 PrefabInstance:
   m_ObjectHideFlags: 0

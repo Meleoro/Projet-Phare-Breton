@@ -45,10 +45,55 @@ public class CheatsManager : MonoBehaviour
                 up = false;
             }
 
+            if (interaction)
+            {
+                Use();
+                
+                interaction = false;
+            }
+
             if (escape)
             {
                 StartCoroutine(QuitCheats(1, 0));
             }
+        }
+    }
+
+    public void Use()
+    {
+        if (index == 0)
+        {
+            SaveManager.Instance.TPZone1();
+        }
+        
+        else if (index == 1)
+        {
+            SaveManager.Instance.TPZone21();
+        }
+        
+        else if (index == 2)
+        {
+            SaveManager.Instance.TPZone22();
+        }
+        
+        else if (index == 3)
+        {
+            SaveManager.Instance.TPZone31();
+        }
+        
+        else if (index == 4)
+        {
+            SaveManager.Instance.TPZone32();
+        }
+        
+        else if (index == 5)
+        {
+            
+        }
+        
+        else if (index == 6)
+        {
+            
         }
     }
 
