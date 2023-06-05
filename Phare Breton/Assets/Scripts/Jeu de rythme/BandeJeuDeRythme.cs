@@ -225,6 +225,9 @@ public class BandeJeuDeRythme : MonoBehaviour
 
         else
         {
+            AudioManager.instance.FadeOutAudioSource(0.2f, 0.5f, 0,
+                ReferenceManager.Instance.characterReference.playerAudioSource);
+            
             timer = 0f;
             erasedNotes = 0;
 
@@ -261,6 +264,8 @@ public class BandeJeuDeRythme : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         stop = true;
+        
+        AudioManager.instance.PlaySoundOneShot(10, 0, 0, ReferenceManager.Instance.characterReference.playerAudioSource);
         
         ReferenceManager.Instance.characterReference.notesScript.NextBande();
     }
