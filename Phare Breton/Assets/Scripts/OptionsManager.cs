@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class OptionsManager : MonoBehaviour
     [SerializeField] private Image fond;
     [SerializeField] private MenuPrincManager menuPrincipalScript;
     [SerializeField] private PauseManager pauseScript;
+    public EventSystem eventSystem;
     
     [Header("Inputs")] 
     private bool pause;
@@ -33,6 +35,8 @@ public class OptionsManager : MonoBehaviour
     
     private void Start()
     {
+        eventSystem = GetComponentInChildren<EventSystem>();
+        
         StartCoroutine(QuitOptions(0, 0));
 
         ActualiseSliders();
@@ -147,6 +151,8 @@ public class OptionsManager : MonoBehaviour
     {
         index = 0;
         
+        eventSystem.enabled = false;
+        
         optionsMainText.DOFade(1, duration);
 
         fond.DOFade(0, 0);
@@ -180,6 +186,8 @@ public class OptionsManager : MonoBehaviour
         GoUp(duration, 1);
 
         yield return new WaitForSeconds(duration);
+
+        eventSystem.enabled = true;
 
         canUse = true;
     }
@@ -217,6 +225,8 @@ public class OptionsManager : MonoBehaviour
     {
         optionsObject.SetActive(true); 
         
+        eventSystem.enabled = false;
+        
         canUse = false;
         
         optionsMainText.DOFade(value, duration);
@@ -239,6 +249,8 @@ public class OptionsManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(duration);
+        
+        eventSystem.enabled = true;
         
         optionsObject.SetActive(false);
 
