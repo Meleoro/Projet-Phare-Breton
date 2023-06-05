@@ -182,6 +182,8 @@ public class CharacterNotes : MonoBehaviour
 
     public IEnumerator UnlockPower()
     {
+        AudioManager.instance.PlaySoundOneShot(10, 1, 0, mainSript.playerAudioSource);
+        
         if(currentMelody == 1)
         {
             mainSript.canMoveObjects = true;
