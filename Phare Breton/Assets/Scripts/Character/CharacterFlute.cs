@@ -691,7 +691,8 @@ public class CharacterFlute : MonoBehaviour
             }
         }
 
-        StopMoveObject();
+        if(manager.isMovingObjects)
+            StopMoveObject();
     }
 
 
