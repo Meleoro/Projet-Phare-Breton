@@ -22,6 +22,8 @@ public class SaveManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+        
+        DontDestroyOnLoad(transform.gameObject);
     }
 
 
@@ -40,9 +42,7 @@ public class SaveManager : MonoBehaviour
     public void TPZone22()
     {
         goMiddle = true;
-        
-        Debug.Log(12);
-        
+
         SceneManager.LoadScene(scene2Name);
     }
 
