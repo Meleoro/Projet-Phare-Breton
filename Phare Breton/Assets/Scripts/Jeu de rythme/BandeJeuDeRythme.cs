@@ -136,6 +136,9 @@ public class BandeJeuDeRythme : MonoBehaviour
         Image imageFond = fond.GetComponent<Image>();
         Image imageArc = arc.GetComponent<Image>();
 
+        ReferenceManager.Instance.characterReference.isInJeuDeRythme = true;
+        ReferenceManager.Instance.characterReference.anim.SetTrigger("startFlute");
+
         imageBarre.DOFade(0, 0);
         imageFond.DOFade(0, 0);
         imageArc.DOFade(0, 0);
@@ -232,6 +235,9 @@ public class BandeJeuDeRythme : MonoBehaviour
             erasedNotes = 0;
 
             stop = true;
+            
+            ReferenceManager.Instance.characterReference.fluteActive = false;
+            ReferenceManager.Instance.characterReference.isInJeuDeRythme = false;
 
             StartCoroutine(LoseEffects());
 
@@ -260,6 +266,9 @@ public class BandeJeuDeRythme : MonoBehaviour
     public IEnumerator EndGame()
     {
         isFinishing = true;
+        
+        ReferenceManager.Instance.characterReference.isInJeuDeRythme = false;
+        ReferenceManager.Instance.characterReference.fluteActive = false;
 
         yield return new WaitForSeconds(0.5f);
 

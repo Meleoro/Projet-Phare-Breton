@@ -57,7 +57,7 @@ public class CharaManager : MonoBehaviour
 
     [Header("Animations")]
     [HideInInspector] public bool isWalking;
-    [HideInInspector] private bool fluteActive;
+    [HideInInspector] public bool fluteActive;
 
     [Header("Selection")]
     [HideInInspector] public List<GameObject> nearObjects = new List<GameObject>();
@@ -88,6 +88,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public bool isCrossingDoor;
     private bool UIActive;
     [HideInInspector] public bool end;
+    public bool isInJeuDeRythme;
 
 
     void Start()
@@ -297,6 +298,10 @@ public class CharaManager : MonoBehaviour
         }
 
         anim.SetBool("isWalking", isWalking);
+
+        if (isInJeuDeRythme)
+            fluteActive = true;
+        
         anim.SetBool("fluteActive", fluteActive);
         
         IsMovingObjects();
