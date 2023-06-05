@@ -30,6 +30,8 @@ public class MusicSpot : MonoBehaviour
         {
             if(other.CompareTag("Player") && !other.isTrigger)
             {
+                Debug.Log(12);
+                
                 ReferenceManager.Instance.characterReference.canPlayMusic = true;
                 ReferenceManager.Instance.characterReference.currentMelodyIndex = melodyIndex;
 
