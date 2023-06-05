@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIFin : MonoBehaviour
 {
@@ -51,7 +52,14 @@ public class UIFin : MonoBehaviour
         }*/
         
         yield return new WaitForSeconds(10);
-        
+
+        ReferenceManager.Instance.cameraReference.fonduObject.SetActive(true);
+        ReferenceManager.Instance.cameraReference.fondu.DOFade(1, 1);
+
+        yield return new WaitForSeconds(1.2f);
+
+        SceneManager.LoadScene("MainMenu");
+
         //ReferenceManager.Instance.cameraReference.scriptFondu.
     }
 }
