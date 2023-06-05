@@ -32,6 +32,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        SaveManager.Instance.SetupVolume();
+        
         //PlaySoundOneShot(0, 5, 0,AudioSourceSurLeJoueur);
         /*if (mainMenu)
         {

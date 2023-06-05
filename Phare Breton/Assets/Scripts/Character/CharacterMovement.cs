@@ -238,13 +238,13 @@ public class CharacterMovement : MonoBehaviour
 
             else if (isOnWater)
             {
-                int index = UnityEngine.Random.Range(0, 2);
+                /*int index = UnityEngine.Random.Range(0, 2);
 
                 if (index == 0)
                     AudioManager.instance.PlaySoundOneShot(8, 0, 0, manager.playerAudioSource);
 
                 else
-                    AudioManager.instance.PlaySoundOneShot(9, 0, 0, manager.playerAudioSource);
+                    AudioManager.instance.PlaySoundOneShot(9, 0, 0, manager.playerAudioSource);*/
             }
         }
     }
