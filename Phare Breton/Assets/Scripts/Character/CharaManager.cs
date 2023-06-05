@@ -116,6 +116,8 @@ public class CharaManager : MonoBehaviour
     
     void Update()
     {
+        Cursor.visible = false;
+        
         direction = Vector2.Lerp(direction, wantedDirection, Time.deltaTime * 50);
 
         IsMovingObjects();
