@@ -1,4 +1,4 @@
-using System;
+    using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -70,7 +70,7 @@ public class CharaManager : MonoBehaviour
     [HideInInspector] public List<GameObject> cableObjects = new List<GameObject>();
     [HideInInspector] public GameObject cableObject;
     [HideInInspector] public Echelle nearLadder;
-    [HideInInspector] public GameObject objectOn;
+    public GameObject objectOn;
 
     [Header("Autres")] 
     public string menuScene;
