@@ -134,7 +134,6 @@ public class CharacterNotes : MonoBehaviour
             if (mainSript.tagToActivate.Count != 0)
             {
                 StartCoroutine(ActualiseTags(4, 4));
-                mainSript.tagToActivate.Clear();
             }
         }
     }
@@ -144,6 +143,7 @@ public class CharacterNotes : MonoBehaviour
     {
         if (timer < 0)
         {
+            mainSript.tagToActivate.Clear();
             yield break;
         }
         
